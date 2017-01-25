@@ -1,0 +1,889 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BMWModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Attendence">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RequestId" Type="Int32" Nullable="false" />
+    <Property Name="SupplierId" Type="Int32" Nullable="false" />
+    <Property Name="Rank" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="Flag" Type="Int32" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Attendences_AspNetUsers" FromRole="Attendences" ToRole="Users" />
+    <NavigationProperty Name="BiddingFloor" Relationship="Self.FK_Attendences_BiddingFloors" FromRole="Attendences" ToRole="BiddingFloors" />
+    <NavigationProperty Name="ContractProducts" Relationship="Self.FK_ContractProducts_Attendences" FromRole="Attendences" ToRole="ContractProducts" />
+  </EntityType>
+  <EntityType Name="BiddingFloor">
+    <Key>
+      <PropertyRef Name="RequestId" />
+    </Key>
+    <Property Name="RequestId" Type="Int32" Nullable="false" />
+    <Property Name="LowestPrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="Flag" Type="Int32" />
+    <NavigationProperty Name="Attendences" Relationship="Self.FK_Attendences_BiddingFloors" FromRole="BiddingFloors" ToRole="Attendences" />
+    <NavigationProperty Name="Request" Relationship="Self.FK_BiddingFloors_Requests" FromRole="BiddingFloors" ToRole="Requests" />
+  </EntityType>
+  <EntityType Name="ContractProduct">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ReplyId" Type="Int32" />
+    <Property Name="AttendenceId" Type="Int32" />
+    <Property Name="ShopProductId" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="Flag" Type="Int32" />
+    <NavigationProperty Name="Attendence" Relationship="Self.FK_ContractProducts_Attendences" FromRole="ContractProducts" ToRole="Attendences" />
+    <NavigationProperty Name="Reply" Relationship="Self.FK_ContractProducts_Replies" FromRole="ContractProducts" ToRole="Replies" />
+    <NavigationProperty Name="ShopProduct" Relationship="Self.FK_OfferProducts_WarehouseProducts" FromRole="ContractProducts" ToRole="ShopProducts" />
+  </EntityType>
+  <EntityType Name="Deal">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SupplierId" Type="Int32" Nullable="false" />
+    <Property Name="ShopProductId" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="Discount" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DueDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="Flag" Type="Int32" />
+    <NavigationProperty Name="ShopProduct" Relationship="Self.FK_Deal_WarehouseProducts" FromRole="Deals" ToRole="ShopProducts" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Deals_Users" FromRole="Deals" ToRole="Users" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Deal" FromRole="Deals" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="Manufacturer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Image" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="Flag" Type="Int32" />
+    <NavigationProperty Name="ShopProducts" Relationship="Self.FK_ShopProducts_Manufacturers" FromRole="Manufacturers" ToRole="ShopProducts" />
+    <NavigationProperty Name="SysProducts" Relationship="Self.FK_SysProducts_Manufacturers" FromRole="Manufacturers" ToRole="SysProducts" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerId" Type="Int32" Nullable="false" />
+    <Property Name="DealId" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="PaymentType" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Total" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="Code" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="Flag" Type="Int32" />
+    <NavigationProperty Name="Deal" Relationship="Self.FK_Orders_Deal" FromRole="Orders" ToRole="Deals" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Orders_AspNetUsers" FromRole="Orders" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Reply">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RequestId" Type="Int32" Nullable="false" />
+    <Property Name="SupplierId" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="Flag" Type="Int32" />
+    <NavigationProperty Name="ContractProducts" Relationship="Self.FK_ContractProducts_Replies" FromRole="Replies" ToRole="ContractProducts" />
+    <NavigationProperty Name="Request" Relationship="Self.FK_Replies_Requests" FromRole="Replies" ToRole="Requests" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Replies_Users" FromRole="Replies" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="RequestDescription">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RequestId" Type="Int32" Nullable="false" />
+    <Property Name="Attribute" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Code" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="Flag" Type="Int32" />
+    <NavigationProperty Name="Request" Relationship="Self.FK_RequestDescriptions_Requests" FromRole="RequestDescriptions" ToRole="Requests" />
+  </EntityType>
+  <EntityType Name="RequestProduct">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RequestId" Type="Int32" />
+    <Property Name="SysProductId" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" />
+    <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Flag" Type="Int32" />
+    <NavigationProperty Name="Request" Relationship="Self.FK_NeedProducts_Requests" FromRole="RequestProducts" ToRole="Requests" />
+    <NavigationProperty Name="SysProduct" Relationship="Self.FK_NeedProducts_SysProducts" FromRole="RequestProducts" ToRole="SysProducts" />
+  </EntityType>
+  <EntityType Name="Request">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerId" Type="Int32" Nullable="false" />
+    <Property Name="SupplierId" Type="Int32" />
+    <Property Name="CustomerPrice" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="DeliveryAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DeliveryDate" Type="DateTime" Precision="7" />
+    <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="7" />
+    <Property Name="DueDate" Type="DateTime" Nullable="false" Precision="7" />
+    <Property Name="PaymentType" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="RequestTypeId" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Flag" Type="Int32" />
+    <NavigationProperty Name="BiddingFloor" Relationship="Self.FK_BiddingFloors_Requests" FromRole="Requests" ToRole="BiddingFloors" />
+    <NavigationProperty Name="Replies" Relationship="Self.FK_Replies_Requests" FromRole="Requests" ToRole="Replies" />
+    <NavigationProperty Name="RequestDescriptions" Relationship="Self.FK_RequestDescriptions_Requests" FromRole="Requests" ToRole="RequestDescriptions" />
+    <NavigationProperty Name="RequestProducts" Relationship="Self.FK_NeedProducts_Requests" FromRole="Requests" ToRole="RequestProducts" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Requests_AspNetUsers" FromRole="Requests" ToRole="Users" />
+    <NavigationProperty Name="RequestType" Relationship="Self.FK_Requests_RequestTypes" FromRole="Requests" ToRole="RequestTypes" />
+    <NavigationProperty Name="User1" Relationship="Self.FK_Requests_Users1" FromRole="Requests" ToRole="Users" />
+    <NavigationProperty Name="Review" Relationship="Self.FK_Reviews_Requests" FromRole="Requests" ToRole="Reviews" />
+  </EntityType>
+  <EntityType Name="RequestType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Requests" Relationship="Self.FK_Requests_RequestTypes" FromRole="RequestTypes" ToRole="Requests" />
+  </EntityType>
+  <EntityType Name="Review">
+    <Key>
+      <PropertyRef Name="RequestId" />
+    </Key>
+    <Property Name="RequestId" Type="Int32" Nullable="false" />
+    <Property Name="PriceGrade" Type="Int32" Nullable="false" />
+    <Property Name="QualityGrade" Type="Int32" Nullable="false" />
+    <Property Name="ServiceGrade" Type="Int32" Nullable="false" />
+    <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="Flag" Type="Int32" />
+    <NavigationProperty Name="Request" Relationship="Self.FK_Reviews_Requests" FromRole="Reviews" ToRole="Requests" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="Self.UserRoles" FromRole="Roles" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="ShopCategory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ShopId" Type="Int32" Nullable="false" />
+    <Property Name="SysCategoryId" Type="Int32" Nullable="false" />
+    <Property Name="ParentId" Type="Int32" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Flag" Type="Int32" />
+    <NavigationProperty Name="SysCategory" Relationship="Self.FK_WarehouseCategories_SysCategories" FromRole="ShopCategories" ToRole="SysCategories" />
+    <NavigationProperty Name="ShopCategories1" Relationship="Self.FK_WarehouseCategories_WarehouseCategories" FromRole="ShopCategories" ToRole="ShopCategories1" />
+    <NavigationProperty Name="ShopCategory1" Relationship="Self.FK_WarehouseCategories_WarehouseCategories" FromRole="ShopCategories1" ToRole="ShopCategories" />
+    <NavigationProperty Name="Shop" Relationship="Self.FK_WarehouseCategories_Warehouses" FromRole="ShopCategories" ToRole="Shops" />
+    <NavigationProperty Name="ShopProducts" Relationship="Self.FK_WarehouseProducts_WarehouseCategories" FromRole="ShopCategories" ToRole="ShopProducts" />
+  </EntityType>
+  <EntityType Name="ShopProduct">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ShopId" Type="Int32" Nullable="false" />
+    <Property Name="SysProductId" Type="Int32" Nullable="false" />
+    <Property Name="ShopCategoryId" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="PricePerUnit" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="ManufacturerId" Type="Int32" Nullable="false" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Flag" Type="Int32" />
+    <NavigationProperty Name="ContractProducts" Relationship="Self.FK_OfferProducts_WarehouseProducts" FromRole="ShopProducts" ToRole="ContractProducts" />
+    <NavigationProperty Name="Deals" Relationship="Self.FK_Deal_WarehouseProducts" FromRole="ShopProducts" ToRole="Deals" />
+    <NavigationProperty Name="Manufacturer" Relationship="Self.FK_ShopProducts_Manufacturers" FromRole="ShopProducts" ToRole="Manufacturers" />
+    <NavigationProperty Name="ShopCategory" Relationship="Self.FK_WarehouseProducts_WarehouseCategories" FromRole="ShopProducts" ToRole="ShopCategories" />
+    <NavigationProperty Name="SysProduct" Relationship="Self.FK_WarehouseProducts_SysProducts" FromRole="ShopProducts" ToRole="SysProducts" />
+    <NavigationProperty Name="Shop" Relationship="Self.FK_WarehouseProducts_Warehouses" FromRole="ShopProducts" ToRole="Shops" />
+  </EntityType>
+  <EntityType Name="Shop">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SupplierId" Type="Int32" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Flag" Type="Int32" />
+    <NavigationProperty Name="ShopCategories" Relationship="Self.FK_WarehouseCategories_Warehouses" FromRole="Shops" ToRole="ShopCategories" />
+    <NavigationProperty Name="ShopProducts" Relationship="Self.FK_WarehouseProducts_Warehouses" FromRole="Shops" ToRole="ShopProducts" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Shops_Users" FromRole="Shops" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="SysCategory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ParentId" Type="Int32" />
+    <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Image" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Flag" Type="Int32" />
+    <NavigationProperty Name="ShopCategories" Relationship="Self.FK_WarehouseCategories_SysCategories" FromRole="SysCategories" ToRole="ShopCategories" />
+    <NavigationProperty Name="SysCategories1" Relationship="Self.FK_SysCategories_SysCategories" FromRole="SysCategories" ToRole="SysCategories1" />
+    <NavigationProperty Name="SysCategory1" Relationship="Self.FK_SysCategories_SysCategories" FromRole="SysCategories1" ToRole="SysCategories" />
+    <NavigationProperty Name="SysProducts" Relationship="Self.FK_SysProducts_SysCategories" FromRole="SysCategories" ToRole="SysProducts" />
+  </EntityType>
+  <EntityType Name="SysProductAttribute">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SysProductId" Type="Int32" Nullable="false" />
+    <Property Name="Attribute" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Flag" Type="Int32" />
+    <NavigationProperty Name="SysProduct" Relationship="Self.FK_SysProductAttributes_SysProducts" FromRole="SysProductAttributes" ToRole="SysProducts" />
+  </EntityType>
+  <EntityType Name="SysProduct">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ManufacturerId" Type="Int32" Nullable="false" />
+    <Property Name="SysCategoryId" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Flag" Type="Int32" />
+    <NavigationProperty Name="Manufacturer" Relationship="Self.FK_SysProducts_Manufacturers" FromRole="SysProducts" ToRole="Manufacturers" />
+    <NavigationProperty Name="RequestProducts" Relationship="Self.FK_NeedProducts_SysProducts" FromRole="SysProducts" ToRole="RequestProducts" />
+    <NavigationProperty Name="ShopProducts" Relationship="Self.FK_WarehouseProducts_SysProducts" FromRole="SysProducts" ToRole="ShopProducts" />
+    <NavigationProperty Name="SysCategory" Relationship="Self.FK_SysProducts_SysCategories" FromRole="SysProducts" ToRole="SysCategories" />
+    <NavigationProperty Name="SysProductAttributes" Relationship="Self.FK_SysProductAttributes_SysProducts" FromRole="SysProducts" ToRole="SysProductAttributes" />
+  </EntityType>
+  <EntityType Name="UserClaim">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="User" Relationship="Self.FK_UserClaims_Users" FromRole="UserClaims" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="UserLogin">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="Self.FK_UserLogins_Users" FromRole="UserLogins" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+    <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Avatar" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="IsSubscribed" Type="Boolean" />
+    <Property Name="AverageGrade" Type="Double" />
+    <Property Name="Flag" Type="Int32" />
+    <NavigationProperty Name="Attendences" Relationship="Self.FK_Attendences_AspNetUsers" FromRole="Users" ToRole="Attendences" />
+    <NavigationProperty Name="Deals" Relationship="Self.FK_Deals_Users" FromRole="Users" ToRole="Deals" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_AspNetUsers" FromRole="Users" ToRole="Orders" />
+    <NavigationProperty Name="Replies" Relationship="Self.FK_Replies_Users" FromRole="Users" ToRole="Replies" />
+    <NavigationProperty Name="Requests" Relationship="Self.FK_Requests_AspNetUsers" FromRole="Users" ToRole="Requests" />
+    <NavigationProperty Name="Requests1" Relationship="Self.FK_Requests_Users1" FromRole="Users" ToRole="Requests" />
+    <NavigationProperty Name="Shops" Relationship="Self.FK_Shops_Users" FromRole="Users" ToRole="Shops" />
+    <NavigationProperty Name="UserClaims" Relationship="Self.FK_UserClaims_Users" FromRole="Users" ToRole="UserClaims" />
+    <NavigationProperty Name="UserLogins" Relationship="Self.FK_UserLogins_Users" FromRole="Users" ToRole="UserLogins" />
+    <NavigationProperty Name="Roles" Relationship="Self.UserRoles" FromRole="Users" ToRole="Roles" />
+  </EntityType>
+  <Association Name="FK_Attendences_AspNetUsers">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="Attendences" Type="Self.Attendence" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Attendences">
+        <PropertyRef Name="SupplierId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Attendences_BiddingFloors">
+    <End Role="BiddingFloors" Type="Self.BiddingFloor" Multiplicity="1" />
+    <End Role="Attendences" Type="Self.Attendence" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BiddingFloors">
+        <PropertyRef Name="RequestId" />
+      </Principal>
+      <Dependent Role="Attendences">
+        <PropertyRef Name="RequestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ContractProducts_Attendences">
+    <End Role="Attendences" Type="Self.Attendence" Multiplicity="0..1" />
+    <End Role="ContractProducts" Type="Self.ContractProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Attendences">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ContractProducts">
+        <PropertyRef Name="AttendenceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BiddingFloors_Requests">
+    <End Role="Requests" Type="Self.Request" Multiplicity="1" />
+    <End Role="BiddingFloors" Type="Self.BiddingFloor" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Requests">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BiddingFloors">
+        <PropertyRef Name="RequestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ContractProducts_Replies">
+    <End Role="Replies" Type="Self.Reply" Multiplicity="0..1" />
+    <End Role="ContractProducts" Type="Self.ContractProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Replies">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ContractProducts">
+        <PropertyRef Name="ReplyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OfferProducts_WarehouseProducts">
+    <End Role="ShopProducts" Type="Self.ShopProduct" Multiplicity="1" />
+    <End Role="ContractProducts" Type="Self.ContractProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ShopProducts">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ContractProducts">
+        <PropertyRef Name="ShopProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Deal_WarehouseProducts">
+    <End Role="ShopProducts" Type="Self.ShopProduct" Multiplicity="1" />
+    <End Role="Deals" Type="Self.Deal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ShopProducts">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Deals">
+        <PropertyRef Name="ShopProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Deals_Users">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="Deals" Type="Self.Deal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Deals">
+        <PropertyRef Name="SupplierId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Orders_Deal">
+    <End Role="Deals" Type="Self.Deal" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Deals">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="DealId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ShopProducts_Manufacturers">
+    <End Role="Manufacturers" Type="Self.Manufacturer" Multiplicity="1" />
+    <End Role="ShopProducts" Type="Self.ShopProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Manufacturers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ShopProducts">
+        <PropertyRef Name="ManufacturerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SysProducts_Manufacturers">
+    <End Role="Manufacturers" Type="Self.Manufacturer" Multiplicity="1" />
+    <End Role="SysProducts" Type="Self.SysProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Manufacturers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SysProducts">
+        <PropertyRef Name="ManufacturerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Orders_AspNetUsers">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Replies_Requests">
+    <End Role="Requests" Type="Self.Request" Multiplicity="1" />
+    <End Role="Replies" Type="Self.Reply" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Requests">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Replies">
+        <PropertyRef Name="RequestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Replies_Users">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="Replies" Type="Self.Reply" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Replies">
+        <PropertyRef Name="SupplierId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RequestDescriptions_Requests">
+    <End Role="Requests" Type="Self.Request" Multiplicity="1" />
+    <End Role="RequestDescriptions" Type="Self.RequestDescription" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Requests">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RequestDescriptions">
+        <PropertyRef Name="RequestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NeedProducts_Requests">
+    <End Role="Requests" Type="Self.Request" Multiplicity="0..1" />
+    <End Role="RequestProducts" Type="Self.RequestProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Requests">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RequestProducts">
+        <PropertyRef Name="RequestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NeedProducts_SysProducts">
+    <End Role="SysProducts" Type="Self.SysProduct" Multiplicity="1" />
+    <End Role="RequestProducts" Type="Self.RequestProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SysProducts">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RequestProducts">
+        <PropertyRef Name="SysProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Requests_AspNetUsers">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="Requests" Type="Self.Request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Requests">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Requests_RequestTypes">
+    <End Role="RequestTypes" Type="Self.RequestType" Multiplicity="1" />
+    <End Role="Requests" Type="Self.Request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RequestTypes">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Requests">
+        <PropertyRef Name="RequestTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Requests_Users1">
+    <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Requests" Type="Self.Request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Requests">
+        <PropertyRef Name="SupplierId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Reviews_Requests">
+    <End Role="Requests" Type="Self.Request" Multiplicity="1" />
+    <End Role="Reviews" Type="Self.Review" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Requests">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Reviews">
+        <PropertyRef Name="RequestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WarehouseCategories_SysCategories">
+    <End Role="SysCategories" Type="Self.SysCategory" Multiplicity="1" />
+    <End Role="ShopCategories" Type="Self.ShopCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SysCategories">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ShopCategories">
+        <PropertyRef Name="SysCategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WarehouseCategories_WarehouseCategories">
+    <End Role="ShopCategories" Type="Self.ShopCategory" Multiplicity="0..1" />
+    <End Role="ShopCategories1" Type="Self.ShopCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ShopCategories">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ShopCategories1">
+        <PropertyRef Name="ParentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WarehouseCategories_Warehouses">
+    <End Role="Shops" Type="Self.Shop" Multiplicity="1" />
+    <End Role="ShopCategories" Type="Self.ShopCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shops">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ShopCategories">
+        <PropertyRef Name="ShopId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WarehouseProducts_WarehouseCategories">
+    <End Role="ShopCategories" Type="Self.ShopCategory" Multiplicity="1" />
+    <End Role="ShopProducts" Type="Self.ShopProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ShopCategories">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ShopProducts">
+        <PropertyRef Name="ShopCategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WarehouseProducts_SysProducts">
+    <End Role="SysProducts" Type="Self.SysProduct" Multiplicity="1" />
+    <End Role="ShopProducts" Type="Self.ShopProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SysProducts">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ShopProducts">
+        <PropertyRef Name="SysProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WarehouseProducts_Warehouses">
+    <End Role="Shops" Type="Self.Shop" Multiplicity="1" />
+    <End Role="ShopProducts" Type="Self.ShopProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shops">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ShopProducts">
+        <PropertyRef Name="ShopId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Shops_Users">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="Shops" Type="Self.Shop" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Shops">
+        <PropertyRef Name="SupplierId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SysCategories_SysCategories">
+    <End Role="SysCategories" Type="Self.SysCategory" Multiplicity="0..1" />
+    <End Role="SysCategories1" Type="Self.SysCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SysCategories">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SysCategories1">
+        <PropertyRef Name="ParentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SysProducts_SysCategories">
+    <End Role="SysCategories" Type="Self.SysCategory" Multiplicity="1" />
+    <End Role="SysProducts" Type="Self.SysProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SysCategories">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SysProducts">
+        <PropertyRef Name="SysCategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SysProductAttributes_SysProducts">
+    <End Role="SysProducts" Type="Self.SysProduct" Multiplicity="1" />
+    <End Role="SysProductAttributes" Type="Self.SysProductAttribute" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SysProducts">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SysProductAttributes">
+        <PropertyRef Name="SysProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserClaims_Users">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="UserClaims" Type="Self.UserClaim" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserClaims">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserLogins_Users">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="UserLogins" Type="Self.UserLogin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserLogins">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserRoles">
+    <End Role="Roles" Type="Self.Role" Multiplicity="*" />
+    <End Role="Users" Type="Self.User" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="BMWEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Attendences" EntityType="Self.Attendence" />
+    <EntitySet Name="BiddingFloors" EntityType="Self.BiddingFloor" />
+    <EntitySet Name="ContractProducts" EntityType="Self.ContractProduct" />
+    <EntitySet Name="Deals" EntityType="Self.Deal" />
+    <EntitySet Name="Manufacturers" EntityType="Self.Manufacturer" />
+    <EntitySet Name="Orders" EntityType="Self.Order" />
+    <EntitySet Name="Replies" EntityType="Self.Reply" />
+    <EntitySet Name="RequestDescriptions" EntityType="Self.RequestDescription" />
+    <EntitySet Name="RequestProducts" EntityType="Self.RequestProduct" />
+    <EntitySet Name="Requests" EntityType="Self.Request" />
+    <EntitySet Name="RequestTypes" EntityType="Self.RequestType" />
+    <EntitySet Name="Reviews" EntityType="Self.Review" />
+    <EntitySet Name="Roles" EntityType="Self.Role" />
+    <EntitySet Name="ShopCategories" EntityType="Self.ShopCategory" />
+    <EntitySet Name="ShopProducts" EntityType="Self.ShopProduct" />
+    <EntitySet Name="Shops" EntityType="Self.Shop" />
+    <EntitySet Name="SysCategories" EntityType="Self.SysCategory" />
+    <EntitySet Name="SysProductAttributes" EntityType="Self.SysProductAttribute" />
+    <EntitySet Name="SysProducts" EntityType="Self.SysProduct" />
+    <EntitySet Name="UserClaims" EntityType="Self.UserClaim" />
+    <EntitySet Name="UserLogins" EntityType="Self.UserLogin" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="FK_Attendences_AspNetUsers" Association="Self.FK_Attendences_AspNetUsers">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Attendences" EntitySet="Attendences" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Attendences_BiddingFloors" Association="Self.FK_Attendences_BiddingFloors">
+      <End Role="BiddingFloors" EntitySet="BiddingFloors" />
+      <End Role="Attendences" EntitySet="Attendences" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ContractProducts_Attendences" Association="Self.FK_ContractProducts_Attendences">
+      <End Role="Attendences" EntitySet="Attendences" />
+      <End Role="ContractProducts" EntitySet="ContractProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BiddingFloors_Requests" Association="Self.FK_BiddingFloors_Requests">
+      <End Role="Requests" EntitySet="Requests" />
+      <End Role="BiddingFloors" EntitySet="BiddingFloors" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ContractProducts_Replies" Association="Self.FK_ContractProducts_Replies">
+      <End Role="Replies" EntitySet="Replies" />
+      <End Role="ContractProducts" EntitySet="ContractProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OfferProducts_WarehouseProducts" Association="Self.FK_OfferProducts_WarehouseProducts">
+      <End Role="ShopProducts" EntitySet="ShopProducts" />
+      <End Role="ContractProducts" EntitySet="ContractProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Deal_WarehouseProducts" Association="Self.FK_Deal_WarehouseProducts">
+      <End Role="ShopProducts" EntitySet="ShopProducts" />
+      <End Role="Deals" EntitySet="Deals" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Deals_Users" Association="Self.FK_Deals_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Deals" EntitySet="Deals" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Orders_Deal" Association="Self.FK_Orders_Deal">
+      <End Role="Deals" EntitySet="Deals" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ShopProducts_Manufacturers" Association="Self.FK_ShopProducts_Manufacturers">
+      <End Role="Manufacturers" EntitySet="Manufacturers" />
+      <End Role="ShopProducts" EntitySet="ShopProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SysProducts_Manufacturers" Association="Self.FK_SysProducts_Manufacturers">
+      <End Role="Manufacturers" EntitySet="Manufacturers" />
+      <End Role="SysProducts" EntitySet="SysProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Orders_AspNetUsers" Association="Self.FK_Orders_AspNetUsers">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Replies_Requests" Association="Self.FK_Replies_Requests">
+      <End Role="Requests" EntitySet="Requests" />
+      <End Role="Replies" EntitySet="Replies" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Replies_Users" Association="Self.FK_Replies_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Replies" EntitySet="Replies" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RequestDescriptions_Requests" Association="Self.FK_RequestDescriptions_Requests">
+      <End Role="Requests" EntitySet="Requests" />
+      <End Role="RequestDescriptions" EntitySet="RequestDescriptions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NeedProducts_Requests" Association="Self.FK_NeedProducts_Requests">
+      <End Role="Requests" EntitySet="Requests" />
+      <End Role="RequestProducts" EntitySet="RequestProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NeedProducts_SysProducts" Association="Self.FK_NeedProducts_SysProducts">
+      <End Role="SysProducts" EntitySet="SysProducts" />
+      <End Role="RequestProducts" EntitySet="RequestProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Requests_AspNetUsers" Association="Self.FK_Requests_AspNetUsers">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Requests" EntitySet="Requests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Requests_RequestTypes" Association="Self.FK_Requests_RequestTypes">
+      <End Role="RequestTypes" EntitySet="RequestTypes" />
+      <End Role="Requests" EntitySet="Requests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Requests_Users1" Association="Self.FK_Requests_Users1">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Requests" EntitySet="Requests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Reviews_Requests" Association="Self.FK_Reviews_Requests">
+      <End Role="Requests" EntitySet="Requests" />
+      <End Role="Reviews" EntitySet="Reviews" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WarehouseCategories_SysCategories" Association="Self.FK_WarehouseCategories_SysCategories">
+      <End Role="SysCategories" EntitySet="SysCategories" />
+      <End Role="ShopCategories" EntitySet="ShopCategories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WarehouseCategories_WarehouseCategories" Association="Self.FK_WarehouseCategories_WarehouseCategories">
+      <End Role="ShopCategories" EntitySet="ShopCategories" />
+      <End Role="ShopCategories1" EntitySet="ShopCategories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WarehouseCategories_Warehouses" Association="Self.FK_WarehouseCategories_Warehouses">
+      <End Role="Shops" EntitySet="Shops" />
+      <End Role="ShopCategories" EntitySet="ShopCategories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WarehouseProducts_WarehouseCategories" Association="Self.FK_WarehouseProducts_WarehouseCategories">
+      <End Role="ShopCategories" EntitySet="ShopCategories" />
+      <End Role="ShopProducts" EntitySet="ShopProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WarehouseProducts_SysProducts" Association="Self.FK_WarehouseProducts_SysProducts">
+      <End Role="SysProducts" EntitySet="SysProducts" />
+      <End Role="ShopProducts" EntitySet="ShopProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WarehouseProducts_Warehouses" Association="Self.FK_WarehouseProducts_Warehouses">
+      <End Role="Shops" EntitySet="Shops" />
+      <End Role="ShopProducts" EntitySet="ShopProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Shops_Users" Association="Self.FK_Shops_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Shops" EntitySet="Shops" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SysCategories_SysCategories" Association="Self.FK_SysCategories_SysCategories">
+      <End Role="SysCategories" EntitySet="SysCategories" />
+      <End Role="SysCategories1" EntitySet="SysCategories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SysProducts_SysCategories" Association="Self.FK_SysProducts_SysCategories">
+      <End Role="SysCategories" EntitySet="SysCategories" />
+      <End Role="SysProducts" EntitySet="SysProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SysProductAttributes_SysProducts" Association="Self.FK_SysProductAttributes_SysProducts">
+      <End Role="SysProducts" EntitySet="SysProducts" />
+      <End Role="SysProductAttributes" EntitySet="SysProductAttributes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserClaims_Users" Association="Self.FK_UserClaims_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="UserClaims" EntitySet="UserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserLogins_Users" Association="Self.FK_UserLogins_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="UserLogins" EntitySet="UserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="UserRoles" Association="Self.UserRoles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d4538e28102c42308e64e786cb5ff66e" Name="Diagram1">
+        <EntityTypeShape EntityType="BMWModel.Attendence" Width="1.5" PointX="5.25" PointY="17.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BMWModel.BiddingFloor" Width="1.5" PointX="7.5" PointY="22.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BMWModel.ContractProduct" Width="1.5" PointX="7.5" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="BMWModel.Deal" Width="1.5" PointX="8.25" PointY="17.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BMWModel.Manufacturer" Width="1.5" PointX="7.5" PointY="33.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BMWModel.Order" Width="1.5" PointX="10.5" PointY="17.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BMWModel.Reply" Width="1.5" PointX="5.25" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="BMWModel.RequestDescription" Width="1.5" PointX="7.5" PointY="25.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BMWModel.RequestProduct" Width="1.5" PointX="10.5" PointY="23.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BMWModel.Request" Width="1.5" PointX="5.25" PointY="22" IsExpanded="true" />
+        <EntityTypeShape EntityType="BMWModel.RequestType" Width="1.5" PointX="3" PointY="23.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BMWModel.Review" Width="1.5" PointX="7.5" PointY="29.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BMWModel.Role" Width="1.5" PointX="0.75" PointY="18.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BMWModel.ShopCategory" Width="1.5" PointX="7.5" PointY="36.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BMWModel.ShopProduct" Width="1.5" PointX="9.75" PointY="36.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BMWModel.Shop" Width="1.5" PointX="5.25" PointY="37" IsExpanded="true" />
+        <EntityTypeShape EntityType="BMWModel.SysCategory" Width="1.5" PointX="5.25" PointY="32.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BMWModel.SysProductAttribute" Width="1.5" PointX="9.75" PointY="41.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BMWModel.SysProduct" Width="1.5" PointX="7.5" PointY="41.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BMWModel.UserClaim" Width="1.5" PointX="5.25" PointY="40.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BMWModel.UserLogin" Width="1.5" PointX="5.25" PointY="42.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BMWModel.User" Width="1.5" PointX="3" PointY="16.375" IsExpanded="true" />
+        <AssociationConnector Association="BMWModel.FK_Attendences_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="BMWModel.FK_Attendences_BiddingFloors" ManuallyRouted="false" />
+        <AssociationConnector Association="BMWModel.FK_ContractProducts_Attendences" ManuallyRouted="false" />
+        <AssociationConnector Association="BMWModel.FK_BiddingFloors_Requests" ManuallyRouted="false" />
+        <AssociationConnector Association="BMWModel.FK_ContractProducts_Replies" ManuallyRouted="false" />
+        <AssociationConnector Association="BMWModel.FK_OfferProducts_WarehouseProducts" ManuallyRouted="false" />
+        <AssociationConnector Association="BMWModel.FK_Deal_WarehouseProducts" ManuallyRouted="false" />
+        <AssociationConnector Association="BMWModel.FK_Deals_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="BMWModel.FK_Orders_Deal" ManuallyRouted="false" />
+        <AssociationConnector Association="BMWModel.FK_ShopProducts_Manufacturers" ManuallyRouted="false" />
+        <AssociationConnector Association="BMWModel.FK_SysProducts_Manufacturers" ManuallyRouted="false" />
+        <AssociationConnector Association="BMWModel.FK_Orders_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="BMWModel.FK_Replies_Requests" ManuallyRouted="false" />
+        <AssociationConnector Association="BMWModel.FK_Replies_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="BMWModel.FK_RequestDescriptions_Requests" ManuallyRouted="false" />
+        <AssociationConnector Association="BMWModel.FK_NeedProducts_Requests" ManuallyRouted="false" />
+        <AssociationConnector Association="BMWModel.FK_NeedProducts_SysProducts" ManuallyRouted="false" />
+        <AssociationConnector Association="BMWModel.FK_Requests_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="BMWModel.FK_Requests_RequestTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="BMWModel.FK_Requests_Users1" ManuallyRouted="false" />
+        <AssociationConnector Association="BMWModel.FK_Reviews_Requests" ManuallyRouted="false" />
+        <AssociationConnector Association="BMWModel.FK_WarehouseCategories_SysCategories" ManuallyRouted="false" />
+        <AssociationConnector Association="BMWModel.FK_WarehouseCategories_WarehouseCategories" ManuallyRouted="false" />
+        <AssociationConnector Association="BMWModel.FK_WarehouseCategories_Warehouses" ManuallyRouted="false" />
+        <AssociationConnector Association="BMWModel.FK_WarehouseProducts_WarehouseCategories" ManuallyRouted="false" />
+        <AssociationConnector Association="BMWModel.FK_WarehouseProducts_SysProducts" ManuallyRouted="false" />
+        <AssociationConnector Association="BMWModel.FK_WarehouseProducts_Warehouses" ManuallyRouted="false" />
+        <AssociationConnector Association="BMWModel.FK_Shops_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="BMWModel.FK_SysCategories_SysCategories" ManuallyRouted="false" />
+        <AssociationConnector Association="BMWModel.FK_SysProducts_SysCategories" ManuallyRouted="false" />
+        <AssociationConnector Association="BMWModel.FK_SysProductAttributes_SysProducts" ManuallyRouted="false" />
+        <AssociationConnector Association="BMWModel.FK_UserClaims_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="BMWModel.FK_UserLogins_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="BMWModel.UserRoles" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
