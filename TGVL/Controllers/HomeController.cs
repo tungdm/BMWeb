@@ -15,7 +15,7 @@ namespace TGVL.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page. Nguyen";
+            ViewBag.Message = "Your application description page. Nguyen - Cho";
 
             return View();
         }
