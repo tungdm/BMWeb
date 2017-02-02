@@ -9,7 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using TGVL;
 
-namespace TGVL.Controllers
+namespace TGVL.Areas.Admin.Controllers
 {
     public class SysCategoriesController : Controller
     {
