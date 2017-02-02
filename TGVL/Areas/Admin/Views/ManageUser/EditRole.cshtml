@@ -1,0 +1,97 @@
+﻿@model TGVL.Models.ApplicationUser
+@{
+    ViewBag.Title = "Sửa quyền";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<ul class="breadcrumb">
+    <li>
+        <i class="icon-home"></i>
+        <a href="index.html">Trang chủ</a>
+        <i class="icon-angle-right"></i>
+    </li>
+    <li><a href="#">Sửa quyền</a></li>
+</ul>
+
+<div class="row-fluid sortable">
+    <div class="box span9">
+        <div class="box-header">
+            <h2><i class="halflings-icon list"></i><span class="break"></span>Quyền</h2>
+        </div>
+        <div class="box-content">
+            <div class="page-header">
+                <h1><strong>Các quyền hiện tại của thành viên @Model.UserName:</strong> </h1>
+            </div>
+            <div class="row-fluid">
+                <div class="span6">
+                    <table class="table table-bordered table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <td>Tên quyền</td>
+                                <td>Thao tác</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Roles.Count > 0)
+                            {
+                                foreach (var item in Model.Roles)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DropDownList("RoleName")
+
+                                        </td>
+                                        <td>
+                                            <form action="@Url.Action("DeleteRoleFromUser", new { UserId = item.UserId, RoleId = item.RoleId })" method="post">
+                                                @Html.AntiForgeryToken()
+                                                <button type="submit" class="btn btn-xs btn-danger">Gỡ bỏ</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="2">
+                                        <p>Thành viên chưa có quyền nào</p>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row-fluid sortable">
+    <div class="box span9">
+        <div class="box-header">
+            <h2><i class="halflings-icon list"></i><span class="break"></span>Thêm quyền</h2>
+        </div>
+        <div class="box-content">
+            <div class="page-header">
+                <h1><strong>Thêm quyền cho thành viên:</strong></h1>
+            </div>
+            <div class="row-fluid">
+                <div class="span4">
+                    <h2>Danh sách quyền hiện tại: </h2>
+                    <form action="@Url.Action("AddToRole","ManageUser")" method="post">
+                        <input type="hidden" name="UserId" value="@Url.RequestContext.RouteData.Values["Id"]" />
+                        @Html.AntiForgeryToken()
+                        @*@Html.ListBox("RoleId", null, new { @class = "form-control", multiple = "multiple" })*@
+                        @Html.DropDownList("RoleId")
+                        <div class="form-group">
+                            <br />
+                            <button type="submit" class="btn btn-primary">Thêm </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
