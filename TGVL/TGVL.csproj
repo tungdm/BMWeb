@@ -171,6 +171,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ManufacturersController.cs" />
     <Compile Include="Attendence.cs">
       <DependentUpon>BMWModel.tt</DependentUpon>
     </Compile>
@@ -433,6 +434,11 @@
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Manufacturers\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Manufacturers\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Manufacturers\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Manufacturers\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Manufacturers\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
