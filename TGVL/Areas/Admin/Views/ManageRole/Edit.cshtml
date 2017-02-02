@@ -1,0 +1,49 @@
+﻿@using Microsoft.AspNet.Identity.EntityFramework;
+@using TGVL.Models
+@model CustomRole
+@{
+    ViewBag.Title = "Chỉnh sửa quyền";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<ul class="breadcrumb">
+    <li>
+        <i class="icon-home"></i>
+        <a href="index.html">Trang chủ</a>
+        <i class="icon-angle-right"></i>
+    </li>
+    <li>
+        <i class="icon-edit"></i>
+        <a href="#">Chỉnh sửa quyền</a>
+    </li>
+</ul>
+
+<div class="row-fluid sortable">
+    <div class="box span12">
+        <div class="box-header">
+            <h2><i class="halflings-icon edit"></i><span class="break"></span>Sửa quyền</h2>
+        </div>
+        <div class="box-content">
+
+            @using (Html.BeginForm())
+            {
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+                @Html.AntiForgeryToken()
+
+                @Html.HiddenFor(m => m.Id)
+
+                <div class="form-group">
+                    <label>Tên quyền</label>
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control", required = "required" })
+                </div>
+
+                <button type="submit" class="btn btn-primary">Lưu</button>
+                <button class="btn">Hủy</button>
+
+            }
+        </div>
+    </div>
+</div>
+
+
+

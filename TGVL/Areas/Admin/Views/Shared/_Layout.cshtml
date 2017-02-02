@@ -1,4 +1,4 @@
-﻿@*@using Microsoft.AspNet.Identity;*@
+﻿@using Microsoft.AspNet.Identity;
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -302,7 +302,7 @@
 
                         <li class="dropdown">
                             <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                                @*@User.Identity.GetUserName()*@
+                                @User.Identity.GetUserName()
                                 <i class="halflings-icon white user"></i>
                                 <span class="caret"></span>
                             </a>
@@ -313,14 +313,14 @@
                                     <span>Account Settings</span>
                                 </li>
                                 <li><a href="#"><i class="halflings-icon user"></i> Profile</a></li>
-                                @*@using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, htmlAttributes: new { id = "logoutForm" }))
+                                @using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, htmlAttributes: new { id = "logoutForm" }))
                                 {
-                                    @Html.AntiForgeryToken()*@
+                                    @Html.AntiForgeryToken()
                                     <li>
                                         @*<a href="#">
                                                 <i class="halflings-icon off"></i> Logout
                                             </a>*@
-                                        <a href="">
+                                        <a href="javascript:document.getElementById('logoutForm').submit()">
                                             <i class="halflings-icon off"></i> Logout
                                         </a>
                                     </li>

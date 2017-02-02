@@ -1,0 +1,25 @@
+﻿@using Microsoft.AspNet.Identity.EntityFramework;
+@using TGVL.Models;
+@model CustomRole
+@{
+    ViewBag.Title = "Xóa role";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12 ">
+        <h2>@ViewBag.Title</h2>
+        <hr />
+        <div class="text-center">
+            <h5>Bạn có chắc muốn xóa quyền @Model.Name ? </h5>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+                <button type="submit" class="btn btn-primary">Chấp nhận</button>
+                <a href="@Url.Action("Index","ManageRole")" class="btn btn-default">Không xóa</a>
+            }
+        </div>
+    </div>
+</div>
+

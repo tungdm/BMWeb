@@ -95,7 +95,13 @@ namespace TGVL.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    if (await UserManager.IsInRoleAsync(user.Id, "Admin"))
+                    {
+                        return RedirectToAction("Index", "Admin/Home");
+                    }
+                    else
+                        return RedirectToLocal(returnUrl);
+                //return RedirectToAction("Index","Home");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:

@@ -1,0 +1,47 @@
+﻿@using TGVL.Models
+@model CustomRole
+@{
+    ViewBag.Title = "Tạo quyền";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<ul class="breadcrumb">
+    <li>
+        <i class="icon-home"></i>
+        <a href="index.html">Trang chủ</a>
+        <i class="icon-angle-right"></i>
+    </li>
+    <li><a href="#">Thêm mới quyền</a></li>
+</ul>
+
+<div class="row-fluid sortable">
+    <div class="box span12">
+        <div class="box-header">
+            <h2><i class="halflings-icon edit"></i><span class="break"></span>Tạo quyền</h2>
+        </div>
+        <div class="box-content">
+            <div class="form-horizontal">
+                @using (Html.BeginForm("Create", "ManageRole", FormMethod.Post, new { @class = "form - horizontal" }))
+                {
+
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary("", new { @class = "text-danger" })
+                    @*<div class="form-group">
+                            <label for="Id">Id</label>
+                            @Html.TextBoxFor(m => m.Id, new { id = "Id", @class = "form-control", required = "required" })
+                        </div>*@
+                    <div class="control-group">
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
+                        <div class="controls">
+                            @Html.TextBoxFor(m => m.Name, htmlAttributes: new { id = "Name", @class = "input-xlarge focused", required = "required" })
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Tạo mới</button>
+                        <button class="btn">Hủy</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
