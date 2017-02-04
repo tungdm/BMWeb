@@ -61,18 +61,73 @@ namespace TGVL.Controllers
                 : message == ManageMessageId.Error ? "An error has occurred."
                 : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
+                : message == ManageMessageId.ChangeUsernameSuccess ? "Your username has been changed."
                 : "";
-
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
+            
             var userId = User.Identity.GetUserId();
-            var model = new IndexViewModel
+            //var model = new IndexViewModel
+            //{
+            //    Username = user.UserName,
+            //    HasPassword = HasPassword(),
+            //    PhoneNumber = await UserManager.GetPhoneNumberAsync(User.Identity.GetUserId<int>()),
+            //    TwoFactor = await UserManager.GetTwoFactorEnabledAsync(User.Identity.GetUserId<int>()),
+            //    Logins = await UserManager.GetLoginsAsync(User.Identity.GetUserId<int>()),
+            //    BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(User.Identity.GetUserId())
+            //};
+
+            var model2 = new IndexViewModel
             {
+                Username = user.UserName,
+                Fullname = user.Fullname,
+                PhoneNumber = user.PhoneNumber,
+                Address = user.Address,
+                DateOfBirth = user.DateOfBirth??DateTime.Now,
                 HasPassword = HasPassword(),
-                PhoneNumber = await UserManager.GetPhoneNumberAsync(User.Identity.GetUserId<int>()),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(User.Identity.GetUserId<int>()),
                 Logins = await UserManager.GetLoginsAsync(User.Identity.GetUserId<int>()),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(User.Identity.GetUserId())
             };
-            return View(model);
+            return View(model2);
+        }
+
+        //
+        //POST: /Manage/ChangeUserName
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangeUserName(ChangeUserNameViewModel model)
+        {
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
+            if (user != null)
+            {
+                user.UserName = model.Username;
+                await UserManager.UpdateAsync(user);
+                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+            }
+
+            return RedirectToAction("Index", new { Message = ManageMessageId.ChangeUsernameSuccess });
+        }
+
+        //TUNGDM
+        //POST: /Manage/UpdateProfile
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> UpdateProfile(IndexViewModel model)
+        {
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
+            if (user != null)
+            {
+                //user.UserName = model.Username;
+                user.Fullname = model.Fullname;
+                user.Address = model.Address;
+                user.PhoneNumber = model.PhoneNumber;
+                user.DateOfBirth = model.DateOfBirth;
+
+                await UserManager.UpdateAsync(user);
+                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+            }
+
+            return RedirectToAction("Index", new { Message = ManageMessageId.ChangeUsernameSuccess });
         }
 
         //
@@ -116,18 +171,29 @@ namespace TGVL.Controllers
             {
                 return View(model);
             }
-            // Generate the token and send it
-            var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId<int>(), model.Number);
-            if (UserManager.SmsService != null)
+
+            //// Generate the token and send it
+            //var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId<int>(), model.Number);
+            //if (UserManager.SmsService != null)
+            //{
+            //    var message = new IdentityMessage
+            //    {
+            //        Destination = model.Number,
+            //        Body = "Your security code is: " + code
+            //    };
+            //    await UserManager.SmsService.SendAsync(message);
+            //}
+            //return RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = model.Number });
+
+            
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
+            if (user != null)
             {
-                var message = new IdentityMessage
-                {
-                    Destination = model.Number,
-                    Body = "Your security code is: " + code
-                };
-                await UserManager.SmsService.SendAsync(message);
+                user.PhoneNumber = model.Number;
+                await UserManager.UpdateAsync(user);
+                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
             }
-            return RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = model.Number });
+            return RedirectToAction("Index", new { Message = ManageMessageId.AddPhoneSuccess });            
         }
 
         //
@@ -179,6 +245,7 @@ namespace TGVL.Controllers
             {
                 return View(model);
             }
+            
             var result = await UserManager.ChangePhoneNumberAsync(User.Identity.GetUserId<int>(), model.PhoneNumber, model.Code);
             if (result.Succeeded)
             {
@@ -215,9 +282,22 @@ namespace TGVL.Controllers
 
         //
         // GET: /Manage/ChangePassword
-        public ActionResult ChangePassword()
+        public async Task<ActionResult> ChangePassword()
         {
-            return View();
+            if (!HasPassword())
+            {
+                return RedirectToAction("SetPassword");
+            }
+
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
+            
+            var model = new ChangePasswordViewModel
+            {
+                HasPassword = HasPassword(),
+                Username = user.UserName,
+                Address = user.Address
+            };
+            return View(model);
         }
 
         //
@@ -246,9 +326,22 @@ namespace TGVL.Controllers
 
         //
         // GET: /Manage/SetPassword
-        public ActionResult SetPassword()
+        public async Task<ActionResult> SetPassword()
         {
-            return View();
+            if (HasPassword())
+            {
+                return RedirectToAction("ChangePassword");
+            }
+
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
+            
+            var model = new SetPasswordViewModel
+            {
+                HasPassword = HasPassword(),
+                Username = user.UserName,
+                Address = user.Address
+            };
+            return View(model);
         }
 
         //
@@ -381,7 +474,8 @@ namespace TGVL.Controllers
             SetPasswordSuccess,
             RemoveLoginSuccess,
             RemovePhoneSuccess,
-            Error
+            Error,
+            ChangeUsernameSuccess
         }
 
 #endregion
