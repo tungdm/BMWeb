@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.ComponentModel.DataAnnotations.Schema;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace TGVL.Models
 {
@@ -14,6 +16,11 @@ namespace TGVL.Models
         public string Avatar { get; set; }
         public bool IsSubscribed { get; set; }
         public float? AverageGrade { get; set; }
+        public string Fullname { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
+        public DateTime? DateOfBirth { get; set; }
         public int Flag { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser, int> manager)
