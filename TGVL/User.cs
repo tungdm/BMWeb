@@ -46,6 +46,8 @@ namespace TGVL
         public Nullable<bool> IsSubscribed { get; set; }
         public Nullable<double> AverageGrade { get; set; }
         public Nullable<int> Flag { get; set; }
+        public string Fullname { get; set; }
+        public Nullable<System.DateTime> DateOfBirth { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Attendence> Attendences { get; set; }
