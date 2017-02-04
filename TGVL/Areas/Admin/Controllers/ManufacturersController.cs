@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.IO;
 using TGVL;
 
 namespace TGVL.Areas.Admin.Controllers
@@ -46,10 +47,24 @@ namespace TGVL.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Image,Flag")] Manufacturer manufacturer)
+        public ActionResult Create(Manufacturer manufacturer, HttpPostedFileBase upload)
         {
             if (ModelState.IsValid)
             {
+                var fileName = Path.GetFileName(upload.FileName);
+                // duong dan
+                var filePath = Path.Combine(Server.MapPath("~/Areas/Admin/Content/img/manufacturer"), fileName);
+                // kiem tra hinh anh da ton tai hay chua
+                if (System.IO.File.Exists(filePath))
+                {
+                    ViewBag.Error = "Hinh anh da ton tai";
+                }
+                else
+                {
+                    //fileName = fileName + DateTime.Now;
+                    upload.SaveAs(filePath);
+                }
+                manufacturer.Image = upload.FileName;
                 db.Manufacturers.Add(manufacturer);
                 db.SaveChanges();
                 return RedirectToAction("Index");

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -49,10 +50,40 @@ namespace TGVL.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,ManufacturerId,SysCategoryId,Name,Price,SortOrder,Flag")] SysProduct sysProduct)
+        public ActionResult Create(/*[Bind(Include = "Id,ManufacturerId,SysCategoryId,Name,Price,SortOrder,Flag")]*/ SysProduct sysProduct, HttpPostedFileBase upload)
         {
             if (ModelState.IsValid)
             {
+                //if (upload != null && upload.ContentLength > 0)
+                //{
+                //    var avatar = new File()
+                //    {
+                //        FileName = System.IO.Path.GetFileName(upload.FileName),
+                //        FileType = FileType.Avatar,
+                //        ContentType = upload.ContentType
+                //    };
+                //    using (var reader = new System.IO.BinaryReader(upload.InputStream))
+                //    {
+                //        avatar.Content = reader.ReadBytes(upload.ContentLength);
+                //    }
+                //    student.Files = new List<File> { avatar };
+                //}
+
+                // code mau
+                var fileName = Path.GetFileName(upload.FileName);
+                // duong dan
+                var filePath = Path.Combine(Server.MapPath("~/Areas/Admin/Content/img/manufacturer"), fileName);
+                // kiem tra hinh anh da ton tai hay chua
+                if (System.IO.File.Exists(filePath))
+                {
+                    ViewBag.Error = "Hinh anh da ton tai";
+                }
+                else
+                {
+                    //fileName = fileName + DateTime.Now;
+                    upload.SaveAs(filePath);
+                }
+                sysProduct.Image = upload.FileName;
                 db.SysProducts.Add(sysProduct);
                 db.SaveChanges();
                 return RedirectToAction("Index");
