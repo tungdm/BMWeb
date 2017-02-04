@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="BMWModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="BMWModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Attendences">
           <Key>
             <PropertyRef Name="Id" />
@@ -220,6 +220,7 @@
           <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="Price" Type="decimal" Precision="19" Scale="4" />
           <Property Name="SortOrder" Type="int" />
+          <Property Name="Image" Type="nvarchar" MaxLength="256" />
           <Property Name="Flag" Type="int" />
         </EntityType>
         <EntityType Name="UserClaims">
@@ -269,6 +270,8 @@
           <Property Name="Avatar" Type="nvarchar" MaxLength="256" />
           <Property Name="IsSubscribed" Type="bit" />
           <Property Name="AverageGrade" Type="float" />
+          <Property Name="Fullname" Type="nvarchar" MaxLength="256" />
+          <Property Name="DateOfBirth" Type="datetime" />
           <Property Name="Flag" Type="int" />
         </EntityType>
         <Association Name="FK_Attendences_AspNetUsers">
@@ -523,7 +526,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SysCategories_SysCategories">
+        <Association Name="FK_SysCategories_SysCategories1">
           <End Role="SysCategories" Type="Self.SysCategories" Multiplicity="0..1" />
           <End Role="SysCategories1" Type="Self.SysCategories" Multiplicity="*" />
           <ReferentialConstraint>
@@ -799,7 +802,7 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Shops" EntitySet="Shops" />
           </AssociationSet>
-          <AssociationSet Name="FK_SysCategories_SysCategories" Association="Self.FK_SysCategories_SysCategories">
+          <AssociationSet Name="FK_SysCategories_SysCategories1" Association="Self.FK_SysCategories_SysCategories1">
             <End Role="SysCategories" EntitySet="SysCategories" />
             <End Role="SysCategories1" EntitySet="SysCategories" />
           </AssociationSet>
@@ -856,8 +859,7 @@
             <End Role="ShopProducts" EntitySet="ShopProducts" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BMWModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1133,6 +1135,7 @@
           <NavigationProperty Name="ShopProducts" Relationship="Self.FK_WarehouseProducts_SysProducts" FromRole="SysProducts" ToRole="ShopProducts" />
           <NavigationProperty Name="SysCategory" Relationship="Self.FK_SysProducts_SysCategories" FromRole="SysProducts" ToRole="SysCategories" />
           <NavigationProperty Name="SysProductAttributes" Relationship="Self.FK_SysProductAttributes_SysProducts" FromRole="SysProducts" ToRole="SysProductAttributes" />
+          <Property Name="Image" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="UserClaim">
           <Key>
@@ -1186,6 +1189,8 @@
           <NavigationProperty Name="UserClaims" Relationship="Self.FK_UserClaims_Users" FromRole="Users" ToRole="UserClaims" />
           <NavigationProperty Name="UserLogins" Relationship="Self.FK_UserLogins_Users" FromRole="Users" ToRole="UserLogins" />
           <NavigationProperty Name="Roles" Relationship="Self.UserRoles" FromRole="Users" ToRole="Roles" />
+          <Property Name="Fullname" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK_Attendences_AspNetUsers">
           <End Role="Users" Type="Self.User" Multiplicity="1" />
@@ -1979,6 +1984,7 @@
           <EntitySetMapping Name="SysProducts">
             <EntityTypeMapping TypeName="BMWModel.SysProduct">
               <MappingFragment StoreEntitySet="SysProducts">
+                <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ManufacturerId" ColumnName="ManufacturerId" />
                 <ScalarProperty Name="SysCategoryId" ColumnName="SysCategoryId" />
@@ -2011,6 +2017,8 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="BMWModel.User">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Fullname" ColumnName="Fullname" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
