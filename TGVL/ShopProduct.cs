@@ -36,8 +36,8 @@ namespace TGVL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Deal> Deals { get; set; }
         public virtual Manufacturer Manufacturer { get; set; }
+        public virtual Shop Shop { get; set; }
         public virtual ShopCategory ShopCategory { get; set; }
         public virtual SysProduct SysProduct { get; set; }
-        public virtual Shop Shop { get; set; }
     }
 }
