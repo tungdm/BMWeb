@@ -6,7 +6,8 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using TGVL.Models;
-
+using Microsoft.Owin.Security.Facebook;
+using System.Threading.Tasks;
 
 namespace TGVL
 {
@@ -61,9 +62,34 @@ namespace TGVL
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            app.UseFacebookAuthentication(
-                appId: "181428112338094",
-                appSecret: "2861c05bb267e530527ed19f9eaac38c");
+            //var facebookAuthenticationOptions = new FacebookAuthenticationOptions()
+            //{
+            //    AppId = "181428112338094",
+            //    AppSecret = "2861c05bb267e530527ed19f9eaac38c",
+            //};
+            //facebookAuthenticationOptions.Scope.Add("email");
+            //facebookAuthenticationOptions.Scope.Add("public_profile");
+            //app.UseFacebookAuthentication(facebookAuthenticationOptions);
+
+            app.UseFacebookAuthentication(new FacebookAuthenticationOptions
+            {
+                AppId = "181428112338094",
+                AppSecret = "2861c05bb267e530527ed19f9eaac38c",
+                Scope = { "email" },
+                Provider = new FacebookAuthenticationProvider
+                {
+                    OnAuthenticated = context =>
+                    {
+                        context.Identity.AddClaim(new System.Security.Claims.Claim("FacebookAccessToken", context.AccessToken));
+                        return Task.FromResult(true);
+                    }
+                }
+            });
+
+
+            //app.UseFacebookAuthentication(
+            //    appId: "181428112338094",
+            //    appSecret: "2861c05bb267e530527ed19f9eaac38c");
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{
