@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using TGVL.Models;
 using Facebook;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace TGVL.Controllers
 {
@@ -160,9 +161,15 @@ namespace TGVL.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous]
-        public ActionResult Register()
+        public ActionResult Register(string type)
         {
-            return View();
+            var model = new RegisterViewModel
+            {
+                RegisterType = type
+            };
+            ViewBag.RegisterType = type;
+
+            return View(model);
         }
 
         //
@@ -170,20 +177,25 @@ namespace TGVL.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model, string type)
         {
             if (ModelState.IsValid)
             {
+                var registerType = model.RegisterType;
+                              
                 var user = new ApplicationUser
                 {
                     UserName = model.Username,
                     Email = model.Email
                 };
                 var result = await UserManager.CreateAsync(user, model.Password);
+
+                
+
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
+                    UserManager.AddToRole(user.Id, registerType);
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
@@ -316,10 +328,10 @@ namespace TGVL.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult ExternalLogin(string provider, string returnUrl)
+        public ActionResult ExternalLogin(string provider, string returnUrl, string RegisterType)
         {
             // Request a redirect to the external login provider
-            return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
+            return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl, RegisterType = RegisterType }));
         }
 
         //
@@ -360,7 +372,7 @@ namespace TGVL.Controllers
         //
         // GET: /Account/ExternalLoginCallback
         [AllowAnonymous]
-        public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
+        public async Task<ActionResult> ExternalLoginCallback(string returnUrl, string RegisterType)
         {
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
            
@@ -394,7 +406,7 @@ namespace TGVL.Controllers
                     // If the user does not have an account, then prompt the user to create an account
                     ViewBag.ReturnUrl = returnUrl;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
+                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email , RegisterType = RegisterType });
             }
         }
 
@@ -412,6 +424,8 @@ namespace TGVL.Controllers
 
             if (ModelState.IsValid)
             {
+                var registerType = model.RegisterType;
+
                 // Get the information about the user from the external login provider
                 var info = await AuthenticationManager.GetExternalLoginInfoAsync();
                 if (info == null)
@@ -422,6 +436,7 @@ namespace TGVL.Controllers
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
+                    UserManager.AddToRole(user.Id, registerType);
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);
                     if (result.Succeeded)
                     {
