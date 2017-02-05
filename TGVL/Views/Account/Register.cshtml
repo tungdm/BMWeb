@@ -6,7 +6,8 @@
 
 <div class="animate form login_form">
     <section class="login_content">
-        @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+
+        @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl, RegisterType = ViewBag.RegisterType })
 
         <!--Register form-->
         @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" , id="registerForm"}))
@@ -27,6 +28,9 @@
             </div>
             <div>
                 @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm Password" })
+            </div>
+            <div>
+                @Html.HiddenFor(m => m.RegisterType)
             </div>
             <div>
                 <a class="btn btn-default submit" href="javascript:document.getElementById('registerForm').submit()">Submit</a>

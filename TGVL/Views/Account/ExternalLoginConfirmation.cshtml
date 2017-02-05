@@ -20,7 +20,9 @@
             <div>
                 @Html.TextBoxFor(m => m.Username, new { @class = "form-control", placeholder = "Username" })
             </div>
-            
+            <div>
+                @Html.HiddenFor(m => m.RegisterType)
+            </div>
             <div>
                 <a class="btn btn-default submit" href="javascript:document.getElementById('registerForm').submit()">Submit</a>
             </div>
@@ -29,7 +31,6 @@
 
             <div class="separator">
                 <p class="change_link">
-                    @*<a href="#signin" class="to_register"> Log in </a>*@
                     @Html.ActionLink("Already a member? Log in", "Login", null, new { @class = "to_register" })
                 </p>
 

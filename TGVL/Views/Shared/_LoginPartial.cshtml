@@ -1,24 +1,65 @@
 ﻿@using Microsoft.AspNet.Identity
 
+<style>
+    li.dropdown {
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+
+            .dropdown-content a:hover {
+                background-color: #f1f1f1;
+            }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+</style>
 
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-        </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-    </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        </ul>
     }
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
+
         <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+
+        <li class="dropdown">
+            <a href="#" class="dropbtn">Register</a>
+            <div class="dropdown-content">
+                @Html.ActionLink("Customer", "Register", "Account", routeValues: new { type = "Customer" }, htmlAttributes: new { id = "registerLink" })
+                @Html.ActionLink("Supplier", "Register", "Account", routeValues: new { type = "Supplier" }, htmlAttributes: new { id = "registerLink" })
+            </div>
+        </li>
+
         <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     </ul>
+
 }
