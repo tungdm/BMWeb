@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using TGVL.Models;
+using Facebook;
 
 namespace TGVL.Controllers
 {
@@ -362,9 +363,20 @@ namespace TGVL.Controllers
         public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
         {
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
+           
             if (loginInfo == null)
             {
                 return RedirectToAction("Login");
+            }
+
+            if (loginInfo.Login.LoginProvider == "Facebook")
+            {
+                var identity = AuthenticationManager.GetExternalIdentity(DefaultAuthenticationTypes.ExternalCookie);
+                var access_token = identity.FindFirstValue("FacebookAccessToken");
+                var fb = new FacebookClient(access_token);
+                dynamic myInfo = fb.Get("/me?fields=email,first_name,last_name,gender");
+                loginInfo.Email = myInfo.email;
+                var gender = myInfo.gender;
             }
 
             // Sign in the user with this external login provider if the user already has a login
