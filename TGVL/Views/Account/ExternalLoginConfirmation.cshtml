@@ -2,42 +2,61 @@
 @{
     ViewBag.Title = "Register";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>Associate your @ViewBag.LoginProvider account.</h3>
 
-@using (Html.BeginForm("ExternalLoginConfirmation", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-    @Html.AntiForgeryToken()
 
-    <h4>Association Form</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <p class="text-info">
-        You've successfully authenticated with <strong>@ViewBag.LoginProvider</strong>.
-        Please enter a user name for this site below and click the Register button to finish
-        logging in.
-    </p>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Username, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
-        </div>
-    </div>
-}
+<section class="login_content">
 
+    <!--Register form-->
+    @using (Html.BeginForm("ExternalLoginConfirmation", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" , id= "registerForm" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <h1>Adding Personal Information</h1>
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+
+            <div>
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email" })
+            </div>
+            <div>
+                @Html.TextBoxFor(m => m.Username, new { @class = "form-control", placeholder = "Username" })
+            </div>
+            
+            <div>
+                <a class="btn btn-default submit" href="javascript:document.getElementById('registerForm').submit()">Submit</a>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="separator">
+                <p class="change_link">
+                    @*<a href="#signin" class="to_register"> Log in </a>*@
+                    @Html.ActionLink("Already a member? Log in", "Login", null, new { @class = "to_register" })
+                </p>
+
+                <div class="clearfix"></div>
+                <br />
+
+                <div>
+                    <h1><i class="fa fa-paw"></i> Thegioivatlieu</h1>
+                    <p>&copy; @DateTime.Now.Year All Rights Reserved. Privacy and Terms</p>
+                </div>
+            </div>
+    }
+
+    <!--Register form-->
+
+</section>
+
+
+
+<style>
+    .login_content h1:before {
+        background: none;
+    }
+    .login_content h1:after {
+        background: none;
+    }
+</style>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
