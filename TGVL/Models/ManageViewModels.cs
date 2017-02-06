@@ -122,4 +122,11 @@ namespace TGVL.Models
         [Display(Name = "Username")]
         public string Username { get; set; }
     }
+
+    //
+    //
+    public class UpdateShopInformation
+    {
+
+    }
 }
