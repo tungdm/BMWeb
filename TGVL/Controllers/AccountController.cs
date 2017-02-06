@@ -80,6 +80,7 @@ namespace TGVL.Controllers
             // To enable password failures to trigger account lockout, change to shouldLockout: true
 
             var user = await UserManager.FindByEmailAsync(model.Email);
+            
             if (user != null)
             {
                 if (!await UserManager.IsEmailConfirmedAsync(user.Id))
@@ -97,12 +98,18 @@ namespace TGVL.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    if (await UserManager.IsInRoleAsync(user.Id, "Admin"))
                     {
-                        return RedirectToAction("Index", "Admin/Home");
+                        if (await UserManager.IsInRoleAsync(user.Id, "Admin"))
+                        {
+                            return RedirectToAction("Index", "Admin/Home");
+                        }
+                        else if ( await UserManager.IsInRoleAsync(user.Id, "Supplier") & user.Flag == 0) {
+                            return RedirectToAction("Index", "Manage");
+                        }
+                        else
+                            return RedirectToLocal(returnUrl);
                     }
-                    else
-                        return RedirectToLocal(returnUrl);
+                    
                 //return RedirectToAction("Index","Home");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -396,6 +403,14 @@ namespace TGVL.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    
+                    var userId = SignInManager.AuthenticationManager.AuthenticationResponseGrant.Identity.GetUserId<int>();
+                    var user = await UserManager.FindByIdAsync(userId);
+
+                    if (await UserManager.IsInRoleAsync(user.Id, "Supplier") & user.Flag == 0)
+                    {
+                        return RedirectToAction("Index", "Manage");
+                    }
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
