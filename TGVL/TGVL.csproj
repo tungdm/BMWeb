@@ -171,6 +171,8 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ManageRoleController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ManageUserController.cs" />
     <Compile Include="Areas\Admin\Controllers\ManufacturersController.cs" />
     <Compile Include="Attendence.cs">
       <DependentUpon>BMWModel.tt</DependentUpon>
@@ -393,6 +395,7 @@
     <Content Include="Areas\Admin\Content\js\jquery.uploadify-3.1.min.js" />
     <Content Include="Areas\Admin\Content\js\modernizr.js" />
     <Content Include="Areas\Admin\Content\js\retina.js" />
+    <Content Include="Areas\Admin\Images\xi mang.png" />
     <Content Include="BMWModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>BMWModel.edmx</DependentUpon>
@@ -439,6 +442,14 @@
     <Content Include="Areas\Admin\Views\Manufacturers\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Manufacturers\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Manufacturers\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageUser\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageUser\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageUser\EditRole.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageUser\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageRole\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageRole\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageRole\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageRole\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

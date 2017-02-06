@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TGVL;
+using System.IO;
 
 namespace TGVL.Areas.Admin.Controllers
 {
@@ -49,12 +50,31 @@ namespace TGVL.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,ParentId,Name,Image,SortOrder,Flag")] SysCategory sysCategory)
+        public async Task<ActionResult> Create([Bind(Include = "Id,ParentId,Name,Image,SortOrder,Flag")] SysCategory sysCategory, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
+                if (file != null && file.ContentLength > 0)
+                    try
+                    {
+                        string path = Path.Combine(Server.MapPath("~/Areas/Admin/Images/"),
+                                                   Path.GetFileName(file.FileName));
+                        file.SaveAs(path);
+                        
+                        ViewBag.Message = "File uploaded successfully";
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewBag.Message = "ERROR:" + ex.Message.ToString();
+                    }
+                else
+                {
+                    ViewBag.Message = "You have not specified a file.";
+                }
+                sysCategory.Image = file.FileName;
                 db.SysCategories.Add(sysCategory);
-                await db.SaveChangesAsync();
+                //await db.SaveChangesAsync();
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -83,10 +103,27 @@ namespace TGVL.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,ParentId,Name,Image,SortOrder,Flag")] SysCategory sysCategory)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,ParentId,Name,Image,SortOrder,Flag")] SysCategory sysCategory, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
+                if (file != null && file.ContentLength > 0)
+                    try
+                    {
+                        string path = Path.Combine(Server.MapPath("~/Areas/Admin/Images/"),
+                                                   Path.GetFileName(file.FileName));
+                        file.SaveAs(path);
+
+                        ViewBag.Message = "File uploaded successfully";
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewBag.Message = "ERROR:" + ex.Message.ToString();
+                    }
+                else
+                {
+                    ViewBag.Message = "You have not specified a file.";
+                }
                 db.Entry(sysCategory).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");

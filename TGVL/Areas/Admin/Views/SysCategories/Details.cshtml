@@ -4,10 +4,10 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Chi tiết</h2>
 
 <div>
-    <h4>SysCategory</h4>
+    <h4>Danh mục hệ thống</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -23,23 +23,8 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Image)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SortOrder)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SortOrder)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Flag)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Flag)
+            @*@Html.DisplayFor(model => model.Image)*@
+            <img src="@Url.Content("~/Areas/Admin/Images/" + Model.Image)" width="100" height="100" />
         </dd>
 
         <dt>
@@ -53,6 +38,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Sửa", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Trở về trang chủ", "Index")
 </p>
