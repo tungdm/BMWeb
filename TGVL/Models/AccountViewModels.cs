@@ -17,10 +17,13 @@ namespace TGVL.Models
         public string RegisterType { get; set; }
     }
 
+   
+
     public class ExternalLoginListViewModel
     {
         public string ReturnUrl { get; set; }
         public string RegisterType { get; set; }
+        public string RegOrLog { get; set; }
     }
 
     public class SendCodeViewModel

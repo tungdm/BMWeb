@@ -35,6 +35,22 @@ namespace TGVL.Models
        
     }
 
+    public class CreateShopViewModel
+    {
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        public string Fullname { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        public string Address { get; set; }
+    }
+
+    public class ManageShopViewModel
+    {
+        public string Username { get; set; }
+    }
+
     public class ManageLoginsViewModel
     {
         public IList<UserLoginInfo> CurrentLogins { get; set; }
