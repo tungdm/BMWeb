@@ -58,6 +58,38 @@ namespace TGVL
                         "~/Scripts/daterangepicker.js",
                         "~/Scripts/custom.min.js"
                         ));
+
+            bundles.Add(new ScriptBundle("~/bundles/manageshop").Include(
+                         "~/Scripts/jquery-{version}.js",
+                         "~/Scripts/bootstrap.js",
+                         "~/Scripts/fastclick.js",
+                         "~/Scripts/nprogress.js",
+                         "~/Scripts/Chart.js",
+                         "~/Scripts/jquery.sparkline.js",
+                         "~/Scripts/raphael.min.js",
+                         "~/Scripts/morris.min.js",
+                         "~/Scripts/gauge.js",
+                         "~/Scripts/bootstrap-progressbar.min.js",
+
+                         "~/Scripts/skycons.js",
+
+                         "~/Scripts/canvasjs.min.js",
+
+                         "~/Scripts/jquery.flot.js",
+                         "~/Scripts/jquery.flot.pie.js",
+                         "~/Scripts/jquery.flot.time.js",
+                         "~/Scripts/jquery.flot.stack.js",
+                         "~/Scripts/jquery.flot.resize.js",
+
+                         "~/Scripts/jquery.flot.orderBars.js",
+                         "~/Scripts/jquery.flot.spline.min.js",
+                         "~/Scripts/curvedLines.js",
+
+                         "~/Scripts/date.js",
+                         "~/Scripts/moment.js",
+                         "~/Scripts/daterangepicker.js",
+                         "~/Scripts/custom.js"
+                         ));
         }
     }
 }
