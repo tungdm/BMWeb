@@ -103,13 +103,7 @@
             <!-- page content -->
             <div class="right_col" role="main">
                 <div class="">
-                    <div class="page-title">
-                        <div class="title_left">
-                            <h3>@ViewBag.Title</h3>
-                        </div>
-                    </div>
-                    <div class="clearfix"></div>
-
+                   
                     @RenderBody()
                 </div>
             </div>
@@ -125,7 +119,7 @@
 
 
     @*Gentelella Template*@
-    @Scripts.Render("~/bundles/customjquery")
+    @Scripts.Render("~/bundles/manageshop")
     @RenderSection("scripts", required: false)
 </body>
 </html>

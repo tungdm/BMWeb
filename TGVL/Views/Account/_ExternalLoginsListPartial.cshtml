@@ -2,13 +2,15 @@
 @using Microsoft.Owin.Security
 
 @{
+
     using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl, RegisterType = Model.RegisterType }))
     {
         @Html.AntiForgeryToken()
         <div id="socialLoginList">
             <p>
-                <button type="submit" class="btn btn-block btn-social btn-facebook btn-flat" id="Facebook" name="provider" value="Facebook" title="Log in using your Facebook account"><i class="fa fa-facebook"></i> Log in using
-            Facebook</button>
+                <button type="submit" class="btn btn-block btn-social btn-facebook btn-flat" id="Facebook" name="provider" value="Facebook" title="@Model.RegOrLog using your Facebook account">
+                <i class="fa fa-facebook"></i> <span>@Model.RegOrLog bằng Facebook</span>
+                </button>
             </p>
         </div>
     }

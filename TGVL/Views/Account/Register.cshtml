@@ -4,10 +4,10 @@
     ViewBag.Title = "Register";
 }
 
-<div class="animate form login_form">
+<div class="animate form login_form" style="margin-top: -55px;">
     <section class="login_content">
 
-        @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl, RegisterType = ViewBag.RegisterType })
+        @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl, RegisterType = ViewBag.RegisterType, RegOrLog = "Đăng ký" })
 
         <!--Register form-->
         @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" , id="registerForm"}))
@@ -32,8 +32,9 @@
             <div>
                 @Html.HiddenFor(m => m.RegisterType)
             </div>
+
             <div>
-                <a class="btn btn-default submit" href="javascript:document.getElementById('registerForm').submit()">Submit</a>
+                <input type="submit" value="Register" class="btn btn-default" style="font-size: 12px; margin: 0px 15px 5px 0; float: none;" />
             </div>
 
             <div class="clearfix"></div>

@@ -5,10 +5,10 @@
     //Layout = "~/Views/Shared/_LoginViewLayout.cshtml";
 }
 
-<div class="animate form login_form">
+<div class="animate form login_form" style="margin-top: -55px;">
     <section class="login_content">
 
-        @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+        @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl, RegOrLog = "Đăng nhập" })
 
         <!--Login form-->
         @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "logintForm" }))
@@ -34,9 +34,9 @@
                 </div>
 
                 <div>
-                    <a class="btn btn-default submit" href="javascript:document.getElementById('logintForm').submit()">Log in</a>
                     
-                   
+                    <input type="submit" value="Log in" class="btn btn-default" style="font-size: 12px; margin: 10px 15px 0 0; float: none;" />
+
                     @Html.ActionLink("Forgot your password?", "ForgotPassword", null, new { @class = "reset_pass" })
                 </div>
 

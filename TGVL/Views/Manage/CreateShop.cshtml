@@ -1,0 +1,118 @@
+﻿@model TGVL.Models.CreateShopViewModel
+
+@{
+    ViewBag.Title = "Create Shop";
+    Layout = "~/Views/Shared/_LoginViewLayout.cshtml";
+}
+
+<section class="login_content">
+
+    <!--Create Shop form-->
+    @using (Html.BeginForm("CreateShop", "Manage", null, FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "createShopForm" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <h1>Adding Shop Information</h1>
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+
+        <div>
+            @Html.TextBoxFor(m => m.Fullname, new { @class = "form-control", placeholder = "Shop name" })
+        </div>
+            <div>
+                @Html.TextBoxFor(m => m.Address, new { @class = "form-control", placeholder = "Shop Address" })
+            </div>
+
+            <div>
+                <a class="btn btn-default submit" href="javascript:document.getElementById('createShopForm').submit()">Submit</a>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="separator">
+                <div>
+                    <h1><i class="fa fa-paw"></i> Thegioivatlieu</h1>
+                    <p>&copy; @DateTime.Now.Year All Rights Reserved. Privacy and Terms</p>
+                </div>
+            </div>
+    }
+
+    <!--Create Shop form-->
+
+</section>
+
+
+
+<style>
+    .login_content h1:before {
+        background: none;
+    }
+
+    .login_content h1:after {
+        background: none;
+    }
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Shop</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.SupplierId, "SupplierId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("SupplierId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.SupplierId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Flag, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Flag, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Flag, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>*@

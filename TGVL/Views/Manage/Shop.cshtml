@@ -1,0 +1,145 @@
+﻿@model TGVL.Models.ManageShopViewModel
+@{
+    ViewBag.Title = "Manage Shop";
+    Layout = "~/Views/Shared/_ManageShopViewLayout.cshtml";
+}
+
+<script type="text/javascript">
+  window.onload = function () {
+    var chart = new CanvasJS.Chart("chartContainer",
+    {
+      
+        data: [
+      {
+        type: "area",
+        dataPoints: [//array
+
+        { x: new Date(2016, 00), y: 2600 },
+        { x: new Date(2016, 01), y: 3800 },
+        { x: new Date(2016, 02), y: 4300 },
+        { x: new Date(2016, 03), y: 2900 },
+        { x: new Date(2016, 04), y: 4100 },
+        { x: new Date(2016, 05), y: 4500 },
+        { x: new Date(2016, 06), y: 8600 },
+        { x: new Date(2016, 07), y: 6400 },
+        { x: new Date(2016, 08), y: 5300 },
+        { x: new Date(2016, 09), y: 6000 }
+        ]
+      }
+      ]
+    });
+    console.log(new Date(2016, 01));
+    chart.render();
+  }
+</script>
+
+<div class="row top_tiles">
+    <div class="row top_tiles">
+        <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="tile-stats">
+                <div class="icon"><i class="fa fa-eye"></i></div>
+                <div class="count">179</div>
+                <h3>Truy cập hôm nay</h3>
+            </div>
+        </div>
+        <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="tile-stats">
+                <div class="icon"><i class="fa fa-shopping-cart"></i></div>
+                <div class="count">179</div>
+                <h3>Đơn hàng mới</h3>
+            </div>
+        </div>
+        <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="tile-stats">
+                <div class="icon"><i class="fa fa-thumbs-up"></i></div>
+                <div class="count">179</div>
+                <h3>Đơn hàng thành công</h3>
+            </div>
+        </div>
+        <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="tile-stats">
+                <div class="icon"><i class="fa fa-usd"></i></div>
+                <div class="count">179</div>
+                <h3>Doanh thu tháng @DateTime.Now.Month</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Số lượng giao dịch <small>Monthly progress</small></h2>
+                @*<div class="filter">
+                    <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
+                        <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                        <span>December 30, 2014 - January 28, 2015</span> <b class="caret"></b>
+                    </div>
+                </div>*@
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="demo-container" style="height:280px">
+                    @*<div id="chart_plot_02" class="demo-placeholder"></div>*@
+                    <div id="chartContainer" class="demo-placeholder"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="x_panel fixed_height_320">
+            <div class="x_title">
+                <h2>Sàn đấu thầu</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="x_panel fixed_height_320">
+            <div class="x_title">
+                <h2>Đơn hàng mới</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="x_panel fixed_height_320">
+            <div class="x_title">
+                <h2>Top sản phẩm</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="x_panel fixed_height_320">
+            <div class="x_title">
+                <h2>Doanh thu</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+@Scripts.Render("~/bundles/manageshop")
