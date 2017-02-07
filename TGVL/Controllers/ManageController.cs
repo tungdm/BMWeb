@@ -15,6 +15,7 @@ namespace TGVL.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private BMWEntities db = new BMWEntities();
 
         public ManageController()
         {
@@ -90,6 +91,59 @@ namespace TGVL.Controllers
             };
             return View(model2);
         }
+
+        //TUNGDM
+        //GET: /Manage/CreateShop
+        public ActionResult CreateShop()
+        {
+            return View();
+        }
+
+        //TUNGDM
+        //POST: /Manage/CreateShop
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CreateShop(CreateShopViewModel model)
+        {
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
+            if ( await UserManager.IsInRoleAsync(user.Id, "Supplier") & user.Flag == 0)
+            {
+                var shop = new Shop();
+                user.Fullname = model.Fullname;
+                user.Address = model.Address;
+                user.Flag = 1;
+
+                //TODO: thiếu trường hợp xử lí một supplier (cửa hàng) có nhiều shop (kho)
+                //Hướng giải quyết: với mỗi địa chỉ tạo một shop (kho)
+
+                shop.SupplierId = User.Identity.GetUserId<int>();
+                shop.Address = model.Address;
+
+                if (ModelState.IsValid)
+                {
+                    await UserManager.UpdateAsync(user);
+                    db.Shops.Add(shop);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+
+                
+            }
+            return View(model);
+        }
+
+        //TUNGDM
+        //GET: /Manage/Shop
+        public async Task<ActionResult> Shop()
+        {
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
+            var model = new ManageShopViewModel
+            {
+                Username = user.UserName
+            };
+            return View(model);
+        }
+
 
         //
         //POST: /Manage/ChangeUserName

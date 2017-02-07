@@ -20,6 +20,7 @@ namespace TGVL.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        
 
         public AccountController()
         {
@@ -104,7 +105,7 @@ namespace TGVL.Controllers
                             return RedirectToAction("Index", "Admin/Home");
                         }
                         else if ( await UserManager.IsInRoleAsync(user.Id, "Supplier") & user.Flag == 0) {
-                            return RedirectToAction("Index", "Manage");
+                            return RedirectToAction("CreateShop", "Manage");
                         }
                         else
                             return RedirectToLocal(returnUrl);
@@ -234,6 +235,8 @@ namespace TGVL.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
+       
 
         //
         // GET: /Account/ConfirmEmail
