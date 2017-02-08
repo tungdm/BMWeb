@@ -12,26 +12,31 @@ namespace TGVL
     using System;
     using System.Collections.Generic;
     
-    public partial class SysCategory
+    public partial class WarehouseProduct
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public SysCategory()
+        public WarehouseProduct()
         {
-            this.SysCategories1 = new HashSet<SysCategory>();
-            this.SysProducts = new HashSet<SysProduct>();
+            this.Deals = new HashSet<Deal>();
+            this.ContractProducts = new HashSet<ContractProduct>();
         }
     
         public int Id { get; set; }
-        public Nullable<int> ParentId { get; set; }
-        public string Name { get; set; }
-        public string Image { get; set; }
+        public int SupplierId { get; set; }
+        public int SysProductId { get; set; }
+        public int ShopCategoryId { get; set; }
+        public int Quantity { get; set; }
+        public Nullable<decimal> PricePerUnit { get; set; }
+        public int ManufacturerId { get; set; }
         public Nullable<int> SortOrder { get; set; }
         public Nullable<int> Flag { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SysCategory> SysCategories1 { get; set; }
-        public virtual SysCategory SysCategory1 { get; set; }
+        public virtual ICollection<Deal> Deals { get; set; }
+        public virtual Manufacturer Manufacturer { get; set; }
+        public virtual SysProduct SysProduct { get; set; }
+        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SysProduct> SysProducts { get; set; }
+        public virtual ICollection<ContractProduct> ContractProducts { get; set; }
     }
 }

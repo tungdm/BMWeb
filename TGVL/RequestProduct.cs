@@ -21,7 +21,7 @@ namespace TGVL
         public Nullable<decimal> Price { get; set; }
         public Nullable<int> Flag { get; set; }
     
-        public virtual Request Request { get; set; }
         public virtual SysProduct SysProduct { get; set; }
+        public virtual Request Request { get; set; }
     }
 }

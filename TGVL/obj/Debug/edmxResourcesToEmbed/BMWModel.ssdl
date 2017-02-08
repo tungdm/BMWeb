@@ -29,7 +29,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ReplyId" Type="int" />
     <Property Name="AttendenceId" Type="int" />
-    <Property Name="ShopProductId" Type="int" Nullable="false" />
+    <Property Name="WarehouseProductId" Type="int" Nullable="false" />
     <Property Name="Quantity" Type="int" Nullable="false" />
     <Property Name="Price" Type="decimal" Precision="19" Scale="4" Nullable="false" />
     <Property Name="Flag" Type="int" />
@@ -121,7 +121,7 @@
     <Property Name="DueDate" Type="datetime2" Precision="7" Nullable="false" />
     <Property Name="PaymentType" Type="nvarchar" MaxLength="256" Nullable="false" />
     <Property Name="RequestTypeId" Type="int" Nullable="false" />
-    <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="256" Nullable="false" />
     <Property Name="Flag" Type="int" />
   </EntityType>
   <EntityType Name="RequestTypes">
@@ -149,40 +149,6 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
-  </EntityType>
-  <EntityType Name="ShopCategories">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="ShopId" Type="int" Nullable="false" />
-    <Property Name="SysCategoryId" Type="int" Nullable="false" />
-    <Property Name="ParentId" Type="int" />
-    <Property Name="SortOrder" Type="int" />
-    <Property Name="Flag" Type="int" />
-  </EntityType>
-  <EntityType Name="ShopProducts">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="ShopId" Type="int" Nullable="false" />
-    <Property Name="SysProductId" Type="int" Nullable="false" />
-    <Property Name="ShopCategoryId" Type="int" Nullable="false" />
-    <Property Name="Quantity" Type="int" Nullable="false" />
-    <Property Name="PricePerUnit" Type="decimal" Precision="19" Scale="4" />
-    <Property Name="ManufacturerId" Type="int" Nullable="false" />
-    <Property Name="SortOrder" Type="int" />
-    <Property Name="Flag" Type="int" />
-  </EntityType>
-  <EntityType Name="Shops">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="SupplierId" Type="int" Nullable="false" />
-    <Property Name="Address" Type="nvarchar(max)" />
-    <Property Name="Flag" Type="int" />
   </EntityType>
   <EntityType Name="SysCategories">
     <Key>
@@ -215,6 +181,7 @@
     <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
     <Property Name="Price" Type="decimal" Precision="19" Scale="4" />
     <Property Name="SortOrder" Type="int" />
+    <Property Name="Image" Type="nvarchar" MaxLength="256" />
     <Property Name="Flag" Type="int" />
   </EntityType>
   <EntityType Name="UserClaims">
@@ -264,6 +231,31 @@
     <Property Name="Avatar" Type="nvarchar" MaxLength="256" />
     <Property Name="IsSubscribed" Type="bit" />
     <Property Name="AverageGrade" Type="float" />
+    <Property Name="Fullname" Type="nvarchar" MaxLength="256" />
+    <Property Name="DateOfBirth" Type="datetime" />
+    <Property Name="Flag" Type="int" />
+  </EntityType>
+  <EntityType Name="WarehouseProducts">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SupplierId" Type="int" Nullable="false" />
+    <Property Name="SysProductId" Type="int" Nullable="false" />
+    <Property Name="ShopCategoryId" Type="int" Nullable="false" />
+    <Property Name="Quantity" Type="int" Nullable="false" />
+    <Property Name="PricePerUnit" Type="decimal" Precision="19" Scale="4" />
+    <Property Name="ManufacturerId" Type="int" Nullable="false" />
+    <Property Name="SortOrder" Type="int" />
+    <Property Name="Flag" Type="int" />
+  </EntityType>
+  <EntityType Name="Warehouses">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SupplierId" Type="int" Nullable="false" />
+    <Property Name="Address" Type="nvarchar(max)" />
     <Property Name="Flag" Type="int" />
   </EntityType>
   <Association Name="FK_Attendences_AspNetUsers">
@@ -327,10 +319,10 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Deal_WarehouseProducts">
-    <End Role="ShopProducts" Type="Self.ShopProducts" Multiplicity="1" />
+    <End Role="WarehouseProducts" Type="Self.WarehouseProducts" Multiplicity="1" />
     <End Role="Deals" Type="Self.Deals" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="ShopProducts">
+      <Principal Role="WarehouseProducts">
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="Deals">
@@ -375,14 +367,14 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_OfferProducts_WarehouseProducts">
-    <End Role="ShopProducts" Type="Self.ShopProducts" Multiplicity="1" />
+    <End Role="WarehouseProducts" Type="Self.WarehouseProducts" Multiplicity="1" />
     <End Role="ContractProducts" Type="Self.ContractProducts" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="ShopProducts">
+      <Principal Role="WarehouseProducts">
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="ContractProducts">
-        <PropertyRef Name="ShopProductId" />
+        <PropertyRef Name="WarehouseProductId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -496,29 +488,29 @@
   </Association>
   <Association Name="FK_ShopProducts_Manufacturers">
     <End Role="Manufacturers" Type="Self.Manufacturers" Multiplicity="1" />
-    <End Role="ShopProducts" Type="Self.ShopProducts" Multiplicity="*" />
+    <End Role="WarehouseProducts" Type="Self.WarehouseProducts" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Manufacturers">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="ShopProducts">
+      <Dependent Role="WarehouseProducts">
         <PropertyRef Name="ManufacturerId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Shops_Users">
     <End Role="Users" Type="Self.Users" Multiplicity="1" />
-    <End Role="Shops" Type="Self.Shops" Multiplicity="*" />
+    <End Role="Warehouses" Type="Self.Warehouses" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Users">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="Shops">
+      <Dependent Role="Warehouses">
         <PropertyRef Name="SupplierId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_SysCategories_SysCategories">
+  <Association Name="FK_SysCategories_SysCategories1">
     <End Role="SysCategories" Type="Self.SysCategories" Multiplicity="0..1" />
     <End Role="SysCategories1" Type="Self.SysCategories" Multiplicity="*" />
     <ReferentialConstraint>
@@ -614,75 +606,27 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_WarehouseCategories_SysCategories">
-    <End Role="SysCategories" Type="Self.SysCategories" Multiplicity="1" />
-    <End Role="ShopCategories" Type="Self.ShopCategories" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="SysCategories">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="ShopCategories">
-        <PropertyRef Name="SysCategoryId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_WarehouseCategories_WarehouseCategories">
-    <End Role="ShopCategories" Type="Self.ShopCategories" Multiplicity="0..1" />
-    <End Role="ShopCategories1" Type="Self.ShopCategories" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ShopCategories">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="ShopCategories1">
-        <PropertyRef Name="ParentId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_WarehouseCategories_Warehouses">
-    <End Role="Shops" Type="Self.Shops" Multiplicity="1" />
-    <End Role="ShopCategories" Type="Self.ShopCategories" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Shops">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="ShopCategories">
-        <PropertyRef Name="ShopId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_WarehouseProducts_SysProducts">
     <End Role="SysProducts" Type="Self.SysProducts" Multiplicity="1" />
-    <End Role="ShopProducts" Type="Self.ShopProducts" Multiplicity="*" />
+    <End Role="WarehouseProducts" Type="Self.WarehouseProducts" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="SysProducts">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="ShopProducts">
+      <Dependent Role="WarehouseProducts">
         <PropertyRef Name="SysProductId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_WarehouseProducts_WarehouseCategories">
-    <End Role="ShopCategories" Type="Self.ShopCategories" Multiplicity="1" />
-    <End Role="ShopProducts" Type="Self.ShopProducts" Multiplicity="*" />
+  <Association Name="FK_WarehouseProducts_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="WarehouseProducts" Type="Self.WarehouseProducts" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="ShopCategories">
+      <Principal Role="Users">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="ShopProducts">
-        <PropertyRef Name="ShopCategoryId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_WarehouseProducts_Warehouses">
-    <End Role="Shops" Type="Self.Shops" Multiplicity="1" />
-    <End Role="ShopProducts" Type="Self.ShopProducts" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Shops">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="ShopProducts">
-        <PropertyRef Name="ShopId" />
+      <Dependent Role="WarehouseProducts">
+        <PropertyRef Name="SupplierId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -700,9 +644,6 @@
     <EntitySet Name="RequestTypes" EntityType="Self.RequestTypes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Reviews" EntityType="Self.Reviews" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="ShopCategories" EntityType="Self.ShopCategories" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="ShopProducts" EntityType="Self.ShopProducts" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Shops" EntityType="Self.Shops" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SysCategories" EntityType="Self.SysCategories" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SysProductAttributes" EntityType="Self.SysProductAttributes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SysProducts" EntityType="Self.SysProducts" Schema="dbo" store:Type="Tables" />
@@ -710,6 +651,8 @@
     <EntitySet Name="UserLogins" EntityType="Self.UserLogins" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WarehouseProducts" EntityType="Self.WarehouseProducts" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Warehouses" EntityType="Self.Warehouses" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Attendences_AspNetUsers" Association="Self.FK_Attendences_AspNetUsers">
       <End Role="Users" EntitySet="Users" />
       <End Role="Attendences" EntitySet="Attendences" />
@@ -731,7 +674,7 @@
       <End Role="ContractProducts" EntitySet="ContractProducts" />
     </AssociationSet>
     <AssociationSet Name="FK_Deal_WarehouseProducts" Association="Self.FK_Deal_WarehouseProducts">
-      <End Role="ShopProducts" EntitySet="ShopProducts" />
+      <End Role="WarehouseProducts" EntitySet="WarehouseProducts" />
       <End Role="Deals" EntitySet="Deals" />
     </AssociationSet>
     <AssociationSet Name="FK_Deals_Users" Association="Self.FK_Deals_Users">
@@ -747,7 +690,7 @@
       <End Role="RequestProducts" EntitySet="RequestProducts" />
     </AssociationSet>
     <AssociationSet Name="FK_OfferProducts_WarehouseProducts" Association="Self.FK_OfferProducts_WarehouseProducts">
-      <End Role="ShopProducts" EntitySet="ShopProducts" />
+      <End Role="WarehouseProducts" EntitySet="WarehouseProducts" />
       <End Role="ContractProducts" EntitySet="ContractProducts" />
     </AssociationSet>
     <AssociationSet Name="FK_Orders_AspNetUsers" Association="Self.FK_Orders_AspNetUsers">
@@ -788,13 +731,13 @@
     </AssociationSet>
     <AssociationSet Name="FK_ShopProducts_Manufacturers" Association="Self.FK_ShopProducts_Manufacturers">
       <End Role="Manufacturers" EntitySet="Manufacturers" />
-      <End Role="ShopProducts" EntitySet="ShopProducts" />
+      <End Role="WarehouseProducts" EntitySet="WarehouseProducts" />
     </AssociationSet>
     <AssociationSet Name="FK_Shops_Users" Association="Self.FK_Shops_Users">
       <End Role="Users" EntitySet="Users" />
-      <End Role="Shops" EntitySet="Shops" />
+      <End Role="Warehouses" EntitySet="Warehouses" />
     </AssociationSet>
-    <AssociationSet Name="FK_SysCategories_SysCategories" Association="Self.FK_SysCategories_SysCategories">
+    <AssociationSet Name="FK_SysCategories_SysCategories1" Association="Self.FK_SysCategories_SysCategories1">
       <End Role="SysCategories" EntitySet="SysCategories" />
       <End Role="SysCategories1" EntitySet="SysCategories" />
     </AssociationSet>
@@ -826,29 +769,13 @@
       <End Role="Users" EntitySet="Users" />
       <End Role="UserRoles" EntitySet="UserRoles" />
     </AssociationSet>
-    <AssociationSet Name="FK_WarehouseCategories_SysCategories" Association="Self.FK_WarehouseCategories_SysCategories">
-      <End Role="SysCategories" EntitySet="SysCategories" />
-      <End Role="ShopCategories" EntitySet="ShopCategories" />
-    </AssociationSet>
-    <AssociationSet Name="FK_WarehouseCategories_WarehouseCategories" Association="Self.FK_WarehouseCategories_WarehouseCategories">
-      <End Role="ShopCategories" EntitySet="ShopCategories" />
-      <End Role="ShopCategories1" EntitySet="ShopCategories" />
-    </AssociationSet>
-    <AssociationSet Name="FK_WarehouseCategories_Warehouses" Association="Self.FK_WarehouseCategories_Warehouses">
-      <End Role="Shops" EntitySet="Shops" />
-      <End Role="ShopCategories" EntitySet="ShopCategories" />
-    </AssociationSet>
     <AssociationSet Name="FK_WarehouseProducts_SysProducts" Association="Self.FK_WarehouseProducts_SysProducts">
       <End Role="SysProducts" EntitySet="SysProducts" />
-      <End Role="ShopProducts" EntitySet="ShopProducts" />
+      <End Role="WarehouseProducts" EntitySet="WarehouseProducts" />
     </AssociationSet>
-    <AssociationSet Name="FK_WarehouseProducts_WarehouseCategories" Association="Self.FK_WarehouseProducts_WarehouseCategories">
-      <End Role="ShopCategories" EntitySet="ShopCategories" />
-      <End Role="ShopProducts" EntitySet="ShopProducts" />
-    </AssociationSet>
-    <AssociationSet Name="FK_WarehouseProducts_Warehouses" Association="Self.FK_WarehouseProducts_Warehouses">
-      <End Role="Shops" EntitySet="Shops" />
-      <End Role="ShopProducts" EntitySet="ShopProducts" />
+    <AssociationSet Name="FK_WarehouseProducts_Users" Association="Self.FK_WarehouseProducts_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="WarehouseProducts" EntitySet="WarehouseProducts" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

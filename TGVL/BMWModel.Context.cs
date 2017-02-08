@@ -27,25 +27,24 @@ namespace TGVL
     
         public virtual DbSet<Attendence> Attendences { get; set; }
         public virtual DbSet<BiddingFloor> BiddingFloors { get; set; }
-        public virtual DbSet<ContractProduct> ContractProducts { get; set; }
         public virtual DbSet<Deal> Deals { get; set; }
         public virtual DbSet<Manufacturer> Manufacturers { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<Reply> Replies { get; set; }
         public virtual DbSet<RequestDescription> RequestDescriptions { get; set; }
         public virtual DbSet<RequestProduct> RequestProducts { get; set; }
-        public virtual DbSet<Request> Requests { get; set; }
         public virtual DbSet<RequestType> RequestTypes { get; set; }
         public virtual DbSet<Review> Reviews { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
-        public virtual DbSet<ShopCategory> ShopCategories { get; set; }
-        public virtual DbSet<ShopProduct> ShopProducts { get; set; }
-        public virtual DbSet<Shop> Shops { get; set; }
         public virtual DbSet<SysCategory> SysCategories { get; set; }
         public virtual DbSet<SysProductAttribute> SysProductAttributes { get; set; }
         public virtual DbSet<SysProduct> SysProducts { get; set; }
         public virtual DbSet<UserClaim> UserClaims { get; set; }
         public virtual DbSet<UserLogin> UserLogins { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<WarehouseProduct> WarehouseProducts { get; set; }
+        public virtual DbSet<Warehouse> Warehouses { get; set; }
+        public virtual DbSet<ContractProduct> ContractProducts { get; set; }
+        public virtual DbSet<Request> Requests { get; set; }
     }
 }

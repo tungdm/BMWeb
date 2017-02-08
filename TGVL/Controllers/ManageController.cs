@@ -108,7 +108,7 @@ namespace TGVL.Controllers
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
             if ( await UserManager.IsInRoleAsync(user.Id, "Supplier") & user.Flag == 0)
             {
-                var shop = new Shop();
+                var warehouse = new Warehouse();
                 user.Fullname = model.Fullname;
                 user.Address = model.Address;
                 user.Flag = 1;
@@ -116,13 +116,14 @@ namespace TGVL.Controllers
                 //TODO: thiếu trường hợp xử lí một supplier (cửa hàng) có nhiều shop (kho)
                 //Hướng giải quyết: với mỗi địa chỉ tạo một shop (kho)
 
-                shop.SupplierId = User.Identity.GetUserId<int>();
-                shop.Address = model.Address;
+                warehouse.SupplierId = User.Identity.GetUserId<int>();
+                warehouse.Address = model.Address;
 
                 if (ModelState.IsValid)
                 {
                     await UserManager.UpdateAsync(user);
-                    db.Shops.Add(shop);
+
+                    db.Warehouses.Add(warehouse);
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }

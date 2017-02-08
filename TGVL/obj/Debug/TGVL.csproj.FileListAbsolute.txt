@@ -274,3 +274,5 @@ E:\BMWeb.git\trunk\TGVL\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 E:\BMWeb.git\trunk\TGVL\obj\Debug\TGVL.csprojResolveAssemblyReference.cache
 E:\BMWeb.git\trunk\TGVL\obj\Debug\TGVL.dll
 E:\BMWeb.git\trunk\TGVL\obj\Debug\TGVL.pdb
+E:\BMWGIT\trunk\TGVL\bin\Facebook.dll
+E:\BMWGIT\trunk\TGVL\bin\Facebook.xml

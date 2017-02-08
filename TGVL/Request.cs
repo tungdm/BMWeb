@@ -32,7 +32,7 @@ namespace TGVL
         public System.DateTime DueDate { get; set; }
         public string PaymentType { get; set; }
         public int RequestTypeId { get; set; }
-        public string Name { get; set; }
+        public string Title { get; set; }
         public Nullable<int> Flag { get; set; }
     
         public virtual BiddingFloor BiddingFloor { get; set; }
