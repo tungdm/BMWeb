@@ -24,7 +24,7 @@ namespace TGVL
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> Flag { get; set; }
     
-        public virtual Deal Deal { get; set; }
         public virtual User User { get; set; }
+        public virtual Deal Deal { get; set; }
     }
 }

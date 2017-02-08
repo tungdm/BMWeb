@@ -22,7 +22,7 @@ namespace TGVL
     
         public int Id { get; set; }
         public int SupplierId { get; set; }
-        public int ShopProductId { get; set; }
+        public int UserProductId { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
         public int Discount { get; set; }
@@ -32,9 +32,9 @@ namespace TGVL
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> Flag { get; set; }
     
+        public virtual UserProduct UserProduct { get; set; }
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Orders { get; set; }
-        public virtual WarehouseProduct WarehouseProduct { get; set; }
     }
 }

@@ -18,7 +18,6 @@ namespace TGVL
         public Request()
         {
             this.Replies = new HashSet<Reply>();
-            this.RequestDescriptions = new HashSet<RequestDescription>();
             this.RequestProducts = new HashSet<RequestProduct>();
         }
     
@@ -34,12 +33,11 @@ namespace TGVL
         public int RequestTypeId { get; set; }
         public string Title { get; set; }
         public Nullable<int> Flag { get; set; }
+        public string Descriptions { get; set; }
     
         public virtual BiddingFloor BiddingFloor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Reply> Replies { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RequestDescription> RequestDescriptions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RequestProduct> RequestProducts { get; set; }
         public virtual User User { get; set; }

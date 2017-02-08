@@ -73,8 +73,8 @@ namespace TGVL.Areas.Admin.Controllers
                 }
                 sysCategory.Image = file.FileName;
                 db.SysCategories.Add(sysCategory);
-                //await db.SaveChangesAsync();
-                db.SaveChanges();
+                await db.SaveChangesAsync();
+                // db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
