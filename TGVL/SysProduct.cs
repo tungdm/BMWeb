@@ -19,17 +19,18 @@ namespace TGVL
         {
             this.RequestProducts = new HashSet<RequestProduct>();
             this.SysProductAttributes = new HashSet<SysProductAttribute>();
-            this.UserProducts = new HashSet<UserProduct>();
+            this.WarehouseProducts = new HashSet<WarehouseProduct>();
         }
     
         public int Id { get; set; }
         public int ManufacturerId { get; set; }
         public int SysCategoryId { get; set; }
         public string Name { get; set; }
-        public Nullable<decimal> Price { get; set; }
+        public decimal UnitPrice { get; set; }
+        public string UnitName { get; set; }
         public Nullable<int> SortOrder { get; set; }
-        public Nullable<int> Flag { get; set; }
         public string Image { get; set; }
+        public Nullable<int> Flag { get; set; }
     
         public virtual Manufacturer Manufacturer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -38,6 +39,6 @@ namespace TGVL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SysProductAttribute> SysProductAttributes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserProduct> UserProducts { get; set; }
+        public virtual ICollection<WarehouseProduct> WarehouseProducts { get; set; }
     }
 }

@@ -21,7 +21,11 @@ namespace TGVL
         public string Comment { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> Flag { get; set; }
+        public int CustomerId { get; set; }
+        public int SupplierId { get; set; }
     
         public virtual Request Request { get; set; }
+        public virtual User User { get; set; }
+        public virtual User User1 { get; set; }
     }
 }

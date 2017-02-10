@@ -230,9 +230,6 @@
     <Compile Include="Request.cs">
       <DependentUpon>BMWModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="RequestDescription.cs">
-      <DependentUpon>BMWModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="RequestProduct.cs">
       <DependentUpon>BMWModel.tt</DependentUpon>
     </Compile>
@@ -264,10 +261,10 @@
     <Compile Include="UserLogin.cs">
       <DependentUpon>BMWModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Warehouse.cs">
+    <Compile Include="UserProduct.cs">
       <DependentUpon>BMWModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="WarehouseProduct.cs">
+    <Compile Include="Warehouse.cs">
       <DependentUpon>BMWModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>

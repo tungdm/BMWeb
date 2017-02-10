@@ -36,14 +36,15 @@ namespace TGVL
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<SysCategory> SysCategories { get; set; }
         public virtual DbSet<SysProductAttribute> SysProductAttributes { get; set; }
-        public virtual DbSet<SysProduct> SysProducts { get; set; }
         public virtual DbSet<UserClaim> UserClaims { get; set; }
         public virtual DbSet<UserLogin> UserLogins { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Warehouse> Warehouses { get; set; }
         public virtual DbSet<Request> Requests { get; set; }
-        public virtual DbSet<UserProduct> UserProducts { get; set; }
         public virtual DbSet<ContractProduct> ContractProducts { get; set; }
         public virtual DbSet<Deal> Deals { get; set; }
+        public virtual DbSet<WarehouseProduct> WarehouseProducts { get; set; }
+        public virtual DbSet<HouseType> HouseTypes { get; set; }
+        public virtual DbSet<SysProduct> SysProducts { get; set; }
     }
 }

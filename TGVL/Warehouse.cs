@@ -14,11 +14,22 @@ namespace TGVL
     
     public partial class Warehouse
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Warehouse()
+        {
+            this.WarehouseProducts = new HashSet<WarehouseProduct>();
+        }
+    
         public int Id { get; set; }
         public int SupplierId { get; set; }
         public string Address { get; set; }
         public Nullable<int> Flag { get; set; }
+        public string Route { get; set; }
+        public string Administrative_area_level_2 { get; set; }
+        public string Administrative_area_level_1 { get; set; }
     
         public virtual User User { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<WarehouseProduct> WarehouseProducts { get; set; }
     }
 }

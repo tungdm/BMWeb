@@ -34,6 +34,7 @@ namespace TGVL
         public string Title { get; set; }
         public Nullable<int> Flag { get; set; }
         public string Descriptions { get; set; }
+        public int TypeOfHouse { get; set; }
     
         public virtual BiddingFloor BiddingFloor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -44,5 +45,6 @@ namespace TGVL
         public virtual RequestType RequestType { get; set; }
         public virtual User User1 { get; set; }
         public virtual Review Review { get; set; }
+        public virtual HouseType HouseType { get; set; }
     }
 }

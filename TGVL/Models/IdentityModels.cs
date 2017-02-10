@@ -13,6 +13,9 @@ namespace TGVL.Models
     public class ApplicationUser : IdentityUser<int, CustomUserLogin, CustomUserRole, CustomUserClaim>
     {
         public string Address { get; set; }
+        public string Route { get; set; }
+        public string Administrative_area_level_2 { get; set; }
+        public string Administrative_area_level_1 { get; set; }
         public string Avatar { get; set; }
         public bool IsSubscribed { get; set; }
         public float? AverageGrade { get; set; }

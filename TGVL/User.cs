@@ -26,8 +26,9 @@ namespace TGVL
             this.Warehouses = new HashSet<Warehouse>();
             this.Requests = new HashSet<Request>();
             this.Requests1 = new HashSet<Request>();
-            this.UserProducts = new HashSet<UserProduct>();
             this.Deals = new HashSet<Deal>();
+            this.Reviews = new HashSet<Review>();
+            this.Reviews1 = new HashSet<Review>();
         }
     
         public int Id { get; set; }
@@ -49,6 +50,9 @@ namespace TGVL
         public Nullable<int> Flag { get; set; }
         public string Fullname { get; set; }
         public Nullable<System.DateTime> DateOfBirth { get; set; }
+        public string Route { get; set; }
+        public string Administrative_area_level_2 { get; set; }
+        public string Administrative_area_level_1 { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Attendence> Attendences { get; set; }
@@ -69,8 +73,10 @@ namespace TGVL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Request> Requests1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserProduct> UserProducts { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Deal> Deals { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Review> Reviews { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Review> Reviews1 { get; set; }
     }
 }
