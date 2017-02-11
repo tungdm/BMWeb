@@ -25,8 +25,6 @@ namespace TGVL
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Attendence> Attendences { get; set; }
-        public virtual DbSet<BiddingFloor> BiddingFloors { get; set; }
         public virtual DbSet<Manufacturer> Manufacturers { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<Reply> Replies { get; set; }
@@ -41,10 +39,12 @@ namespace TGVL
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Warehouse> Warehouses { get; set; }
         public virtual DbSet<Request> Requests { get; set; }
-        public virtual DbSet<ContractProduct> ContractProducts { get; set; }
-        public virtual DbSet<Deal> Deals { get; set; }
         public virtual DbSet<WarehouseProduct> WarehouseProducts { get; set; }
-        public virtual DbSet<HouseType> HouseTypes { get; set; }
+        public virtual DbSet<BidLetter> BidLetters { get; set; }
+        public virtual DbSet<BidRequest> BidRequests { get; set; }
+        public virtual DbSet<House> Houses { get; set; }
+        public virtual DbSet<ReplyProduct> ReplyProducts { get; set; }
         public virtual DbSet<SysProduct> SysProducts { get; set; }
+        public virtual DbSet<Deal> Deals { get; set; }
     }
 }

@@ -27,7 +27,7 @@ namespace TGVL
         public int SysCategoryId { get; set; }
         public string Name { get; set; }
         public decimal UnitPrice { get; set; }
-        public string UnitName { get; set; }
+        public string UnitType { get; set; }
         public Nullable<int> SortOrder { get; set; }
         public string Image { get; set; }
         public Nullable<int> Flag { get; set; }

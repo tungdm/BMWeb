@@ -27,25 +27,6 @@
     <NavigationProperty Name="Attendences" Relationship="Self.FK_Attendences_BiddingFloors" FromRole="BiddingFloors" ToRole="Attendences" />
     <NavigationProperty Name="Request" Relationship="BMWModel.FK_BiddingFloors_Requests" FromRole="BiddingFloor" ToRole="Request" />
   </EntityType>
-  <EntityType Name="Deal">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="SupplierId" Type="Int32" Nullable="false" />
-    <Property Name="ShopProductId" Type="Int32" Nullable="false" />
-    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-    <Property Name="Discount" Type="Int32" Nullable="false" />
-    <Property Name="Quantity" Type="Int32" Nullable="false" />
-    <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="DueDate" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-    <Property Name="Flag" Type="Int32" />
-    <NavigationProperty Name="User" Relationship="Self.FK_Deals_Users" FromRole="Deals" ToRole="Users" />
-    <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Deal" FromRole="Deals" ToRole="Orders" />
-    <NavigationProperty Name="WarehouseProduct" Relationship="BMWModel.FK_Deal_WarehouseProducts1" FromRole="Deal" ToRole="WarehouseProduct" />
-  </EntityType>
   <EntityType Name="Manufacturer">
     <Key>
       <PropertyRef Name="Id" />
@@ -54,8 +35,7 @@
     <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Image" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
     <Property Name="Flag" Type="Int32" />
-    <NavigationProperty Name="SysProducts" Relationship="Self.FK_SysProducts_Manufacturers" FromRole="Manufacturers" ToRole="SysProducts" />
-    <NavigationProperty Name="WarehouseProducts" Relationship="BMWModel.FK_ShopProducts_Manufacturers1" FromRole="Manufacturer" ToRole="WarehouseProduct" />
+    <NavigationProperty Name="SysProducts" Relationship="BMWModel.FK_SysProducts_Manufacturers" FromRole="Manufacturer" ToRole="SysProduct" />
   </EntityType>
   <EntityType Name="Order">
     <Key>
@@ -70,8 +50,8 @@
     <Property Name="Code" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="CreatedDate" Type="DateTime" Precision="3" />
     <Property Name="Flag" Type="Int32" />
-    <NavigationProperty Name="Deal" Relationship="Self.FK_Orders_Deal" FromRole="Orders" ToRole="Deals" />
     <NavigationProperty Name="User" Relationship="Self.FK_Orders_AspNetUsers" FromRole="Orders" ToRole="Users" />
+    <NavigationProperty Name="Deal" Relationship="BMWModel.FK_Orders_Deal" FromRole="Order" ToRole="Deal" />
   </EntityType>
   <EntityType Name="Reply">
     <Key>
@@ -85,20 +65,8 @@
     <Property Name="CreatedDate" Type="DateTime" Precision="3" />
     <Property Name="Flag" Type="Int32" />
     <NavigationProperty Name="User" Relationship="Self.FK_Replies_Users" FromRole="Replies" ToRole="Users" />
-    <NavigationProperty Name="ContractProducts" Relationship="BMWModel.FK_ContractProducts_Replies" FromRole="Reply" ToRole="ContractProduct" />
     <NavigationProperty Name="Request" Relationship="BMWModel.FK_Replies_Requests" FromRole="Reply" ToRole="Request" />
-  </EntityType>
-  <EntityType Name="RequestDescription">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="RequestId" Type="Int32" Nullable="false" />
-    <Property Name="Attribute" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Code" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-    <Property Name="Flag" Type="Int32" />
-    <NavigationProperty Name="Request" Relationship="BMWModel.FK_RequestDescriptions_Requests" FromRole="RequestDescription" ToRole="Request" />
+    <NavigationProperty Name="ContractProducts" Relationship="BMWModel.FK_ContractProducts_Replies" FromRole="Reply" ToRole="ContractProduct" />
   </EntityType>
   <EntityType Name="RequestProduct">
     <Key>
@@ -110,8 +78,8 @@
     <Property Name="Quantity" Type="Int32" />
     <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="Flag" Type="Int32" />
-    <NavigationProperty Name="SysProduct" Relationship="Self.FK_NeedProducts_SysProducts" FromRole="RequestProducts" ToRole="SysProducts" />
     <NavigationProperty Name="Request" Relationship="BMWModel.FK_NeedProducts_Requests" FromRole="RequestProduct" ToRole="Request" />
+    <NavigationProperty Name="SysProduct" Relationship="BMWModel.FK_NeedProducts_SysProducts" FromRole="RequestProduct" ToRole="SysProduct" />
   </EntityType>
   <EntityType Name="RequestType">
     <Key>
@@ -133,6 +101,10 @@
     <Property Name="CreatedDate" Type="DateTime" Precision="3" />
     <Property Name="Flag" Type="Int32" />
     <NavigationProperty Name="Request" Relationship="BMWModel.FK_Reviews_Requests" FromRole="Review" ToRole="Request" />
+    <Property Name="CustomerId" Type="Int32" Nullable="false" />
+    <Property Name="SupplierId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="BMWModel.FK_Reviews_Users" FromRole="Review" ToRole="User" />
+    <NavigationProperty Name="User1" Relationship="BMWModel.FK_Reviews_Users1" FromRole="Review" ToRole="User" />
   </EntityType>
   <EntityType Name="Role">
     <Key>
@@ -154,7 +126,7 @@
     <Property Name="Flag" Type="Int32" />
     <NavigationProperty Name="SysCategories1" Relationship="Self.FK_SysCategories_SysCategories" FromRole="SysCategories" ToRole="SysCategories1" />
     <NavigationProperty Name="SysCategory1" Relationship="Self.FK_SysCategories_SysCategories" FromRole="SysCategories1" ToRole="SysCategories" />
-    <NavigationProperty Name="SysProducts" Relationship="Self.FK_SysProducts_SysCategories" FromRole="SysCategories" ToRole="SysProducts" />
+    <NavigationProperty Name="SysProducts" Relationship="BMWModel.FK_SysProducts_SysCategories" FromRole="SysCategory" ToRole="SysProduct" />
   </EntityType>
   <EntityType Name="SysProductAttribute">
     <Key>
@@ -165,25 +137,7 @@
     <Property Name="Attribute" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Flag" Type="Int32" />
-    <NavigationProperty Name="SysProduct" Relationship="Self.FK_SysProductAttributes_SysProducts" FromRole="SysProductAttributes" ToRole="SysProducts" />
-  </EntityType>
-  <EntityType Name="SysProduct">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ManufacturerId" Type="Int32" Nullable="false" />
-    <Property Name="SysCategoryId" Type="Int32" Nullable="false" />
-    <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="SortOrder" Type="Int32" />
-    <Property Name="Flag" Type="Int32" />
-    <NavigationProperty Name="Manufacturer" Relationship="Self.FK_SysProducts_Manufacturers" FromRole="SysProducts" ToRole="Manufacturers" />
-    <NavigationProperty Name="RequestProducts" Relationship="Self.FK_NeedProducts_SysProducts" FromRole="SysProducts" ToRole="RequestProducts" />
-    <NavigationProperty Name="SysCategory" Relationship="Self.FK_SysProducts_SysCategories" FromRole="SysProducts" ToRole="SysCategories" />
-    <NavigationProperty Name="SysProductAttributes" Relationship="Self.FK_SysProductAttributes_SysProducts" FromRole="SysProducts" ToRole="SysProductAttributes" />
-    <Property Name="Image" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="WarehouseProducts" Relationship="BMWModel.FK_WarehouseProducts_SysProducts1" FromRole="SysProduct" ToRole="WarehouseProduct" />
+    <NavigationProperty Name="SysProduct" Relationship="BMWModel.FK_SysProductAttributes_SysProducts" FromRole="SysProductAttribute" ToRole="SysProduct" />
   </EntityType>
   <EntityType Name="UserClaim">
     <Key>
@@ -228,7 +182,6 @@
     <Property Name="AverageGrade" Type="Double" />
     <Property Name="Flag" Type="Int32" />
     <NavigationProperty Name="Attendences" Relationship="Self.FK_Attendences_AspNetUsers" FromRole="Users" ToRole="Attendences" />
-    <NavigationProperty Name="Deals" Relationship="Self.FK_Deals_Users" FromRole="Users" ToRole="Deals" />
     <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_AspNetUsers" FromRole="Users" ToRole="Orders" />
     <NavigationProperty Name="Replies" Relationship="Self.FK_Replies_Users" FromRole="Users" ToRole="Replies" />
     <NavigationProperty Name="UserClaims" Relationship="Self.FK_UserClaims_Users" FromRole="Users" ToRole="UserClaims" />
@@ -237,9 +190,14 @@
     <Property Name="Fullname" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
     <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
     <NavigationProperty Name="Warehouses" Relationship="BMWModel.FK_Shops_Users" FromRole="User" ToRole="Warehouse" />
-    <NavigationProperty Name="WarehouseProducts" Relationship="BMWModel.FK_WarehouseProducts_Users" FromRole="User" ToRole="WarehouseProduct" />
     <NavigationProperty Name="Requests" Relationship="BMWModel.FK_Requests_AspNetUsers" FromRole="User" ToRole="Request" />
     <NavigationProperty Name="Requests1" Relationship="BMWModel.FK_Requests_Users1" FromRole="User" ToRole="Request" />
+    <NavigationProperty Name="Deals" Relationship="BMWModel.FK_Deals_Users" FromRole="User" ToRole="Deal" />
+    <Property Name="Route" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="Administrative_area_level_2" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="Administrative_area_level_1" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Reviews" Relationship="BMWModel.FK_Reviews_Users" FromRole="User" ToRole="Review" />
+    <NavigationProperty Name="Reviews1" Relationship="BMWModel.FK_Reviews_Users1" FromRole="User" ToRole="Review" />
   </EntityType>
   <Association Name="FK_Attendences_AspNetUsers">
     <End Role="Users" Type="Self.User" Multiplicity="1" />
@@ -262,42 +220,6 @@
       </Principal>
       <Dependent Role="Attendences">
         <PropertyRef Name="RequestId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Deals_Users">
-    <End Role="Users" Type="Self.User" Multiplicity="1" />
-    <End Role="Deals" Type="Self.Deal" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Users">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Deals">
-        <PropertyRef Name="SupplierId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Orders_Deal">
-    <End Role="Deals" Type="Self.Deal" Multiplicity="1" />
-    <End Role="Orders" Type="Self.Order" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Deals">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Orders">
-        <PropertyRef Name="DealId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_SysProducts_Manufacturers">
-    <End Role="Manufacturers" Type="Self.Manufacturer" Multiplicity="1" />
-    <End Role="SysProducts" Type="Self.SysProduct" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Manufacturers">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="SysProducts">
-        <PropertyRef Name="ManufacturerId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -325,18 +247,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_NeedProducts_SysProducts">
-    <End Role="SysProducts" Type="Self.SysProduct" Multiplicity="1" />
-    <End Role="RequestProducts" Type="Self.RequestProduct" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="SysProducts">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="RequestProducts">
-        <PropertyRef Name="SysProductId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_SysCategories_SysCategories">
     <End Role="SysCategories" Type="Self.SysCategory" Multiplicity="0..1" />
     <End Role="SysCategories1" Type="Self.SysCategory" Multiplicity="*" />
@@ -346,30 +256,6 @@
       </Principal>
       <Dependent Role="SysCategories1">
         <PropertyRef Name="ParentId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_SysProducts_SysCategories">
-    <End Role="SysCategories" Type="Self.SysCategory" Multiplicity="1" />
-    <End Role="SysProducts" Type="Self.SysProduct" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="SysCategories">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="SysProducts">
-        <PropertyRef Name="SysCategoryId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_SysProductAttributes_SysProducts">
-    <End Role="SysProducts" Type="Self.SysProduct" Multiplicity="1" />
-    <End Role="SysProductAttributes" Type="Self.SysProductAttribute" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="SysProducts">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="SysProductAttributes">
-        <PropertyRef Name="SysProductId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -404,18 +290,15 @@
   <EntityContainer Name="BMWEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Attendences" EntityType="Self.Attendence" />
     <EntitySet Name="BiddingFloors" EntityType="Self.BiddingFloor" />
-    <EntitySet Name="Deals" EntityType="Self.Deal" />
     <EntitySet Name="Manufacturers" EntityType="Self.Manufacturer" />
     <EntitySet Name="Orders" EntityType="Self.Order" />
     <EntitySet Name="Replies" EntityType="Self.Reply" />
-    <EntitySet Name="RequestDescriptions" EntityType="Self.RequestDescription" />
     <EntitySet Name="RequestProducts" EntityType="Self.RequestProduct" />
     <EntitySet Name="RequestTypes" EntityType="Self.RequestType" />
     <EntitySet Name="Reviews" EntityType="Self.Review" />
     <EntitySet Name="Roles" EntityType="Self.Role" />
     <EntitySet Name="SysCategories" EntityType="Self.SysCategory" />
     <EntitySet Name="SysProductAttributes" EntityType="Self.SysProductAttribute" />
-    <EntitySet Name="SysProducts" EntityType="Self.SysProduct" />
     <EntitySet Name="UserClaims" EntityType="Self.UserClaim" />
     <EntitySet Name="UserLogins" EntityType="Self.UserLogin" />
     <EntitySet Name="Users" EntityType="Self.User" />
@@ -427,18 +310,6 @@
       <End Role="BiddingFloors" EntitySet="BiddingFloors" />
       <End Role="Attendences" EntitySet="Attendences" />
     </AssociationSet>
-    <AssociationSet Name="FK_Deals_Users" Association="Self.FK_Deals_Users">
-      <End Role="Users" EntitySet="Users" />
-      <End Role="Deals" EntitySet="Deals" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Orders_Deal" Association="Self.FK_Orders_Deal">
-      <End Role="Deals" EntitySet="Deals" />
-      <End Role="Orders" EntitySet="Orders" />
-    </AssociationSet>
-    <AssociationSet Name="FK_SysProducts_Manufacturers" Association="Self.FK_SysProducts_Manufacturers">
-      <End Role="Manufacturers" EntitySet="Manufacturers" />
-      <End Role="SysProducts" EntitySet="SysProducts" />
-    </AssociationSet>
     <AssociationSet Name="FK_Orders_AspNetUsers" Association="Self.FK_Orders_AspNetUsers">
       <End Role="Users" EntitySet="Users" />
       <End Role="Orders" EntitySet="Orders" />
@@ -447,21 +318,9 @@
       <End Role="Users" EntitySet="Users" />
       <End Role="Replies" EntitySet="Replies" />
     </AssociationSet>
-    <AssociationSet Name="FK_NeedProducts_SysProducts" Association="Self.FK_NeedProducts_SysProducts">
-      <End Role="SysProducts" EntitySet="SysProducts" />
-      <End Role="RequestProducts" EntitySet="RequestProducts" />
-    </AssociationSet>
     <AssociationSet Name="FK_SysCategories_SysCategories" Association="Self.FK_SysCategories_SysCategories">
       <End Role="SysCategories" EntitySet="SysCategories" />
       <End Role="SysCategories1" EntitySet="SysCategories" />
-    </AssociationSet>
-    <AssociationSet Name="FK_SysProducts_SysCategories" Association="Self.FK_SysProducts_SysCategories">
-      <End Role="SysCategories" EntitySet="SysCategories" />
-      <End Role="SysProducts" EntitySet="SysProducts" />
-    </AssociationSet>
-    <AssociationSet Name="FK_SysProductAttributes_SysProducts" Association="Self.FK_SysProductAttributes_SysProducts">
-      <End Role="SysProducts" EntitySet="SysProducts" />
-      <End Role="SysProductAttributes" EntitySet="SysProductAttributes" />
     </AssociationSet>
     <AssociationSet Name="FK_UserClaims_Users" Association="Self.FK_UserClaims_Users">
       <End Role="Users" EntitySet="Users" />
@@ -475,40 +334,10 @@
       <End Role="Roles" EntitySet="Roles" />
       <End Role="Users" EntitySet="Users" />
     </AssociationSet>
-    <EntitySet Name="WarehouseProducts" EntityType="BMWModel.WarehouseProduct" />
     <EntitySet Name="Warehouses" EntityType="BMWModel.Warehouse" />
-    <AssociationSet Name="FK_Deal_WarehouseProducts1" Association="BMWModel.FK_Deal_WarehouseProducts1">
-      <End Role="WarehouseProduct" EntitySet="WarehouseProducts" />
-      <End Role="Deal" EntitySet="Deals" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ShopProducts_Manufacturers1" Association="BMWModel.FK_ShopProducts_Manufacturers1">
-      <End Role="Manufacturer" EntitySet="Manufacturers" />
-      <End Role="WarehouseProduct" EntitySet="WarehouseProducts" />
-    </AssociationSet>
-    <AssociationSet Name="FK_WarehouseProducts_SysProducts1" Association="BMWModel.FK_WarehouseProducts_SysProducts1">
-      <End Role="SysProduct" EntitySet="SysProducts" />
-      <End Role="WarehouseProduct" EntitySet="WarehouseProducts" />
-    </AssociationSet>
     <AssociationSet Name="FK_Shops_Users" Association="BMWModel.FK_Shops_Users">
       <End Role="User" EntitySet="Users" />
       <End Role="Warehouse" EntitySet="Warehouses" />
-    </AssociationSet>
-    <AssociationSet Name="FK_WarehouseProducts_Users" Association="BMWModel.FK_WarehouseProducts_Users">
-      <End Role="User" EntitySet="Users" />
-      <End Role="WarehouseProduct" EntitySet="WarehouseProducts" />
-    </AssociationSet>
-    <EntitySet Name="ContractProducts" EntityType="BMWModel.ContractProduct" />
-    <AssociationSet Name="FK_ContractProducts_Attendences" Association="BMWModel.FK_ContractProducts_Attendences">
-      <End Role="Attendence" EntitySet="Attendences" />
-      <End Role="ContractProduct" EntitySet="ContractProducts" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ContractProducts_Replies" Association="BMWModel.FK_ContractProducts_Replies">
-      <End Role="Reply" EntitySet="Replies" />
-      <End Role="ContractProduct" EntitySet="ContractProducts" />
-    </AssociationSet>
-    <AssociationSet Name="FK_OfferProducts_WarehouseProducts" Association="BMWModel.FK_OfferProducts_WarehouseProducts">
-      <End Role="WarehouseProduct" EntitySet="WarehouseProducts" />
-      <End Role="ContractProduct" EntitySet="ContractProducts" />
     </AssociationSet>
     <EntitySet Name="Requests" EntityType="BMWModel.Request" />
     <AssociationSet Name="FK_BiddingFloors_Requests" Association="BMWModel.FK_BiddingFloors_Requests">
@@ -518,10 +347,6 @@
     <AssociationSet Name="FK_Replies_Requests" Association="BMWModel.FK_Replies_Requests">
       <End Role="Request" EntitySet="Requests" />
       <End Role="Reply" EntitySet="Replies" />
-    </AssociationSet>
-    <AssociationSet Name="FK_RequestDescriptions_Requests" Association="BMWModel.FK_RequestDescriptions_Requests">
-      <End Role="Request" EntitySet="Requests" />
-      <End Role="RequestDescription" EntitySet="RequestDescriptions" />
     </AssociationSet>
     <AssociationSet Name="FK_NeedProducts_Requests" Association="BMWModel.FK_NeedProducts_Requests">
       <End Role="Request" EntitySet="Requests" />
@@ -543,72 +368,86 @@
       <End Role="Request" EntitySet="Requests" />
       <End Role="Review" EntitySet="Reviews" />
     </AssociationSet>
+    <EntitySet Name="ContractProducts" EntityType="BMWModel.ContractProduct" />
+    <AssociationSet Name="FK_ContractProducts_Attendences" Association="BMWModel.FK_ContractProducts_Attendences">
+      <End Role="Attendence" EntitySet="Attendences" />
+      <End Role="ContractProduct" EntitySet="ContractProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ContractProducts_Replies" Association="BMWModel.FK_ContractProducts_Replies">
+      <End Role="Reply" EntitySet="Replies" />
+      <End Role="ContractProduct" EntitySet="ContractProducts" />
+    </AssociationSet>
+    <EntitySet Name="Deals" EntityType="BMWModel.Deal" />
+    <AssociationSet Name="FK_Deals_Users" Association="BMWModel.FK_Deals_Users">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Deal" EntitySet="Deals" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Orders_Deal" Association="BMWModel.FK_Orders_Deal">
+      <End Role="Deal" EntitySet="Deals" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <EntitySet Name="WarehouseProducts" EntityType="BMWModel.WarehouseProduct" />
+    <AssociationSet Name="FK_OfferProducts_WarehouseProducts" Association="BMWModel.FK_OfferProducts_WarehouseProducts">
+      <End Role="WarehouseProduct" EntitySet="WarehouseProducts" />
+      <End Role="ContractProduct" EntitySet="ContractProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Deal_WarehouseProducts" Association="BMWModel.FK_Deal_WarehouseProducts">
+      <End Role="WarehouseProduct" EntitySet="WarehouseProducts" />
+      <End Role="Deal" EntitySet="Deals" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WarehouseProducts_Warehouses" Association="BMWModel.FK_WarehouseProducts_Warehouses">
+      <End Role="Warehouse" EntitySet="Warehouses" />
+      <End Role="WarehouseProduct" EntitySet="WarehouseProducts" />
+    </AssociationSet>
+    <EntitySet Name="HouseTypes" EntityType="BMWModel.HouseType" />
+    <AssociationSet Name="FK_Requests_HouseType" Association="BMWModel.FK_Requests_HouseType">
+      <End Role="HouseType" EntitySet="HouseTypes" />
+      <End Role="Request" EntitySet="Requests" />
+    </AssociationSet>
+    <EntitySet Name="SysProducts" EntityType="BMWModel.SysProduct" />
+    <AssociationSet Name="FK_SysProducts_Manufacturers" Association="BMWModel.FK_SysProducts_Manufacturers">
+      <End Role="Manufacturer" EntitySet="Manufacturers" />
+      <End Role="SysProduct" EntitySet="SysProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NeedProducts_SysProducts" Association="BMWModel.FK_NeedProducts_SysProducts">
+      <End Role="SysProduct" EntitySet="SysProducts" />
+      <End Role="RequestProduct" EntitySet="RequestProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SysProducts_SysCategories" Association="BMWModel.FK_SysProducts_SysCategories">
+      <End Role="SysCategory" EntitySet="SysCategories" />
+      <End Role="SysProduct" EntitySet="SysProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SysProductAttributes_SysProducts" Association="BMWModel.FK_SysProductAttributes_SysProducts">
+      <End Role="SysProduct" EntitySet="SysProducts" />
+      <End Role="SysProductAttribute" EntitySet="SysProductAttributes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WarehouseProducts_SysProducts" Association="BMWModel.FK_WarehouseProducts_SysProducts">
+      <End Role="SysProduct" EntitySet="SysProducts" />
+      <End Role="WarehouseProduct" EntitySet="WarehouseProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Reviews_Users" Association="BMWModel.FK_Reviews_Users">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Review" EntitySet="Reviews" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Reviews_Users1" Association="BMWModel.FK_Reviews_Users1">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Review" EntitySet="Reviews" />
+    </AssociationSet>
   </EntityContainer>
-  <EntityType Name="WarehouseProduct">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="SupplierId" Type="Int32" Nullable="false" />
-    <Property Name="SysProductId" Type="Int32" Nullable="false" />
-    <Property Name="ShopCategoryId" Type="Int32" Nullable="false" />
-    <Property Name="Quantity" Type="Int32" Nullable="false" />
-    <Property Name="PricePerUnit" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="ManufacturerId" Type="Int32" Nullable="false" />
-    <Property Name="SortOrder" Type="Int32" />
-    <Property Name="Flag" Type="Int32" />
-    <NavigationProperty Name="Deals" Relationship="BMWModel.FK_Deal_WarehouseProducts1" FromRole="WarehouseProduct" ToRole="Deal" />
-    <NavigationProperty Name="Manufacturer" Relationship="BMWModel.FK_ShopProducts_Manufacturers1" FromRole="WarehouseProduct" ToRole="Manufacturer" />
-    <NavigationProperty Name="SysProduct" Relationship="BMWModel.FK_WarehouseProducts_SysProducts1" FromRole="WarehouseProduct" ToRole="SysProduct" />
-    <NavigationProperty Name="User" Relationship="BMWModel.FK_WarehouseProducts_Users" FromRole="WarehouseProduct" ToRole="User" />
-    <NavigationProperty Name="ContractProducts" Relationship="BMWModel.FK_OfferProducts_WarehouseProducts" FromRole="WarehouseProduct" ToRole="ContractProduct" />
-  </EntityType>
   <EntityType Name="Warehouse">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="SupplierId" Type="Int32" Nullable="false" />
-    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
     <Property Name="Flag" Type="Int32" />
     <NavigationProperty Name="User" Relationship="BMWModel.FK_Shops_Users" FromRole="Warehouse" ToRole="User" />
+    <Property Name="Route" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="Administrative_area_level_2" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="Administrative_area_level_1" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="WarehouseProducts" Relationship="BMWModel.FK_WarehouseProducts_Warehouses" FromRole="Warehouse" ToRole="WarehouseProduct" />
   </EntityType>
-  <Association Name="FK_Deal_WarehouseProducts1">
-    <End Type="BMWModel.WarehouseProduct" Role="WarehouseProduct" Multiplicity="1" />
-    <End Type="BMWModel.Deal" Role="Deal" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="WarehouseProduct">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Deal">
-        <PropertyRef Name="ShopProductId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ShopProducts_Manufacturers1">
-    <End Type="BMWModel.Manufacturer" Role="Manufacturer" Multiplicity="1" />
-    <End Type="BMWModel.WarehouseProduct" Role="WarehouseProduct" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Manufacturer">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="WarehouseProduct">
-        <PropertyRef Name="ManufacturerId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_WarehouseProducts_SysProducts1">
-    <End Type="BMWModel.SysProduct" Role="SysProduct" Multiplicity="1" />
-    <End Type="BMWModel.WarehouseProduct" Role="WarehouseProduct" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="SysProduct">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="WarehouseProduct">
-        <PropertyRef Name="SysProductId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Shops_Users">
     <End Type="BMWModel.User" Role="User" Multiplicity="1" />
     <End Type="BMWModel.Warehouse" Role="Warehouse" Multiplicity="*" />
@@ -618,69 +457,6 @@
       </Principal>
       <Dependent Role="Warehouse">
         <PropertyRef Name="SupplierId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_WarehouseProducts_Users">
-    <End Type="BMWModel.User" Role="User" Multiplicity="1" />
-    <End Type="BMWModel.WarehouseProduct" Role="WarehouseProduct" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="WarehouseProduct">
-        <PropertyRef Name="SupplierId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <EntityType Name="ContractProduct">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ReplyId" Type="Int32" />
-    <Property Name="AttendenceId" Type="Int32" />
-    <Property Name="WarehouseProductId" Type="Int32" Nullable="false" />
-    <Property Name="Quantity" Type="Int32" Nullable="false" />
-    <Property Name="Price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-    <Property Name="Flag" Type="Int32" />
-    <NavigationProperty Name="Attendence" Relationship="BMWModel.FK_ContractProducts_Attendences" FromRole="ContractProduct" ToRole="Attendence" />
-    <NavigationProperty Name="Reply" Relationship="BMWModel.FK_ContractProducts_Replies" FromRole="ContractProduct" ToRole="Reply" />
-    <NavigationProperty Name="WarehouseProduct" Relationship="BMWModel.FK_OfferProducts_WarehouseProducts" FromRole="ContractProduct" ToRole="WarehouseProduct" />
-  </EntityType>
-  <Association Name="FK_ContractProducts_Attendences">
-    <End Type="BMWModel.Attendence" Role="Attendence" Multiplicity="0..1" />
-    <End Type="BMWModel.ContractProduct" Role="ContractProduct" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Attendence">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="ContractProduct">
-        <PropertyRef Name="AttendenceId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ContractProducts_Replies">
-    <End Type="BMWModel.Reply" Role="Reply" Multiplicity="0..1" />
-    <End Type="BMWModel.ContractProduct" Role="ContractProduct" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Reply">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="ContractProduct">
-        <PropertyRef Name="ReplyId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_OfferProducts_WarehouseProducts">
-    <End Type="BMWModel.WarehouseProduct" Role="WarehouseProduct" Multiplicity="1" />
-    <End Type="BMWModel.ContractProduct" Role="ContractProduct" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="WarehouseProduct">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="ContractProduct">
-        <PropertyRef Name="WarehouseProductId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -702,12 +478,14 @@
     <Property Name="Flag" Type="Int32" />
     <NavigationProperty Name="BiddingFloor" Relationship="BMWModel.FK_BiddingFloors_Requests" FromRole="Request" ToRole="BiddingFloor" />
     <NavigationProperty Name="Replies" Relationship="BMWModel.FK_Replies_Requests" FromRole="Request" ToRole="Reply" />
-    <NavigationProperty Name="RequestDescriptions" Relationship="BMWModel.FK_RequestDescriptions_Requests" FromRole="Request" ToRole="RequestDescription" />
     <NavigationProperty Name="RequestProducts" Relationship="BMWModel.FK_NeedProducts_Requests" FromRole="Request" ToRole="RequestProduct" />
     <NavigationProperty Name="User" Relationship="BMWModel.FK_Requests_AspNetUsers" FromRole="Request" ToRole="User" />
     <NavigationProperty Name="RequestType" Relationship="BMWModel.FK_Requests_RequestTypes" FromRole="Request" ToRole="RequestType" />
     <NavigationProperty Name="User1" Relationship="BMWModel.FK_Requests_Users1" FromRole="Request" ToRole="User" />
     <NavigationProperty Name="Review" Relationship="BMWModel.FK_Reviews_Requests" FromRole="Request" ToRole="Review" />
+    <Property Name="Descriptions" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="TypeOfHouse" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="HouseType" Relationship="BMWModel.FK_Requests_HouseType" FromRole="Request" ToRole="HouseType" />
   </EntityType>
   <Association Name="FK_BiddingFloors_Requests">
     <End Type="BMWModel.Request" Role="Request" Multiplicity="1" />
@@ -729,18 +507,6 @@
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="Reply">
-        <PropertyRef Name="RequestId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_RequestDescriptions_Requests">
-    <End Type="BMWModel.Request" Role="Request" Multiplicity="1" />
-    <End Type="BMWModel.RequestDescription" Role="RequestDescription" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Request">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="RequestDescription">
         <PropertyRef Name="RequestId" />
       </Dependent>
     </ReferentialConstraint>
@@ -802,6 +568,263 @@
       </Principal>
       <Dependent Role="Review">
         <PropertyRef Name="RequestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ContractProduct">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ReplyId" Type="Int32" />
+    <Property Name="AttendenceId" Type="Int32" />
+    <Property Name="WarehouseProductId" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="Flag" Type="Int32" />
+    <NavigationProperty Name="Attendence" Relationship="BMWModel.FK_ContractProducts_Attendences" FromRole="ContractProduct" ToRole="Attendence" />
+    <NavigationProperty Name="Reply" Relationship="BMWModel.FK_ContractProducts_Replies" FromRole="ContractProduct" ToRole="Reply" />
+    <NavigationProperty Name="WarehouseProduct" Relationship="BMWModel.FK_OfferProducts_WarehouseProducts" FromRole="ContractProduct" ToRole="WarehouseProduct" />
+  </EntityType>
+  <Association Name="FK_ContractProducts_Attendences">
+    <End Type="BMWModel.Attendence" Role="Attendence" Multiplicity="0..1" />
+    <End Type="BMWModel.ContractProduct" Role="ContractProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Attendence">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ContractProduct">
+        <PropertyRef Name="AttendenceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ContractProducts_Replies">
+    <End Type="BMWModel.Reply" Role="Reply" Multiplicity="0..1" />
+    <End Type="BMWModel.ContractProduct" Role="ContractProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Reply">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ContractProduct">
+        <PropertyRef Name="ReplyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Deal">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SupplierId" Type="Int32" Nullable="false" />
+    <Property Name="WarehouseProductId" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="Discount" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DueDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="Flag" Type="Int32" />
+    <NavigationProperty Name="User" Relationship="BMWModel.FK_Deals_Users" FromRole="Deal" ToRole="User" />
+    <NavigationProperty Name="Orders" Relationship="BMWModel.FK_Orders_Deal" FromRole="Deal" ToRole="Order" />
+    <NavigationProperty Name="WarehouseProduct" Relationship="BMWModel.FK_Deal_WarehouseProducts" FromRole="Deal" ToRole="WarehouseProduct" />
+  </EntityType>
+  <Association Name="FK_Deals_Users">
+    <End Type="BMWModel.User" Role="User" Multiplicity="1" />
+    <End Type="BMWModel.Deal" Role="Deal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Deal">
+        <PropertyRef Name="SupplierId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Orders_Deal">
+    <End Type="BMWModel.Deal" Role="Deal" Multiplicity="1" />
+    <End Type="BMWModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Deal">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="DealId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="WarehouseProduct">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="WarehouseId" Type="Int32" Nullable="false" />
+    <Property Name="SysProductId" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="UnitPrice" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Flag" Type="Int32" />
+    <NavigationProperty Name="ContractProducts" Relationship="BMWModel.FK_OfferProducts_WarehouseProducts" FromRole="WarehouseProduct" ToRole="ContractProduct" />
+    <NavigationProperty Name="Deals" Relationship="BMWModel.FK_Deal_WarehouseProducts" FromRole="WarehouseProduct" ToRole="Deal" />
+    <NavigationProperty Name="Warehouse" Relationship="BMWModel.FK_WarehouseProducts_Warehouses" FromRole="WarehouseProduct" ToRole="Warehouse" />
+    <NavigationProperty Name="SysProduct" Relationship="BMWModel.FK_WarehouseProducts_SysProducts" FromRole="WarehouseProduct" ToRole="SysProduct" />
+  </EntityType>
+  <Association Name="FK_OfferProducts_WarehouseProducts">
+    <End Type="BMWModel.WarehouseProduct" Role="WarehouseProduct" Multiplicity="1" />
+    <End Type="BMWModel.ContractProduct" Role="ContractProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WarehouseProduct">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ContractProduct">
+        <PropertyRef Name="WarehouseProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Deal_WarehouseProducts">
+    <End Type="BMWModel.WarehouseProduct" Role="WarehouseProduct" Multiplicity="1" />
+    <End Type="BMWModel.Deal" Role="Deal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WarehouseProduct">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Deal">
+        <PropertyRef Name="WarehouseProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WarehouseProducts_Warehouses">
+    <End Type="BMWModel.Warehouse" Role="Warehouse" Multiplicity="1" />
+    <End Type="BMWModel.WarehouseProduct" Role="WarehouseProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Warehouse">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="WarehouseProduct">
+        <PropertyRef Name="WarehouseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="HouseType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Requests" Relationship="BMWModel.FK_Requests_HouseType" FromRole="HouseType" ToRole="Request" />
+  </EntityType>
+  <Association Name="FK_Requests_HouseType">
+    <End Type="BMWModel.HouseType" Role="HouseType" Multiplicity="1" />
+    <End Type="BMWModel.Request" Role="Request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HouseType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Request">
+        <PropertyRef Name="TypeOfHouse" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="SysProduct">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ManufacturerId" Type="Int32" Nullable="false" />
+    <Property Name="SysCategoryId" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="UnitPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="UnitName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Image" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="Flag" Type="Int32" />
+    <NavigationProperty Name="Manufacturer" Relationship="BMWModel.FK_SysProducts_Manufacturers" FromRole="SysProduct" ToRole="Manufacturer" />
+    <NavigationProperty Name="RequestProducts" Relationship="BMWModel.FK_NeedProducts_SysProducts" FromRole="SysProduct" ToRole="RequestProduct" />
+    <NavigationProperty Name="SysCategory" Relationship="BMWModel.FK_SysProducts_SysCategories" FromRole="SysProduct" ToRole="SysCategory" />
+    <NavigationProperty Name="SysProductAttributes" Relationship="BMWModel.FK_SysProductAttributes_SysProducts" FromRole="SysProduct" ToRole="SysProductAttribute" />
+    <NavigationProperty Name="WarehouseProducts" Relationship="BMWModel.FK_WarehouseProducts_SysProducts" FromRole="SysProduct" ToRole="WarehouseProduct" />
+  </EntityType>
+  <Association Name="FK_SysProducts_Manufacturers">
+    <End Type="BMWModel.Manufacturer" Role="Manufacturer" Multiplicity="1" />
+    <End Type="BMWModel.SysProduct" Role="SysProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Manufacturer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SysProduct">
+        <PropertyRef Name="ManufacturerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NeedProducts_SysProducts">
+    <End Type="BMWModel.SysProduct" Role="SysProduct" Multiplicity="1" />
+    <End Type="BMWModel.RequestProduct" Role="RequestProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SysProduct">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RequestProduct">
+        <PropertyRef Name="SysProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SysProducts_SysCategories">
+    <End Type="BMWModel.SysCategory" Role="SysCategory" Multiplicity="1" />
+    <End Type="BMWModel.SysProduct" Role="SysProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SysCategory">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SysProduct">
+        <PropertyRef Name="SysCategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SysProductAttributes_SysProducts">
+    <End Type="BMWModel.SysProduct" Role="SysProduct" Multiplicity="1" />
+    <End Type="BMWModel.SysProductAttribute" Role="SysProductAttribute" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SysProduct">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SysProductAttribute">
+        <PropertyRef Name="SysProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WarehouseProducts_SysProducts">
+    <End Type="BMWModel.SysProduct" Role="SysProduct" Multiplicity="1" />
+    <End Type="BMWModel.WarehouseProduct" Role="WarehouseProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SysProduct">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="WarehouseProduct">
+        <PropertyRef Name="SysProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Reviews_Users">
+    <End Type="BMWModel.User" Role="User" Multiplicity="1" />
+    <End Type="BMWModel.Review" Role="Review" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Review">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Reviews_Users1">
+    <End Type="BMWModel.User" Role="User" Multiplicity="1" />
+    <End Type="BMWModel.Review" Role="Review" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Review">
+        <PropertyRef Name="SupplierId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

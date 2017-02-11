@@ -25,23 +25,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Deals">
-      <EntityTypeMapping TypeName="BMWModel.Deal">
-        <MappingFragment StoreEntitySet="Deals">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
-          <ScalarProperty Name="ShopProductId" ColumnName="ShopProductId" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Price" ColumnName="Price" />
-          <ScalarProperty Name="Discount" ColumnName="Discount" />
-          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-          <ScalarProperty Name="DueDate" ColumnName="DueDate" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="Flag" ColumnName="Flag" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Manufacturers">
       <EntityTypeMapping TypeName="BMWModel.Manufacturer">
         <MappingFragment StoreEntitySet="Manufacturers">
@@ -80,18 +63,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="RequestDescriptions">
-      <EntityTypeMapping TypeName="BMWModel.RequestDescription">
-        <MappingFragment StoreEntitySet="RequestDescriptions">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="RequestId" ColumnName="RequestId" />
-          <ScalarProperty Name="Attribute" ColumnName="Attribute" />
-          <ScalarProperty Name="Value" ColumnName="Value" />
-          <ScalarProperty Name="Code" ColumnName="Code" />
-          <ScalarProperty Name="Flag" ColumnName="Flag" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="RequestProducts">
       <EntityTypeMapping TypeName="BMWModel.RequestProduct">
         <MappingFragment StoreEntitySet="RequestProducts">
@@ -115,6 +86,8 @@
     <EntitySetMapping Name="Reviews">
       <EntityTypeMapping TypeName="BMWModel.Review">
         <MappingFragment StoreEntitySet="Reviews">
+          <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
           <ScalarProperty Name="RequestId" ColumnName="RequestId" />
           <ScalarProperty Name="PriceGrade" ColumnName="PriceGrade" />
           <ScalarProperty Name="QualityGrade" ColumnName="QualityGrade" />
@@ -156,20 +129,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="SysProducts">
-      <EntityTypeMapping TypeName="BMWModel.SysProduct">
-        <MappingFragment StoreEntitySet="SysProducts">
-          <ScalarProperty Name="Image" ColumnName="Image" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="ManufacturerId" ColumnName="ManufacturerId" />
-          <ScalarProperty Name="SysCategoryId" ColumnName="SysCategoryId" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Price" ColumnName="Price" />
-          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
-          <ScalarProperty Name="Flag" ColumnName="Flag" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="UserClaims">
       <EntityTypeMapping TypeName="BMWModel.UserClaim">
         <MappingFragment StoreEntitySet="UserClaims">
@@ -192,6 +151,9 @@
     <EntitySetMapping Name="Users">
       <EntityTypeMapping TypeName="BMWModel.User">
         <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="Administrative_area_level_1" ColumnName="Administrative_area_level_1" />
+          <ScalarProperty Name="Administrative_area_level_2" ColumnName="Administrative_area_level_2" />
+          <ScalarProperty Name="Route" ColumnName="Route" />
           <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
           <ScalarProperty Name="Fullname" ColumnName="Fullname" />
           <ScalarProperty Name="Id" ColumnName="Id" />
@@ -222,27 +184,35 @@
         <ScalarProperty Name="Id" ColumnName="UserId" />
       </EndProperty>
     </AssociationSetMapping>
-    <EntitySetMapping Name="WarehouseProducts">
-      <EntityTypeMapping TypeName="BMWModel.WarehouseProduct">
-        <MappingFragment StoreEntitySet="WarehouseProducts">
+    <EntitySetMapping Name="Warehouses">
+      <EntityTypeMapping TypeName="BMWModel.Warehouse">
+        <MappingFragment StoreEntitySet="Warehouses">
+          <ScalarProperty Name="Administrative_area_level_1" ColumnName="Administrative_area_level_1" />
+          <ScalarProperty Name="Administrative_area_level_2" ColumnName="Administrative_area_level_2" />
+          <ScalarProperty Name="Route" ColumnName="Route" />
           <ScalarProperty Name="Flag" ColumnName="Flag" />
-          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
-          <ScalarProperty Name="ManufacturerId" ColumnName="ManufacturerId" />
-          <ScalarProperty Name="PricePerUnit" ColumnName="PricePerUnit" />
-          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-          <ScalarProperty Name="ShopCategoryId" ColumnName="ShopCategoryId" />
-          <ScalarProperty Name="SysProductId" ColumnName="SysProductId" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
           <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Warehouses">
-      <EntityTypeMapping TypeName="BMWModel.Warehouse">
-        <MappingFragment StoreEntitySet="Warehouses">
+    <EntitySetMapping Name="Requests">
+      <EntityTypeMapping TypeName="BMWModel.Request">
+        <MappingFragment StoreEntitySet="Requests">
+          <ScalarProperty Name="TypeOfHouse" ColumnName="TypeOfHouse" />
+          <ScalarProperty Name="Descriptions" ColumnName="Descriptions" />
           <ScalarProperty Name="Flag" ColumnName="Flag" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="RequestTypeId" ColumnName="RequestTypeId" />
+          <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
+          <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
+          <ScalarProperty Name="DeliveryAddress" ColumnName="DeliveryAddress" />
+          <ScalarProperty Name="CustomerPrice" ColumnName="CustomerPrice" />
           <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -260,20 +230,55 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Requests">
-      <EntityTypeMapping TypeName="BMWModel.Request">
-        <MappingFragment StoreEntitySet="Requests">
+    <EntitySetMapping Name="Deals">
+      <EntityTypeMapping TypeName="BMWModel.Deal">
+        <MappingFragment StoreEntitySet="Deals">
           <ScalarProperty Name="Flag" ColumnName="Flag" />
-          <ScalarProperty Name="Title" ColumnName="Title" />
-          <ScalarProperty Name="RequestTypeId" ColumnName="RequestTypeId" />
-          <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
           <ScalarProperty Name="DueDate" ColumnName="DueDate" />
           <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-          <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
-          <ScalarProperty Name="DeliveryAddress" ColumnName="DeliveryAddress" />
-          <ScalarProperty Name="CustomerPrice" ColumnName="CustomerPrice" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Discount" ColumnName="Discount" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="WarehouseProductId" ColumnName="WarehouseProductId" />
           <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
-          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WarehouseProducts">
+      <EntityTypeMapping TypeName="BMWModel.WarehouseProduct">
+        <MappingFragment StoreEntitySet="WarehouseProducts">
+          <ScalarProperty Name="Flag" ColumnName="Flag" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="SysProductId" ColumnName="SysProductId" />
+          <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HouseTypes">
+      <EntityTypeMapping TypeName="BMWModel.HouseType">
+        <MappingFragment StoreEntitySet="HouseType">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SysProducts">
+      <EntityTypeMapping TypeName="BMWModel.SysProduct">
+        <MappingFragment StoreEntitySet="SysProducts">
+          <ScalarProperty Name="Flag" ColumnName="Flag" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="SysCategoryId" ColumnName="SysCategoryId" />
+          <ScalarProperty Name="ManufacturerId" ColumnName="ManufacturerId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

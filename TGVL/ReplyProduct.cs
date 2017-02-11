@@ -12,17 +12,17 @@ namespace TGVL
     using System;
     using System.Collections.Generic;
     
-    public partial class ContractProduct
+    public partial class ReplyProduct
     {
         public int Id { get; set; }
         public Nullable<int> ReplyId { get; set; }
-        public Nullable<int> AttendenceId { get; set; }
+        public Nullable<int> BidLetterId { get; set; }
         public int WarehouseProductId { get; set; }
         public int Quantity { get; set; }
         public decimal Price { get; set; }
         public Nullable<int> Flag { get; set; }
     
-        public virtual Attendence Attendence { get; set; }
+        public virtual BidLetter BidLetter { get; set; }
         public virtual Reply Reply { get; set; }
         public virtual WarehouseProduct WarehouseProduct { get; set; }
     }

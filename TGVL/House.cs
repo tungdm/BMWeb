@@ -12,21 +12,18 @@ namespace TGVL
     using System;
     using System.Collections.Generic;
     
-    public partial class BiddingFloor
+    public partial class House
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public BiddingFloor()
+        public House()
         {
-            this.Attendences = new HashSet<Attendence>();
+            this.Requests = new HashSet<Request>();
         }
     
-        public int RequestId { get; set; }
-        public decimal LowestPrice { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
-        public Nullable<int> Flag { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Attendence> Attendences { get; set; }
-        public virtual Request Request { get; set; }
+        public virtual ICollection<Request> Requests { get; set; }
     }
 }

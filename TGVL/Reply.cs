@@ -17,7 +17,7 @@ namespace TGVL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Reply()
         {
-            this.ContractProducts = new HashSet<ContractProduct>();
+            this.ReplyProducts = new HashSet<ReplyProduct>();
         }
     
         public int Id { get; set; }
@@ -31,6 +31,6 @@ namespace TGVL
         public virtual User User { get; set; }
         public virtual Request Request { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ContractProduct> ContractProducts { get; set; }
+        public virtual ICollection<ReplyProduct> ReplyProducts { get; set; }
     }
 }
