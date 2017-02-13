@@ -18,10 +18,10 @@ namespace TGVL
         public Nullable<int> RequestId { get; set; }
         public int SysProductId { get; set; }
         public Nullable<int> Quantity { get; set; }
-        public Nullable<decimal> Price { get; set; }
+        public Nullable<decimal> UnitPrice { get; set; }
         public Nullable<int> Flag { get; set; }
     
-        public virtual Request Request { get; set; }
         public virtual SysProduct SysProduct { get; set; }
+        public virtual Request Request { get; set; }
     }
 }

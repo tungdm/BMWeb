@@ -28,23 +28,23 @@ namespace TGVL
         public virtual DbSet<Manufacturer> Manufacturers { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<Reply> Replies { get; set; }
-        public virtual DbSet<RequestProduct> RequestProducts { get; set; }
         public virtual DbSet<RequestType> RequestTypes { get; set; }
         public virtual DbSet<Review> Reviews { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<SysCategory> SysCategories { get; set; }
-        public virtual DbSet<SysProductAttribute> SysProductAttributes { get; set; }
         public virtual DbSet<UserClaim> UserClaims { get; set; }
         public virtual DbSet<UserLogin> UserLogins { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Warehouse> Warehouses { get; set; }
-        public virtual DbSet<Request> Requests { get; set; }
         public virtual DbSet<WarehouseProduct> WarehouseProducts { get; set; }
-        public virtual DbSet<BidLetter> BidLetters { get; set; }
         public virtual DbSet<BidRequest> BidRequests { get; set; }
         public virtual DbSet<House> Houses { get; set; }
-        public virtual DbSet<ReplyProduct> ReplyProducts { get; set; }
         public virtual DbSet<SysProduct> SysProducts { get; set; }
         public virtual DbSet<Deal> Deals { get; set; }
+        public virtual DbSet<ReplyProduct> ReplyProducts { get; set; }
+        public virtual DbSet<BidReply> BidReplies { get; set; }
+        public virtual DbSet<RequestProduct> RequestProducts { get; set; }
+        public virtual DbSet<Request> Requests { get; set; }
+        public virtual DbSet<ProductAttribute> ProductAttributes { get; set; }
     }
 }

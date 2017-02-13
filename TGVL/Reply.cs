@@ -29,8 +29,9 @@ namespace TGVL
         public Nullable<int> Flag { get; set; }
     
         public virtual User User { get; set; }
-        public virtual Request Request { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ReplyProduct> ReplyProducts { get; set; }
+        public virtual BidReply BidReply { get; set; }
+        public virtual Request Request { get; set; }
     }
 }

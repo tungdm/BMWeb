@@ -17,9 +17,8 @@ namespace TGVL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public SysProduct()
         {
-            this.RequestProducts = new HashSet<RequestProduct>();
-            this.SysProductAttributes = new HashSet<SysProductAttribute>();
             this.WarehouseProducts = new HashSet<WarehouseProduct>();
+            this.RequestProducts = new HashSet<RequestProduct>();
         }
     
         public int Id { get; set; }
@@ -33,12 +32,10 @@ namespace TGVL
         public Nullable<int> Flag { get; set; }
     
         public virtual Manufacturer Manufacturer { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RequestProduct> RequestProducts { get; set; }
         public virtual SysCategory SysCategory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SysProductAttribute> SysProductAttributes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<WarehouseProduct> WarehouseProducts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RequestProduct> RequestProducts { get; set; }
     }
 }

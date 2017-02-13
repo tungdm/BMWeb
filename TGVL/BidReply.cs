@@ -12,14 +12,13 @@ namespace TGVL
     using System;
     using System.Collections.Generic;
     
-    public partial class SysProductAttribute
+    public partial class BidReply
     {
-        public int Id { get; set; }
-        public int SysProductId { get; set; }
-        public string Attribute { get; set; }
-        public string Value { get; set; }
+        public int ReplyId { get; set; }
+        public int Rank { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> Flag { get; set; }
     
-        public virtual SysProduct SysProduct { get; set; }
+        public virtual Reply Reply { get; set; }
     }
 }

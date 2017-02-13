@@ -178,10 +178,10 @@
     <Compile Include="Areas\Admin\Controllers\ManageRoleController.cs" />
     <Compile Include="Areas\Admin\Controllers\ManageUserController.cs" />
     <Compile Include="Areas\Admin\Controllers\ManufacturersController.cs" />
-    <Compile Include="Attendence.cs">
+    <Compile Include="BidReply.cs">
       <DependentUpon>BMWModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="BiddingFloor.cs">
+    <Compile Include="BidRequest.cs">
       <DependentUpon>BMWModel.tt</DependentUpon>
     </Compile>
     <Compile Include="BMWModel.Context.cs">
@@ -199,9 +199,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BMWModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="ContractProduct.cs">
-      <DependentUpon>BMWModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -214,7 +211,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Gmail\GmailService.cs" />
-    <Compile Include="HouseType.cs">
+    <Compile Include="House.cs">
       <DependentUpon>BMWModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Manufacturer.cs">
@@ -231,6 +228,9 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reply.cs">
+      <DependentUpon>BMWModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReplyProduct.cs">
       <DependentUpon>BMWModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Request.cs">
