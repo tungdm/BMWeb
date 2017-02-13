@@ -1,0 +1,93 @@
+﻿
+@{
+    ViewBag.Title = "CreateRequest";
+    Layout = "~/Views/Shared/_RequestViewLayout.cshtml";
+}
+
+<div class="container">
+    <div class="air-card" data-custom-metrics="mainContentRendered">
+        <h2 class="text-center">Bạn chọn hình thức đấu giá nào?</h2>
+        <div class="row">
+            <div class="col-md-6 split-border">
+                @*<div class="box">*@
+                <h2 class="text-center">Tôi cần mua nhanh</h2>
+                <ul class="list-unstyled col-md-offset-3">
+                    <li>
+                        <h3>
+                            <i class="fa fa-check" aria-hidden="true"> Thời gian ngắn</i>
+                        </h3>
+                    </li>
+                    <li>
+                        <h3>
+                            <i class="fa fa-check" aria-hidden="true"> Mua số lượng ít</i>
+                        </h3>
+                    </li>
+                    <li>
+                        <h3>
+                            <i class="fa fa-check" aria-hidden="true"> Giá cả phù hợp</i>
+                        </h3>
+                    </li>
+                </ul>
+
+                @*</div>*@
+            </div>
+
+            <div class="col-md-6">
+                @*<div class="box">*@
+                <h2 class="text-center">Tôi cần đấu giá</h2>
+                <ul class="list-unstyled col-md-offset-3">
+                    <li>
+                        <h3>
+                            <i class="fa fa-check" aria-hidden="true"> Thời gian dài</i>
+                        </h3>
+                    </li>
+                    <li>
+                        <h3>
+                            <i class="fa fa-check" aria-hidden="true"> Mua số lượng lớn</i>
+                        </h3>
+                    </li>
+                    <li>
+                        <h3>
+                            <i class="fa fa-check" aria-hidden="true"> Giá cả rẻ nhất</i>
+                        </h3>
+                    </li>
+                </ul>
+                @*</div>*@
+            </div>
+        </div>
+        <!-- /.row -->
+        <div class="row m-md-bottom text-center">
+            <div class="col-md-6">
+                <a href="/c/3619419/jobs/new?enterprise=no"
+                   data-event-log
+                   data-trigger="click"
+                   data-event="click_cta"
+                   data-location="jobpost_staffaug_selection"
+                   data-data='[{"cta": "non_staff_aug"}]'
+                   class="btn btn-primary width-sm m-0">
+                    Lựa chọn
+                </a>
+            </div>
+            <div class="col-md-6">
+                <a href="/c/3619419/jobs/new?enterprise=no"
+                   data-event-log
+                   data-trigger="click"
+                   data-event="click_cta"
+                   data-location="jobpost_staffaug_selection"
+                   data-data='[{"cta": "non_staff_aug"}]'
+                   class="btn btn-primary width-sm m-0">
+                    Lựa chọn
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .split-border {
+        padding-bottom: 20px;
+        border-right: 1px solid #e5e5e5;
+    }
+</style>
+
+

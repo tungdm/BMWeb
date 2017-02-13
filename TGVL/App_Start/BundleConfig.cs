@@ -90,6 +90,52 @@ namespace TGVL
                          "~/Scripts/daterangepicker.js",
                          "~/Scripts/custom.js"
                          ));
+
+            // VyCMT
+            bundles.Add(new StyleBundle("~/Content/customercss").Include(
+                "~/Content/air.global.2.3.1.min.css",
+                "~/Content/air.components.2.3.1.min.css",
+                "~/Content/homepage.css",
+                "~/Content/components.css",
+                "~/Content/nprogress.css",
+                "~/Content/green.css",
+                "~/Content/prettify.min.css",
+                "~/Content/select2.min.css",
+                "~/Content/switchery.min.css",
+                "~/Content/starrr.css",
+                "~/Content/daterangepicker.css",
+                "~/Content/custom.min.css",
+                "~/Content/bootstrap.min.css",
+                "~/Content/font-awesome.min.css",
+                "~/Content/css/animate.css",
+                "~/Content/css/style.default.css",
+                "~/Content/css/custom.css"
+                ));
+            bundles.Add(new ScriptBundle("~/bundles/customerjquery").Include(
+                                    "~/Scripts/bootstrap.min.js",
+                                   "~/Scripts/js/jquery.cookie.js",
+                                    "~/Scripts/js/waypoints.min.js",
+                                    "~/Scripts/js/jquery.counterup.min.js",
+                                    "~/Scripts/js/jquery.parallax-1.1.3.js",
+                                    "~/Scripts/js/front.js",
+                                    "~/Scripts/custom.min.js",
+                                    "~/Scripts/fastclick.js",
+                                    "~/Scripts/nprogress.js",
+                                    "~/Scripts/moment.min.js",
+                                    "~/Scripts/icheck.min.js",
+                                    "~/Scripts/bootstrap-progressbar.min.js",
+                                    "~/Scripts/bootstrap-wysiwyg.min.js",
+                                    "~/Scripts/daterangepicker.js",
+                                    "~/Scripts/prettify.js",
+                                    "~/Scripts/jquery.hotkeys.js",
+                                    "~/Scripts/switchery.min.js",
+                                    "~/Scripts/jquery.tagsinput.js",
+                                    "~/Scripts/select2.full.min.js",
+                                    "~/Scripts/autosize.min.js",
+                                    "~/Scripts/jquery.autocomplete.min.js",
+                                    "~/Scripts/starrr.js",
+                                    "~/Scripts/custom.min.js"
+                                    ));
         }
     }
 }

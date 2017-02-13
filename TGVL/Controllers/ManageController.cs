@@ -92,6 +92,17 @@ namespace TGVL.Controllers
             return View(model2);
         }
 
+        //VyCMT
+        public ActionResult ViewCategory()
+        {
+            return View();
+        }
+
+        public ActionResult BidRequest()
+        {
+            return View();
+        }
+
         //TUNGDM
         //GET: /Manage/CreateShop
         public ActionResult CreateShop()
@@ -145,6 +156,7 @@ namespace TGVL.Controllers
             return View(model);
         }
 
+        
 
         //
         //POST: /Manage/ChangeUserName

@@ -1,0 +1,168 @@
+﻿
+@{
+    ViewBag.Title = "BidRequest";
+    Layout = "~/Views/Shared/_RequestViewLayout.cshtml";
+}
+
+<div class="container">
+    @*<div class="air-card" data-custom-metrics="mainContentRendered">*@
+    <div class="row">
+        @*<div class="col-md-12 col-sm-12 col-xs-12">*@
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>YÊU CẦU ĐẤU GIÁ</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <br />
+                <form class="form-horizontal">
+                    <h4 class="text-center">CHỌN SẢN PHẨM</h4>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Nhập sản phẩm</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Gạch lát tường">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button">Tìm kiếm!</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Từ khóa</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input id="tags_1" type="text" class="tags form-control" value="gạch, xi măng, inox" />
+                            <div id="suggestions-container" style="position: initial; float: left"></div>
+                        </div>
+                    </div>
+
+                    <div class="ln_solid"></div>
+
+                    <h4 class="text-center">NỘI DUNG YÊU CẦU</h4>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Tỉnh thành<span class="required"> *</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <select class="form-control" style="height:auto">
+                                <option>Hồ Chí Minh</option>
+                                <option>Hà Nội</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Tiêu đề<span class="required"> *</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" class="form-control" placeholder="Đấu giá lần đầu tiên">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Loại nhà<span class="required"> *</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <select class="form-control" style="height:auto">
+                                <option>Căn hộ</option>
+                                <option>Biệt thự</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Mô tả <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <textarea class="form-control" rows="3" placeholder="Tôi đang muốn mua 1 số lượng lớn về xi măng"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                            <i class="fa fa-upload" aria-hidden="true"> Đính kèm tập tin</i>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="file" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Giá khởi điểm<span class="required"> *</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" class="form-control" placeholder="450.000 VNĐ">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Thời hạn kết thúc<span class="required"> *</span></label>
+                        <div class="controls">
+                            <div class="xdisplay_inputx form-group has-feedback col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" class="form-control has-feedback-left" id="single_cal4" placeholder="First Name" aria-describedby="inputSuccess2Status4">
+                                <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
+                                <span id="inputSuccess2Status4" class="sr-only">(success)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Thời gian giao hàng<span class="required"> *</span></label>
+
+                        <div class="controls">
+                            <div class="xdisplay_inputx form-group has-feedback col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" class="form-control has-feedback-left" id="single_cal3" placeholder="First Name" aria-describedby="inputSuccess2Status3">
+                                <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
+                                <span id="inputSuccess2Status3" class="sr-only">(success)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ln_solid"></div>
+                    <h4 class="text-center">THÔNG TIN LIÊN HỆ</h4>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Tên người đăng<span class="required"> *</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" class="form-control" placeholder="Cao Minh Thúy Vy">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Email<span class="required"> *</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" class="form-control" placeholder="abc@yahoo.com.vn">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Địa chỉ<span class="required"> *</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" class="form-control" placeholder="134 Nguyễn Trãi TPHCM">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Phương thức thanh toán<span class="required"> *</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <select class="form-control" style="height:auto">
+                                <option>Chuyển khoản</option>
+                                <option>Tiền mặt</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="ln_solid"></div>
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                            <button type="submit" class="btn btn-success">Đăng tin</button>
+                            <button type="submit" class="btn btn-info">Xem trước</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        @*</div>*@
+    </div>
+    @*</div>*@
+</div>
+
