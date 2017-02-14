@@ -46,11 +46,6 @@ namespace TGVL.Models
         public string Address { get; set; }
     }
 
-    public class ManageShopViewModel
-    {
-        public string Username { get; set; }
-    }
-
     public class ManageLoginsViewModel
     {
         public IList<UserLoginInfo> CurrentLogins { get; set; }
