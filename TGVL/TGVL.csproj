@@ -205,6 +205,7 @@
     <Compile Include="Areas\Admin\Controllers\SysCategoriesController.cs" />
     <Compile Include="Areas\Admin\Controllers\SysProductsController.cs" />
     <Compile Include="Controllers\RequestController.cs" />
+    <Compile Include="Controllers\ShopController.cs" />
     <Compile Include="Deal.cs">
       <DependentUpon>BMWModel.tt</DependentUpon>
     </Compile>
@@ -478,12 +479,15 @@
     <Content Include="Content\air.components.2.3.1.min.css" />
     <Content Include="Content\air.global.2.3.1.min.css" />
     <Content Include="Content\animate.min.css" />
+    <Content Include="Content\bootstrap-colorpicker.min.css" />
     <Content Include="Content\bootstrap-social.css" />
     <Content Include="Content\bootstrap-timepicker.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.gen.min.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\buttons.bootstrap.min.css" />
     <Content Include="Content\components.css" />
+    <Content Include="Content\cropper.min.css" />
     <Content Include="Content\css\animate.css" />
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\bootstrap.min.css" />
@@ -510,8 +514,12 @@
     <Content Include="Content\green.css" />
     <Content Include="Content\green.png" />
     <Content Include="Content\homepage.css" />
+    <Content Include="Content\ion.rangeSlider.css" />
+    <Content Include="Content\ion.rangeSlider.skinFlat.css" />
     <Content Include="Content\nprogress.css" />
     <Content Include="Content\prettify.min.css" />
+    <Content Include="Content\responsive.bootstrap.min.css" />
+    <Content Include="Content\scroller.bootstrap.min.css" />
     <Content Include="Content\select2.min.css" />
     <Content Include="Content\starrr.css" />
     <Content Include="Content\switchery.min.css" />
@@ -532,6 +540,7 @@
     <Content Include="Images\img\ximang6.png" />
     <Content Include="Images\UserAvatar\Admin1.jpg" />
     <Content Include="Scripts\autosize.min.js" />
+    <Content Include="Scripts\bootstrap-colorpicker.min.js" />
     <Content Include="Scripts\bootstrap-progressbar.min.js" />
     <Content Include="Scripts\bootstrap-wysiwyg.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -591,11 +600,22 @@
     <Content Include="Content\scaffolding.less" />
     <Content Include="Content\vendor-prefixes.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\buttons.bootstrap.min.js" />
+    <Content Include="Scripts\buttons.flash.min.js" />
+    <Content Include="Scripts\buttons.html5.min.js" />
+    <Content Include="Scripts\buttons.print.min.js" />
     <Content Include="Scripts\canvasjs.min.js" />
     <Content Include="Scripts\Chart.js" />
+    <Content Include="Scripts\cropper.min.js" />
     <Content Include="Scripts\curvedLines.js" />
     <Content Include="Scripts\custom.js" />
     <Content Include="Scripts\custom.min.js" />
+    <Content Include="Scripts\dataTables.bootstrap.min.js" />
+    <Content Include="Scripts\dataTables.buttons.min.js" />
+    <Content Include="Scripts\dataTables.fixedHeader.min.js" />
+    <Content Include="Scripts\dataTables.keyTable.min.js" />
+    <Content Include="Scripts\dataTables.responsive.min.js" />
+    <Content Include="Scripts\dataTables.scroller.min.js" />
     <Content Include="Scripts\date.js" />
     <Content Include="Scripts\daterangepicker.js" />
     <Content Include="Scripts\fastclick.js" />
@@ -605,6 +625,7 @@
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.autocomplete.min.js" />
+    <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="Scripts\jquery.flot.js" />
     <Content Include="Scripts\jquery.flot.orderBars.js" />
     <Content Include="Scripts\jquery.flot.pie.js" />
@@ -613,6 +634,8 @@
     <Content Include="Scripts\jquery.flot.stack.js" />
     <Content Include="Scripts\jquery.flot.time.js" />
     <Content Include="Scripts\jquery.hotkeys.js" />
+    <Content Include="Scripts\jquery.inputmask.bundle.min.js" />
+    <Content Include="Scripts\jquery.knob.js" />
     <Content Include="Scripts\jquery.min.js" />
     <Content Include="Scripts\jquery.smartWizard.js" />
     <Content Include="Scripts\jquery.sparkline.js" />
@@ -621,6 +644,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jszip.min.js" />
     <Content Include="Scripts\js\bootstrap-hover-dropdown.js" />
     <Content Include="Scripts\js\bootstrap-progressbar.min.js" />
     <Content Include="Scripts\js\bootstrap.min.js" />
@@ -640,15 +664,18 @@
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\morris.min.js" />
     <Content Include="Scripts\nprogress.js" />
+    <Content Include="Scripts\pdfmake.min.js" />
     <Content Include="Scripts\prettify.js" />
     <Content Include="Scripts\raphael.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\responsive.bootstrap.js" />
     <Content Include="Scripts\select2.full.min.js" />
     <Content Include="Scripts\skycons.js" />
     <Content Include="Scripts\starrr.js" />
     <Content Include="Scripts\switchery.min.js" />
     <Content Include="Scripts\validator.js" />
+    <Content Include="Scripts\vfs_fonts.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -707,6 +734,7 @@
     <Content Include="Views\Manage\ViewCategory.cshtml" />
     <Content Include="Views\Manage\BidRequest.cshtml" />
     <Content Include="Views\Request\CreateRequest.cshtml" />
+    <Content Include="Views\Shop\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

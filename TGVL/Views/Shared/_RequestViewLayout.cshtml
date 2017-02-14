@@ -6,7 +6,8 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,500,700,800' rel='stylesheet' type='text/css'>
 
     <title>Thế giới vật liệu</title>
-    @Styles.Render("~/Content/customercss");
+    @Styles.Render("~/Content/bidrequestcss");
+    @Styles.Render("~/Content/mainpagecss");
 
 </head>
 <body>
@@ -674,10 +675,10 @@
     <!-- /#all -->
     <!-- #### JAVASCRIPT FILES ### -->
     @*Universal*@
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    @*<script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script>
         window.jQuery || document.write('<script src="js/jquery-1.10.2.min.js"><\/script>')
-    </script>
+    </script>*@
     @*<script src="~/Scripts/bootstrap.min.js"></script>
 
         <script src="~/Scripts/js/jquery.cookie.js"></script>
@@ -707,7 +708,8 @@
 
 
     @*Gentelella Template*@
-    @Scripts.Render("~/bundles/customerjquery")
+    @Scripts.Render("~/bundles/mainpagejquery");
+    @Scripts.Render("~/bundles/bidrequestjquery");
     @RenderSection("scripts", required: false)
 </body>
 </html>
