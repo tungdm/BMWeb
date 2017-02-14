@@ -143,19 +143,6 @@ namespace TGVL.Controllers
             }
             return View(model);
         }
-
-        //TUNGDM
-        //GET: /Manage/Shop
-        public async Task<ActionResult> Shop()
-        {
-            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
-            var model = new ManageShopViewModel
-            {
-                Username = user.UserName
-            };
-            return View(model);
-        }
-
         
 
         //
