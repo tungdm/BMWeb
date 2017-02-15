@@ -1,4 +1,4 @@
-/*
+﻿/*
  * SmartWizard 3.3.1 plugin
  * jQuery Wizard control Plugin
  * by Dipu
@@ -437,9 +437,9 @@ $.fn.smartWizard.defaults = {
     enableFinishButton: false, // make finish button enabled always
 	hideButtonsOnDisabled: false, // when the previous/next/finish buttons are disabled, hide them instead?
     errorSteps:[],    // Array Steps with errors
-    labelNext:'Next',
-    labelPrevious:'Previous',
-    labelFinish:'Finish',
+    labelNext:'Tiếp tục',
+    labelPrevious:'Quay lại',
+    labelFinish:'Hoàn tất',
     noForwardJumping: false,
     onLeaveStep: null, // triggers when leaving a step
     onShowStep: null,  // triggers when showing a step
