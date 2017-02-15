@@ -48,5 +48,15 @@ namespace TGVL.Controllers
             };
             return View(model);
         }
+
+        public ActionResult ViewProduct()
+        {
+            return View();
+        }
+
+        public ActionResult CreateProduct()
+        {
+            return View();
+        }
     }
 }

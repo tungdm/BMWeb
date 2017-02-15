@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewBag.Title = "ViewProduct";
+    Layout = "~/Views/Shared/_ManageShopViewLayout.cshtml";
+}
+
+<p>
+    @Html.ActionLink("Tạo mới sản phẩm", "CreateProduct", "Supplier", null, new { @class = "btn btn-success" })
+</p>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                Quản lý sản phẩm
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <table id="datatable-checkbox" class="table table-striped table-bordered bulk_action">
+                    <thead>
+                        <tr>
+                            <th>Sản phẩm</th>
+                            <th>Nhà sản xuất</th>
+                            <th>Danh mục</th>
+                            <th>Số lượng</th>
+                            <th>Tên kho</th>
+                            <th>Giá</th>
+                            <th>Đơn vị</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Gạch 4 lỗ</td>
+                            <td>Phú Điền</td>
+                            <td>Gạch</td>
+                            <td>30000</td>
+                            <td>Phú Điền 1</td>
+                            <td>780 đồng</td>
+                            <th>Cái</th>
+                            <td>
+                                <a>Sửa</a>
+                                <a>Xóa</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Xi măng Hà Tiên 1</td>
+                            <td>Vicem Hà Tiên</td>
+                            <td>Xi măng</td>
+                            <td>15000</td>
+                            <td>Hà Tiên 1</td>
+                            <td>85000</td>
+                            <td>Bao</td>
+                            <td>
+                                <a>Sửa</a>
+                                <a>Xóa</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Cát xây tô</td>
+                            <td>Nam Thành Vinh</td>
+                            <td>Cát</td>
+                            <td>12</td>
+                            <td>Nam Thành Vinh 5</td>
+                            <td>150000</td>
+                            <td>Tấn</td>
+                            <td>
+                                <a>Sửa</a>
+                                <a>Xóa</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+

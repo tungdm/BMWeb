@@ -1,15 +1,64 @@
 ﻿<!DOCTYPE html>
+<html lang="en">
 
-<html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,500,700,800' rel='stylesheet' type='text/css'>
+    <meta charset="utf-8">
+    <meta name="robots" content="all,follow">
+    <meta name="googlebot" content="index,follow,snippet,archive">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Thế giới vật liệu</title>
-    @Styles.Render("~/Content/bidrequestcss");
-    @Styles.Render("~/Content/mainpagecss");
 
+    <meta name="keywords" content="">
+
+    @*<link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,500,700,800' rel='stylesheet' type='text/css'>*@
+
+    @*@*Upwork css*@
+    @*<link href="~/Content/air.global.2.3.1.min.css" rel="stylesheet" />
+        <link href="~/Content/air.components.2.3.1.min.css" rel="stylesheet" />
+        <link href="~/Content/homepage.css" rel="stylesheet" />
+        <link href="~/Content/components.css" rel="stylesheet" />*@
+
+    @*Gentella form*@
+    @*<link href="~/Content/nprogress.css" rel="stylesheet" />
+        <link href="~/Content/green.css" rel="stylesheet" />
+        <link href="~/Content/prettify.min.css" rel="stylesheet" />
+        <link href="~/Content/select2.min.css" rel="stylesheet" />
+        <link href="~/Content/switchery.min.css" rel="stylesheet" />
+        <link href="~/Content/starrr.css" rel="stylesheet" />
+        <link href="~/Content/daterangepicker.css" rel="stylesheet" />
+        <link href="~/Content/custom.min.css" rel="stylesheet" />*@
+
+    <!-- Bootstrap and Font Awesome css -->
+    @*<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/Content/font-awesome.min.css" rel="stylesheet" />*@
+
+    <!-- Css animations  -->
+    @*<link href="~/Content/css/animate.css" rel="stylesheet">*@
+
+    <!-- Theme stylesheet, if possible do not edit this stylesheet -->
+    @*<link href="~/Content/css/style.default.css" rel="stylesheet" id="theme-stylesheet">*@
+
+    <!-- Custom stylesheet - for your changes -->
+    @*<link href="~/Content/css/custom.css" rel="stylesheet">*@
+
+    @*@Styles.Render("~/Content/requestcss");*@
+
+    @Styles.Render("~/Content/bidrequestcss")
+    @Styles.Render("~/Content/mainpagecss")
+    @Scripts.Render("~/bundles/mainpagejquery")
+
+    <link rel="shortcut icon" href="~/Images/img/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="/Images/img/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="57x57" href="/Images/img/apple-touch-icon-57x57.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="/Images/img/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon" sizes="76x76" href="/Images/img/apple-touch-icon-76x76.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="/Images/img/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="/Images/img/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="/Images/img/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="/Images/img/apple-touch-icon-152x152.png" />
 </head>
+
 <body>
     <div id="all">
 
@@ -20,24 +69,22 @@
             <div id="top">
                 <div class="container">
                     <div class="row">
-                        @*<div class="col-xs-5 contact">*@
-                        @*<p class="hidden-sm hidden-xs">Contact us on +420 777 555 333 or hello@universal.com.</p>
-                            <p class="hidden-md hidden-lg">
-                                <a href="#" data-animate-hover="pulse"><i class="fa fa-phone"></i></a>  <a href="#" data-animate-hover="pulse"><i class="fa fa-envelope"></i></a>
-                            </p>*@
-                        @*</div>*@
+                        @*<div class="col-md-5 contact">
+                                <p class="hidden-sm hidden-xs"></p>
+                                    <p class="hidden-md hidden-lg">
+                                        <a href="#" data-animate-hover="pulse"><i class="fa fa-phone"></i></a>Khi cần hãy gọi (08) 38 38 38 38 <a href="#" data-animate-hover="pulse"><i class="fa fa-envelope"></i></a>
+                                    </p>
+                            </div>*@
                         <div class="col-md-12 text-right">
-                            @*<div class="social">*@
-                            @*<a href="#" class="external facebook" data-animate-hover="pulse"><i class="fa fa-facebook"></i></a>
-                                <a href="#" class="external gplus" data-animate-hover="pulse"><i class="fa fa-google-plus"></i></a>
-                                <a href="#" class="external twitter" data-animate-hover="pulse"><i class="fa fa-twitter"></i></a>
-                                <a href="#" class="email" data-animate-hover="pulse"><i class="fa fa-envelope"></i></a>*@
-                            @*</div>*@
-                            @*<div class="login">*@
-                            <a href="customer-register.html"> @*data-toggle="modal" data-target="#login-modal">*@<i class="fa fa-user-circle" aria-hidden="true"> ThuyVy</i></a>
-                            <a href="customer-register.html"><i class="fa fa-sign-out" aria-hidden="true"></i>Đăng xuất</a>
+                            @*<div class="social">
+                                    <a href="#" class="external facebook" data-animate-hover="pulse"><i class="fa fa-facebook"></i></a>
+                                    <a href="#" class="external gplus" data-animate-hover="pulse"><i class="fa fa-google-plus"></i></a>
+                                    <a href="#" class="external twitter" data-animate-hover="pulse"><i class="fa fa-twitter"></i></a>
+                                    <a href="#" class="email" data-animate-hover="pulse"><i class="fa fa-envelope"></i></a>
+                                </div>*@
 
-                            @*</div>*@
+                            <a href="#" data-toggle="modal" data-target="#login-modal"><i class="fa fa-sign-in"></i> <span class="hidden-xs text-uppercase">Đăng ký</span></a>
+                            <a href="customer-register.html"><i class="fa fa-user"></i> <span class="hidden-xs text-uppercase">Đăng nhập</span></a>
 
                         </div>
                     </div>
@@ -59,18 +106,18 @@
                                     <img src="img/logo.png" alt="Universal logo" class="hidden-xs hidden-sm">
                                     <img src="img/logo-small.png" alt="Universal logo" class="visible-xs visible-sm"><span class="sr-only">Universal - go to homepage</span>
                                 </a>*@
-                            <div class="navbar-buttons">
-                                <button type="button" class="navbar-toggle btn-template-main" data-toggle="collapse" data-target="#navigation">
-                                    <span class="sr-only">Toggle navigation</span>
-                                    <i class="fa fa-align-justify"></i>
-                                </button>
-                            </div>
+                            @*<div class="navbar-buttons">
+                                    <button type="button" class="navbar-toggle btn-template-main" data-toggle="collapse" data-target="#navigation">
+                                        <span class="sr-only">Toggle navigation</span>
+                                        <i class="fa fa-align-justify"></i>
+                                    </button>
+                                </div>*@
                         </div>
                         <!--/.navbar-header -->
 
                         <div class="navbar-collapse collapse" id="navigation">
 
-                            <ul class="nav navbar-nav navbar-right">
+                            <ul class="nav navbar-nav navbar-left">
                                 <li class="dropdown active">
                                     <a href="javascript: void(0)" class="dropdown-toggle" data-toggle="dropdown">Trang chủ <b class="caret"></b></a>
                                     @*<ul class="dropdown-menu">
@@ -484,27 +531,25 @@
 
         <!-- *** LOGIN MODAL END *** -->
 
-        <div id="heading-breadcrumbs">
+
+        <section>
             <div class="container">
+
                 <div class="row">
-                    <div class="col-md-7">
-                        <h1>THẾ GIỚI VẬT LIỆU</h1>
-                    </div>
-                    <div class="col-md-5">
-                        @*<ul class="breadcrumb">
-                                <li>
-                                    <a href="index.html">Trang chủ</a>
-                                </li>
-                                <li>Category with left sidebar</li>
-                            </ul>*@
+                    <div class="col-md-12">
+
 
                     </div>
                 </div>
+
             </div>
-        </div>
+            <!-- /.container -->
+        </section>
 
         <div id="content">
-            @RenderBody();
+            <div class="container">
+                @RenderBody();
+            </div>
         </div>
         <!-- /#content -->
         <!-- *** GET IT ***
@@ -676,9 +721,9 @@
     <!-- #### JAVASCRIPT FILES ### -->
     @*Universal*@
     @*<script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script>
-        window.jQuery || document.write('<script src="js/jquery-1.10.2.min.js"><\/script>')
-    </script>*@
+        <script>
+            window.jQuery || document.write('<script src="js/jquery-1.10.2.min.js"><\/script>')
+        </script>*@
     @*<script src="~/Scripts/bootstrap.min.js"></script>
 
         <script src="~/Scripts/js/jquery.cookie.js"></script>
@@ -707,9 +752,13 @@
         <script src="~/Scripts/custom.min.js"></script>*@
 
 
+
     @*Gentelella Template*@
-    @Scripts.Render("~/bundles/mainpagejquery");
+
     @Scripts.Render("~/bundles/bidrequestjquery");
+
+
     @RenderSection("scripts", required: false)
 </body>
+
 </html>

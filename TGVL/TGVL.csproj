@@ -735,6 +735,8 @@
     <Content Include="Views\Manage\BidRequest.cshtml" />
     <Content Include="Views\Request\CreateRequest.cshtml" />
     <Content Include="Views\Shop\Index.cshtml" />
+    <Content Include="Views\Shop\ViewProduct.cshtml" />
+    <Content Include="Views\Shop\CreateProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
