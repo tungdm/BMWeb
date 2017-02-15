@@ -1,512 +1,267 @@
-﻿@model TGVL.Models.ManageShopViewModel
-@{
+﻿@{
     ViewBag.Title = "ViewCategory";
     Layout = "~/Views/Shared/_RequestViewLayout.cshtml";
 }
 
-<div class="container">
+@Styles.Render("~/Content/viewcategorycss")
+@Scripts.Render("~/bundles/viewcategoryjquery")
 
-    <div class="row">
-
-
-        <!-- *** LEFT COLUMN ***
-        _________________________________________________________ -->
-
-        <div class="col-sm-3">
-
-            <!-- *** MENUS AND FILTERS ***
-            _________________________________________________________ -->
-            <div class="panel panel-default sidebar-menu">
-
-                <div class="panel-heading">
-                    <h3 class="panel-title"><strong>Danh mục</strong></h3>
-                </div>
-
-                <div class="panel-body">
-                    <ul class="nav nav-pills nav-stacked category-menu">
-                        <li>
-                            <a href="shop-category.html">Sắt, thép <span class="badge pull-left"></span></a>
-                            @*<ul>
-                                    <li>
-                                        <a href="shop-category.html">T-shirts</a>
-                                    </li>
-                                    <li>
-                                        <a href="shop-category.html">Shirts</a>
-                                    </li>
-                                    <li>
-                                        <a href="shop-category.html">Pants</a>
-                                    </li>
-                                    <li>
-                                        <a href="shop-category.html">Accessories</a>
-                                    </li>
-                                </ul>*@
-                        </li>
-                        <li>
-                            <a href="shop-category.html">Gạch  <span class="badge pull-left"></span></a>
-                            @*<ul>
-                                    <li>
-                                        <a href="shop-category.html">T-shirts</a>
-                                    </li>
-                                    <li>
-                                        <a href="shop-category.html">Skirts</a>
-                                    </li>
-                                    <li>
-                                        <a href="shop-category.html">Pants</a>
-                                    </li>
-                                    <li>
-                                        <a href="shop-category.html">Accessories</a>
-                                    </li>
-                                </ul>*@
-                        </li>
-                        <li>
-                            <a href="shop-category.html">Đá, cát  <span class="badge pull-left"></span></a>
-                            @*<ul>
-                                    <li>
-                                        <a href="shop-category.html">T-shirts</a>
-                                    </li>
-                                    <li>
-                                        <a href="shop-category.html">Skirts</a>
-                                    </li>
-                                    <li>
-                                        <a href="shop-category.html">Pants</a>
-                                    </li>
-                                    <li>
-                                        <a href="shop-category.html">Accessories</a>
-                                    </li>
-                                </ul>*@
-                        </li>
-                        <li>
-                            <a href="shop-category.html">Ống đồng  <span class="badge pull-left"></span></a>
-                            @*<ul>
-                                    <li>
-                                        <a href="shop-category.html">T-shirts</a>
-                                    </li>
-                                    <li>
-                                        <a href="shop-category.html">Skirts</a>
-                                    </li>
-                                    <li>
-                                        <a href="shop-category.html">Pants</a>
-                                    </li>
-                                    <li>
-                                        <a href="shop-category.html">Accessories</a>
-                                    </li>
-                                </ul>*@
-                        </li>
-                        <li class="active">
-                            <a href="shop-category.html">Xi măng  <span class="badge pull-left"></span></a>
-                            @*<ul>
-                                    <li>
-                                        <a href="shop-category.html">T-shirts</a>
-                                    </li>
-                                    <li>
-                                        <a href="shop-category.html">Skirts</a>
-                                    </li>
-                                    <li>
-                                        <a href="shop-category.html">Pants</a>
-                                    </li>
-                                    <li>
-                                        <a href="shop-category.html">Accessories</a>
-                                    </li>
-                                </ul>*@
-                        </li>
-                        <li>
-                            <a href="shop-category.html">Inox  <span class="badge pull-left"></span></a>
-                            @*<ul>
-                                    <li>
-                                        <a href="shop-category.html">T-shirts</a>
-                                    </li>
-                                    <li>
-                                        <a href="shop-category.html">Skirts</a>
-                                    </li>
-                                    <li>
-                                        <a href="shop-category.html">Pants</a>
-                                    </li>
-                                    <li>
-                                        <a href="shop-category.html">Accessories</a>
-                                    </li>
-                                </ul>*@
-                        </li>
-                        <li>
-                            <a href="shop-category.html">Bê tông, vữa  <span class="badge pull-left"></span></a>
-                            @*<ul>
-                                    <li>
-                                        <a href="shop-category.html">T-shirts</a>
-                                    </li>
-                                    <li>
-                                        <a href="shop-category.html">Skirts</a>
-                                    </li>
-                                    <li>
-                                        <a href="shop-category.html">Pants</a>
-                                    </li>
-                                    <li>
-                                        <a href="shop-category.html">Accessories</a>
-                                    </li>
-                                </ul>*@
-                        </li>
-                        <li>
-                            <a href="shop-category.html">Tôn  <span class="badge pull-left"></span></a>
-                            @*<ul>
-                                    <li>
-                                        <a href="shop-category.html">T-shirts</a>
-                                    </li>
-                                    <li>
-                                        <a href="shop-category.html">Skirts</a>
-                                    </li>
-                                    <li>
-                                        <a href="shop-category.html">Pants</a>
-                                    </li>
-                                    <li>
-                                        <a href="shop-category.html">Accessories</a>
-                                    </li>
-                                </ul>*@
-                        </li>
-                        <li>
-                            <a href="shop-category.html">Vật liệu chống thấm  <span class="badge pull-left"></span></a>
-                            @*<ul>
-                                    <li>
-                                        <a href="shop-category.html">T-shirts</a>
-                                    </li>
-                                    <li>
-                                        <a href="shop-category.html">Skirts</a>
-                                    </li>
-                                    <li>
-                                        <a href="shop-category.html">Pants</a>
-                                    </li>
-                                    <li>
-                                        <a href="shop-category.html">Accessories</a>
-                                    </li>
-                                </ul>*@
-                        </li>
-                        <li>
-                            <a href="shop-category.html">Đá ốp lát  <span class="badge pull-left"></span></a>
-                            @*<ul>
-                                    <li>
-                                        <a href="shop-category.html">T-shirts</a>
-                                    </li>
-                                    <li>
-                                        <a href="shop-category.html">Skirts</a>
-                                    </li>
-                                    <li>
-                                        <a href="shop-category.html">Pants</a>
-                                    </li>
-                                    <li>
-                                        <a href="shop-category.html">Accessories</a>
-                                    </li>
-                                </ul>*@
-                        </li>
-                    </ul>
-
-                </div>
-            </div>
-
-            <div class="panel panel-default sidebar-menu">
-
-                <div class="panel-heading">
-                    <h3 class="panel-title"><strong>Nhà sản xuất</strong></h3>
-                    @*<a class="btn btn-xs btn-danger pull-right" href="#"><i class="fa fa-times-circle"></i> <span class="hidden-sm">Clear</span></a>*@
-                </div>
-
-                <div class="panel-body">
-
-                    <form>
-                        <div class="form-group">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox">Công ty CP Xi Măng FICO Tây Ninh (1)
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox">Công ty CP Xi Măng Hà Tiên 1 (2)
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox">Công ty Xi Măng Nghi Sơn (1)
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox">Công ty Xi Măng Cẩm Phả (1)
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox">Công ty Xi Măng Thăng Long (1)
-                                </label>
-                            </div>
-                        </div>
-
-                        @*<button class="btn btn-default btn-sm btn-template-main"><i class="fa fa-pencil"></i> Apply</button>*@
-
-                    </form>
-
-                </div>
-            </div>
-
-            @*<div class="panel panel-default sidebar-menu">
-
-                    <div class="panel-heading">
-                        <h3 class="panel-title clearfix">Colours</h3>
-                        <a class="btn btn-xs btn-danger pull-right" href="#"><i class="fa fa-times-circle"></i> <span class="hidden-sm">Clear</span></a>
-                    </div>
-
-                    <div class="panel-body">
-
-                        <form>
-                            <div class="form-group">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox"> <span class="colour white"></span> White (14)
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox"> <span class="colour blue"></span> Blue (10)
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox"> <span class="colour green"></span> Green (20)
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox"> <span class="colour yellow"></span> Yellow (13)
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox"> <span class="colour red"></span> Red (10)
-                                    </label>
-                                </div>
-                            </div>
-
-                            <button class="btn btn-default btn-sm btn-template-main"><i class="fa fa-pencil"></i> Apply</button>
-
-                        </form>
-
-                    </div>
-                </div>*@
-
-            <!-- *** MENUS AND FILTERS END *** -->
-            @*<div class="banner">
-                    <a href="shop-category.html">
-                        <img src="~/Images/img/banner.jpg" alt="sales 2014" class="img-responsive">
-                    </a>
-                </div>*@
-            <!-- /.banner -->
-
+<div class="content">
+    <div class="content_top">
+        <div class="back-links">
+            <p>Home>Lò vi ba</p>
         </div>
-        <!-- /.col-md-3 -->
-        <!-- *** LEFT COLUMN END *** -->
-        <!-- *** RIGHT COLUMN ***
-        _________________________________________________________ -->
-
-        <div class="col-sm-9">
-
-            @*<p class="text-muted lead">In our Ladies department we offer wide selection of the best products we have found and carefully selected worldwide. Pellentesque habitant morbi tristique senectus et netuss.</p>*@
-
-            <div class="row products">
-
-                <div class="col-md-4 col-sm-6">
-                    <div class="product">
-                        <div class="image">
-                            <a href="shop-detail.html">
-                                <img src="~/Images/img/ximang1.jpg" alt="" class="img-responsive image1">
-                            </a>
-                        </div>
-                        <!-- /.image -->
-                        <div class="text">
-                            <h3><a href="shop-detail.html">Xi măng FICO PCB40</a></h3>
-                            <p>Cửa hàng VLXD Phú Nhuận</p>
-                            <p class="price">80.000 VNĐ</p>
-                            <p class="buttons">
-                                <a href="shop-detail.html" class="btn btn-default">View detail</a>
-
-                            </p>
-                        </div>
-                        <!-- /.text -->
-                    </div>
-                    <!-- /.product -->
-                </div>
-
-                <div class="col-md-4 col-sm-6">
-                    <div class="product">
-                        <div class="image">
-                            <a href="shop-detail.html">
-                                <img src="~/Images/img/ximang1.jpg" alt="" class="img-responsive image1">
-                            </a>
-                        </div>
-                        <!-- /.image -->
-                        <div class="text">
-                            <h3><a href="shop-detail.html">Xi măng FICO PCB40</a></h3>
-                            <p>Cửa hàng VLXD VyVy</p>
-                            <p class="price">@*<del>$280</del>*@ 73.500 VNĐ</p>
-                            <p class="buttons">
-                                <a href="shop-detail.html" class="btn btn-default">View detail</a>
-                            </p>
-                        </div>
-                        <!-- /.text -->
-                        @*<div class="ribbon sale">
-                                <div class="theribbon">SALE</div>
-                                <div class="ribbon-background"></div>
-                            </div>*@
-                        <!-- /.ribbon -->
-
-                        <div class="ribbon new">
-                            <div class="theribbon">NEW</div>
-                            <div class="ribbon-background"></div>
-                        </div>
-                        <!-- /.ribbon -->
-                    </div>
-                    <!-- /.product -->
-                </div>
-
-                <div class="col-md-4 col-sm-6">
-                    <div class="product">
-                        <div class="image">
-                            <a href="shop-detail.html">
-                                <img src="~/Images/img/ximang3.jpg" alt="" class="img-responsive image1">
-                            </a>
-                        </div>
-                        <!-- /.image -->
-                        <div class="text">
-                            <h3><a href="shop-detail.html">Cement FiCo PCB 40</a></h3>
-                            <p>Cửa hàng VLXD</p>
-                            <p class="price">77.000 VNĐ</p>
-                            <p class="buttons">
-                                <a href="shop-detail.html" class="btn btn-default">View detail</a>
-                                <a href="shop-basket.html" class="btn btn-template-main"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                            </p>
-
-                        </div>
-                        <!-- /.text -->
-                    </div>
-                    <!-- /.product -->
-                </div>
-
-                <div class="col-md-4 col-sm-6">
-                    <div class="product">
-                        <div class="image">
-                            <a href="shop-detail.html">
-                                <img src="~/Images/img/ximang4.jpg" alt="" class="img-responsive image1">
-                            </a>
-                        </div>
-                        <!-- /.image -->
-                        <div class="text">
-                            <h3><a href="shop-detail.html">Xi măng Hạ Long PCB 40</a></h3>
-                            <p class="price">73.500 VNĐ</p>
-                            <p class="buttons">
-                                <a href="shop-detail.html" class="btn btn-default">View detail</a>
-                                <a href="shop-basket.html" class="btn btn-template-main"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                            </p>
-
-                        </div>
-                        <!-- /.text -->
-                    </div>
-                    <!-- /.product -->
-                </div>
-
-                @*<div class="col-md-4 col-sm-6">
-                        <div class="product">
-                            <div class="image">
-                                <a href="shop-detail.html">
-                                    <img src="~/Images/img/ximang5.png" alt="" class="img-responsive image1">
-                                </a>
-                            </div>
-                            <!-- /.image -->
-                            <div class="text">
-                                <h3><a href="shop-detail.html">White Blouse Versace</a></h3>
-                                <p class="price">$143.00</p>
-                                <p class="buttons">
-                                    <a href="shop-detail.html" class="btn btn-default">View detail</a>
-                                    <a href="shop-basket.html" class="btn btn-template-main"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                </p>
-
-                            </div>
-                            <!-- /.text -->
-
-                            <div class="ribbon new">
-                                <div class="theribbon">NEW</div>
-                                <div class="ribbon-background"></div>
-                            </div>
-                            <!-- /.ribbon -->
-                        </div>
-                        <!-- /.product -->
-                    </div>*@
-
-                @*<div class="col-md-4 col-sm-6">
-                        <div class="product">
-                            <div class="image">
-                                <a href="shop-detail.html">
-                                    <img src="~/Images/img/product1.jpg" alt="" class="img-responsive image1">
-                                </a>
-                            </div>
-                            <!-- /.image -->
-                            <div class="text">
-                                <h3><a href="shop-detail.html">Fur coat</a></h3>
-                                <p class="price">$143.00</p>
-                                <p class="buttons">
-                                    <a href="shop-detail.html" class="btn btn-default">View detail</a>
-                                    <a href="shop-basket.html" class="btn btn-template-main"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                </p>
-
-                            </div>
-                            <!-- /.text -->
-                        </div>
-                        <!-- /.product -->
-                    </div>*@
-                <!-- /.col-md-4 -->
-            </div>
-            <!-- /.products -->
-            @*<div class="row">
-
-                    <div class="col-md-12 banner">
-                        <a href="#">
-                            <img src="~/Images/img/banner2.jpg" alt="" class="img-responsive">
-                        </a>
-                    </div>
-
-                </div>*@
-
-
-            <div class="pages">
-
-                <p class="loadMore">
-                    <a href="#" class="btn btn-template-main"><i class="fa fa-chevron-down"></i> Xem thêm</a>
-                </p>
-
-                <ul class="pagination">
-                    <li>
-                        <a href="#">&laquo;</a>
-                    </li>
-                    <li class="active">
-                        <a href="#">1</a>
-                    </li>
-                    <li>
-                        <a href="#">2</a>
-                    </li>
-                    <li>
-                        <a href="#">3</a>
-                    </li>
-                    <li>
-                        <a href="#">4</a>
-                    </li>
-                    <li>
-                        <a href="#">5</a>
-                    </li>
-                    <li>
-                        <a href="#">&raquo;</a>
-                    </li>
-                </ul>
-            </div>
-
-
-        </div>
-        <!-- /.col-md-9 -->
-        <!-- *** RIGHT COLUMN END *** -->
-
+        <div class="clear"></div>
     </div>
+    <div class="section group">
+        <div class="cont-desc span_1_of_2">
+            <div class="product-details">
+                <div class="grid images_3_of_2">
+                    <div id="container">
+                        <div id="products_example">
+                            <div id="products">
+                                @*<div class="slides_container">
+                                    <a href="#" target="_blank"><img src="~/Content/images/productslide-1.jpg" alt=" " /></a>
+                                    <a href="#" target="_blank"><img src="~/Content/images/productslide-2.jpg" alt=" " /></a>
+                                    <a href="#" target="_blank"><img src="~/Content/images/productslide-3.jpg" alt=" " /></a>
+                                    <a href="#" target="_blank"><img src="~/Content/images/productslide-4.jpg" alt=" " /></a>
+                                    <a href="#" target="_blank"><img src="~/Content/images/productslide-5.jpg" alt=" " /></a>
+                                    <a href="#" target="_blank"><img src="~/Content/images/productslide-6.jpg" alt=" " /></a>
+                                </div>
+                                <ul class="pagination">
+                                    <li><a href="#"><img src="~/Content/images/thumbnailslide-1.jpg" alt=" " /></a></li>
+                                    <li><a href="#"><img src="~/Content/images/thumbnailslide-2.jpg" alt=" " /></a></li>
+                                    <li><a href="#"><img src="~/Content/images/thumbnailslide-3.jpg" alt=" " /></a></li>
+                                    <li><a href="#"><img src="~/Content/images/thumbnailslide-4.jpg" alt=" " /></a></li>
+                                    <li><a href="#"><img src="~/Content/images/thumbnailslide-5.jpg" alt=" " /></a></li>
+                                    <li><a href="#"><img src="~/Content/images/thumbnailslide-6.jpg" alt=" " /></a></li>
+                                </ul>*@
+                                <img src="~/Content/images/productslide-1.jpg"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="desc span_3_of_2">
+                    <h2>Gạch bông Đồng Tâm 7560-2 20x20 </h2>
+                    <div class="price">
+                        <p>Giá: 500.000 VNĐ</p>
+                    </div>
+                    @*<div class="available">
+                            <p>Available Options :</p>
+                            <ul>
+                                <li>
+                                    Color:
+                                    <select>
+                                        <option>Silver</option>
+                                        <option>Black</option>
+                                        <option>Dark Black</option>
+                                        <option>Red</option>
+                                    </select>
+                                </li>
+                                <li>
+                                    Size:<select>
+                                        <option>Large</option>
+                                        <option>Medium</option>
+                                        <option>small</option>
+                                        <option>Large</option>
+                                        <option>small</option>
+                                    </select>
+                                </li>
+                                <li>
+                                    Quality:<select>
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </select>
+                                </li>
+                            </ul>
+                        </div>*@
+                    @*<div class="share-desc">
+                            <div class="share">
+                                <p>Share Product :</p>
+                                <ul>
+                                    <li><a href="#"><img src="images/facebook.png" alt="" /></a></li>
+                                    <li><a href="#"><img src="images/twitter.png" alt="" /></a></li>
+                                </ul>
+                            </div>
+                            <div class="button"><span><a href="#">Add to Cart</a></span></div>
+                            <div class="clear"></div>
+                        </div>*@
+                    <div class="wish-list">
+                        <ul>
+                            <li class="wish"><a href="#">Add to Wishlist</a></li>
+                            <li class="compare"><a href="#">Add to Compare</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="product_desc">
+                <div id="horizontalTab">
+                    <ul class="resp-tabs-list">
+                        <li>Chi tiết sản phẩm</li>
+                        <li>product Tags</li>
+                        <li>Product Reviews</li>
 
+                    </ul>
+                    <div class="resp-tabs-container">
+                        <div class="product-desc">
+
+                        </div>
+                        <div class="product-tags">
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+                        </div>
+
+                        <div class="review">
+                            <h4>Lorem ipsum Review by <a href="#">Finibus Bonorum</a></h4>
+                            <ul>
+                                <li>Price :<a href="#"><img src="~/Content/images/price-rating.png" alt="" /></a></li>
+                                <li>Value :<a href="#"><img src="~/Content/images/value-rating.png" alt="" /></a></li>
+                                <li>Quality :<a href="#"><img src="~/Content/images/quality-rating.png" alt="" /></a></li>
+                            </ul>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+                            <div class="your-review">
+                                <h3>How Do You Rate This Product?</h3>
+                                <p>Write Your Own Review?</p>
+                                <form>
+                                    <div>
+                                        <span><label>Nickname<span class="red">*</span></label></span>
+                                        <span><input type="text" value=""></span>
+                                    </div>
+                                    <div>
+                                        <span><label>Summary of Your Review<span class="red">*</span></label></span>
+                                        <span><input type="text" value=""></span>
+                                    </div>
+                                    <div>
+                                        <span><label>Review<span class="red">*</span></label></span>
+                                        <span><textarea> </textarea></span>
+                                    </div>
+                                    <div>
+                                        <span><input type="submit" value="SUBMIT REVIEW"></span>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('#horizontalTab').easyResponsiveTabs({
+                        type: 'default', //Types: default, vertical, accordion
+                        width: 'auto', //auto or any width like 600px
+                        fit: true   // 100% fit in a container
+                    });
+                });
+            </script>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $().UItoTop({ easingType: 'easeOutQuart' });
+
+                });
+            </script>
+            <a href="#" id="toTop"><span id="toTopHover"> </span></a>
+            <div class="content_bottom">
+                <div class="heading">
+                    <h3>Sản phẩm tương tự</h3>
+                </div>
+                <div class="see">
+                    <p><a href="#">See all Products</a></p>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="section group">
+                <div class="grid_1_of_4 images_1_of_4">
+                    <a href="#"><img src="~/Content/images/new-pic1.jpg" alt=""></a>
+                    <div class="price" style="border:none">
+
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="grid_1_of_4 images_1_of_4">
+                    <a href="#"><img src="~/Content/images/new-pic2.jpg" alt=""></a>
+                    <div class="price" style="border:none">
+
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="grid_1_of_4 images_1_of_4">
+                    <a href="#"><img src="~/Content/images/new-pic4.jpg" alt=""></a>
+                    <div class="price" style="border:none">
+
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="grid_1_of_4 images_1_of_4">
+                    <img src="~/Content/images/new-pic3.jpg" alt="">
+                    <div class="price" style="border:none">
+
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="rightsidebar span_3_of_1">
+            <h2>DANH MỤC SẢN PHẨM</h2>
+            <ul>
+                <li><a href="#">Mobile Phones</a></li>
+                <li><a href="#">Desktop</a></li>
+                <li><a href="#">Laptop</a></li>
+                <li><a href="#">Accessories</a></li>
+                <li><a href="#">Software</a></li>
+                <li><a href="#">Sports &amp; Fitness</a></li>
+                <li><a href="#">Footwear</a></li>
+                <li><a href="#">Jewellery</a></li>
+                <li><a href="#">Clothing</a></li>
+                <li><a href="#">Home Decor &amp; Kitchen</a></li>
+                <li><a href="#">Beauty &amp; Healthcare</a></li>
+                <li><a href="#">Toys, Kids &amp; Babies</a></li>
+            </ul>
+            @*<div class="subscribe">
+                    <h2>Newsletters Signup</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.......</p>
+                    <div class="signup">
+                        <form>
+                            <input type="text" value="E-mail address" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'E-mail address';"><input type="submit" value="Sign up">
+                        </form>
+                    </div>
+                </div>*@
+            @*<div class="community-poll">
+                    <h2>Community POll</h2>
+                    <p>What is the main reason for you to purchase products online?</p>
+                    <div class="poll">
+                        <form>
+                            <ul>
+                                <li>
+                                    <input type="radio" name="vote" class="radio" value="1">
+                                    <span class="label"><label>More convenient shipping and delivery </label></span>
+                                </li>
+                                <li>
+                                    <input type="radio" name="vote" class="radio" value="2">
+                                    <span class="label"><label for="vote_2">Lower price</label></span>
+                                </li>
+                                <li>
+                                    <input type="radio" name="vote" class="radio" value="3">
+                                    <span class="label"><label for="vote_3">Bigger choice</label></span>
+                                </li>
+                                <li>
+                                    <input type="radio" name="vote" class="radio" value="5">
+                                    <span class="label"><label for="vote_5">Payments security </label></span>
+                                </li>
+                                <li>
+                                    <input type="radio" name="vote" class="radio" value="6">
+                                    <span class="label"><label for="vote_6">30-day Money Back Guarantee </label></span>
+                                </li>
+                                <li>
+                                    <input type="radio" name="vote" class="radio" value="7">
+                                    <span class="label"><label for="vote_7">Other.</label></span>
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+                </div>*@
+        </div>
+    </div>
 </div>

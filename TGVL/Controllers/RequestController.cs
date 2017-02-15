@@ -13,5 +13,20 @@ namespace TGVL.Controllers
         {
             return View();
         }
+
+        public ActionResult BidRequest()
+        {
+            return View();
+        }
+
+        public ActionResult NormalRequest()
+        {
+            return View();
+        }
+
+        public ActionResult ViewRequest()
+        {
+            return View();
+        }
     }
 }

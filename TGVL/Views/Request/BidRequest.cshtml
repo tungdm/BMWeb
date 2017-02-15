@@ -4,6 +4,8 @@
     Layout = "~/Views/Shared/_RequestViewLayout.cshtml";
 }
 
+@Scripts.Render("~/bundles/bidrequestjquery")
+
 <div class="row">
     <div class="col-md-12 col-xs-12">
         @*<div class="container">*@
@@ -12,7 +14,7 @@
         @*<div class="col-md-12 col-sm-12 col-xs-12">*@
         <div class="x_panel">
             <div class="x_title">
-                <h2 class="text-center"><strong>YÊU CẦU ĐẤU THẦU</strong></h2>
+                <h1><strong>YÊU CẦU ĐẤU THẦU</strong></h1>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -20,25 +22,12 @@
                 <form class="form-horizontal form-label-left">
                     <h4 class="text-center"><strong>THÔNG TIN CHUNG</strong></h4>
 
-                    @*<div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Nhập sản phẩm</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Gạch lát tường">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-default" type="button">Tìm kiếm!</button>
-                                    </span>
-                                </div>
-                            </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Tiêu đề<span class="required"> *</span></label>
+                        <div class="col-m6-8 col-sm-6 col-xs-12">
+                            <input type="text" class="form-control" placeholder="Tôi muốn mua xi măng" />
                         </div>
-
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Từ khóa</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="tags_1" type="text" class="tags form-control" value="gạch, xi măng, inox" />
-                                <div id="suggestions-container" style="position: initial; float: left"></div>
-                            </div>
-                        </div>*@
+                    </div>
 
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Tỉnh thành<span class="required"> *</span></label>
@@ -68,7 +57,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Thời gian giao hàng<span class="required"> *</span></label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Thời gian nhận hàng<span class="required"> *</span></label>
                         <div class="controls">
                             <div class="xdisplay_inputx form-group has-feedback col-md-6 col-sm-6 col-xs-12">
                                 <input type="text" class="form-control has-feedback-left" id="single_cal4" aria-describedby="inputSuccess2Status4">
@@ -130,6 +119,12 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Đơn vị tính<span class="required"> *</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" class="form-control" placeholder="bao">
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
                             Mô tả <span class="required">*</span>
                         </label>
@@ -140,7 +135,7 @@
 
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                            <i class="fa fa-upload" aria-hidden="true"> Đính kèm tập tin</i>
+                            <i class="fa fa-upload" aria-hidden="true"> Kế hoạch xây nhà    </i>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <input type="file" class="form-control" />
@@ -148,12 +143,12 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Giá khởi điểm<span class="required"> *</span></label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Giá đề xuất<span class="required"> *</span></label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <input type="text" class="form-control" placeholder="450.000 VNĐ">
                         </div>
                     </div>
-
+                    
                     <div class="ln_solid"></div>
                     <h4 class="text-center"><strong>THÔNG TIN LIÊN HỆ</strong></h4>
 
@@ -199,7 +194,7 @@
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                             <button type="submit" class="btn btn-success">Đăng tin</button>
-                            <button type="submit" class="btn btn-info">Xem trước</button>
+                            
                         </div>
                     </div>
 

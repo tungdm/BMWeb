@@ -93,11 +93,16 @@ namespace TGVL
 
             // VyCMT
             bundles.Add(new StyleBundle("~/Content/mainpagecss").Include(
-                "~/Content/css/font-awesome.css",
-                "~/Content/css/bootstrap.min.css",
-                "~/Content/css/animate.css",
-                "~/Content/css/style.default.css",
-                "~/Content/css/custom.css"
+                "~/Content/css/style.css",
+                "~/Content/css/slider.css",
+                "~/Content/css/global.css"
+             ));
+
+            bundles.Add(new StyleBundle("~/Content/viewcategorycss").Include(
+                "~/Content/css/style.css",
+                "~/Content/css/easy-responsive-tabs.css",
+                "~/Content/css/slider.css",
+                "~/Content/css/global.css"
              ));
 
             bundles.Add(new StyleBundle("~/Content/bidrequestcss").Include(
@@ -110,6 +115,7 @@ namespace TGVL
                 "~/Content/switchery.min.css",
                 "~/Content/starrr.css",
                 "~/Content/daterangepicker.css",
+                
                 "~/Content/custom.min.css"
                 ));
             bundles.Add(new StyleBundle("~/Content/productcss").Include(
@@ -125,6 +131,14 @@ namespace TGVL
                 "~/Content/custom.min.css"
                 ));
 
+            bundles.Add(new StyleBundle("~/Content/uploadcss").Include(
+                "~/Content/bootstrap.min.css",
+                "~/Content/font-awesome.min.css",
+                "~/Content/nprogress.css",
+                "~/Content/dropzone.min.css",
+                "~/Content/custom.min.css"
+             ));
+
             //bundles.Add(new StyleBundle("~/Content/wizardcss").Include(
             //    "~/Content/bootstrap.min.css",
             //    "~/Content/font-awesome.min.css",
@@ -135,13 +149,18 @@ namespace TGVL
 
             bundles.Add(new ScriptBundle("~/bundles/mainpagejquery").Include(
                                     "~/Scripts/js/jquery-1.11.0.min.js",
-                                    "~/Scripts/js/bootstrap.min.js",
-                                    "~/Scripts/js/jquery.cookie.js",
-                                    "~/Scripts/js/waypoints.min.js",
-                                    "~/Scripts/js/jquery.counterup.min.js",
-                                    "~/Scripts/js/jquery.parallax-1.1.3.js",
-                                    "~/Scripts/js/front.js",
-                                    "~/Scripts/js/owl.carousel.min.js"
+                                    "~/Scripts/js/move-top.js",
+                                    "~/Scripts/js/easing.js",
+                                    "~/Scripts/js/startstop-slider.js"
+                                    
+                                    ));
+            bundles.Add(new ScriptBundle("~/bundles/viewcategoryjquery").Include(
+                                    "~/Scripts/js/jquery-1.11.0.min.js",
+                                    "~/Scripts/js/move-top.js",
+                                    "~/Scripts/js/easing.js",
+                                    "~/Scripts/js/easyResponsiveTabs.js",
+                                    "~/Scripts/js/slides.min.jquery.js"
+                                    
                                     ));
 
             bundles.Add(new ScriptBundle("~/bundles/bidrequestjquery").Include(
@@ -162,8 +181,19 @@ namespace TGVL
                                     "~/Scripts/autosize.min.js",
                                     "~/Scripts/jquery.autocomplete.min.js",
                                     "~/Scripts/starrr.js",
+                                    "~/Scripts/dropzone.min.js",
                                     "~/Scripts/custom.min.js"
+                                    
                                     ));
+
+            bundles.Add(new ScriptBundle("~/bundles/uploadjquery").Include(
+                                   "~/Scripts/jquery.min.js",
+                                   "~/Scripts/bootstrap.min.js",
+                                   "~/Scripts/fastclick.js",
+                                    "~/Scripts/nprogress.js",
+                                    "~/Scripts/dropzone.min.js",
+                                    "~/Scripts/custom.min.js"
+                                   ));
 
             bundles.Add(new ScriptBundle("~/bundles/productjquery").Include(
                                     "~/Scripts/jquery.min.js",
