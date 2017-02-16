@@ -788,7 +788,6 @@
     <Content Include="Areas\Admin\Views\SysProducts\Index.cshtml" />
     <Content Include="Views\Account\_ViewStart.cshtml" />
     <Content Include="Views\Manage\CreateShop.cshtml" />
-    <Content Include="Views\Manage\Shop.cshtml" />
     <Content Include="Views\Shared\_CustomerSidebarMenu.cshtml" />
     <Content Include="Views\Shared\_LoginViewLayout.cshtml" />
     <Content Include="Views\Shared\_ManageShopViewLayout.cshtml" />
@@ -806,6 +805,9 @@
     <Content Include="Views\Request\ViewRequest.cshtml" />
     <Content Include="Views\Shared\_CustomerMainMenu.cshtml" />
     <Content Include="Views\Shared\_SupplierMainMenu.cshtml" />
+    <Content Include="Views\Request\ViewBidRequestDetail.cshtml" />
+    <Content Include="Views\Request\ViewBidFloor.cshtml" />
+    <Content Include="Views\Request\ViewNormalFloor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

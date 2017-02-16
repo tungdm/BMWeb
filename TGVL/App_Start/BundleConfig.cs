@@ -98,6 +98,12 @@ namespace TGVL
                 "~/Content/css/global.css"
              ));
 
+            bundles.Add(new StyleBundle("~/Content/approvecss").Include(
+                "~/Content/css/style.css",
+                "~/Content/css/slider.css",
+                "~/Content/css/global.css"
+             ));
+
             bundles.Add(new StyleBundle("~/Content/viewcategorycss").Include(
                 "~/Content/css/style.css",
                 "~/Content/css/easy-responsive-tabs.css",
@@ -154,6 +160,15 @@ namespace TGVL
                                     "~/Scripts/js/startstop-slider.js"
                                     
                                     ));
+
+            bundles.Add(new ScriptBundle("~/bundles/approvejquery").Include(
+                                   "~/Scripts/js/jquery-1.11.0.min.js",
+                                   "~/Scripts/js/move-top.js",
+                                   "~/Scripts/js/easing.js",
+                                   "~/Scripts/js/startstop-slider.js"
+
+                                   ));
+
             bundles.Add(new ScriptBundle("~/bundles/viewcategoryjquery").Include(
                                     "~/Scripts/js/jquery-1.11.0.min.js",
                                     "~/Scripts/js/move-top.js",
