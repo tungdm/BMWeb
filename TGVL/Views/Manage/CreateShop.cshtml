@@ -18,22 +18,22 @@
         <div>
             @Html.TextBoxFor(m => m.Fullname, new { @class = "form-control", placeholder = "Shop name" })
         </div>
+        <div>
+            @Html.TextBoxFor(m => m.Address, new { @class = "form-control", placeholder = "Shop Address" })
+        </div>
+
+        <div>
+            <a class="btn btn-default submit" href="javascript:document.getElementById('createShopForm').submit()">Submit</a>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="separator">
             <div>
-                @Html.TextBoxFor(m => m.Address, new { @class = "form-control", placeholder = "Shop Address" })
+                <h1><i class="fa fa-paw"></i> Thegioivatlieu</h1>
+                <p>&copy; @DateTime.Now.Year All Rights Reserved. Privacy and Terms</p>
             </div>
-
-            <div>
-                <a class="btn btn-default submit" href="javascript:document.getElementById('createShopForm').submit()">Submit</a>
-            </div>
-
-            <div class="clearfix"></div>
-
-            <div class="separator">
-                <div>
-                    <h1><i class="fa fa-paw"></i> Thegioivatlieu</h1>
-                    <p>&copy; @DateTime.Now.Year All Rights Reserved. Privacy and Terms</p>
-                </div>
-            </div>
+        </div>
     }
 
     <!--Create Shop form-->
