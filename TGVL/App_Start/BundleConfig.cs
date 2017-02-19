@@ -27,13 +27,26 @@ namespace TGVL
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
 
+           
+            //TungDM
+            //ajax
+            bundles.Add(new ScriptBundle("~/bundles/otf").Include(
+                "~/Scripts/jquery-{version}.js",
+                "~/Scripts/bootstrap.js",
+                "~/Scripts/jquery-ui.js",
+                "~/Scripts/jquery.unobtrusive*",
+                "~/Scripts/jquery.validate*",
+                "~/Scripts/otf.js"
+                ));
+           
             // TungDM - Gentelella Template
             bundles.Add(new StyleBundle("~/Content/customcss").Include(
                       "~/Content/bootstrap.min.css",
                       "~/Content/font-awesome.min.css",
                       "~/Content/nprogress.css",
                       "~/Content/custom.min.css",
-                      "~/Content/daterangepicker.css"
+                      "~/Content/daterangepicker.css",
+                      "~/Content/jquery-ui.css"
                       ));
 
             bundles.Add(new StyleBundle("~/Content/loginformcss").Include(
