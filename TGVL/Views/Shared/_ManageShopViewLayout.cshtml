@@ -8,7 +8,7 @@
     @*Gentelella Template*@
     @Styles.Render("~/Content/customcss")
     @Scripts.Render("~/bundles/modernizr")
-    @Styles.Render("~/Content/productcss")
+    @*@Scripts.Render("~/Content/productcss")*@
 
 </head>
 @using Microsoft.AspNet.Identity
@@ -104,7 +104,7 @@
             <!-- page content -->
             <div class="right_col" role="main">
                 <div class="">
-                   
+                    
                     @RenderBody()
                 </div>
             </div>
@@ -120,7 +120,9 @@
 
 
     @*Gentelella Template*@
-    @Scripts.Render("~/bundles/productjquery")
+    @*@Scripts.Render("~/bundles/productjquery")*@
+
+    @Scripts.Render("~/bundles/otf")
     @RenderSection("scripts", required: false)
 </body>
 </html>
