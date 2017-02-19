@@ -1,0 +1,31 @@
+﻿@model TGVL.Models.ResponeViewModel
+
+
+
+<div id="test" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">THÊM SẢN PHẨM VÀO GIAN HÀNG</h4>
+            </div>
+            <div class="modal-body">
+                <p>@Html.Raw(@Model.Message)</p>
+            </div>
+            <div class="modal-footer">
+                @if (Model.Mode == "error")
+                {
+                    @Html.ActionLink("Cập nhật thông tin sản phẩm", "EditProduct", new { id = Model.WarehouseProductId }, new { @type = "button", @class = "btn btn-default" })
+                }
+                else
+                {
+                    @Html.ActionLink("Xem sản phẩm vừa đăng", "EditProduct", new { id = Model.WarehouseProductId }, new { @type = "button", @class = "btn btn-default" })
+                }
+
+                <button type="button" class="btn btn-default" data-dismiss="modal">Đăng sản phẩm khác</button>
+            </div>
+        </div>
+
+    </div>
+</div>

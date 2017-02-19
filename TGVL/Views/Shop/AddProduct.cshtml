@@ -1,0 +1,37 @@
+﻿@model TGVL.Models.AddProductViewModel
+
+@{
+    ViewBag.Title = "Add Product";
+    Layout = "~/Views/Shared/_ManageShopViewLayout.cshtml";
+}
+
+<form methode="get" action="@Url.Action("AddProduct")" data-otf-ajax="true" data-otf-target="#productList">
+    <input type="search" name="searchString" data-otf-autocomplete="@Url.Action("ProductAutocomplete")" />
+    @*<input type="submit" value="Search By Name" />*@
+</form>
+
+@*@using (Ajax.BeginForm(
+    new AjaxOptions
+    {
+        HttpMethod = "GET",
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "productList"
+    }
+))
+{
+    <input type="search" name="searchString" />
+    <input type="submit" value="Search By Name" />
+}*@
+
+<div id="productList" class="form-horizontal">
+
+</div>
+    
+
+@*@Html.Partial("_Products", Model)*@
+
+
+
+
+
+

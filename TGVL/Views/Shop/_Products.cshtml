@@ -1,0 +1,208 @@
+﻿@model TGVL.Models.AddProductViewModel
+
+
+<div id="productList" class="form-horizontal">
+
+    @using (Ajax.BeginForm(new AjaxOptions
+    {
+        HttpMethod = "POST",
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "productList",
+        OnSuccess = "$('#test').modal('show')"
+    }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <input readonly class="form-control disabled text-box single-line" id="ProductId" name="ProductId" type="hidden" value="@Model.ProductId">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Product_Name">Sản phẩm</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Category_Name">Danh mục</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Category_Name">Chi tiết sản phẩm</label>
+            <div class="col-md-10">
+                <table class="table">
+                    @foreach (var item in Model.ProductAttributes)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Attribute)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Value)
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Manufacturer_Name">Nhà sản xuất</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ManufactureName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Product_Image">Hình ảnh</label>
+            <div class="col-md-10">
+                <input type="file" id="Product" name="uploadImage" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Quantity">Số lượng</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="UnitPrice">Giá tiền</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UnitPrice, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="UnitPrice">Đơn vị</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UnitType, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Warehouse">Kho</label>
+            <div class="col-md-10">
+                @Html.DropDownList("WarehouseId", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Select" class="btn btn-default" />
+            </div>
+        </div>
+    }
+    
+
+    @*@using (Html.BeginForm("AddProduct", "Shop", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <input readonly class="form-control disabled text-box single-line" id="ProductId" name="ProductId" type="hidden" value="@Model.ProductId">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Product_Name">Sản phẩm</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control" , @readonly = "readonly"} })
+               
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Category_Name">Danh mục</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } } )
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Category_Name">Chi tiết sản phẩm</label>
+            <div class="col-md-10">
+                <table class="table">
+                    @foreach (var item in Model.ProductAttributes)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Attribute)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Value)
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Manufacturer_Name">Nhà sản xuất</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ManufactureName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Product_Image">Hình ảnh</label>
+            <div class="col-md-10">
+                <input type="file" id="Product" name="uploadImage" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Quantity">Số lượng</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control"} })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="UnitPrice">Giá tiền</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UnitPrice, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="UnitPrice">Đơn vị</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UnitType, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>
+        </div>
+
+        
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Warehouse">Kho</label>
+            <div class="col-md-10">
+                @Html.DropDownList("WarehouseId", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Select" class="btn btn-default" />
+            </div>
+        </div>
+    }*@
+
+    
+</div>
+
+
+
+
