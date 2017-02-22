@@ -106,17 +106,35 @@ namespace TGVL
 
             // VyCMT
             bundles.Add(new StyleBundle("~/Content/mainpagecss").Include(
-                "~/Content/css/style.css",
+                "~/Content/css/bootstrap.min.css",
                 "~/Content/css/slider.css",
-                "~/Content/css/global.css"
+                "~/Content/css/owl.carousel.css",
+                "~/Content/css/owl.theme.css",
+                "~/Content/font-awesome.min.css",
+                "~/Content/bootstrap.css",
+                "~/Content/AdminLTE.min.css",
+                "~/Content/css/style.css"
              ));
 
-            bundles.Add(new StyleBundle("~/Content/approvecss").Include(
-                "~/Content/css/style.css",
-                "~/Content/css/slider.css",
-                "~/Content/css/global.css"
+            bundles.Add(new StyleBundle("~/Content/viewdetailcss").Include(
+                "~/Content/css/bootstrap.min.css",
+                "~/Content/css/owl.carousel.css",
+                "~/Content/css/owl.theme.css",
+                "~/Content/css/flexslider.css",
+                "~/Content/css/fancybox.css.css",
+                "~/Content/font-awesome.min.css",
+                "~/Content/css/style.css"
              ));
 
+
+            bundles.Add(new StyleBundle("~/Content/createrequestcss").Include(
+                "~/Content/css/air.components.2.3.1.min.css",
+                "~/Content/css/air.global.2.3.1.min.css",
+                "~/Content/css/homepage.css",
+                "~/Content/css/components.css"
+             ));
+
+            
             bundles.Add(new StyleBundle("~/Content/viewcategorycss").Include(
                 "~/Content/css/style.css",
                 "~/Content/css/easy-responsive-tabs.css",
@@ -128,12 +146,15 @@ namespace TGVL
                 "~/Content/bootstrap.min.css",
                 "~/Content/font-awesome.min.css",
                 "~/Content/nprogress.css",
+                "~/Content/daterangepicker.css",
+                "~/Content/ion.rangeSlider.css",
+                "~/Content/ion.rangeSlider.skinFlat.css",
+                "~/Content/bootstrap-colorpicker.min.css",
                 "~/Content/green.css",
                 "~/Content/prettify.min.css",
                 "~/Content/select2.min.css",
                 "~/Content/switchery.min.css",
                 "~/Content/starrr.css",
-                "~/Content/daterangepicker.css",
                 
                 "~/Content/custom.min.css"
                 ));
@@ -141,6 +162,7 @@ namespace TGVL
                 "~/Content/bootstrap.min.css",
                 "~/Content/font-awesome.min.css",
                 "~/Content/nprogress.css",
+                "~/Content/daterangepicker.css",
                 "~/Content/green.css",
                 "~/Content/dataTables.bootstrap.min.css",
                 "~/Content/buttons.bootstrap.min.css",
@@ -150,38 +172,28 @@ namespace TGVL
                 "~/Content/custom.min.css"
                 ));
 
-            bundles.Add(new StyleBundle("~/Content/uploadcss").Include(
-                "~/Content/bootstrap.min.css",
-                "~/Content/font-awesome.min.css",
-                "~/Content/nprogress.css",
-                "~/Content/dropzone.min.css",
-                "~/Content/custom.min.css"
-             ));
-
-            //bundles.Add(new StyleBundle("~/Content/wizardcss").Include(
-            //    "~/Content/bootstrap.min.css",
-            //    "~/Content/font-awesome.min.css",
-            //    "~/Content/nprogress.css",
-            //    "~/Content/custom.min.css"
-            //    ));
-
-
+            // jquery
             bundles.Add(new ScriptBundle("~/bundles/mainpagejquery").Include(
-                                    "~/Scripts/js/jquery-1.11.0.min.js",
-                                    "~/Scripts/js/move-top.js",
-                                    "~/Scripts/js/easing.js",
-                                    "~/Scripts/js/startstop-slider.js"
-                                    
+                                    "~/Scripts/js/jquery.min.js",
+                                    "~/Scripts/js/bootstrap.min.js",
+                                    "~/Scripts/js/parallax.js",
+                                    "~/Scripts/js/common.js",
+                                    "~/Scripts/js/slider.js",
+                                    "~/Scripts/js/owl.carousel.min.js"
                                     ));
 
-            bundles.Add(new ScriptBundle("~/bundles/approvejquery").Include(
-                                   "~/Scripts/js/jquery-1.11.0.min.js",
-                                   "~/Scripts/js/move-top.js",
-                                   "~/Scripts/js/easing.js",
-                                   "~/Scripts/js/startstop-slider.js"
-
-                                   ));
-
+            bundles.Add(new ScriptBundle("~/bundles/viewdetailjquery").Include(
+                                    "~/Scripts/js/prototype.js",
+                                    "~/Scripts/js/jquery.min.js",
+                                    "~/Scripts/js/bootstrap.min.js",
+                                    "~/Scripts/js/common.js",
+                                    "~/Scripts/js/owl.carousel.min.js",
+                                    "~/Scripts/js/toggle.js",
+                                    "~/Scripts/js/pro-img-slider.js",
+                                    "~/Scripts/js/jquery.flexslider.js",
+                                    "~/Scripts/js/cloud-zoom.js"
+                                    ));
+            
             bundles.Add(new ScriptBundle("~/bundles/viewcategoryjquery").Include(
                                     "~/Scripts/js/jquery-1.11.0.min.js",
                                     "~/Scripts/js/move-top.js",
@@ -196,10 +208,11 @@ namespace TGVL
                                     "~/Scripts/bootstrap.min.js",
                                     "~/Scripts/fastclick.js",
                                     "~/Scripts/nprogress.js",
-                                    "~/Scripts/bootstrap-progressbar.min.js",
-                                    "~/Scripts/icheck.min.js",
                                     "~/Scripts/moment.min.js",
                                     "~/Scripts/daterangepicker.js",
+                                    "~/Scripts/bootstrap-colorpicker.min.js",
+                                    "~/Scripts/bootstrap-progressbar.min.js",
+                                    "~/Scripts/icheck.min.js",
                                     "~/Scripts/bootstrap-wysiwyg.min.js",
                                     "~/Scripts/jquery.hotkeys.js",
                                     "~/Scripts/prettify.js",
@@ -213,21 +226,14 @@ namespace TGVL
                                     "~/Scripts/custom.min.js"
                                     
                                     ));
-
-            bundles.Add(new ScriptBundle("~/bundles/uploadjquery").Include(
-                                   "~/Scripts/jquery.min.js",
-                                   "~/Scripts/bootstrap.min.js",
-                                   "~/Scripts/fastclick.js",
-                                    "~/Scripts/nprogress.js",
-                                    "~/Scripts/dropzone.min.js",
-                                    "~/Scripts/custom.min.js"
-                                   ));
-
+            
             bundles.Add(new ScriptBundle("~/bundles/productjquery").Include(
                                     "~/Scripts/jquery.min.js",
                                     "~/Scripts/bootstrap.min.js",
                                     "~/Scripts/fastclick.js",
                                     "~/Scripts/nprogress.js",
+                                    "~/Scripts/moment.min.js",
+                                    "~/Scripts/daterangepicker.js",
                                     "~/Scripts/icheck.min.js",
                                     "~/Scripts/jquery.dataTables.min.js",
                                     "~/Scripts/dataTables.bootstrap.min.js",
@@ -247,14 +253,7 @@ namespace TGVL
                                     "~/Scripts/jquery.smartWizard.js",
                                     "~/Scripts/custom.min.js"
                                     ));
-            //bundles.Add(new ScriptBundle("~/bundles/wizardjquery").Include(
-            //                        "~/Scripts/jquery.min.js",
-            //                        "~/Scripts/bootstrap.min.js",
-            //                        "~/Scripts/fastclick.js",
-            //                        "~/Scripts/nprogress.js",
-            //                        "~/Scripts/jquery.smartWizard.js",
-            //                        "~/Scripts/custom.min.js"
-            //                        ));
+            
         }
     }
 }

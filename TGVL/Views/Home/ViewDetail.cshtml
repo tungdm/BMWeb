@@ -1,0 +1,306 @@
+﻿
+@{
+    ViewBag.Title = "ViewDetail";
+    Layout = "~/Views/Shared/_HomePageViewLayout.cshtml";
+}
+
+@Styles.Render("~/Content/viewdetailcss")
+@Scripts.Render("~/bundles/viewdetailjquery")
+
+<style>
+    .item-img-info {
+        width: 300px;
+        height: 200px;
+        background-image: none;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+    }
+
+    .item-inner {
+        width: 300px;
+        height: 300px;
+        display: inline-block;
+        padding: 5px;
+        margin-left: 10px;
+        vertical-align: top;
+    }
+
+    .col-item {
+        width: 100%;
+        height: auto;
+        padding: 5px;
+    }
+</style>
+
+<div class="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <ul>
+                <li class="home"> <a href="index.html">Trang chủ</a><span>&raquo;</span></li>
+                <li class=""> <a href="grid.html">Xi măng</a><span>&raquo;</span></li>
+                <li class="category13"><strong> Xi măng FICO PCB40 </strong></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<section class="main-container col1-layout">
+    <div class="main container">
+        <div class="col-main">
+            <div class="row">
+                <div class="product-view">
+                    <div class="product-essential">
+
+                        <input name="form_key" value="6UbXroakyQlbfQzK" type="hidden">
+                        <div class="product-img-box col-sm-3 col-xs-12">
+
+                            <div class="product-image">
+                                <div class="large-image"><img alt="product-image" src="~/Content/images/cement-fico-pcb-40.jpg"></div>
+                                @*<div class="flexslider flexslider-thumb">
+                                        <ul class="previews-list slides">
+                                            <li><a href='~/Content/images/product6.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '~/Content/images/product6.jpg' "><img src="~/Content/images/product6.jpg" alt="Thumbnail 1" /></a></li>
+                                            <li><a href='~/Content/images/product10.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '~/Content/images/product10.jpg' "><img src="~/Content/images/product10.jpg" alt="Thumbnail 2" /></a></li>
+                                            <li><a href='~/Content/images/product3.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '~/Content/images/product3.jpg' "><img src="~/Content/images/product3.jpg" alt="Thumbnail 1" /></a></li>
+                                            <li><a href='~/Content/images/product4.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '~/Content/images/product4.jpg' "><img src="~/Content/images/product4.jpg" alt="Thumbnail 2" /></a></li>
+                                            <li><a href='~/Content/images/product5.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '~/Content/images/product5.jpg' "><img src="~/Content/images/product5.jpg" alt="Thumbnail 2" /></a></li>
+                                        </ul>
+                                    </div>*@
+                            </div>
+                            <!-- end: more-images -->
+                            <div class="clear"></div>
+                        </div>
+                        <div class="product-shop col-sm-6 col-xs-12">
+                            <div class="product-next-prev"> <a class="product-next" href="#"><span></span></a> <a class="product-prev" href="#"><span></span></a> </div>
+                            <div class="product-name">
+                                <h1>Xi măng FICO PCB40</h1>
+                            </div>
+                            @*<div class="short-description">
+                                    <p>Sản phẩm đến từ nhà cung cấp uy tín</p>
+                                </div>*@
+
+                            <div class="price-block">
+                                <div class="price-box">
+                                    @*<p>3 cửa hàng bán với giá từ: <b>80.000 VNĐ</b></p>*@
+                                    6 Cửa hàng bán với giá từ: <p class="special-price"> <span class="price-label"> Special Price</span> <span class="price"> 80.000 VNĐ </span> </p>
+                                </div>
+                            </div>
+                            <div class="add-to-box">
+                                <div class="add-to-cart">
+                                    <label>Số lượng :</label>
+                                    <select>
+                                        <option>1</option>
+                                        <option>2 </option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5 </option>
+                                        <option>6</option>
+                                        <option>7</option>
+                                        <option>8 </option>
+                                        <option>9</option>
+                                        <option>10</option>
+                                    </select>
+                                </div>
+                                <button type="button" title="Thêm vào giỏ hàng" class="button btn-cart" onClick="productAddToCartForm.submit(this)"><span>Thêm vào giỏ hàng</span></button>
+                            </div>
+                            <br />
+                            <br />
+                            <div class="toggle-content">
+                                <div class="toggle toggle-white">
+                                    <h4 class="trigger"><a href="#">Mô tả</a></h4>
+                                    <div style="display: none;" class="toggle_container ">
+                                        <form>
+                                            <table class="table-bordered" width="500">
+                                                <tr>
+                                                    <td>Nhà sản xuất</td>
+                                                    <td>Xi măng Hocim</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Khối lượng</td>
+                                                    <td>50kg</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Đơn vị tính</td>
+                                                    <td>bao</td>
+                                                </tr>
+
+                                            </table>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="toggle toggle-white">
+                                    <h4 class="trigger"><a href="#">Thông số kỹ thuật</a></h4>
+                                    <div style="display: none;" class="toggle_container ">
+                                        <form>
+                                            <table class="table-bordered" width="500">
+                                                <tr>
+                                                    <td>Thời gian đông kết</td>
+                                                    <td>45 phút</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Độ ổn định thể tích</td>
+                                                    <td>10m</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Hàm lượng SO3</td>
+                                                    <td>3.5%</td>
+                                                </tr>
+
+                                            </table>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-img-box col-sm-3 col-xs-12">
+                            <h4 class="text-center"><strong>CỬA HÀNG CÓ BÁN</strong></h4>
+                            <div class="product-additional">
+                                <ol id="products-list" class="products-list">
+                                    <li class="item">
+                                        <div class="col-item">
+                                            <div class="product-image"> <a href="product_detail.html"> <img class="small-image" src="~/Content/images/logo1.jpg"> </a> </div>
+                                        </div>
+                                        <div class="product-shop">
+                                            <p>Cửa hàng VLXD Sỹ Mạnh</p>
+                                            <p>36 Nguyễn Trãi Q1 TPHCM</p>
+                                        </div>
+                                    </li>
+                                    <li class="item">
+                                        <div class="col-item">
+                                            <div class="product-image"> <a href="product_detail.html"> <img class="small-image" src="~/Content/images/logo2.jpg"> </a> </div>
+                                        </div>
+                                        <div class="product-shop">
+                                            <p>Cửa hàng VLXD M&C</p>
+                                            <p>36 Nguyễn Văn Trỗi Phú Nhuận TPHCM</p>
+                                        </div>
+                                    </li>
+
+                                </ol>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- related Product Slider -->
+                        <div class="product-collateral">
+
+                            <!-- related Product Slider End -->
+                            <!-- Upsell Product Slider -->
+                            <section class="upsell-pro">
+                                <div class="slider-items-products">
+                                    <div class="new_title center">
+                                        <h2>Sản phẩm tương tự</h2>
+                                    </div>
+                                    <div id="featured-slider" class="product-flexslider hidden-buttons">
+                                        <div class="slider-items slider-width-col4">
+                                            @*<div class="item">
+                                                    <div class="col-item">
+                                                        <div class="item-inner">
+                                                            <div class="item-img">
+
+                                                                <div class="item-img-info">
+                                                                    <a href="product_detail.html" class="product-image"> <img src="~/Content/images/cement-fico-pcb-40.jpg"> </a>
+                                                                    <div class="item-box-hover">
+                                                                        <div class="box-inner">
+                                                                            <div class="product-detail-bnt"><a href="quick_view.html" class="button detail-bnt"> <span> Xem chi tiết</span></a></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="item-info">
+                                                                <div class="info-inner">
+                                                                    <div class="item-title"> <a href="product_detail.html" title="Sample Product"> Xi măng FICO PCB40 </a> </div>
+                                                                    <div class="item-content">
+
+                                                                        <div class="item-price">
+                                                                            <div class="price-box">
+                                                                                <div class="price-box"> <span class="regular-price"> <span class="price">80.000 VNĐ</span> </span> </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <p>3 cửa hàng bán</p>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>*@
+
+                                            <div class="item">
+                                                <div class="col-item">
+                                                    <div class="item-inner">
+                                                        <div class="item-img">
+
+                                                            <div class="item-img-info">
+                                                                <a href="product_detail.html" class="product-image"> <img src="~/Content/images/xi-mang-ha-tien-1-pcb-30.jpg"> </a>
+                                                                @*<div class="item-box-hover">
+                                                                    <div class="box-inner">
+                                                                        <div class="product-detail-bnt"><a href="quick_view.html" class="button detail-bnt"> <span> Xem chi tiết</span></a></div>
+                                                                    </div>
+                                                                </div>*@
+                                                            </div>
+                                                        </div>
+                                                        <div class="item-info">
+                                                            <div class="info-inner">
+                                                                <div class="item-title"> <a href="product_detail.html"> Xi măng Hà Tiên 1 </a> </div>
+                                                                <div class="item-content">
+                                                                    <div class="item-price">
+                                                                        <div class="price-box">
+                                                                            <div class="price-box"> <span class="regular-price"> <span class="price">92.000 VNĐ</span> </span> </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <p>6 cửa hàng bán</p>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="item">
+                                                <div class="col-item">
+                                                    <div class="item-inner">
+                                                        <div class="item-img">
+
+                                                            <div class="item-img-info">
+                                                                <a href="product_detail.html" class="product-image"> <img src="~/Content/images/xi-mang-ha-tien-1.jpg"> </a>
+                                                                @*<div class="item-box-hover">
+                                                                    <div class="box-inner">
+                                                                        <div class="product-detail-bnt"><a href="quick_view.html" class="button detail-bnt"> <span> Xem chi tiết</span></a></div>
+                                                                    </div>
+                                                                </div>*@
+                                                            </div>
+                                                        </div>
+                                                        <div class="item-info">
+                                                            <div class="info-inner">
+                                                                <div class="item-title"> <a href="product_detail.html"> Xi măng Nghi Sơn PCB40 </a> </div>
+                                                                <div class="item-content">
+                                                                    <div class="item-price">
+                                                                        <div class="price-box">
+                                                                            <div class="price-box"> <span class="regular-price"> <span class="price">81.000 VNĐ</span> </span> </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <p>6 cửa hàng bán</p>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <!-- Upsell Product Slider End -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

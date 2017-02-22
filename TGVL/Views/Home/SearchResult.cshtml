@@ -1,0 +1,223 @@
+﻿
+@{
+    ViewBag.Title = "SearchResult";
+    Layout = "~/Views/Shared/_HomePageViewLayout.cshtml";
+}
+
+@Styles.Render("~/Content/mainpagecss")
+@Scripts.Render("~/bundles/mainpagejquery")
+
+<style>
+    .item-img-info {
+        width: 300px;
+        height: 200px;
+        background-image: none;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+    }
+
+    .item-inner {
+        width: 300px;
+        height: 300px;
+        display: inline-block;
+        padding: 5px;
+        margin-left: 10px;
+        vertical-align: top;
+    }
+
+    .col-item {
+        width: 100%;
+        height: auto;
+        padding: 5px;
+    }
+</style>
+
+<div class="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <ul>
+                <li class="home"> <a href="index.html">Trang chủ</a><span>&raquo;</span></li>
+                <li class=""> <a href="grid.html">Xi măng</a><span>&raquo;</span></li>
+                <li class="category13"><strong> Xi măng Hà Tiên Đa dụng </strong></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<section class="main-container col1-layout home-content-container">
+    <div class="container">
+        <div class="row">
+            <div class="std">
+                <div class="best-pro col-sm-12">
+                    <div class="slider-items-products">
+                        <div class="new_title center">
+                            <h2>Kết quả tìm kiếm phù hợp</h2>
+                        </div>
+                        <div id="best-seller-slider" class="product-flexslider hidden-buttons">
+                            <div class="slider-items slider-width-col4">
+                                <div class="item">
+                                    <div class="col-item">
+                                        <div class="item-inner">
+                                            <div class="item-img">
+                                                <div class="item-img-info">
+                                                    <a href="product_detail.html" class="product-image"> <img src="~/Content/images/xi măng hà tiên đa dụng.jpg"> </a>
+
+                                                </div>
+                                            </div>
+                                            <div class="item-info">
+                                                <div class="info-inner">
+                                                    <div class="item-title"> <a href="product_detail.html" title="Xi măng Hà Tiên Đa dụng"> Xi măng Hà Tiên Đa dụng </a> </div>
+                                                    <div class="item-content">
+                                                        <div class="item-price">
+                                                            <div class="price-box">
+                                                                <div class="price-box"> <span class="regular-price"> <span class="price">87.000 VNĐ</span> </span> </div>
+                                                            </div>
+                                                        </div>
+                                                        <a><p>Cửa hàng VLXD Vy Vy</p></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="item">
+                                    <div class="col-item">
+                                        <div class="item-inner">
+                                            <div class="item-img">
+
+                                                <div class="item-img-info">
+                                                    <a href="product_detail.html" title="Xi măng Hà Tiên Đa dụng" class="product-image"> <img src="~/Content/images/xi măng hà tiên đa dụng.jpg"> </a>
+
+                                                </div>
+                                            </div>
+                                            <div class="item-info">
+                                                <div class="info-inner">
+                                                    <div class="item-title"> <a href="product_detail.html" title="Sample Product"> Xi măng Hà Tiên Đa dụng </a> </div>
+                                                    <div class="item-content">
+
+                                                        <div class="item-price">
+                                                            <div class="price-box">
+                                                                <div class="price-box">
+                                                                    <div class="price-box"> <span class="regular-price"> <span class="price">88.000 VNĐ</span> </span> </div>
+                                                                </div>
+                                                            </div>
+                                                            <a><p>Cửa hàng VLXD Hương Mai</p></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="item">
+                                    <div class="col-item">
+                                        <div class="item-inner">
+                                            <div class="item-img">
+
+                                                <div class="item-img-info">
+                                                    <a href="product_detail.html" class="product-image"> <img src="~/Content/images/xi măng hà tiên đa dụng.jpg"> </a>
+
+                                                </div>
+                                            </div>
+                                            <div class="item-info">
+                                                <div class="info-inner">
+                                                    <div class="item-title"> <a href="product_detail.html" title="Sample Product"> Xi măng Hà Tiên Đa dụng </a> </div>
+                                                    <div class="item-content">
+
+                                                        <div class="item-price">
+                                                            <div class="price-box">
+                                                                <div class="price-box">
+                                                                    <div class="price-box"> <span class="regular-price"> <span class="price">89.000 VNĐ</span> </span> </div>
+                                                                </div>
+                                                            </div>
+                                                            <a><p>Cửa hàng VLXD Hương Lan</p></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br />
+
+
+                    <div class="slider-items-products">
+                        <div class="new_title center">
+                            <h2>Sản phẩm tương tự</h2>
+                        </div>
+                        <div id="featured-slider" class="product-flexslider hidden-buttons">
+                            <div class="slider-items slider-width-col4">
+                                <div class="item">
+                                    <div class="col-item">
+                                        <div class="item-inner">
+                                            <div class="item-img">
+
+                                                <div class="item-img-info">
+                                                    <a href="product_detail.html" class="product-image"> <img src="~/Content/images/cement-fico-pcb-40.jpg"> </a>
+
+                                                </div>
+                                            </div>
+                                            <div class="item-info">
+                                                <div class="info-inner">
+                                                    <div class="item-title"> <a href="product_detail.html" title="Sample Product"> Xi măng FICO PCB40 </a> </div>
+                                                    <div class="item-content">
+
+                                                        <div class="item-price">
+                                                            <div class="price-box">
+                                                                <div class="price-box"> <span class="regular-price"> <span class="price">80.000 VNĐ</span> </span> </div>
+                                                            </div>
+                                                        </div>
+                                                        <p>3 cửa hàng bán</p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="item">
+                                    <div class="col-item">
+                                        <div class="item-inner">
+                                            <div class="item-img">
+
+                                                <div class="item-img-info">
+                                                    <a href="product_detail.html" class="product-image"> <img src="~/Content/images/xi-mang-ha-tien-1-pcb-30.jpg"> </a>
+
+                                                </div>
+                                            </div>
+                                            <div class="item-info">
+                                                <div class="info-inner">
+                                                    <div class="item-title"> <a href="product_detail.html"> Xi măng Hà Tiên 1 </a> </div>
+                                                    <div class="item-content">
+                                                        <div class="item-price">
+                                                            <div class="price-box">
+                                                                <div class="price-box"> <span class="regular-price"> <span class="price">92.000 VNĐ</span> </span> </div>
+                                                            </div>
+                                                        </div>
+                                                        <p>6 cửa hàng bán</p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

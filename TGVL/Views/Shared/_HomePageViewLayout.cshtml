@@ -1,0 +1,665 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>THẾ GIỚI VẬT LIỆU</title>
+
+    @Styles.Render("~/Content/mainpagecss")
+    @*@Scripts.Render("~/bundles/mainpagejquery")
+        @RenderSection("scripts", required: false)*@
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,400italic,700italic&subset=latin,vietnamese' rel='stylesheet' type='text/css'>
+    <style>
+        body{
+            font-family: Roboto, sans-serif;
+        }
+        #top-header {
+            background: #F3F3F3;
+            border-bottom: 2px solid #FFFFFF;
+            height: 35px;
+        }
+
+        #searchForm {
+            width:80%;
+            padding: 11px 20px;
+            font-size: 14px;
+        }
+
+        
+    </style>
+
+</head>
+<body class="cms-index-index">
+
+    <div class="page">
+        <!-- Header -->
+        <header class="header-container">
+
+            <div id="top-header" class="header-top">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-5 col-md-5 col-xs-6"></div>
+                        <div class="col-lg-7 col-md-7 col-xs-6">
+                            <!-- Header Top Links -->
+                            <div class="toplinks">
+                                <div class="links">
+                                    <div class="dropdown block-company-wrapper"><a data-toggle="dropdown" data-target="#" class="dropdown-toggle" href="#"><span><strong>YÊU CẦU</strong></span></a>
+                                        <ul class="dropdown-menu">
+                                            <li role="presentation"><a tabindex="-1" href="about_us.html"><strong> MUA NHANH </strong></a></li>
+                                            <li role="presentation"><a tabindex="-1" href="#"><strong> ĐẤU THẦU </strong></a></li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="myaccount"><a href="login.html"><span><strong>ĐĂNG KÝ</strong></span><i class="icon-angle-down"></i></a></div>
+                                    <div class="login"><a href="login.html"><span><strong>ĐĂNG NHẬP</strong></span></a></div>
+                                </div>
+                            </div>
+                            <!-- End Header Top Links -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="header container">
+                <div class="row">
+                    @*<div id="logo-img" class="col-md-2 col-sm-2 col-xs-12 ">
+                        
+                        <div class="logo">
+                            <img src="~/Content/images/logo.jpg" />
+                        </div>
+
+                    </div>*@
+                    <div class="col-md-3 col-sm-12 col-xs-12">
+                        <div class="logo">
+                            <img src="~/Content/images/coollogo_com-237831172.png" />
+                        </div>
+                    </div>
+                    <div class="col-md-7 col-sm-12 col-xs-12">
+                        <form id="searchForm">
+                            <div class="input-group input-group-lg">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
+                                        Sản phẩm
+                                        <span class="fa fa-caret-down"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Cửa hàng</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Yêu cầu</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Deal</a></li>
+                                    </ul>
+                                </div>
+                                <input type="text" class="form-control input-sm" placeholder="Nhập vào đây để tìm kiếm">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-info btn-flat">Tìm kiếm</button>
+                                </span>
+                            </div>
+                        </form>
+                       
+                    </div>
+                    <div class="col-md-2 col-sm-12 col-xs-12">
+                        <div class="top-cart-contain">
+                            <div class="mini-cart">
+                                <div data-toggle="dropdown" data-hover="dropdown" class="basket dropdown-toggle"> <a href="#"><span>Giỏ hàng (0)</span></a></div>
+                                <div>
+
+                                </div>
+                            </div>
+                            <div id="ajaxconfig_info" style="display:none">
+                                <a href="#/"></a>
+                                <input value="" type="hidden">
+                                <input id="enable_module" value="1" type="hidden">
+                                <input class="effect_to_cart" value="1" type="hidden">
+                                <input class="title_shopping_cart" value="Go to shopping cart" type="hidden">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- end header -->
+        <!-- Navbar -->
+        <nav>
+            <div class="container">
+                <div class="nav-inner">
+                    <ul id="nav" class="hidden-xs">
+                        <li class="level0 nav-8 level-top"> <a href="grid.html" class="level-top"> <span><strong>Trang chủ</strong></span> </a> </li>
+                        <li class="level0 nav-7 level-top parent">
+                            <a href="grid.html" class="level-top"> <span><strong>GẠCH XÂY</strong></span> </a>
+                            <div style="display: none; left: 0px;" class="level0-wrapper dropdown-6col">
+                                <div class="level0-wrapper2">
+                                    <div class="nav-block nav-block-center">
+                                        <ul class="level0">
+                                            <li class="level1 nav-7-1 first parent item">
+                                                <a href="grid.html"> <span>GẠCH TÀU</span> </a>
+                                                <ul class="level1">
+                                                    <li class="level2 nav-7-3-15 first"> <a href="grid.html"> <span>Digital Cameras</span> </a> </li>
+                                                    <li class="level2 nav-7-3-16"> <a href="grid.html"> <span>Camcorders</span> </a> </li>
+                                                    <li class="level2 nav-7-3-17"> <a href="grid.html"> <span>Lenses</span> </a> </li>
+                                                    <li class="level2 nav-7-3-18"> <a href="grid.html"> <span>Filters</span> </a> </li>
+                                                    <li class="level2 nav-7-3-19 last"> <a href="grid.html"> <span>Tripods</span> </a> </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level1 nav-7-3 parent item">
+                                                <a href="grid.html"> <span>GẠCH ỐNG</span> </a>
+                                                <ul class="level1">
+                                                    <li class="level2 nav-7-3-15 first"> <a href="grid.html"> <span>Digital Cameras</span> </a> </li>
+                                                    <li class="level2 nav-7-3-16"> <a href="grid.html"> <span>Camcorders</span> </a> </li>
+                                                    <li class="level2 nav-7-3-17"> <a href="grid.html"> <span>Lenses</span> </a> </li>
+                                                    <li class="level2 nav-7-3-18"> <a href="grid.html"> <span>Filters</span> </a> </li>
+                                                    <li class="level2 nav-7-3-19 last"> <a href="grid.html"> <span>Tripods</span> </a> </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level1 nav-7-3 parent item">
+                                                <a href="grid.html"> <span>GẠCH ĐỒNG NAI</span> </a>
+                                                <ul class="level1">
+                                                    <li class="level2 nav-7-3-15 first"> <a href="grid.html"> <span>Digital Cameras</span> </a> </li>
+                                                    <li class="level2 nav-7-3-16"> <a href="grid.html"> <span>Camcorders</span> </a> </li>
+                                                    <li class="level2 nav-7-3-17"> <a href="grid.html"> <span>Lenses</span> </a> </li>
+                                                    <li class="level2 nav-7-3-18"> <a href="grid.html"> <span>Filters</span> </a> </li>
+                                                    <li class="level2 nav-7-3-19 last"> <a href="grid.html"> <span>Tripods</span> </a> </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level1 nav-7-4 parent item">
+                                                <a href="grid.html"> <span>GẠCH THẺ</span> </a>
+                                                <ul class="level1">
+                                                    <li class="level2 nav-7-2-8 first"> <a href="grid.html"> <span>Headsets</span> </a> </li>
+                                                    <li class="level2 nav-7-2-9"> <a href="grid.html"> <span>Batteries</span> </a> </li>
+                                                    <li class="level2 nav-7-2-10"> <a href="grid.html"> <span>Screen Protectors</span> </a> </li>
+                                                    <li class="level2 nav-7-2-11"> <a href="grid.html"> <span>Memory Cards</span> </a> </li>
+                                                    <li class="level2 nav-7-2-14 last"> <a href="grid.html"> <span>Cases</span> </a> </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level1 nav-7-4 last parent item">
+                                                <a href="grid.html"> <span>GẠCH INAX</span> </a>
+                                                <ul class="level1">
+                                                    <li class="level2 nav-7-2-8 first"> <a href="grid.html"> <span>Headsets</span> </a> </li>
+                                                    <li class="level2 nav-7-2-9"> <a href="grid.html"> <span>Batteries</span> </a> </li>
+                                                    <li class="level2 nav-7-2-10"> <a href="grid.html"> <span>Screen Protectors</span> </a> </li>
+                                                    <li class="level2 nav-7-2-11"> <a href="grid.html"> <span>Memory Cards</span> </a> </li>
+                                                    <li class="level2 nav-7-2-14 last"> <a href="grid.html"> <span>Cases</span> </a> </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="level0 nav-8 level-top"> <a href="grid.html" class="level-top"> <span><strong>XI MĂNG</strong></span> </a> </li>
+                        <li class="level0 nav-7 level-top parent">
+                            <a href="grid.html" class="level-top"> <span><strong>SẮT</strong></span> </a>
+                            <div style="display: none; left: 0px;" class="level0-wrapper dropdown-6col">
+                                <div class="level0-wrapper2">
+                                    <div class="nav-block nav-block-center">
+                                        <ul class="level0">
+                                            <li class="level1 nav-7-1 first parent item">
+                                                <a href="grid.html"> <span>SẮT TRÒN</span> </a>
+                                                <ul class="level1">
+                                                    <li class="level2 nav-7-3-15 first"> <a href="grid.html"> <span>Digital Cameras</span> </a> </li>
+                                                    <li class="level2 nav-7-3-16"> <a href="grid.html"> <span>Camcorders</span> </a> </li>
+                                                    <li class="level2 nav-7-3-17"> <a href="grid.html"> <span>Lenses</span> </a> </li>
+                                                    <li class="level2 nav-7-3-18"> <a href="grid.html"> <span>Filters</span> </a> </li>
+                                                    <li class="level2 nav-7-3-19 last"> <a href="grid.html"> <span>Tripods</span> </a> </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level1 nav-7-3 parent item">
+                                                <a href="grid.html"> <span>SẮT CUỘN</span> </a>
+                                                <ul class="level1">
+                                                    <li class="level2 nav-7-3-15 first"> <a href="grid.html"> <span>Digital Cameras</span> </a> </li>
+                                                    <li class="level2 nav-7-3-16"> <a href="grid.html"> <span>Camcorders</span> </a> </li>
+                                                    <li class="level2 nav-7-3-17"> <a href="grid.html"> <span>Lenses</span> </a> </li>
+                                                    <li class="level2 nav-7-3-18"> <a href="grid.html"> <span>Filters</span> </a> </li>
+                                                    <li class="level2 nav-7-3-19 last"> <a href="grid.html"> <span>Tripods</span> </a> </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level1 nav-7-3 parent item">
+                                                <a href="grid.html"> <span>SẮT CÂY</span> </a>
+                                                <ul class="level1">
+                                                    <li class="level2 nav-7-3-15 first"> <a href="grid.html"> <span>Digital Cameras</span> </a> </li>
+                                                    <li class="level2 nav-7-3-16"> <a href="grid.html"> <span>Camcorders</span> </a> </li>
+                                                    <li class="level2 nav-7-3-17"> <a href="grid.html"> <span>Lenses</span> </a> </li>
+                                                    <li class="level2 nav-7-3-18"> <a href="grid.html"> <span>Filters</span> </a> </li>
+                                                    <li class="level2 nav-7-3-19 last"> <a href="grid.html"> <span>Tripods</span> </a> </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level1 nav-7-4 parent item">
+                                                <a href="grid.html"> <span>SẮT HỘP</span> </a>
+                                                <ul class="level1">
+                                                    <li class="level2 nav-7-2-8 first"> <a href="grid.html"> <span>Headsets</span> </a> </li>
+                                                    <li class="level2 nav-7-2-9"> <a href="grid.html"> <span>Batteries</span> </a> </li>
+                                                    <li class="level2 nav-7-2-10"> <a href="grid.html"> <span>Screen Protectors</span> </a> </li>
+                                                    <li class="level2 nav-7-2-11"> <a href="grid.html"> <span>Memory Cards</span> </a> </li>
+                                                    <li class="level2 nav-7-2-14 last"> <a href="grid.html"> <span>Cases</span> </a> </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level1 nav-7-4 last parent item">
+                                                <a href="grid.html"> <span>SẮT HÌNH</span> </a>
+                                                <ul class="level1">
+                                                    <li class="level2 nav-7-2-8 first"> <a href="grid.html"> <span>Headsets</span> </a> </li>
+                                                    <li class="level2 nav-7-2-9"> <a href="grid.html"> <span>Batteries</span> </a> </li>
+                                                    <li class="level2 nav-7-2-10"> <a href="grid.html"> <span>Screen Protectors</span> </a> </li>
+                                                    <li class="level2 nav-7-2-11"> <a href="grid.html"> <span>Memory Cards</span> </a> </li>
+                                                    <li class="level2 nav-7-2-14 last"> <a href="grid.html"> <span>Cases</span> </a> </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="level0 nav-7 level-top parent">
+                            <a href="grid.html" class="level-top"> <span><strong>THÉP</strong></span> </a>
+                            <div style="display: none; left: 0px;" class="level0-wrapper dropdown-6col">
+                                <div class="level0-wrapper2">
+                                    <div class="nav-block nav-block-center">
+                                        <ul class="level0">
+                                            <li class="level1 nav-7-1 first parent item">
+                                                <a href="grid.html"> <span>THÉP ỐNG</span> </a>
+                                                <ul class="level1">
+                                                    <li class="level2 nav-7-3-15 first"> <a href="grid.html"> <span>Digital Cameras</span> </a> </li>
+                                                    <li class="level2 nav-7-3-16"> <a href="grid.html"> <span>Camcorders</span> </a> </li>
+                                                    <li class="level2 nav-7-3-17"> <a href="grid.html"> <span>Lenses</span> </a> </li>
+                                                    <li class="level2 nav-7-3-18"> <a href="grid.html"> <span>Filters</span> </a> </li>
+                                                    <li class="level2 nav-7-3-19 last"> <a href="grid.html"> <span>Tripods</span> </a> </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level1 nav-7-3 parent item">
+                                                <a href="grid.html"> <span>THÉP TRÒN</span> </a>
+                                                <ul class="level1">
+                                                    <li class="level2 nav-7-3-15 first"> <a href="grid.html"> <span>Digital Cameras</span> </a> </li>
+                                                    <li class="level2 nav-7-3-16"> <a href="grid.html"> <span>Camcorders</span> </a> </li>
+                                                    <li class="level2 nav-7-3-17"> <a href="grid.html"> <span>Lenses</span> </a> </li>
+                                                    <li class="level2 nav-7-3-18"> <a href="grid.html"> <span>Filters</span> </a> </li>
+                                                    <li class="level2 nav-7-3-19 last"> <a href="grid.html"> <span>Tripods</span> </a> </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level1 nav-7-3 parent item">
+                                                <a href="grid.html"> <span>THÉP VUÔNG</span> </a>
+                                                <ul class="level1">
+                                                    <li class="level2 nav-7-3-15 first"> <a href="grid.html"> <span>Digital Cameras</span> </a> </li>
+                                                    <li class="level2 nav-7-3-16"> <a href="grid.html"> <span>Camcorders</span> </a> </li>
+                                                    <li class="level2 nav-7-3-17"> <a href="grid.html"> <span>Lenses</span> </a> </li>
+                                                    <li class="level2 nav-7-3-18"> <a href="grid.html"> <span>Filters</span> </a> </li>
+                                                    <li class="level2 nav-7-3-19 last"> <a href="grid.html"> <span>Tripods</span> </a> </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level1 nav-7-4 parent item">
+                                                <a href="grid.html"> <span>THÉP VẰN</span> </a>
+                                                <ul class="level1">
+                                                    <li class="level2 nav-7-2-8 first"> <a href="grid.html"> <span>Headsets</span> </a> </li>
+                                                    <li class="level2 nav-7-2-9"> <a href="grid.html"> <span>Batteries</span> </a> </li>
+                                                    <li class="level2 nav-7-2-10"> <a href="grid.html"> <span>Screen Protectors</span> </a> </li>
+                                                    <li class="level2 nav-7-2-11"> <a href="grid.html"> <span>Memory Cards</span> </a> </li>
+                                                    <li class="level2 nav-7-2-14 last"> <a href="grid.html"> <span>Cases</span> </a> </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level1 nav-7-4 last parent item">
+                                                <a href="grid.html"> <span>THÉP CUỘN</span> </a>
+                                                <ul class="level1">
+                                                    <li class="level2 nav-7-2-8 first"> <a href="grid.html"> <span>Headsets</span> </a> </li>
+                                                    <li class="level2 nav-7-2-9"> <a href="grid.html"> <span>Batteries</span> </a> </li>
+                                                    <li class="level2 nav-7-2-10"> <a href="grid.html"> <span>Screen Protectors</span> </a> </li>
+                                                    <li class="level2 nav-7-2-11"> <a href="grid.html"> <span>Memory Cards</span> </a> </li>
+                                                    <li class="level2 nav-7-2-14 last"> <a href="grid.html"> <span>Cases</span> </a> </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="level0 nav-7 level-top parent">
+                            <a href="grid.html" class="level-top"> <span><strong>ĐÁ ỐP LÁT</strong></span> </a>
+                            <div style="display: none; left: 0px;" class="level0-wrapper dropdown-6col">
+                                <div class="level0-wrapper2">
+                                    <div class="nav-block nav-block-center">
+                                        <ul class="level0">
+                                            <li class="level1 nav-7-1 first parent item">
+                                                <a href="grid.html"> <span>ĐÁ HOA CƯƠNG</span> </a>
+                                                <ul class="level1">
+                                                    <li class="level2 nav-7-3-15 first"> <a href="grid.html"> <span>Digital Cameras</span> </a> </li>
+                                                    <li class="level2 nav-7-3-16"> <a href="grid.html"> <span>Camcorders</span> </a> </li>
+                                                    <li class="level2 nav-7-3-17"> <a href="grid.html"> <span>Lenses</span> </a> </li>
+                                                    <li class="level2 nav-7-3-18"> <a href="grid.html"> <span>Filters</span> </a> </li>
+                                                    <li class="level2 nav-7-3-19 last"> <a href="grid.html"> <span>Tripods</span> </a> </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level1 nav-7-3 parent item">
+                                                <a href="grid.html"> <span>ĐÁ GRANITE</span> </a>
+                                                <ul class="level1">
+                                                    <li class="level2 nav-7-3-15 first"> <a href="grid.html"> <span>Digital Cameras</span> </a> </li>
+                                                    <li class="level2 nav-7-3-16"> <a href="grid.html"> <span>Camcorders</span> </a> </li>
+                                                    <li class="level2 nav-7-3-17"> <a href="grid.html"> <span>Lenses</span> </a> </li>
+                                                    <li class="level2 nav-7-3-18"> <a href="grid.html"> <span>Filters</span> </a> </li>
+                                                    <li class="level2 nav-7-3-19 last"> <a href="grid.html"> <span>Tripods</span> </a> </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level1 nav-7-3 parent item">
+                                                <a href="grid.html"> <span>ĐÁ RUBY</span> </a>
+                                                <ul class="level1">
+                                                    <li class="level2 nav-7-3-15 first"> <a href="grid.html"> <span>Digital Cameras</span> </a> </li>
+                                                    <li class="level2 nav-7-3-16"> <a href="grid.html"> <span>Camcorders</span> </a> </li>
+                                                    <li class="level2 nav-7-3-17"> <a href="grid.html"> <span>Lenses</span> </a> </li>
+                                                    <li class="level2 nav-7-3-18"> <a href="grid.html"> <span>Filters</span> </a> </li>
+                                                    <li class="level2 nav-7-3-19 last"> <a href="grid.html"> <span>Tripods</span> </a> </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level1 nav-7-4 parent item">
+                                                <a href="grid.html"> <span>ĐÁ KIM SA</span> </a>
+                                                <ul class="level1">
+                                                    <li class="level2 nav-7-2-8 first"> <a href="grid.html"> <span>Headsets</span> </a> </li>
+                                                    <li class="level2 nav-7-2-9"> <a href="grid.html"> <span>Batteries</span> </a> </li>
+                                                    <li class="level2 nav-7-2-10"> <a href="grid.html"> <span>Screen Protectors</span> </a> </li>
+                                                    <li class="level2 nav-7-2-11"> <a href="grid.html"> <span>Memory Cards</span> </a> </li>
+                                                    <li class="level2 nav-7-2-14 last"> <a href="grid.html"> <span>Cases</span> </a> </li>
+                                                </ul>
+                                            </li>
+                                            
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="level0 nav-7 level-top parent">
+                            <a href="grid.html" class="level-top"> <span><strong>BÊ TÔNG, VỮA</strong></span> </a>
+                            <div style="display: none; left: 0px;" class="level0-wrapper dropdown-6col">
+                                <div class="level0-wrapper2">
+                                    <div class="nav-block nav-block-center">
+                                        <ul class="level0">
+                                            <li class="level1 nav-7-1 first parent item">
+                                                <a href="grid.html"> <span>VỮA TRỘN SẴN</span> </a>
+                                                <ul class="level1">
+                                                    <li class="level2 nav-7-3-15 first"> <a href="grid.html"> <span>Digital Cameras</span> </a> </li>
+                                                    <li class="level2 nav-7-3-16"> <a href="grid.html"> <span>Camcorders</span> </a> </li>
+                                                    <li class="level2 nav-7-3-17"> <a href="grid.html"> <span>Lenses</span> </a> </li>
+                                                    <li class="level2 nav-7-3-18"> <a href="grid.html"> <span>Filters</span> </a> </li>
+                                                    <li class="level2 nav-7-3-19 last"> <a href="grid.html"> <span>Tripods</span> </a> </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level1 nav-7-3 parent item">
+                                                <a href="grid.html"> <span>VỮA SIKA GROUT</span> </a>
+                                                <ul class="level1">
+                                                    <li class="level2 nav-7-3-15 first"> <a href="grid.html"> <span>Digital Cameras</span> </a> </li>
+                                                    <li class="level2 nav-7-3-16"> <a href="grid.html"> <span>Camcorders</span> </a> </li>
+                                                    <li class="level2 nav-7-3-17"> <a href="grid.html"> <span>Lenses</span> </a> </li>
+                                                    <li class="level2 nav-7-3-18"> <a href="grid.html"> <span>Filters</span> </a> </li>
+                                                    <li class="level2 nav-7-3-19 last"> <a href="grid.html"> <span>Tripods</span> </a> </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level1 nav-7-3 parent item">
+                                                <a href="grid.html"> <span>CỐNG BÊ TÔNG</span> </a>
+                                                <ul class="level1">
+                                                    <li class="level2 nav-7-3-15 first"> <a href="grid.html"> <span>Digital Cameras</span> </a> </li>
+                                                    <li class="level2 nav-7-3-16"> <a href="grid.html"> <span>Camcorders</span> </a> </li>
+                                                    <li class="level2 nav-7-3-17"> <a href="grid.html"> <span>Lenses</span> </a> </li>
+                                                    <li class="level2 nav-7-3-18"> <a href="grid.html"> <span>Filters</span> </a> </li>
+                                                    <li class="level2 nav-7-3-19 last"> <a href="grid.html"> <span>Tripods</span> </a> </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level1 nav-7-4 parent item">
+                                                <a href="grid.html"> <span>BÊ TÔNG NHẸ</span> </a>
+                                                <ul class="level1">
+                                                    <li class="level2 nav-7-2-8 first"> <a href="grid.html"> <span>Headsets</span> </a> </li>
+                                                    <li class="level2 nav-7-2-9"> <a href="grid.html"> <span>Batteries</span> </a> </li>
+                                                    <li class="level2 nav-7-2-10"> <a href="grid.html"> <span>Screen Protectors</span> </a> </li>
+                                                    <li class="level2 nav-7-2-11"> <a href="grid.html"> <span>Memory Cards</span> </a> </li>
+                                                    <li class="level2 nav-7-2-14 last"> <a href="grid.html"> <span>Cases</span> </a> </li>
+                                                </ul>
+                                            </li>
+                                            
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="level0 nav-7 level-top parent">
+                            <a href="grid.html" class="level-top"> <span><strong>INOX</strong></span> </a>
+                            <div style="display: none; left: 0px;" class="level0-wrapper dropdown-6col">
+                                <div class="level0-wrapper2">
+                                    <div class="nav-block nav-block-center">
+                                        <ul class="level0">
+                                            <li class="level1 nav-7-1 first parent item">
+                                                <a href="grid.html"> <span>TẤM INOX</span> </a>
+                                                <ul class="level1">
+                                                    <li class="level2 nav-7-3-15 first"> <a href="grid.html"> <span>Digital Cameras</span> </a> </li>
+                                                    <li class="level2 nav-7-3-16"> <a href="grid.html"> <span>Camcorders</span> </a> </li>
+                                                    <li class="level2 nav-7-3-17"> <a href="grid.html"> <span>Lenses</span> </a> </li>
+                                                    <li class="level2 nav-7-3-18"> <a href="grid.html"> <span>Filters</span> </a> </li>
+                                                    <li class="level2 nav-7-3-19 last"> <a href="grid.html"> <span>Tripods</span> </a> </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level1 nav-7-3 parent item">
+                                                <a href="grid.html"> <span>DÂY INOX</span> </a>
+                                                <ul class="level1">
+                                                    <li class="level2 nav-7-3-15 first"> <a href="grid.html"> <span>Digital Cameras</span> </a> </li>
+                                                    <li class="level2 nav-7-3-16"> <a href="grid.html"> <span>Camcorders</span> </a> </li>
+                                                    <li class="level2 nav-7-3-17"> <a href="grid.html"> <span>Lenses</span> </a> </li>
+                                                    <li class="level2 nav-7-3-18"> <a href="grid.html"> <span>Filters</span> </a> </li>
+                                                    <li class="level2 nav-7-3-19 last"> <a href="grid.html"> <span>Tripods</span> </a> </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level1 nav-7-3 parent item">
+                                                <a href="grid.html"> <span>HỘP INOX</span> </a>
+                                                <ul class="level1">
+                                                    <li class="level2 nav-7-3-15 first"> <a href="grid.html"> <span>Digital Cameras</span> </a> </li>
+                                                    <li class="level2 nav-7-3-16"> <a href="grid.html"> <span>Camcorders</span> </a> </li>
+                                                    <li class="level2 nav-7-3-17"> <a href="grid.html"> <span>Lenses</span> </a> </li>
+                                                    <li class="level2 nav-7-3-18"> <a href="grid.html"> <span>Filters</span> </a> </li>
+                                                    <li class="level2 nav-7-3-19 last"> <a href="grid.html"> <span>Tripods</span> </a> </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level1 nav-7-4 parent item">
+                                                <a href="grid.html"> <span>CÂY INOX</span> </a>
+                                                <ul class="level1">
+                                                    <li class="level2 nav-7-2-8 first"> <a href="grid.html"> <span>Headsets</span> </a> </li>
+                                                    <li class="level2 nav-7-2-9"> <a href="grid.html"> <span>Batteries</span> </a> </li>
+                                                    <li class="level2 nav-7-2-10"> <a href="grid.html"> <span>Screen Protectors</span> </a> </li>
+                                                    <li class="level2 nav-7-2-11"> <a href="grid.html"> <span>Memory Cards</span> </a> </li>
+                                                    <li class="level2 nav-7-2-14 last"> <a href="grid.html"> <span>Cases</span> </a> </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level1 nav-7-4 last parent item">
+                                                <a href="grid.html"> <span>CUỘN INOX</span> </a>
+                                                <ul class="level1">
+                                                    <li class="level2 nav-7-2-8 first"> <a href="grid.html"> <span>Headsets</span> </a> </li>
+                                                    <li class="level2 nav-7-2-9"> <a href="grid.html"> <span>Batteries</span> </a> </li>
+                                                    <li class="level2 nav-7-2-10"> <a href="grid.html"> <span>Screen Protectors</span> </a> </li>
+                                                    <li class="level2 nav-7-2-11"> <a href="grid.html"> <span>Memory Cards</span> </a> </li>
+                                                    <li class="level2 nav-7-2-14 last"> <a href="grid.html"> <span>Cases</span> </a> </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="level0 nav-7 level-top parent">
+                            <a href="grid.html" class="level-top"> <span><strong>TÔN</strong></span> </a>
+                            <div style="display: none; left: 0px;" class="level0-wrapper dropdown-6col">
+                                <div class="level0-wrapper2">
+                                    <div class="nav-block nav-block-center">
+                                        <ul class="level0">
+                                            <li class="level1 nav-7-1 first parent item">
+                                                <a href="grid.html"> <span>TÔN CHỐNG NÓNG</span> </a>
+                                                <ul class="level1">
+                                                    <li class="level2 nav-7-3-15 first"> <a href="grid.html"> <span>Digital Cameras</span> </a> </li>
+                                                    <li class="level2 nav-7-3-16"> <a href="grid.html"> <span>Camcorders</span> </a> </li>
+                                                    <li class="level2 nav-7-3-17"> <a href="grid.html"> <span>Lenses</span> </a> </li>
+                                                    <li class="level2 nav-7-3-18"> <a href="grid.html"> <span>Filters</span> </a> </li>
+                                                    <li class="level2 nav-7-3-19 last"> <a href="grid.html"> <span>Tripods</span> </a> </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level1 nav-7-3 parent item">
+                                                <a href="grid.html"> <span>TÔN CÁCH NHIỆT</span> </a>
+                                                <ul class="level1">
+                                                    <li class="level2 nav-7-3-15 first"> <a href="grid.html"> <span>Digital Cameras</span> </a> </li>
+                                                    <li class="level2 nav-7-3-16"> <a href="grid.html"> <span>Camcorders</span> </a> </li>
+                                                    <li class="level2 nav-7-3-17"> <a href="grid.html"> <span>Lenses</span> </a> </li>
+                                                    <li class="level2 nav-7-3-18"> <a href="grid.html"> <span>Filters</span> </a> </li>
+                                                    <li class="level2 nav-7-3-19 last"> <a href="grid.html"> <span>Tripods</span> </a> </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level1 nav-7-3 parent item">
+                                                <a href="grid.html"> <span>TÔN NHỰA</span> </a>
+                                                <ul class="level1">
+                                                    <li class="level2 nav-7-3-15 first"> <a href="grid.html"> <span>Digital Cameras</span> </a> </li>
+                                                    <li class="level2 nav-7-3-16"> <a href="grid.html"> <span>Camcorders</span> </a> </li>
+                                                    <li class="level2 nav-7-3-17"> <a href="grid.html"> <span>Lenses</span> </a> </li>
+                                                    <li class="level2 nav-7-3-18"> <a href="grid.html"> <span>Filters</span> </a> </li>
+                                                    <li class="level2 nav-7-3-19 last"> <a href="grid.html"> <span>Tripods</span> </a> </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level1 nav-7-4 parent item">
+                                                <a href="grid.html"> <span>TÔN OLYMPIC</span> </a>
+                                                <ul class="level1">
+                                                    <li class="level2 nav-7-2-8 first"> <a href="grid.html"> <span>Headsets</span> </a> </li>
+                                                    <li class="level2 nav-7-2-9"> <a href="grid.html"> <span>Batteries</span> </a> </li>
+                                                    <li class="level2 nav-7-2-10"> <a href="grid.html"> <span>Screen Protectors</span> </a> </li>
+                                                    <li class="level2 nav-7-2-11"> <a href="grid.html"> <span>Memory Cards</span> </a> </li>
+                                                    <li class="level2 nav-7-2-14 last"> <a href="grid.html"> <span>Cases</span> </a> </li>
+                                                </ul>
+                                            </li>
+                                            <li class="level1 nav-7-4 last parent item">
+                                                <a href="grid.html"> <span>TÔN SÓNG NGÓI</span> </a>
+                                                <ul class="level1">
+                                                    <li class="level2 nav-7-2-8 first"> <a href="grid.html"> <span>Headsets</span> </a> </li>
+                                                    <li class="level2 nav-7-2-9"> <a href="grid.html"> <span>Batteries</span> </a> </li>
+                                                    <li class="level2 nav-7-2-10"> <a href="grid.html"> <span>Screen Protectors</span> </a> </li>
+                                                    <li class="level2 nav-7-2-11"> <a href="grid.html"> <span>Memory Cards</span> </a> </li>
+                                                    <li class="level2 nav-7-2-14 last"> <a href="grid.html"> <span>Cases</span> </a> </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+
+        @RenderBody();
+        <!-- End main container -->
+        <!-- Footer -->
+        <footer class="footer">
+
+            <div class="footer-bottom">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-4 col-xs-12 coppyright"> &copy; 2017 BMW</div>
+
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- End Footer -->
+
+    </div>
+
+    <div id="hideShow" class="right-side-content" style="display: none;">
+        <!--Contact Static Block -->
+        <div class="slider-phone active">
+            <h2 class="">Talk To Us</h2>
+            <h3 class="">Available 24/7</h3>
+            <p class="textcenter">
+                Want to speak to someone? We're here 24/7 to answer any questions. Just call!<br>
+                <br>
+                <span class="phone-number"> +1 800 123 1234</span>
+            </p>
+            <a id="hideDiv" class="slider-close" href="javascript:void(0)"></a>
+        </div>
+        <div class="slider-email hidden">
+            <h2 class="">Let us know how we can help you.</h2>
+            <form action="#" enctype="application/x-www-form-urlencoded" method="post" id="form-contact-help_slider">
+                <div class="column sixty">
+                    <div class="">
+                        <ul>
+                            <li>
+                                <label>First Name</label>
+                                <input type="text" name="FirstName" class="required-entry">
+                                <div class="clearfix"></div>
+                            </li>
+                            <li>
+                                <label>Last Name</label>
+                                <input type="text" name="LastName" class="required-entry">
+                                <div class="clearfix"></div>
+                            </li>
+                            <li>
+                                <label>Email Address</label>
+                                <input type="email" name="Email" class="required-entry">
+                                <div class="clearfix"></div>
+                            </li>
+                            <li>
+                                <label>Phone Number</label>
+                                <input type="text" name="Phone">
+                                <div class="clearfix"></div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="column fourty last">
+                    <div class="padding">
+                        <textarea name="Contact_Form_Message__c" class="required-entry">How can we help you?</textarea>
+                        <div class="textright">
+                            <button class="button btn-sent" title="Add to Cart" type="button"><span>Send</span></button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="clearfix"></div>
+            <a class="slider-close" href="#"></a>
+        </div>
+    </div>
+    <div id="hideShow1" style="display: none;">
+        <div class="right-side-content hidden1">
+            <div class="slider-email active">
+                <div id="messages_product_view"></div>
+                <div id="formSuccess" style="display:none;">Your inquiry was submitted and will be responded to as soon as possible. Thank you for contacting us.</div>
+                <form id="contactForm1" method="post">
+                    <div class="column sixty">
+                        <h2>TALK TO US</h2>
+                        <ul>
+                            <li>
+                                <label>Name<em class="required">*</em></label>
+                                <input name="name" id="name" title="Name" value="" class="input-text required-entry" type="text">
+                            </li>
+                            <li>
+                                <label>Email<em class="required">*</em></label>
+                                <input name="email" id="email" title="Email" value="" class="input-text required-entry validate-email" type="text">
+                            </li>
+                            <li>
+                                <label>Telephone</label>
+                                <input name="telephone" id="telephone" title="Telephone" value="" class="input-text" type="text">
+                            </li>
+                        </ul>
+                        <p class="required">* Required Fields</p>
+                    </div>
+                    <!--column sixty-->
+                    <div class="column fourty last">
+                        <div class="padding">
+                            <label>Comment<em class="required">*</em></label>
+                            <textarea name="comment" title="Comment" class="required-entry input-text" cols="5" rows="3"></textarea>
+                            <div class="textright">
+                                <input type="text" name="hideit" value="" style="display:none !important;">
+                                <button type="submit" title="Submit" class="button btn-sent"><span>Submit</span></button>
+                                <img src="~/Content/images/mgkloading1.html" alt="loader" id="loader" style="display:none;">
+                            </div>
+                            <!--textright-->
+                        </div>
+                        <!--padding-->
+                    </div>
+                    <!--column fourty last-->
+                </form>
+                <a href="javascript:void(0)" id="hideDiv1" class="slider-close"></a>
+            </div>
+            <!--slider-email active-->
+        </div>
+        <!--right-side-content hidden1-->
+    </div>
+
+
+</body>
+</html>

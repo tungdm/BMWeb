@@ -26,5 +26,20 @@ namespace TGVL.Controllers
 
             return View();
         }
+
+        public ActionResult HomePage()
+        {
+            return View();
+        }
+
+        public ActionResult SearchResult()
+        {
+            return View();
+        }
+
+        public ActionResult ViewDetail()
+        {
+            return View();
+        }
     }
 }
