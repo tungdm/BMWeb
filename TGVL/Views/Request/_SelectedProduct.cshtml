@@ -1,0 +1,98 @@
+﻿@model TGVL.Models.RequestProductViewModel
+
+
+<table class="table removable">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.UnitPrice)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.UnitType)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.ProductImage)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.ManufactureName)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </th>
+
+        <th></th>
+    </tr>
+    @foreach (var item in Model.SelectedProduct)
+    {
+        var id = "p" + item.Id;
+        <tr id="@id">
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitType.Type)
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.Image)*@
+                <img src="~/Images/Product/SysProduct/@item.Image" style="max-height:100px; max-width:100px"/>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Manufacturer.Name)
+            </td>
+            <td>
+                @{ 
+                    var productSessionKey = "product" + @item.Id;  
+                }
+
+                @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = @item.Id + " form-control" , @Value = Session[productSessionKey] == null ? 0 : Session[productSessionKey] } })
+                @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+            </td>
+            <td>
+                <input type="checkbox"
+                       name="selectedProduct"
+                       value="@item.Id"
+                       checked="checked"
+                       style="display:none" />
+
+                <a name="delete" id="@item.Id" href="javascript:;">Delete</a>
+
+            </td>
+        </tr>
+    }
+</table>
+
+<div class="col-md-offset-2 col-md-10" id="productList"></div>
+
+<script>
+    $(document).ready(function () {
+        $("a[name='delete']").click(function () {
+            var rowIndex = $(this).closest('tr').prop('rowIndex');
+            $('.removable tr').filter(function () {
+                return this.rowIndex === rowIndex;
+            }).remove();
+
+            //$(this).closest('tr').remove();
+
+        });
+
+        $("input[name='Quantity']").bind('keyup mouseup', function () {
+            var myClass = $(this).attr("class").split(" ")[0];
+            //alert(myClass);
+
+            var test = "." + myClass;
+            $(test).on('keyup mouseup', function () {
+                $(test).val($(this).val());
+            });
+        });
+    });
+</script>

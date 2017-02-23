@@ -1,0 +1,133 @@
+﻿@model TGVL.Models.RequestProductViewModel
+
+
+@if (Model.Message != null)
+{
+    <p>@Html.Raw(@Model.Message)</p>
+}
+else
+{
+    <table class="table removable">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.UnitPrice)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.UnitType)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ProductImage)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ManufactureName)
+            </th>
+
+            <th>Select</th>
+
+        </tr>
+        @foreach (var item in Model.Products)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UnitPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UnitType.Type)
+                </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.Image)*@
+                    <img src="~/Images/Product/SysProduct/@item.Image" style="max-height:100px; max-width:100px"/>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Manufacturer.Name)
+                </td>
+
+                <td>
+                    <input type="checkbox"
+                            name="selectedProduct"
+                            value="@item.Id"
+                            />
+                </td>
+            </tr>
+        }
+
+
+
+
+    </table>
+
+    @*Selected Product*@
+    if (Model.SelectedProduct != null)
+    {
+        <table class="table" style="display:none;">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProductName)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.UnitPrice)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.UnitType)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.ProductImage)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.ManufactureName)
+                </th>
+
+                <th>Select</th>
+
+            </tr>
+            @foreach (var item in Model.SelectedProduct)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UnitPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UnitType.Type)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Image)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Manufacturer.Name)
+                    </td>
+
+                    <td>
+                        <input type="checkbox"
+                                name="selectedProduct"
+                                value="@item.Id"
+                                checked="checked" />
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+    
+}
+
+
+
+
+
+
