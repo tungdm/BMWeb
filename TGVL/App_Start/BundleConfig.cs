@@ -24,8 +24,9 @@ namespace TGVL
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/bootstrap.min.css",
+                      "~/Content/site.css",
+                      "~/Content/jquery-ui.css"));
 
            
             //TungDM
@@ -36,9 +37,23 @@ namespace TGVL
                 "~/Scripts/jquery-ui.js",
                 "~/Scripts/jquery.unobtrusive*",
                 "~/Scripts/jquery.validate*",
-                "~/Scripts/otf.js"
+                "~/Scripts/otf.js",
+                "~/Scripts/custom.min.js"
                 ));
-           
+
+            bundles.Add(new ScriptBundle("~/bundles/otf2").Include(
+                "~/Scripts/jquery-{version}.js",
+                "~/Scripts/bootstrap.js",
+                "~/Scripts/jquery-ui.js",
+                "~/Scripts/jquery.unobtrusive*",
+                "~/Scripts/jquery.validate*",
+                "~/Scripts/otf-1.2.js",
+                "~/Scripts/custom.min.js"
+                ));
+            bundles.Add(new ScriptBundle("~/bundles/request").Include(
+                "~/Scripts/request.js"
+                ));
+
             // TungDM - Gentelella Template
             bundles.Add(new StyleBundle("~/Content/customcss").Include(
                       "~/Content/bootstrap.min.css",
