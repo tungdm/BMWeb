@@ -66,9 +66,6 @@ namespace TGVL.Controllers
         public async Task<ActionResult> Create(string mode, string searchString, string[] selectedProduct, int[] quantity)
         {
             var model = new RequestProductViewModel();
-            //selectedProduct = Session["selectedProduct"] as string[];
-
-            
 
             if (Request.IsAjaxRequest())
             {
@@ -96,16 +93,9 @@ namespace TGVL.Controllers
                                 Session[key] = quantity[i];
                             }
 
-                            foreach (var productId in selectedProduct)
-                            {
-                                var key = "product" + productId;
-                                var q = Session[key];
-                            }
-
                             model.SelectedProduct = new List<SysProduct>();
                             foreach (var productId in selectedProduct)
                             {
-
                                 var productToAdd = db.SysProducts.Find(int.Parse(productId));
 
                                 if (model.Products.Contains(productToAdd))
@@ -114,8 +104,6 @@ namespace TGVL.Controllers
                                 }
 
                                 model.SelectedProduct.Add(productToAdd);
-                                
-                                //model.Products.Add(productToAdd);
                             }
 
                             model.ListQuantity = quantity;
@@ -141,12 +129,14 @@ namespace TGVL.Controllers
             model2.Email = user.Email;
             model2.Address = user.Address;
             model2.Phone = user.PhoneNumber;
-            //model2.ReceivingDate = DateTime.Now;
+
             ViewBag.PaymentType = new SelectList(db.Payments, "Id", "Type");
             ViewBag.TypeOfHouse = new SelectList(db.Houses, "Id", "Type");
             return View(model2);
         }
 
+        //TungDM
+        // GET: Request
         public ActionResult SelectProduct(RequestProductViewModel model, string[] selectedProduct)
          {
             if (Request.IsAjaxRequest())
@@ -158,64 +148,70 @@ namespace TGVL.Controllers
                     {
                         var productToAdd = db.SysProducts.Find(int.Parse(productId));
                         model.SelectedProduct.Add(productToAdd); 
-                        //model.Products.Add(productToAdd);
                     }
-
-                    //Session["selectedProduct"] = selectedProduct;
                 }
             }
             return PartialView("_SelectedProduct", model);
         }
 
+        //TungDM
         // POST: Shop/AddProduct
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(CreateRequestViewModel model, string[] selectedProduct, int[] quantity, string mode)
+        public async Task<ActionResult> Create(CreateRequestViewModel model, string mode, string[] selectedProduct, int[] quantity)
         {
-            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
-
-            var request = new Request
+            if (ModelState.IsValid)
             {
-                CustomerId = user.Id,
-                DeliveryAddress = user.Address,
-                DeliveryDate = model.ReceivingDate,
-                Descriptions = model.Description,
-                StartDate = DateTime.Today,
-                DueDate = DateTime.Today.AddDays(model.TimeRange),
-                PaymentId = model.PaymentType,
-                Title = model.Title,
-                TypeOfHouse = model.TypeOfHouse
-            };
-            db.Requests.Add(request);
-            
-            if (selectedProduct != null && quantity != null)
-            {
-                model.RequestProducts = new List<SysProduct>();
+                var test = Request.QueryString["mode"];
 
-                for (int i = 0; i < selectedProduct.Count(); i++)
+                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
+
+                var request = new Request
                 {
-                    var requestProduct = new RequestProduct
+                    CustomerId = user.Id,
+                    DeliveryAddress = user.Address,
+                    DeliveryDate = model.ReceivingDate,
+                    Descriptions = model.Description,
+                    StartDate = DateTime.Today,
+                    DueDate = DateTime.Today.AddDays(model.TimeRange),
+                    PaymentId = model.PaymentType,
+                    Title = model.Title,
+                    TypeOfHouse = model.TypeOfHouse
+                };
+                db.Requests.Add(request);
+
+                if (selectedProduct != null && quantity != null)
+                {
+                    model.RequestProducts = new List<SysProduct>();
+
+                    for (int i = 0; i < selectedProduct.Count(); i++)
+                    {
+                        var requestProduct = new RequestProduct
+                        {
+                            RequestId = request.Id,
+                            SysProductId = int.Parse(selectedProduct[i]),
+                            Quantity = quantity[i],
+                        };
+                        db.RequestProducts.Add(requestProduct);
+                    }
+                }
+
+                if (mode == "bid")
+                {
+                    var bidRequest = new BidRequest
                     {
                         RequestId = request.Id,
-                        SysProductId = int.Parse(selectedProduct[i]),
-                        Quantity = quantity[i],
+                        //LowestPrice= hệ thống sẽ gợi ý
+                        CreatedDate = request.StartDate
                     };
-                    db.RequestProducts.Add(requestProduct);
+                    db.BidRequests.Add(bidRequest);
                 }
+                db.SaveChanges();
+                Session.Clear();
+                return RedirectToAction("Index");
             }
 
-            if (mode == "bid")
-            {
-                var bidRequest = new BidRequest
-                {
-                    RequestId = request.Id,
-                    //LowestPrice= hệ thống sẽ gợi ý
-                    CreatedDate = request.StartDate
-                };
-                db.BidRequests.Add(bidRequest);
-            }
-            db.SaveChanges();
-            Session.Clear();
+            
             return View(model);
         }
 
