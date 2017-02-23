@@ -28,8 +28,6 @@ namespace TGVL.Models
         public int UnitTypeId { get; set; }
         public string UnitType { get; set; }
 
-        public bool OpenModal { get; set; }
-
         //public IEnumerable<SysProduct> Products { get; set; }
         //public IEnumerable<SysCategory> Categories { get; set; }
         //public IEnumerable<Manufacturer> Manufacuters { get; set; }
