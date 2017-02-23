@@ -10,8 +10,10 @@ $(function () {
         };
 
         $.ajax(options).done(function (data) {
+            if (!$.trim(data)) {
                 var $target = $($form.attr("data-otf-target"));
                 $target.replaceWith(data);
+            }
         });
 
         return false;
