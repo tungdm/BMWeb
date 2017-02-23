@@ -7,15 +7,7 @@
 
 <h2>Create</h2>
 
-@using (Ajax.BeginForm(
-    new AjaxOptions
-    {
-        HttpMethod = "POST",
-        InsertionMode = InsertionMode.Replace,
-        UpdateTargetId = "modalProduct",
-        OnSuccess = "$('#requestProduct').modal('show')"
-    }
-))
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
@@ -145,13 +137,10 @@
                             OnSuccess = "$('#select').show()"
                         }
                     ))
-                    {
-                      
+                    {                    
                         <p style="text-align:center">
                             @Html.TextBox("searchString", null, new { @class = "form-control text-box", style="display:inline-block"}  ) 
-                            @*<input class="form-control text-box single-line" type="text" name="searchString" />*@
-                            <input type="submit" value="Search" class="btn btn-default"/>
-                          
+                            <input type="submit" value="Search" class="btn btn-default"/>  
                         </p>
 
                         <div id="clone" style="display:none"></div>
@@ -166,7 +155,7 @@
                                 InsertionMode = InsertionMode.Replace,
                                 UpdateTargetId = "productList",
                                 OnSuccess = "selectedSuccess"
-                            }
+                            }, new {@id = "formAjax"}
                     ))
                     {
                         <div id="listProduct">
