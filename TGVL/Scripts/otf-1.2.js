@@ -24,7 +24,7 @@
 
     $('#select').click(function () {
         
-        $("form[id='form2']").submit();
+        $("form[id='formAjax']").submit();
         
     });
 });
