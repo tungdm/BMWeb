@@ -77,50 +77,43 @@ namespace TGVL.Controllers
             var WarehouseId = db.Warehouses.Where(w => w.SupplierId == userId).ToList();
             ViewBag.WarehouseId = new SelectList(WarehouseId, "Id", "Address");
 
-
-            if (!String.IsNullOrWhiteSpace(searchString))
+            if (Request.IsAjaxRequest())
             {
-                //model.Products = db.SysProducts
-                //.Include(p => p.SysCategory)
-                //.Include(p => p.ProductAttributes)
-                //.Where(p => p.Name.Contains(searchString));
-
-
-                //if (model.Products == null || !model.Products.Any())
-                //{
-                //    return PartialView("_AddNewProduct");
-                //}
-
-
-                var productList = db.SysProducts
-                    .Where(p => p.Name.Contains(searchString));
-
-                if (productList == null || !productList.Any())
+                if (!String.IsNullOrWhiteSpace(searchString))
                 {
-                    ViewBag.SysCategoryId = new SelectList(db.SysCategories, "Id", "Name");
-                    ViewBag.ManufacturerId = new SelectList(db.Manufacturers, "Id", "Name");
-                    ViewBag.UnitTypeId = new SelectList(db.UnitTypes, "Id", "Type");
+                    var productList = db.SysProducts
+                        .Where(p => p.Name.Contains(searchString));
 
-                    return PartialView("_AddNewProduct");
+                    if (productList == null || !productList.Any())
+                    {
+                        ViewBag.SysCategoryId = new SelectList(db.SysCategories, "Id", "Name");
+                        ViewBag.ManufacturerId = new SelectList(db.Manufacturers, "Id", "Name");
+                        ViewBag.UnitTypeId = new SelectList(db.UnitTypes, "Id", "Type");
+
+                        return PartialView("_AddNewProduct");
+                    }
+                    else
+                    {
+                        var product = productList.First();
+
+                        model.ProductId = product.Id;
+                        model.ProductName = product.Name;
+                        model.CategoryName = product.SysCategory.Name;
+                        model.ManufactureName = product.Manufacturer.Name;
+                        model.ProductAttributes = product.ProductAttributes;
+                        model.UnitType = product.UnitType.Type;
+                    }
+
+                    return PartialView("_Products", model);
+                    
                 }
                 else
                 {
-                    var product = productList.First();
-
-                    model.ProductId = product.Id;
-                    model.ProductName = product.Name;
-                    model.CategoryName = product.SysCategory.Name;
-                    model.ManufactureName = product.Manufacturer.Name;
-                    model.ProductAttributes = product.ProductAttributes;
-                    model.UnitType = product.UnitType.Type;
+                    return Json(null, JsonRequestBehavior.AllowGet);
                 }
             }
+            
 
-
-            if (Request.IsAjaxRequest())
-            {
-                return PartialView("_Products", model);
-            }
 
             //return View(model);
             return View();
