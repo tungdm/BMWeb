@@ -244,7 +244,7 @@
 	-webkit-transition: all 0.2s ease-out;
 	-moz-transition: all 0.2s ease-out;
 	transition: all 0.2s ease-out;
-	font-size: 13px;
+	font-size: 14px;
 	display: inherit;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -253,7 +253,7 @@
 }
 .popular-posts .post-meta {
 	margin-bottom: 0;
-	font-size: 11px;
+	font-size: 14px;
 	color: #999;
 }
 .popular-posts .post-meta a {
@@ -422,9 +422,13 @@
 }
 .commentlist li .comment-wrapper {
 	position: relative;
-	padding: 0 20px 17px 90px;
-	margin-bottom: 34px;
-	border-bottom: 1px dotted #c9c8c5;
+	padding: 10px 20px 17px 100px;
+	/*margin-bottom: 34px;*/
+    border-top: 1px solid #eaeaea;
+	border-bottom: 1px solid #eaeaea;
+    border-left: 2px solid #eaeaea;
+    border-right: 2px solid #eaeaea;
+    display:block;
 }
 .comments-form-wrapper {
 	background: none repeat scroll 0 0 #FFFFFF;
@@ -441,18 +445,22 @@
 }
 .commentlist li .gravatar img {
 	float: left;
+    padding-top:10px;
+    margin-bottom: 10px;
+    padding-right:15px;
+    padding-left: 10px;
 	border: 1px solid #fff;
 	-webkit-transition: all 0.1s ease-out;
 	-moz-transition: all 0.1s ease-out;
 	transition: all 0.1s ease-out;
 }
-.commentlist li .gravatar img:hover {
+/*.commentlist li .gravatar img:hover {
 	border-color: #6E9B76;
-}
+}*/
 .commentlist li .comment-author {
 	font-size: 14px;
 	color: #282828;
-	font-family: 'Bitter', serif;
+	font-family: 'Roboto', serif;
 }
 .commentlist li .comment-meta {
 	color: #999;

@@ -1,0 +1,170 @@
+﻿
+@{
+    ViewBag.Title = "SearchShopResult";
+    Layout = "~/Views/Shared/_HomePageViewLayout.cshtml";
+}
+
+@Styles.Render("~/Content/mainpagecss")
+@Scripts.Render("~/bundles/mainpagejquery")
+
+<style>
+    ul {
+        border: 0;
+        margin: 0;
+        padding: 0;
+    }
+
+    #pagination-flickr li {
+        border: 0;
+        margin: 0;
+        padding: 0;
+        font-size: 14px;
+        list-style: none;
+    }
+
+    #pagination-flickr a {
+        border: solid 1px #DDDDDD;
+        margin-right: 2px;
+    }
+
+    #pagination-flickr .previous-off,
+    #pagination-flickr .next-off {
+        color: #666666;
+        display: block;
+        float: left;
+        font-weight: bold;
+        padding: 3px 4px;
+    }
+
+    #pagination-flickr .next a,
+    #pagination-flickr .previous a {
+        font-weight: bold;
+        border: solid 1px #FFFFFF;
+    }
+
+    #pagination-flickr .active {
+        color: #ff0084;
+        font-weight: bold;
+        display: block;
+        float: left;
+        padding: 4px 6px;
+    }
+
+    #pagination-flickr a:link,
+    #pagination-flickr a:visited {
+        color: #0063e3;
+        display: block;
+        float: left;
+        padding: 3px 6px;
+        text-decoration: none;
+    }
+
+    #pagination-flickr a:hover {
+        border: solid 1px #666666;
+    }
+</style>
+<div class="main-container col2-left-layout">
+    <div class="main container">
+        <div class="row">
+            <section class="col-main col-sm-12">
+                <div class="page-title">
+                    <h4>Có<strong> 15 </strong>kết quả phù hợp</h4>
+                </div>
+                <div class="my-account">
+                    <div class="dashboard">
+                        <div class="welcome-msg">
+                            <p><strong>Sắp xếp theo: </strong></p>
+                             
+                        </div>
+                        <div class="recent-orders">
+                            <div class="table-responsive">
+                                <form>
+                                    <table class="data-table" id="my-orders-table">
+                                        <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th>Logo</th>
+                                                <th>Tên cửa hàng</th>
+                                                <th>Địa chỉ</th>
+                                                <th>Liên hệ</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>
+                                                    <img width="80" height="80" src="~/Content/images/logo1.jpg" />
+                                                </td>
+                                                <td class="text-uppercase">
+                                                    <a>
+                                                        <strong>Cửa hàng VLXD VyVy</strong>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    36 Nguyễn Trãi TPHCM
+                                                </td>
+                                                <td>
+                                                    Điện thoại: 08-35175888
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>
+                                                    <img width="80" height="80" src="~/Content/images/logo2.jpg" />
+                                                </td>
+                                                <td class="text-uppercase">
+                                                    <a>
+                                                        <strong>Cửa hàng VLXD Minh Minh</strong>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    36 Nguyễn Trãi Quận 1 TPCHM
+                                                </td>
+                                                <td>
+                                                    Điện thoại: 08-35175888
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>3</td>
+                                                <td>
+                                                    <img width="80" height="80" src="~/Content/images/logo1.jpg" />
+                                                </td>
+                                                <td class="text-uppercase">
+                                                    <a>
+                                                        <strong>Cửa hàng VLXD VyVy</strong>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    87/9/2 Phan Xích Long Phường 2 Quận Phú Nhuận
+                                                </td>
+                                                <td>
+                                                    Điện thoại: 08-35175888
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </form>
+                                <br />
+                                <ul id="pagination-flickr">
+                                    <li class="previous-off">«Trước</li>
+                                    <li class="active">1</li>
+                                    <li><a href="?page=2">2</a></li>
+                                    <li><a href="?page=3">3</a></li>
+                                    <li><a href="?page=4">4</a></li>
+                                    <li><a href="?page=5">5</a></li>
+                                    <li><a href="?page=6">6</a></li>
+                                    <li><a href="?page=7">7</a></li>
+                                    <li class="next"><a href="?page=2">Sau »</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </section>
+            <aside class="col-left sidebar col-sm-3 ">
+                @*Menu goes here*@
+            </aside>
+        </div>
+    </div>
+</div>
