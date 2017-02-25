@@ -30,6 +30,13 @@
         height: auto;
         padding: 5px;
     }
+
+    #border {
+        border-top: 2px solid #e5e5e5;
+        border-bottom: 2px solid #e5e5e5;
+        border-left: 2px solid #e5e5e5;
+        border-right: 2px solid #e5e5e5;
+    }
 </style>
 
 @*<section class="slider-intro">
@@ -64,12 +71,11 @@
         </div>
     </section>*@
 <br />
-<br />
 <section class="main-container col1-layout home-content-container">
     <div class="container">
         <div class="row">
             <div class="std">
-                <div class="best-pro col-lg-12">
+                <div id="border" class="best-pro col-lg-12">
                     <div class="slider-items-products">
                         <div class="new_title center">
                             <h2>SẢN PHẨM YÊU CẦU NHIỀU NHẤT</h2>
@@ -238,10 +244,14 @@
                                                 </div>
 
                                             </div>
+
                                         </div>
                                     </div>
+
                                 </div>
+                                
                             </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -250,12 +260,12 @@
         </div>
     </div>
 </section>
-
+<br />
 <section class="main-container col1-layout home-content-container">
     <div class="container">
         <div class="row">
             <div class="std">
-                <div class="best-pro col-lg-12">
+                <div id="border" class="best-pro col-lg-12">
                     <div class="slider-items-products">
                         <div class="new_title center">
                             <h2>CỬA HÀNG GẦN ĐÂY</h2>
@@ -294,14 +304,14 @@
                                     </div>
                                 </div>
                                 <!-- End Item -->
-                                
+
                                 <div class="item">
                                     <div class="col-item">
                                         <div class="item-inner">
                                             <div class="item-img">
 
                                                 <div class="item-img-info">
-                                                    <a href="product_detail.html"  class="product-image"> <img src="~/Content/images/thep.jpg"> </a>
+                                                    <a href="product_detail.html" class="product-image"> <img src="~/Content/images/thep.jpg"> </a>
                                                     @*<div class="item-box-hover">
                                                             <div class="box-inner">
                                                                 <div class="product-detail-bnt"><a href="quick_view.html" class="button detail-bnt"> <span> Xem chi tiết</span></a></div>
@@ -311,7 +321,7 @@
                                             </div>
                                             <div class="item-info">
                                                 <div class="info-inner">
-                                                    <div class="item-title"> <a href="product_detail.html" > Cửa hàng VLXD BDC </a> </div>
+                                                    <div class="item-title"> <a href="product_detail.html"> Cửa hàng VLXD BDC </a> </div>
                                                     <div class="item-content">
                                                         <div class="item-price">
                                                             <div class="price-box">
@@ -331,7 +341,7 @@
                                         <div class="item-inner">
                                             <div class="item-img">
                                                 <div class="item-img-info">
-                                                    <a href="product_detail.html"  class="product-image"> <img src="~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg" alt="Sample Product"></a>
+                                                    <a href="product_detail.html" class="product-image"> <img src="~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg" alt="Sample Product"></a>
                                                     @*<div class="item-box-hover">
                                                             <div class="box-inner">
                                                                 <div class="product-detail-bnt"><a href="quick_view.html" class="button detail-bnt"><span>Xem chi tiết</span></a></div>
@@ -357,6 +367,7 @@
                                     </div>
                                 </div>
                             </div>
+                           
                         </div>
                     </div>
                 </div>
@@ -365,12 +376,12 @@
         </div>
     </div>
 </section>
-
+<br />
 <section class="main-container col1-layout home-content-container">
     <div class="container">
         <div class="row">
             <div class="std">
-                <div class="best-pro col-lg-12">
+                <div id="border" class="best-pro col-lg-12">
                     <div class="slider-items-products">
                         <div class="new_title center">
                             <h2>DEAL NỔI BẬT</h2>
@@ -544,6 +555,7 @@
                                     </div>
                                 </div>
                             </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -553,16 +565,6 @@
     </div>
 </section>
 
-<script type="text/javascript">
-    //<![CDATA[
-    jQuery(function () {
-        jQuery(".slideshow").cycle({
-            fx: 'scrollHorz', easing: 'easeInOutCubic', timeout: 10000, speedOut: 800, speedIn: 800, sync: 1, pause: 1, fit: 0, pager: '#home-slides-pager',
-            prev: '#home-slides-prev',
-            next: '#home-slides-next'
-        });
-    });
-    //]]>
-</script>
+
 
 

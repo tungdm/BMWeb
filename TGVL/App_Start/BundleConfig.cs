@@ -141,6 +141,16 @@ namespace TGVL
                 "~/Content/css/style.css"
              ));
 
+            bundles.Add(new StyleBundle("~/Content/searchproductcss").Include(
+                "~/Content/css/bootstrap.min.css",
+                "~/Content/css/owl.carousel.css",
+                "~/Content/css/owl.theme.css",
+                "~/Content/font-awesome.min.css",
+                "~/Content/css/blogmate.css",
+                "~/Content/css/style.css"
+
+             ));
+
 
             bundles.Add(new StyleBundle("~/Content/createrequestcss").Include(
                 "~/Content/css/air.components.2.3.1.min.css",
@@ -208,7 +218,8 @@ namespace TGVL
                                     "~/Scripts/js/jquery.flexslider.js",
                                     "~/Scripts/js/cloud-zoom.js"
                                     ));
-            
+
+
             bundles.Add(new ScriptBundle("~/bundles/viewcategoryjquery").Include(
                                     "~/Scripts/js/jquery-1.11.0.min.js",
                                     "~/Scripts/js/move-top.js",

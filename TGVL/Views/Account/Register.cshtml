@@ -4,54 +4,65 @@
     ViewBag.Title = "Register";
 }
 
-<div class="animate form login_form" style="margin-top: -55px;">
+@Styles.Render("~/Content/loginformcss")
+
+<style>
+    #login {
+        border-radius: 25px;
+        background: rgba(216, 231, 195,0.5);
+        padding: 20px;
+    }
+</style>
+
+<div id="login" class="animate form login_form" style="margin-top: -55px;">
     <section class="login_content">
 
         @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl, RegisterType = ViewBag.RegisterType, RegOrLog = "Đăng ký" })
 
         <!--Register form-->
-        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" , id="registerForm"}))
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "registerForm" }))
         {
             @Html.AntiForgeryToken()
 
-            <h1>Create Account</h1>
+            <h1 style="color:black"><strong>ĐĂNG KÝ</strong></h1>
             @Html.ValidationSummary("", new { @class = "text-danger" })
 
             <div>
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" , placeholder = "Email" })
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email" })
             </div>
             <div>
-                @Html.TextBoxFor(m => m.Username, new { @class = "form-control", placeholder = "Username" })
+                @Html.TextBoxFor(m => m.Username, new { @class = "form-control", placeholder = "Tên đăng nhập" })
             </div>
             <div>
-                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Mật khẩu" })
             </div>
             <div>
-                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm Password" })
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "Xác nhận mật khẩu" })
             </div>
             <div>
                 @Html.HiddenFor(m => m.RegisterType)
             </div>
 
-            <div>
-                <input type="submit" value="Register" class="btn btn-default" style="font-size: 12px; margin: 0px 15px 5px 0; float: none;" />
-            </div>
+
 
             <div class="clearfix"></div>
 
             <div class="separator">
-                <p class="change_link">
-                    @*<a href="#signin" class="to_register"> Log in </a>*@
-                    @Html.ActionLink("Already a member? Log in", "Login", null, new { @class = "to_register" })
-                </p>
+                @*<p class="change_link">
+
+                        @Html.ActionLink("Đã là thành viên, Đăng nhập", "Login", null, new { @class = "to_register" })
+                    </p>*@
 
                 <div class="clearfix"></div>
                 <br />
 
                 <div>
-                    <h1><i class="fa fa-paw"></i> Thegioivatlieu</h1>
-                    <p>&copy; @DateTime.Now.Year All Rights Reserved. Privacy and Terms</p>
+                    @*<h1><i class="fa fa-home"></i> THẾ GIỚI VẬT LIỆU</h1>*@
+                    @*<p>&copy; @DateTime.Now.Year All Rights Reserved. Privacy and Terms</p>*@
                 </div>
+            </div>
+            <div>
+                <input type="submit" value="Đăng ký" class="btn btn-warning" style="font-size: 12px; margin: 0px 15px 5px 0; float: none;" />
             </div>
         }
 

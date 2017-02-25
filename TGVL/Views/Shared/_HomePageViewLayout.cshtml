@@ -7,12 +7,13 @@
 
     @Styles.Render("~/Content/mainpagecss")
     @*@Scripts.Render("~/bundles/mainpagejquery")
-        @RenderSection("scripts", required: false)*@
+    @RenderSection("scripts", required: false)*@
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,400italic,700italic&subset=latin,vietnamese' rel='stylesheet' type='text/css'>
     <style>
-        body{
+        body {
             font-family: Roboto, sans-serif;
         }
+
         #top-header {
             background: #F3F3F3;
             border-bottom: 2px solid #FFFFFF;
@@ -20,12 +21,10 @@
         }
 
         #searchForm {
-            width:80%;
+            width: 80%;
             padding: 11px 20px;
             font-size: 14px;
         }
-
-        
     </style>
 
 </head>
@@ -39,19 +38,26 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-5 col-md-5 col-xs-6"></div>
-                        <div class="col-lg-7 col-md-7 col-xs-6">
+                        <div class="col-md-7 col-sm-12 col-xs-12">
                             <!-- Header Top Links -->
                             <div class="toplinks">
                                 <div class="links">
-                                    <div class="dropdown block-company-wrapper"><a data-toggle="dropdown" data-target="#" class="dropdown-toggle" href="#"><span><strong>YÊU CẦU</strong></span></a>
-                                        <ul class="dropdown-menu">
-                                            <li role="presentation"><a tabindex="-1" href="about_us.html"><strong> MUA NHANH </strong></a></li>
-                                            <li role="presentation"><a tabindex="-1" href="#"><strong> ĐẤU THẦU </strong></a></li>
+                                    <div class="dropdown block-company-wrapper">
+                                        <a data-toggle="dropdown" data-hover="dropdown" data-target="#" class="dropdown-toggle" href="#"><span><strong>ĐĂNG NHẬP</strong></span></a>
+                                        <ul class="dropdown-menu" style="width:170px">
+                                            <li role="presentation"><a tabindex="-1" href="#"><strong> THÔNG TIN CÁ NHÂN </strong></a></li>
+                                            <li role="presentation"><a tabindex="-1" href="#"><strong> ĐĂNG XUẤT </strong></a></li>
                                         </ul>
                                     </div>
-                                    
+                                    <div class="dropdown block-company-wrapper">
+                                        <a data-toggle="dropdown" data-target="#" class="dropdown-toggle" href="#"><span><strong>YÊU CẦU</strong></span></a>
+                                        <ul class="dropdown-menu">
+                                            <li role="presentation"><a tabindex="-1" href="@Url.Action("Create","Request", new { mode = "normal" })"><strong> MUA NHANH </strong></a></li>
+                                            <li role="presentation"><a tabindex="-1" href="@Url.Action("Create","Request", new { mode = "bid" })"><strong> ĐẤU THẦU </strong></a></li>
+                                        </ul>
+                                    </div>
                                     <div class="myaccount"><a href="login.html"><span><strong>ĐĂNG KÝ</strong></span><i class="icon-angle-down"></i></a></div>
-                                    <div class="login"><a href="login.html"><span><strong>ĐĂNG NHẬP</strong></span></a></div>
+                                    
                                 </div>
                             </div>
                             <!-- End Header Top Links -->
@@ -63,10 +69,10 @@
             <div class="header container">
                 <div class="row">
                     @*<div id="logo-img" class="col-md-2 col-sm-2 col-xs-12 ">
-                        
-                        <div class="logo">
-                            <img src="~/Content/images/logo.jpg" />
-                        </div>
+
+                    <div class="logo">
+                    <img src="~/Content/images/logo.jpg" />
+                    </div>
 
                     </div>*@
                     <div class="col-md-3 col-sm-12 col-xs-12">
@@ -96,7 +102,7 @@
                                 </span>
                             </div>
                         </form>
-                       
+
                     </div>
                     <div class="col-md-2 col-sm-12 col-xs-12">
                         <div class="top-cart-contain">
@@ -124,7 +130,103 @@
             <div class="container">
                 <div class="nav-inner">
                     <ul id="nav" class="hidden-xs">
+                        <li class="level0 parent drop-menu" style="width:171px;float:left">
+                            <a href="#"><span><strong>DANH MỤC</strong></span> </a>
+                            <ul style="display: none;" class="level1">
+                                <li class="level1 first parent">
+                                    <a href="grid.html"><span> <strong>SẮT, THÉP</strong></span></a>
+                                    <ul class="level2">
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                    </ul>
+                                </li>
+                                <li class="level1 first parent">
+                                    <a href="grid.html"><span> <strong>GẠCH XÂY</strong></span></a>
+                                    <ul class="level2">
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                    </ul>
+                                </li>
+                                <li class="level1 first parent">
+                                    <a href="grid.html"><span> <strong>XI MĂNG</strong></span></a>
+                                    <ul class="level2">
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                    </ul>
+                                </li>
+                                <li class="level1 first parent">
+                                    <a href="grid.html"><span> <strong>ĐÁ ỐP LÁT</strong></span></a>
+                                    <ul class="level2">
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                    </ul>
+                                </li>
+                                <li class="level1 first parent">
+                                    <a href="grid.html"><span> <strong>BÊ TÔNG, VỮA</strong></span></a>
+                                    <ul class="level2">
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                    </ul>
+                                </li>
+                                <li class="level1 first parent">
+                                    <a href="grid.html"><span> <strong>NGÓI</strong></span></a>
+                                    <ul class="level2">
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                    </ul>
+                                </li>
+                                <li class="level1 first parent">
+                                    <a href="grid.html"><span> <strong>TÔN</strong></span></a>
+                                    <ul class="level2">
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                    </ul>
+                                </li>
+                                <li class="level1 first parent">
+                                    <a href="grid.html"><span> <strong>VL CHỐNG THẤM</strong></span></a>
+                                    <ul class="level2">
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                    </ul>
+                                </li>
+                                <li class="level1 first parent">
+                                    <a href="grid.html"><span> <strong>INOX</strong></span></a>
+                                    <ul class="level2">
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                    </ul>
+                                </li>
+                                <li class="level1 first parent">
+                                    <a href="grid.html"><span> <strong>NHÔM</strong></span></a>
+                                    <ul class="level2">
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
                         <li class="level0 nav-8 level-top"> <a href="grid.html" class="level-top"> <span><strong>Trang chủ</strong></span> </a> </li>
+
                         <li class="level0 nav-7 level-top parent">
                             <a href="grid.html" class="level-top"> <span><strong>GẠCH XÂY</strong></span> </a>
                             <div style="display: none; left: 0px;" class="level0-wrapper dropdown-6col">
@@ -355,7 +457,7 @@
                                                     <li class="level2 nav-7-2-14 last"> <a href="grid.html"> <span>Cases</span> </a> </li>
                                                 </ul>
                                             </li>
-                                            
+
                                         </ul>
                                     </div>
                                 </div>
@@ -407,7 +509,7 @@
                                                     <li class="level2 nav-7-2-14 last"> <a href="grid.html"> <span>Cases</span> </a> </li>
                                                 </ul>
                                             </li>
-                                            
+
                                         </ul>
                                     </div>
                                 </div>
@@ -560,104 +662,104 @@
     </div>
 
     @*<div id="hideShow" class="right-side-content" style="display: none;">
-        <!--Contact Static Block -->
-        <div class="slider-phone active">
-            <h2 class="">Talk To Us</h2>    
-            <h3 class="">Available 24/7</h3>
-            <p class="textcenter">
-                Want to speak to someone? We're here 24/7 to answer any questions. Just call!<br>
-                <br>
-                <span class="phone-number"> +1 800 123 1234</span>
-            </p>
-            <a id="hideDiv" class="slider-close" href="javascript:void(0)"></a>
-        </div>
-        <div class="slider-email hidden">
-            <h2 class="">Let us know how we can help you.</h2>
-            <form action="#" enctype="application/x-www-form-urlencoded" method="post" id="form-contact-help_slider">
-                <div class="column sixty">
-                    <div class="">
-                        <ul>
-                            <li>
-                                <label>First Name</label>
-                                <input type="text" name="FirstName" class="required-entry">
-                                <div class="clearfix"></div>
-                            </li>
-                            <li>
-                                <label>Last Name</label>
-                                <input type="text" name="LastName" class="required-entry">
-                                <div class="clearfix"></div>
-                            </li>
-                            <li>
-                                <label>Email Address</label>
-                                <input type="email" name="Email" class="required-entry">
-                                <div class="clearfix"></div>
-                            </li>
-                            <li>
-                                <label>Phone Number</label>
-                                <input type="text" name="Phone">
-                                <div class="clearfix"></div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="column fourty last">
-                    <div class="padding">
-                        <textarea name="Contact_Form_Message__c" class="required-entry">How can we help you?</textarea>
-                        <div class="textright">
-                            <button class="button btn-sent" title="Add to Cart" type="button"><span>Send</span></button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-            <div class="clearfix"></div>
-            <a class="slider-close" href="#"></a>
-        </div>
+    <!--Contact Static Block -->
+    <div class="slider-phone active">
+    <h2 class="">Talk To Us</h2>
+    <h3 class="">Available 24/7</h3>
+    <p class="textcenter">
+    Want to speak to someone? We're here 24/7 to answer any questions. Just call!<br>
+    <br>
+    <span class="phone-number"> +1 800 123 1234</span>
+    </p>
+    <a id="hideDiv" class="slider-close" href="javascript:void(0)"></a>
+    </div>
+    <div class="slider-email hidden">
+    <h2 class="">Let us know how we can help you.</h2>
+    <form action="#" enctype="application/x-www-form-urlencoded" method="post" id="form-contact-help_slider">
+    <div class="column sixty">
+    <div class="">
+    <ul>
+    <li>
+    <label>First Name</label>
+    <input type="text" name="FirstName" class="required-entry">
+    <div class="clearfix"></div>
+    </li>
+    <li>
+    <label>Last Name</label>
+    <input type="text" name="LastName" class="required-entry">
+    <div class="clearfix"></div>
+    </li>
+    <li>
+    <label>Email Address</label>
+    <input type="email" name="Email" class="required-entry">
+    <div class="clearfix"></div>
+    </li>
+    <li>
+    <label>Phone Number</label>
+    <input type="text" name="Phone">
+    <div class="clearfix"></div>
+    </li>
+    </ul>
+    </div>
+    </div>
+    <div class="column fourty last">
+    <div class="padding">
+    <textarea name="Contact_Form_Message__c" class="required-entry">How can we help you?</textarea>
+    <div class="textright">
+    <button class="button btn-sent" title="Add to Cart" type="button"><span>Send</span></button>
+    </div>
+    </div>
+    </div>
+    </form>
+    <div class="clearfix"></div>
+    <a class="slider-close" href="#"></a>
+    </div>
     </div>
     <div id="hideShow1" style="display: none;">
-        <div class="right-side-content hidden1">
-            <div class="slider-email active">
-                <div id="messages_product_view"></div>
-                <div id="formSuccess" style="display:none;">Your inquiry was submitted and will be responded to as soon as possible. Thank you for contacting us.</div>
-                <form id="contactForm1" method="post">
-                    <div class="column sixty">
-                        <h2>TALK TO US</h2>
-                        <ul>
-                            <li>
-                                <label>Name<em class="required">*</em></label>
-                                <input name="name" id="name" title="Name" value="" class="input-text required-entry" type="text">
-                            </li>
-                            <li>
-                                <label>Email<em class="required">*</em></label>
-                                <input name="email" id="email" title="Email" value="" class="input-text required-entry validate-email" type="text">
-                            </li>
-                            <li>
-                                <label>Telephone</label>
-                                <input name="telephone" id="telephone" title="Telephone" value="" class="input-text" type="text">
-                            </li>
-                        </ul>
-                        <p class="required">* Required Fields</p>
-                    </div>
-                    <!--column sixty-->
-                    <div class="column fourty last">
-                        <div class="padding">
-                            <label>Comment<em class="required">*</em></label>
-                            <textarea name="comment" title="Comment" class="required-entry input-text" cols="5" rows="3"></textarea>
-                            <div class="textright">
-                                <input type="text" name="hideit" value="" style="display:none !important;">
-                                <button type="submit" title="Submit" class="button btn-sent"><span>Submit</span></button>
-                                <img src="~/Content/images/mgkloading1.html" alt="loader" id="loader" style="display:none;">
-                            </div>
-                            <!--textright-->
-                        </div>
-                        <!--padding-->
-                    </div>
-                    <!--column fourty last-->
-                </form>
-                <a href="javascript:void(0)" id="hideDiv1" class="slider-close"></a>
-            </div>
-            <!--slider-email active-->
-        </div>
-        <!--right-side-content hidden1-->
+    <div class="right-side-content hidden1">
+    <div class="slider-email active">
+    <div id="messages_product_view"></div>
+    <div id="formSuccess" style="display:none;">Your inquiry was submitted and will be responded to as soon as possible. Thank you for contacting us.</div>
+    <form id="contactForm1" method="post">
+    <div class="column sixty">
+    <h2>TALK TO US</h2>
+    <ul>
+    <li>
+    <label>Name<em class="required">*</em></label>
+    <input name="name" id="name" title="Name" value="" class="input-text required-entry" type="text">
+    </li>
+    <li>
+    <label>Email<em class="required">*</em></label>
+    <input name="email" id="email" title="Email" value="" class="input-text required-entry validate-email" type="text">
+    </li>
+    <li>
+    <label>Telephone</label>
+    <input name="telephone" id="telephone" title="Telephone" value="" class="input-text" type="text">
+    </li>
+    </ul>
+    <p class="required">* Required Fields</p>
+    </div>
+    <!--column sixty-->
+    <div class="column fourty last">
+    <div class="padding">
+    <label>Comment<em class="required">*</em></label>
+    <textarea name="comment" title="Comment" class="required-entry input-text" cols="5" rows="3"></textarea>
+    <div class="textright">
+    <input type="text" name="hideit" value="" style="display:none !important;">
+    <button type="submit" title="Submit" class="button btn-sent"><span>Submit</span></button>
+    <img src="~/Content/images/mgkloading1.html" alt="loader" id="loader" style="display:none;">
+    </div>
+    <!--textright-->
+    </div>
+    <!--padding-->
+    </div>
+    <!--column fourty last-->
+    </form>
+    <a href="javascript:void(0)" id="hideDiv1" class="slider-close"></a>
+    </div>
+    <!--slider-email active-->
+    </div>
+    <!--right-side-content hidden1-->
     </div>*@
 
 

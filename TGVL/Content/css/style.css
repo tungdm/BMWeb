@@ -1549,7 +1549,7 @@ li.level0 > a:hover > span > .pin-bottom:before, #nav li.level0:hover > a > span
 	-webkit-transition: all 200ms ease-in-out;
 	-moz-transition: all 200ms ease-in-out;
 	-o-transition: all 200ms ease-in-out;
-	font-size: 13px;
+	font-size: 14px;
 }
 #nav li.drop-menu ul li:hover > a {
 	color: #000;
@@ -1991,7 +1991,7 @@ ul#magicat li .open-close, .block-layered-nav dt .toggleBtn {
 .new_title.center {
 	padding: 0 0 10px 0;
 	text-align: left;
-	border-bottom: 1px solid #ccc;
+	border-bottom: 1px solid #e5e5e5;
 }
 .new_title {
 	color: #000000;
