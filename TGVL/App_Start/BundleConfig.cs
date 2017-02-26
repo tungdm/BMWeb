@@ -20,15 +20,19 @@ namespace TGVL
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
+                      "~/Scripts/bootstrap.min.js",
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.min.css",
                       "~/Content/site.css",
-                      "~/Content/jquery-ui.css"));
+                      "~/Content/jquery-ui.css",
+                      "~/Content/font-awesome.min.css"));
 
-           
+            bundles.Add(new StyleBundle("~/Content/notification").Include(
+                      "~/Content/notification.css"));
+
+
             //TungDM
             //ajax
             bundles.Add(new ScriptBundle("~/bundles/otf").Include(
@@ -48,8 +52,12 @@ namespace TGVL
                 "~/Scripts/jquery.unobtrusive*",
                 "~/Scripts/jquery.validate*",
                 "~/Scripts/otf-1.2.js",
-                "~/Scripts/custom.min.js"
+                "~/Scripts/custom.min.js",
+                "~/Scripts/jquery.signalR-2.2.1.min.js",
+                "~/Scripts/dateformat.js"
+
                 ));
+
             bundles.Add(new ScriptBundle("~/bundles/request").Include(
                 "~/Scripts/request.js"
                 ));
