@@ -7,10 +7,8 @@ $(document).click(function () {
 $('#noti_Button').click(function (e) {
     e.stopPropagation();
     //$('.noti-content').show();
-    //var count = 0;
+    
 
-    //count = parseInt($('div.count').html()) || 0;
-    //console.log(count);
 
     $('#notifications').fadeToggle('fast', 'linear', function () {
         $('#notiContent').empty();
@@ -19,12 +17,19 @@ $('#noti_Button').click(function (e) {
         }
     });
 
-    $('#noti_Counter').fadeOut('slow');
+    //$('#noti_Counter').fadeOut('slow');
+    $('#noti_Counter').fadeOut(500, function () {
+        $(this).empty();
+    });
+    
+
 })
 
 // update notification
 function updateNotification() {
-   
+    //$('#notiContent').empty();
+    //$('#notiContent').append($('<li>Loading...</li>'));
+
     $.ajax({
         type: 'GET',
         url: 'Home/GetNotificationReplies',
@@ -36,11 +41,13 @@ function updateNotification() {
             count = $("#notiContent li").length;
             if (count !== response.length) {
                 $('#notiContent').empty();
-
+            
                 $.each(response, function (index, value) {
                     $('#notiContent').append($('<li>New reply by : ' + value.Supplier + ' at : ' + new Date(parseInt(value.CreatedDate.substr(6))).format("dd/mm/yyyy HH:MM:ss") + '</li>'));
                 });
-            } 
+            }
+
+            
         },
         error: function (error) {
             console.log(error);
@@ -53,7 +60,8 @@ function updateNotificationCount() {
     var count = 0;
     count = parseInt($('div.count').html()) || 0;
     count++;
-    console.log(count);
+    console.log("updateNotificationCount:" + count);
+
     //$('span.count').html(count);
 
     // ANIMATEDLY DISPLAY THE NOTIFICATION COUNTER.
