@@ -53,9 +53,12 @@ namespace TGVL
                 "~/Scripts/jquery.validate*",
                 "~/Scripts/otf-1.2.js",
                 "~/Scripts/custom.min.js",
-                "~/Scripts/jquery.signalR-2.2.1.min.js",
                 "~/Scripts/dateformat.js"
+                ));
 
+            bundles.Add(new ScriptBundle("~/bundles/signalR").Include(
+                "~/Scripts/jquery.signalR-2.2.1.min.js",
+                "~/Scripts/notification.js"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/request").Include(
