@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,9 +9,36 @@ namespace TGVL.Controllers
 {
     public class HomeController : Controller
     {
+        private BMWEntities db = new BMWEntities();
+
         public ActionResult Index()
         {
             return View();
+        }
+
+        [Authorize]
+        public JsonResult GetNotificationReplies()
+        {
+            var notificationRegisterTime = Session["LastUpdated"] != null ? Convert.ToDateTime(Session["LastUpdated"]) : DateTime.Now;
+            NotificationComponent NC = new NotificationComponent();
+            //var list = NC.GetReplies(notificationRegisterTime).ToList();
+            var userId = User.Identity.GetUserId<int>();
+
+            var list2 = db.Notifications
+                .Where(r => r.CreatedDate > notificationRegisterTime && r.UserId == userId)
+                .Take(10)
+                
+                .Select(r => new {
+                    ReplyId = r.ReplyId,
+                    CreatedDate = r.CreatedDate,
+                    Supplier = r.Reply.User.UserName
+                })
+                .OrderByDescending(r => r.CreatedDate)
+                .ToList();
+
+            //update session here for get only new added contacts (notification)
+            Session["LastUpdate"] = DateTime.Now;
+            return new JsonResult { Data = list2, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         public ActionResult About()

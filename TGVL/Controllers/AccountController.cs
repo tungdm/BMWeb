@@ -108,7 +108,17 @@ namespace TGVL.Controllers
                             return RedirectToAction("CreateShop", "Manage");
                         }
                         else
+                        {
+                            NotificationComponent NC = new NotificationComponent();
+
+                            var currentTime = DateTime.Now;
+                            Session["LastUpdated"] = currentTime;
+                            
+                            NC.RegisterNotification(currentTime, user.UserName);
+                            
                             return RedirectToLocal(returnUrl);
+                        }
+                            
                     }
                     
                 //return RedirectToAction("Index","Home");
