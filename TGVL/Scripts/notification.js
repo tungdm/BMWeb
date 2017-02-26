@@ -7,7 +7,7 @@ $(document).click(function () {
 $('#noti_Button').click(function (e) {
     e.stopPropagation();
     //$('.noti-content').show();
-    
+
 
 
     $('#notifications').fadeToggle('fast', 'linear', function () {
@@ -21,9 +21,9 @@ $('#noti_Button').click(function (e) {
     $('#noti_Counter').fadeOut(500, function () {
         $(this).empty();
     });
-    
 
-})
+
+});
 
 // update notification
 function updateNotification() {
@@ -34,7 +34,7 @@ function updateNotification() {
         type: 'GET',
         url: 'Home/GetNotificationReplies',
         success: function (response) {
-            if (response.length == 0) {
+            if (response.length === 0) {
                 $('#notiContent').append($('<li>No data available</li>'));
             }
 
