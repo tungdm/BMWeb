@@ -69,5 +69,16 @@ namespace TGVL.Controllers
         {
             return View();
         }
+
+        public ActionResult SearchRequestResult()
+        {
+            return View();
+        }
+
+        public ActionResult SearchShopResult()
+        {
+            return View();
+        }
+        
     }
 }

@@ -189,19 +189,22 @@
 .popular-posts {
 	padding: 0px;
 	margin-bottom: 15px;
-	border-top: none;
-	font-family: 'Bitter', serif;
+	border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+    border-left: 1px solid #e5e5e5;
+    border-right: 1px solid #e5e5e5;
+	font-family: 'Roboto', serif;
 	font-size: 14px
 }
 .widget__sidebar .widget-title {
-	background-color: #ffffff;
-	border-bottom: 1px solid #efefef;
+	background-color: #eaeaea;
+	border-bottom: 1px solid #e5e5e5;
 	color: #000000;
-	font-family: 'Bitter', serif;
+	font-family: 'Roboto', serif;
 	font-size: 20px;
 	font-weight: normal;
 	margin: 0;
-	padding: 0 0 6px;
+	padding: 6px 5px 6px 6px;
 }
 .widget__sidebar .widget-title h3 {
 	margin: auto;
@@ -223,6 +226,7 @@
 .popular-posts .posts-list li {
 	overflow: hidden;
 	margin: 10px 0 0 0;
+    border-bottom: 1px solid #e5e5e5;
 }
 .popular-posts .posts-list li:first-child {
 	margin-top: 0;
@@ -230,6 +234,7 @@
 .featured-thumb {
 	float: left;
 	margin: 0 12px 10px 0;
+    padding: 5px 5px 5px 8px;
 	position: relative;
 }
 .popular-posts h4 {

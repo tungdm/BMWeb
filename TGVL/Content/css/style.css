@@ -120,6 +120,7 @@ legend {
 }
 .col-right {
 	margin-bottom: 0px;
+    padding-left:25px;
 }
 	/* 1 Column Layout */
 .col1-layout .header-background-default {

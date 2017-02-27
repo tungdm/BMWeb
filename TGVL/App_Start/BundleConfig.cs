@@ -159,6 +159,7 @@ namespace TGVL
                 "~/Content/css/owl.theme.css",
                 "~/Content/font-awesome.min.css",
                 "~/Content/css/blogmate.css",
+                "~/Content/css/flipclock.css",
                 "~/Content/css/style.css"
 
              ));
@@ -216,7 +217,8 @@ namespace TGVL
                                     "~/Scripts/js/parallax.js",
                                     "~/Scripts/js/common.js",
                                     "~/Scripts/js/slider.js",
-                                    "~/Scripts/js/owl.carousel.min.js"
+                                    "~/Scripts/js/owl.carousel.min.js",
+                                    "~/Scripts/js/flipclock.js"
                                     ));
 
             bundles.Add(new ScriptBundle("~/bundles/viewdetailjquery").Include(
