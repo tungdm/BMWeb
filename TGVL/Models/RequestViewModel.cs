@@ -16,8 +16,10 @@ namespace TGVL.Models
     {
         //TODO: validate data
         [Required]
+        [Display(Name = "Tiêu đề")]
         public string Title { get; set; }
 
+        [Display(Name = "Loại nhà")]
         public int TypeOfHouse { get; set; }
         public string Administrative_area_level_1 { get; set; } //tỉnh, thành phố
         public string Formatted_address { get; set; } //địa chỉ đầy đủ (delivery address)
@@ -28,14 +30,21 @@ namespace TGVL.Models
         [Display(Name = "Ngày nhận hàng")]
         public DateTime? ReceivingDate { get; set; }
 
+        [Display(Name = "Hình thức thanh toán")]
         public int PaymentType { get; set; }
+        [Display(Name = "Miêu tả chi tiết")]
         public string Description { get; set; }
-        
+        [Display(Name = "Thời hạn yêu cầu")]
         public int TimeRange { get; set; }
+        [Display(Name = "Người yêu cầu")]
         public string CustomerName { get; set; }
         public string Email { get; set; }
+        [Display(Name = "Số điện thoại")]
         public string Phone { get; set; }
+
+        [Display(Name = "Địa chỉ")]
         public string Address { get; set; }
+
 
         public string RequestType { get; set; }
 
@@ -46,20 +55,29 @@ namespace TGVL.Models
     {
         //TODO: validate data
         public int ProductId { get; set; }
+
+        [Display(Name = "Sản phẩm")]
         public string ProductName { get; set; }
 
+        [Display(Name = "Danh mục")]
         public string CategoryName { get; set; }
-        public int SysCategoryId { get; set; }
 
+
+        public int SysCategoryId { get; set; }
+        [Display(Name = "Nhà sản xuất")]
         public string ManufactureName { get; set; }
         public int ManufacturerId { get; set; }
 
+        [Display(Name = "Ảnh minh họa")]
         public string ProductImage { get; set; }
 
+        [Display(Name = "Giá")]
         public decimal UnitPrice { get; set; }
+        [Display(Name = "Số lượng")]
         public int Quantity { get; set; }
         public ICollection<int> ListQuantity { get; set; }
 
+        [Display(Name = "Đơn vị tính")]
         public string UnitType { get; set; }
 
         public ICollection<SysProduct> Products { get; set; }
