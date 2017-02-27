@@ -6,25 +6,18 @@
         <th>
             @Html.DisplayNameFor(model => model.ProductName)
         </th>
-
         <th>
-            @Html.DisplayNameFor(model => model.UnitPrice)
+            @Html.DisplayNameFor(model => model.ManufactureName)
         </th>
-
-        <th>
-            @Html.DisplayNameFor(model => model.UnitType)
-        </th>
-
         <th>
             @Html.DisplayNameFor(model => model.ProductImage)
         </th>
 
         <th>
-            @Html.DisplayNameFor(model => model.ManufactureName)
-        </th>
-
-        <th>
             @Html.DisplayNameFor(model => model.Quantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UnitPrice)
         </th>
 
         <th></th>
@@ -37,17 +30,11 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UnitPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UnitType.Type)
+                @Html.DisplayFor(modelItem => item.Manufacturer.Name)
             </td>
             <td>
                 @*@Html.DisplayFor(modelItem => item.Image)*@
-                <img src="~/Images/Product/SysProduct/@item.Image" style="max-height:100px; max-width:100px"/>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Manufacturer.Name)
+                <img src="~/Images/Product/SysProduct/@item.Image" style="max-height:100px; max-width:100px" />
             </td>
             <td>
                 @{ 
@@ -58,13 +45,16 @@
                 @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.UnitPrice) / @Html.DisplayFor(modelItem => item.UnitType.Type)
+            </td>
+            <td>
                 <input type="checkbox"
                        name="selectedProduct"
                        value="@item.Id"
                        checked="checked"
                        style="display:none" />
 
-                <a name="delete" id="@item.Id" href="javascript:;">Delete</a>
+                <a name="delete" id="@item.Id" href="javascript:;">Xóa</a>
 
             </td>
         </tr>

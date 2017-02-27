@@ -29,7 +29,7 @@ else
                 @Html.DisplayNameFor(model => model.ManufactureName)
             </th>
 
-            <th>Select</th>
+            <th>Chọn</th>
 
         </tr>
         @foreach (var item in Model.Products)
@@ -74,24 +74,17 @@ else
                 <th>
                     @Html.DisplayNameFor(model => model.ProductName)
                 </th>
-
                 <th>
-                    @Html.DisplayNameFor(model => model.UnitPrice)
+                    @Html.DisplayNameFor(model => model.ManufactureName)
                 </th>
-
-                <th>
-                    @Html.DisplayNameFor(model => model.UnitType)
-                </th>
-
                 <th>
                     @Html.DisplayNameFor(model => model.ProductImage)
                 </th>
 
                 <th>
-                    @Html.DisplayNameFor(model => model.ManufactureName)
+                    @Html.DisplayNameFor(model => model.UnitPrice) / @Html.DisplayNameFor(model => model.UnitType)
                 </th>
-
-                <th>Select</th>
+                <th>Chọn</th>
 
             </tr>
             @foreach (var item in Model.SelectedProduct)
@@ -101,18 +94,14 @@ else
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.UnitPrice)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UnitType.Type)
-                    </td>
-                    <td>
                         @Html.DisplayFor(modelItem => item.Image)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Manufacturer.Name)
                     </td>
-
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UnitPrice) / @Html.DisplayFor(modelItem => item.UnitType.Type)
+                    </td>
                     <td>
                         <input type="checkbox"
                                 name="selectedProduct"
