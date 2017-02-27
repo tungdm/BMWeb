@@ -27,7 +27,8 @@ namespace TGVL
                       "~/Content/bootstrap.min.css",
                       "~/Content/site.css",
                       "~/Content/jquery-ui.css",
-                      "~/Content/font-awesome.min.css"));
+                      "~/Content/font-awesome.min.css",
+                      "~/Content/wysiwyg.css"));
 
             bundles.Add(new StyleBundle("~/Content/notification").Include(
                       "~/Content/notification.css"));
@@ -230,6 +231,19 @@ namespace TGVL
                                     "~/Scripts/js/cloud-zoom.js"
                                     ));
 
+
+
+            bundles.Add(new StyleBundle("~/Content/textareascss").Include(                                                              
+                                  "~/Content/custom.min.css",
+                                  "~/Content/prettify.min.css"
+                        ));
+
+            bundles.Add(new ScriptBundle("~/bundles/textareasjquery").Include(
+                                    "~/Scripts/bootstrap-wysiwyg.js",
+                                    "~/Scripts/prettify.js",
+                                    "~/Scripts/jquery.hotkeys.js",
+                                    "~/Scripts/customnguyen.js"
+                                    ));
 
             bundles.Add(new ScriptBundle("~/bundles/viewcategoryjquery").Include(
                                     "~/Scripts/js/jquery-1.11.0.min.js",
