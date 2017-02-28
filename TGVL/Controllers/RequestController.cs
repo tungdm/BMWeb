@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using TGVL.Models;
 using System.Threading.Tasks;
+using System.Net;
 
 namespace TGVL.Controllers
 {
@@ -201,7 +202,6 @@ namespace TGVL.Controllers
                     var bidRequest = new BidRequest
                     {
                         RequestId = request.Id,
-                        //LowestPrice= hệ thống sẽ gợi ý
                         CreatedDate = request.StartDate
                     };
                     db.BidRequests.Add(bidRequest);
@@ -215,6 +215,22 @@ namespace TGVL.Controllers
             return View(model);
         }
 
+        //TungDM
+        //GET: Request/Details/Id
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Request request = db.Requests.Find(id);
+            if (request == null)
+            {
+                return HttpNotFound();
+            }
+            return View(request);
+        }
 
         // GET: Request
         public ActionResult CreateRequest()
