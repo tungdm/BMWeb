@@ -163,8 +163,6 @@ namespace TGVL.Controllers
         {
             if (ModelState.IsValid)
             {
-                var test = Request.QueryString["mode"];
-
                 var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
 
                 var request = new Request
@@ -172,7 +170,7 @@ namespace TGVL.Controllers
                     CustomerId = user.Id,
                     DeliveryAddress = user.Address,
                     DeliveryDate = model.ReceivingDate,
-                    Descriptions = model.Description,
+                    Descriptions = WebUtility.HtmlDecode(model.Description),
                     StartDate = DateTime.Today,
                     DueDate = DateTime.Today.AddDays(model.TimeRange),
                     PaymentId = model.PaymentType,
@@ -229,7 +227,40 @@ namespace TGVL.Controllers
             {
                 return HttpNotFound();
             }
+
+            var query = "SELECT [dbo].[Users].[Fullname], [dbo].[Users].[Avatar], [dbo].[Users].[Address], [dbo].[Replies].[Total], [dbo].[Replies].[Description], [dbo].[Replies].[CreatedDate] "
+                    + "FROM[dbo].[Replies], [dbo].[Users] "
+                    + "WHERE[dbo].[Replies].[RequestId] = {0} "
+                    + "AND[dbo].[Replies].[SupplierId] = [dbo].[Users].[Id]"
+                    + "ORDER BY [dbo].[Replies].[CreatedDate] DESC"; ;
+            IEnumerable<BriefReply> data = db.Database.SqlQuery<BriefReply>(query, id).ToList();
+            ViewBag.Replies = data;
+
             return View(request);
+        }
+
+        //TungDM
+        //GET: Request/UpdateReplies
+        public JsonResult UpdateReplies(int id)
+        {
+            var notificationRegisterTime = Session["LastUpdated"] != null ? Convert.ToDateTime(Session["LastUpdated"]) : DateTime.Now;
+
+            //NotificationComponent NC = new NotificationComponent();
+            //var list = NC.GetReplies(notificationRegisterTime).ToList();
+            var userId = User.Identity.GetUserId<int>();
+
+            var list = db.Replies
+                .Where(r => r.CreatedDate > notificationRegisterTime && r.RequestId == id)
+                .Select(r => new {
+                    SupplierName = r.User.Fullname,
+                    CreatedDate = r.CreatedDate
+                })
+                .OrderByDescending(r => r.CreatedDate)
+                .ToList();
+
+            //update session here for get only new added contacts (notification)
+            Session["LastUpdate"] = DateTime.Now;
+            return new JsonResult { Data = list, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         // GET: Request

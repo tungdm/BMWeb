@@ -68,12 +68,34 @@ namespace TGVL.Controllers
             return RedirectToAction("AddProduct");
         }
 
+        private void PopulateWarehouseData(int supplierId)
+        {
+            var warehouses = db.Warehouses.Where(w => w.SupplierId == supplierId);
+
+            //var instructorCourses = new HashSet<int>(instructor.Courses.Select(c => c.CourseID));
+
+            var viewModel = new List<AssignedWarehouseData>();
+            foreach (var warehouse in warehouses)
+            {
+                viewModel.Add(new AssignedWarehouseData
+                {
+                    WarehouseId = warehouse.Id,
+                    Address = warehouse.Address
+                    //Assigned = instructorCourses.Contains(course.CourseID)
+                });
+            }
+            ViewBag.Warehouses = viewModel;
+        }
+
         //GET: Shop/AddProduct
         public ActionResult AddProduct(string searchString)
         {
             var model = new AddProductViewModel();
 
             var userId = User.Identity.GetUserId<int>();
+            
+
+            //TODO: Kiểm tra supplier có warehouse hay không
             var WarehouseId = db.Warehouses.Where(w => w.SupplierId == userId).ToList();
             ViewBag.WarehouseId = new SelectList(WarehouseId, "Id", "Address");
 
@@ -81,6 +103,8 @@ namespace TGVL.Controllers
             {
                 if (!String.IsNullOrWhiteSpace(searchString))
                 {
+                    PopulateWarehouseData(userId);
+
                     var productList = db.SysProducts
                         .Where(p => p.Name.Contains(searchString));
 
@@ -94,7 +118,7 @@ namespace TGVL.Controllers
                     }
                     else
                     {
-                        var product = productList.First();
+                        var product = productList.First(); //SysProduct
 
                         model.ProductId = product.Id;
                         model.ProductName = product.Name;
@@ -122,15 +146,15 @@ namespace TGVL.Controllers
         // POST: Shop/AddProduct
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddProduct(AddProductViewModel model, HttpPostedFileBase uploadImage)
+        public ActionResult AddProduct(AddProductViewModel model, HttpPostedFileBase uploadImage, int[] selectedWarehouse, int[] quantity)
         {
             if (ModelState.IsValid)
             {
                 var responseModel = new ResponeViewModel();
+                var userId = User.Identity.GetUserId<int>();
                 if (model.ProductId != 0)
                 {
-                   
-                    var productToAdd = db.WarehouseProducts.Where(w => w.SysProductId == model.ProductId);
+                    var productToAdd = db.Products.Where(p => p.SysProductId == model.ProductId && p.SupplierId == userId);
 
                     //Product đã được supplier add vào trước đó
                     if (productToAdd.Count() != 0)
@@ -145,12 +169,11 @@ namespace TGVL.Controllers
                     }
 
                     // Product có tồn tại trong hệ thống nhưng chưa được add
-                    var warehouseProduct = new WarehouseProduct
+                    var product = new Product
                     {
-                        WarehouseId = model.WarehouseId,
                         SysProductId = model.ProductId,
-                        Quantity = model.Quantity,
-                        UnitPrice = model.UnitPrice
+                        SupplierId = userId,
+                        UnitPrice = model.UnitPrice,
                     };
 
                     if (uploadImage != null && uploadImage.ContentLength > 0)
@@ -166,14 +189,33 @@ namespace TGVL.Controllers
                         else
                         {
                             uploadImage.SaveAs(filePath);
-                            warehouseProduct.Image = filePath;
+                            product.Image = filePath;
                         }
                     }
 
-                    db.WarehouseProducts.Add(warehouseProduct);
+                    db.Products.Add(product);
                     db.SaveChanges();
-           
-                    responseModel.WarehouseProductId = warehouseProduct.Id;
+
+                    if (selectedWarehouse != null && quantity != null)
+                    {
+                        for (int i = 0; i < quantity.Count(); i++)
+                        {
+                            if(quantity[i]==0)
+                            {
+                                continue;
+                            }
+                            var wp = new WarehouseProduct
+                            {
+                                WarehouseId = selectedWarehouse[i],
+                                ProductId = product.Id,
+                                Quantity = quantity[i],
+                            };
+                            db.WarehouseProducts.Add(wp);
+                        }
+                    }
+
+                    db.SaveChanges();
+                    responseModel.WarehouseProductId = product.Id;
                 }
                 else
                 {
@@ -187,14 +229,12 @@ namespace TGVL.Controllers
                     };
                     db.SysProducts.Add(sysProduct);
                     db.SaveChanges();
-                    var productId = sysProduct.Id;
 
-                    var warehouseProduct = new WarehouseProduct
+                    var product = new Product
                     {
-                        WarehouseId = model.WarehouseId,
-                        SysProductId = productId,
-                        Quantity = model.Quantity,
-                        UnitPrice = model.UnitPrice
+                        SysProductId = sysProduct.Id,
+                        SupplierId = userId,
+                        UnitPrice = model.UnitPrice,
                     };
 
                     if (uploadImage != null && uploadImage.ContentLength > 0)
@@ -210,15 +250,27 @@ namespace TGVL.Controllers
                         else
                         {
                             uploadImage.SaveAs(filePath);
-                            warehouseProduct.Image = filePath;
+                            product.Image = filePath;
                         }
                     }
-                    db.WarehouseProducts.Add(warehouseProduct);
+                    db.Products.Add(product);
                     db.SaveChanges();
 
-                    responseModel.WarehouseProductId = warehouseProduct.Id;
+                    if (selectedWarehouse != null && quantity != null)
+                    {
+                        for (int i = 0; i < quantity.Count(); i++)
+                        {
+                            var wp = new WarehouseProduct
+                            {
+                                WarehouseId = selectedWarehouse[i],
+                                ProductId = product.Id,
+                                Quantity = quantity[i],
+                            };
+                            db.WarehouseProducts.Add(wp);
+                        }
+                    }
 
-                    
+                    responseModel.WarehouseProductId = product.Id;
                 }
 
                 responseModel.Message = "Bạn đã đăng thành công sản phẩm " + model.ProductName + ".<br/>Thông tin sản phẩm bạn vừa đăng sẽ được TGVL kiểm duyệt.";
