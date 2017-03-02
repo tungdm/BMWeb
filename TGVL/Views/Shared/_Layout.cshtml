@@ -58,6 +58,7 @@
             //signalr method for push server message to client
             notificationHub.client.notify = function (message) {
                 if (message && message.toLowerCase() === "added") {
+                    //console.log('New Noti');
                     updateNotificationCount();
                 }
             };

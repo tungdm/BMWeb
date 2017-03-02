@@ -58,6 +58,7 @@
             <div class="col-md-9">
                 @*@Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", style = "max-width:80%" } })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })*@
+
                 <div id="alerts"></div>
                 <div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
                     <div class="btn-group">
@@ -110,83 +111,88 @@
                     <input type="text" data-edit="inserttext" id="voiceBtn" x-webkit-speech="">
                 </div>
 
-                <div id="editor" name="Description">
+                <div id="editor">
                     
                 </div>
+
                 
-               
-            </div>
-           
-        </div>
-        <hr />
-        <h3 style="text-align:center">Sản phẩm yêu cầu</h3>
 
-        <div class="form-group">
-            <div class="col-md-offset-1 col-md-10" id="productList"></div>
-        </div> 
-        <div class="form-group">
-            <div style="text-align:center">
-                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#searchProduct">Thêm sản phẩm</button>
-            </div>
-        </div>
-        <hr/>
+                @Html.HiddenFor(model => model.Description)
+                
 
-        <h3 style="text-align:center">Thông tin liên hệ</h3>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CustomerName, htmlAttributes: new { @class = "control-label col-md-3" })
-            <div class="col-md-9">
-                @Html.EditorFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control", style = "max-width:100%" } })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-3" })
-            <div class="col-md-9">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", style = "max-width:100%" } })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+
+            <hr />
+            <h3 style="text-align:center">Sản phẩm yêu cầu</h3>
+
+            <div class="form-group">
+                <div class="col-md-offset-1 col-md-10" id="productList"></div>
+            </div>
+            <div class="form-group">
+                <div style="text-align:center">
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#searchProduct">Thêm sản phẩm</button>
+                </div>
+            </div>
+            <hr/>
+
+            <h3 style="text-align:center">Thông tin liên hệ</h3>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CustomerName, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control", style = "max-width:100%" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", style = "max-width:100%" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", style = "max-width:100%" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", style = "max-width:100%" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div style="text-align:center">
+                    <input type="submit" value="Hoàn tất" class="btn btn-success" id="submit-btn"/>
+                </div>
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-3" })
-            <div class="col-md-9">
-                @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", style = "max-width:100%" } })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-            </div>
-        </div>
+    }
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-3" })
-            <div class="col-md-9">
-                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", style = "max-width:100%" } })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div style="text-align:center">
-                <input type="submit" value="Hoàn tất" class="btn btn-success" />
-            </div>
-        </div>
-    </div>
-
-}
-
-<div id="modalProduct"></div>
+    <div id="modalProduct"></div>
 
 
-<div id="searchProduct" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Thêm sản phẩm</h4>
-            </div>
-            <div class="modal-body" style="min-height:calc(100vh - 210px);max-height: calc(100vh - 210px);overflow-y: auto;">
-                <div class="form-horizontal">
-                    @*Tìm kiếm sản phẩm*@
+    <div id="searchProduct" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Thêm sản phẩm</h4>
+                </div>
+                <div class="modal-body" style="min-height:calc(100vh - 210px);max-height: calc(100vh - 210px);overflow-y: auto;">
+                    <div class="form-horizontal">
+                        @*Tìm kiếm sản phẩm*@
                     @using (Ajax.BeginForm(
                         new AjaxOptions
                         {

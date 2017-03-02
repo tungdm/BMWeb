@@ -40,12 +40,12 @@
             </div>
         </div>
 
-        <div class="form-group">
+        @*<div class="form-group">
             <label class="control-label col-md-2" for="Quantity">Số lượng</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
             </div>
-        </div>
+        </div>*@
 
         <div class="form-group">
             <label class="control-label col-md-2" for="UnitPrice">Giá tiền</label>
@@ -64,7 +64,36 @@
         <div class="form-group">
             <label class="control-label col-md-2" for="Warehouse">Kho</label>
             <div class="col-md-10">
-                @Html.DropDownList("WarehouseId", null, htmlAttributes: new { @class = "form-control" })
+                @*@Html.DropDownList("WarehouseId", null, htmlAttributes: new { @class = "form-control" })*@
+
+                @{
+                    List<TGVL.Models.AssignedWarehouseData> warehouses = ViewBag.Warehouses;
+                    <table class="table">
+                        @{
+                            int count = 0;
+                            foreach (var warehouse in warehouses)
+                            {
+                                count++;
+                                var groupId = warehouse.WarehouseId;
+                                <tr>
+                                    
+                                    <td>
+                                        @warehouse.Address
+                                        <input type="checkbox"
+                                               name="selectedWarehouse"
+                                               value="@warehouse.WarehouseId"
+                                               id="group_@count" />
+                                    </td>
+
+                                    <td>
+                                        @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "group_" + count, @readonly = "true" } })
+                                    </td>
+                                </tr>
+                            }
+                        }
+
+                    </table>
+                }
             </div>
         </div>
 
@@ -75,3 +104,16 @@
         </div>
     }
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("input[name='selectedWarehouse']").click(function () {
+            var myClass = $(this).attr("id");
+            $('.' + myClass).attr('readonly', !this.checked);
+
+            if (!$(this).is(":checked")) {
+                $('.' + myClass).val("");
+            }
+        });
+    });
+</script>
