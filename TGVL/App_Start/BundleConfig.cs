@@ -154,7 +154,7 @@ namespace TGVL
              ));
 
             bundles.Add(new StyleBundle("~/Content/searchproductcss").Include(
-                "~/Content/css/bootstrap.min.css",
+                //"~/Content/css/bootstrap.min.css",
                 "~/Content/css/owl.carousel.css",
                 "~/Content/css/owl.theme.css",
                 "~/Content/font-awesome.min.css",
