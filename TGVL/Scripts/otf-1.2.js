@@ -42,3 +42,48 @@ function selectedSuccess() {
     $('#searchProduct').modal('toggle');
 }
 
+//chức năng reply ở trang request/details
+function reply(requestId) {
+    var options = {
+        url: '/Reply/Create',
+        type: 'GET',
+        data: 'requestId=' + requestId
+    };
+
+    $.ajax(options).done(function (data) {
+        //console.log("Hello");
+        var $target = $('#replyInfo');
+        $target.html(data);
+        $('#replyModal').modal('show');
+        
+    });
+}
+
+
+function updateReplies(data) {
+    console.log(data.name);
+    var reply = '<li class="comment">'
+            +       '<div class="comment-wrapper">'
+            +           '<div class="comment-author vcard">'
+            +               '<p class="gravatar">'
+            +                   '<a href="#">'
+            +                       '<img src="/Images/UserAvatar/' +data.avatar +'" width="100" height="100" alt="avatar" />'      
+            +                   '</a>'
+            +               '</p>'
+            +               '<span class="author">' + data.name +'</span>'
+            +           '</div>'
+            +           '<div class="comment-meta">'
+            +               '<p><strong>' + data.total + ' VNĐ</strong></p>'
+            +           '</div>'
+            +           '<div class="comment-body">'
+            +               data.description
+            +               '<p style="color:#b6b6b6">'+ data.address +'</p>'
+            +           '</div>'
+            +       '</div>'
+            + '</li>'
+    console.log(reply);
+
+    $("#reply-content").prepend(reply);
+    //$('#replyModal').modal('toggle');
+}
+

@@ -1,8 +1,11 @@
 ﻿
 $(function () {
+
+    
+
     var ajaxFormSubmit = function () {
         var $form = $(this);
-
+        
         var options = {
             url: $form.attr("action"),
             type: $form.attr("method"),
@@ -10,10 +13,9 @@ $(function () {
         };
 
         $.ajax(options).done(function (data) {
-            if (!$.trim(data)) {
-                var $target = $($form.attr("data-otf-target"));
-                $target.replaceWith(data);
-            }
+            console.log("Hello1");
+            var $target = $($form.attr("data-otf-target"));
+            $target.replaceWith(data);      
         });
 
         return false;
@@ -29,7 +31,6 @@ $(function () {
 
     var createAutoComplete = function () {
         var $input = $(this);
-
         var options = {
             source: $input.attr("data-otf-autocomplete"),
             select: submitAutocompleteForm

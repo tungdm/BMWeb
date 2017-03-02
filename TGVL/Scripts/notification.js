@@ -25,11 +25,10 @@ $('#noti_Button').click(function (e) {
 
 });
 
+
 // update notification
 function updateNotification() {
-    //$('#notiContent').empty();
-    //$('#notiContent').append($('<li>Loading...</li>'));
-
+   
     $.ajax({
         type: 'GET',
         url: 'Home/GetNotificationReplies',
@@ -56,7 +55,7 @@ function updateNotification() {
 }
 
 // update notification count
-function updateNotificationCount() {
+function updateNotificationCount(controllerName, actionName, requestId) {
     var count = 0;
     count = parseInt($('div.count').html()) || 0;
     count++;
@@ -72,5 +71,23 @@ function updateNotificationCount() {
         .animate({ top: '10px', opacity: 1 }, 500)
         .fadeIn('slow');
 
+    //CALL AJAX UPDATE REPLIES
+    if (controllerName === 'Request' && actionName === 'Details') {
+        updateReply(requestId);
+    }
 }
 
+
+function updateReply(requestId) {
+    $.ajax({
+        type: 'GET',
+        url: '/Request/UpdateReplies',
+        data: 'id=' + requestId,
+        success: function (response) {
+           
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
