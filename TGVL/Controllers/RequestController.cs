@@ -228,7 +228,7 @@ namespace TGVL.Controllers
                 return HttpNotFound();
             }
 
-            var query = "SELECT [dbo].[Users].[Fullname], [dbo].[Users].[Avatar], [dbo].[Users].[Address], [dbo].[Replies].[Total], [dbo].[Replies].[Description], [dbo].[Replies].[CreatedDate] "
+            var query = "SELECT [dbo].[Users].[Fullname], [dbo].[Users].[Avatar], [dbo].[Users].[Address], [dbo].[Replies].[Total], [dbo].[Replies].[Description], [dbo].[Replies].[CreatedDate], [dbo].[Replies].[Id] "
                     + "FROM[dbo].[Replies], [dbo].[Users] "
                     + "WHERE[dbo].[Replies].[RequestId] = {0} "
                     + "AND[dbo].[Replies].[SupplierId] = [dbo].[Users].[Id]"
@@ -253,9 +253,14 @@ namespace TGVL.Controllers
                 .Where(r => r.CreatedDate > notificationRegisterTime && r.RequestId == id)
                 .Select(r => new {
                     SupplierName = r.User.Fullname,
-                    CreatedDate = r.CreatedDate
+                    Avatar = r.User.Avatar,
+                    Address = r.User.Address,
+                    Description = r.Description,
+                    Total = r.Total,
+                    CreatedDate = r.CreatedDate,
+                    ReplyId = r.Id
                 })
-                .OrderByDescending(r => r.CreatedDate)
+                .OrderBy(r => r.CreatedDate)
                 .ToList();
 
             //update session here for get only new added contacts (notification)

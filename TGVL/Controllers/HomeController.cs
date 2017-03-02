@@ -31,7 +31,8 @@ namespace TGVL.Controllers
                 .Select(r => new {
                     ReplyId = r.ReplyId,
                     CreatedDate = r.CreatedDate,
-                    Supplier = r.Reply.User.UserName
+                    Supplier = r.Reply.User.UserName,
+                    RequestId = r.Reply.RequestId,
                 })
                 .OrderByDescending(r => r.CreatedDate)
                 .ToList();

@@ -159,15 +159,21 @@ namespace TGVL.Controllers
                         db.ReplyProducts.Add(rp);
                     }
                 }
-                db.SaveChanges();
+                
                 var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
+                var request = db.Requests.Find(requestId);
+
                 var notify = new Notification
                 {
                     ReplyId = reply.Id,
-                    UserId = user.Id,
-                    CreatedDate = reply.CreatedDate
-                }
-                return new JsonResult { Data = new { name = user.Fullname, total = model.Total, address = user.Address, description = model.Description, avatar = user.Avatar }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                    UserId = request.CustomerId,
+                    CreatedDate = reply.CreatedDate,
+                    IsSeen = false
+                };
+                db.Notifications.Add(notify);
+
+                db.SaveChanges();
+                return new JsonResult { Data = new { replyId = reply.Id, name = user.Fullname, total = model.Total, address = user.Address, description = model.Description, avatar = user.Avatar }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
             return View();
         }
