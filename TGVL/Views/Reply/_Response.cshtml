@@ -12,7 +12,6 @@ else
             HttpMethod = "POST",
             InsertionMode = InsertionMode.Replace,
             UpdateTargetId = "",
-            //OnSuccess = "$('#replyModal').modal('toggle');"
             OnSuccess = "updateReplies"
         }
     ))
@@ -106,6 +105,7 @@ else
         $("#submit-btn-reply").click(function () {
 
             $("#form0").submit();
+            $('#replyModal').modal('toggle');
             $("#replyInfo").empty();
         });
     });

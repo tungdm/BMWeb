@@ -100,6 +100,9 @@
                                         <form>
                                             <table class="data-table" id="my-orders-table">
                                                 <tbody>
+                                                    <tr style="display:none;">
+                                                        <td id="requestID">@Html.DisplayFor(model => model.Id)</td>
+                                                    </tr>
                                                     <tr>
                                                         <td>Loại nhà</td>
                                                         <td>@Html.DisplayFor(model => model.House.Type)</td>
@@ -220,7 +223,7 @@
                                             List<TGVL.Models.BriefReply> replies = ViewBag.Replies;
                                             foreach (var reply in replies)
                                             {
-                                                <li class="comment">
+                                                <li class="comment" id="reply_@reply.Id">
                                                     <div class="comment-wrapper">
                                                         <div class="comment-author vcard">
                                                             <p class="gravatar">
