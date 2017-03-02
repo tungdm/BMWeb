@@ -12,6 +12,13 @@ namespace TGVL.Models
         public string Username { get; set; }
     }
 
+    public class AssignedWarehouseData
+    {
+        public int WarehouseId { get; set; }
+        public string Address { get; set; }
+        public bool Assigned { get; set; }
+    }
+
     public class AddProductViewModel
     {
         //TODO: validate data
@@ -31,8 +38,11 @@ namespace TGVL.Models
         //public IEnumerable<SysProduct> Products { get; set; }
         //public IEnumerable<SysCategory> Categories { get; set; }
         //public IEnumerable<Manufacturer> Manufacuters { get; set; }
+
         public IEnumerable<ProductAttribute> ProductAttributes { get; set; }
-        
+
+
+
     }
 
     public class ResponeViewModel
