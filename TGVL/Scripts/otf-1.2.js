@@ -61,8 +61,7 @@ function reply(requestId) {
 
 
 function updateReplies(data) {
-    console.log(data.name);
-    var reply = '<li class="comment">'
+    var reply = '<li class="comment" id="reply_' + data.replyId + '">'
             +       '<div class="comment-wrapper">'
             +           '<div class="comment-author vcard">'
             +               '<p class="gravatar">'
@@ -81,9 +80,9 @@ function updateReplies(data) {
             +           '</div>'
             +       '</div>'
             + '</li>'
-    console.log(reply);
+
 
     $("#reply-content").prepend(reply);
-    //$('#replyModal').modal('toggle');
 }
+
 
