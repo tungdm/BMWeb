@@ -53,7 +53,7 @@ namespace TGVL
                 "~/Scripts/jquery.unobtrusive*",
                 "~/Scripts/jquery.validate*",
                 "~/Scripts/otf-1.2.js",
-                "~/Scripts/custom.min.js",
+                //"~/Scripts/custom.min.js",
                 "~/Scripts/dateformat.js"
                 ));
 
@@ -244,7 +244,8 @@ namespace TGVL
                                     "~/Scripts/bootstrap-wysiwyg.js",
                                     "~/Scripts/prettify.js",
                                     "~/Scripts/jquery.hotkeys.js",
-                                    "~/Scripts/customnguyen.js"
+                                    "~/Scripts/customnguyen.js",
+                                    "~/Scripts/textarea-hack.js"
                                     ));
 
             bundles.Add(new ScriptBundle("~/bundles/viewcategoryjquery").Include(
