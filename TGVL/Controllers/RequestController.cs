@@ -78,7 +78,7 @@ namespace TGVL.Controllers
                     if (productList == null || !productList.Any())
                     {
                         //Sản phẩm hiện k có trong hệ thống
-                        model.Message = "Sản phẩm hiện k có trong hệ thống";
+                        model.Message = "Sản phẩm hiện không có trong hệ thống";
 
                         //return Json(null, JsonRequestBehavior.AllowGet);
                     }

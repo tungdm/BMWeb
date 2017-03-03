@@ -1,5 +1,68 @@
 ﻿@model TGVL.Models.RequestProductViewModel
 
+<style>
+         .data-table {
+             width: 100%;
+            border-spacing: 0;
+            text-align: left;
+        }
+
+        .data-table thead tr, .data-table tfoot tr {
+            background-color: #f0f0f0;
+        }
+
+        .data-table thead th, .data-table thead td, .data-table tfoot th, .data-table tfoot td, .cart .totals table th, .cart .totals table td {
+            color: #565656;
+            border-bottom: 1px solid #eaeaea;
+            border-right: 0px solid #dcdcdc;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .data-table tbody th, .data-table tbody td {
+            border-bottom: 1px solid #eaeaea;
+            border-right: 0px solid #dcdcdc;
+            padding: 10px 10px 6px;
+        }
+
+       
+        .data-table th {
+            line-height: 20px;
+            padding: 10px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 20px;
+        }
+
+        .data-table td {
+            line-height: 20px;
+            padding: 10px;
+            vertical-align: top;
+        }
+
+        .data-table th .tax-flag {
+            white-space: nowrap;
+            font-weight: normal;
+        }
+
+        .data-table td.label, .data-table th.label {
+            font-weight: normal;
+            background: #f8f8f8;
+        }
+
+        .data-table input, data-table select, data-table textarea {
+            margin: 3px;
+        }
+
+        .data-table p {
+            margin: 10px 0;
+        }
+
+        .data-table .description {
+            margin: 10px 0;
+        }
+</style>
+
 
 @if (Model.Message != null)
 {
@@ -7,112 +70,114 @@
 }
 else
 {
-    <table class="table removable">
+    <div class="table-responsive">
+        <table class="data-table removable" id="my-orders-table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ProductName)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.UnitPrice)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.UnitType)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.ProductImage)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.ManufactureName)
+                    </th>
+
+                    <th>Chọn</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Products)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            <span class="price">
+                                @Html.DisplayFor(modelItem => item.UnitPrice)
+                            </span>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UnitType.Type)
+                        </td>
+                        <td>
+                            @*@Html.DisplayFor(modelItem => item.Image)*@
+                            <img src="~/Images/Product/SysProduct/@item.Image" style="max-height:100px; max-width:100px" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Manufacturer.Name)
+                        </td>
+
+                        <td>
+                            <input type="checkbox"
+                                   name="selectedProduct"
+                                   value="@item.Id" />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @*Selected Product*@
+if (Model.SelectedProduct != null)
+{
+    <table class="table" style="display:none;">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.ProductName)
             </th>
-
             <th>
-                @Html.DisplayNameFor(model => model.UnitPrice)
+                @Html.DisplayNameFor(model => model.ManufactureName)
             </th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.UnitType)
-            </th>
-
             <th>
                 @Html.DisplayNameFor(model => model.ProductImage)
             </th>
 
             <th>
-                @Html.DisplayNameFor(model => model.ManufactureName)
+                @Html.DisplayNameFor(model => model.UnitPrice) / @Html.DisplayNameFor(model => model.UnitType)
             </th>
-
             <th>Chọn</th>
 
         </tr>
-        @foreach (var item in Model.Products)
+        @foreach (var item in Model.SelectedProduct)
         {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.UnitPrice)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UnitType.Type)
-                </td>
-                <td>
-                    @*@Html.DisplayFor(modelItem => item.Image)*@
-                    <img src="~/Images/Product/SysProduct/@item.Image" style="max-height:100px; max-width:100px"/>
+                    @Html.DisplayFor(modelItem => item.Image)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Manufacturer.Name)
                 </td>
-
+                <td>
+                    @Html.DisplayFor(modelItem => item.UnitPrice) / @Html.DisplayFor(modelItem => item.UnitType.Type)
+                </td>
                 <td>
                     <input type="checkbox"
-                            name="selectedProduct"
-                            value="@item.Id"
-                            />
+                           name="selectedProduct"
+                           value="@item.Id"
+                           checked="checked" />
                 </td>
             </tr>
         }
-
-
-
-
     </table>
-
-    @*Selected Product*@
-    if (Model.SelectedProduct != null)
-    {
-        <table class="table" style="display:none;">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.ProductName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ManufactureName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ProductImage)
-                </th>
-
-                <th>
-                    @Html.DisplayNameFor(model => model.UnitPrice) / @Html.DisplayNameFor(model => model.UnitType)
-                </th>
-                <th>Chọn</th>
-
-            </tr>
-            @foreach (var item in Model.SelectedProduct)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Image)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Manufacturer.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UnitPrice) / @Html.DisplayFor(modelItem => item.UnitType.Type)
-                    </td>
-                    <td>
-                        <input type="checkbox"
-                                name="selectedProduct"
-                                value="@item.Id"
-                                checked="checked" />
-                    </td>
-                </tr>
-            }
-        </table>
     }
-    
+
 }
 
 

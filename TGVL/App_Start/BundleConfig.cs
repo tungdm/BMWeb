@@ -24,7 +24,7 @@ namespace TGVL
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.min.css",
+                      "~/Content/css/bootstrap.min.css",
                       "~/Content/site.css",
                       "~/Content/jquery-ui.css",
                       "~/Content/font-awesome.min.css",
@@ -138,7 +138,7 @@ namespace TGVL
                 "~/Content/css/owl.carousel.css",
                 "~/Content/css/owl.theme.css",
                 "~/Content/font-awesome.min.css",
-                "~/Content/bootstrap.css",
+                //"~/Content/bootstrap.css",
                 "~/Content/AdminLTE.min.css",
                 "~/Content/css/style.css"
              ));
