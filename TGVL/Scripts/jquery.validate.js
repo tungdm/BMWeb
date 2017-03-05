@@ -378,7 +378,8 @@ $.extend($.validator, {
 			for ( var i = 0, elements = (this.currentElements = this.elements()); elements[i]; i++ ) {
 				this.check( elements[i] );
 			}
-			return this.valid();
+		    return this.valid();   
+		    
 		},
 
 		// http://docs.jquery.com/Plugins/Validation/Validator/element
