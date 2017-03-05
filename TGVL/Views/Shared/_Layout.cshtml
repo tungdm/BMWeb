@@ -52,15 +52,26 @@
             // signalr js code for start hub and send receive notification
             var notificationHub = $.connection.notificationHub;
             $.connection.hub.start().done(function () {
-                notificationHub.server.joinGroup("@User.Identity.GetUserName()");
+
+                //$('#test').click(function () {
+                    
+                //    notificationHub.server.send("Shinfg");
+                //    console.log('Test');
+                //});
+
                 console.log('Notification hub started');
             });
             //signalr method for push server message to client
             notificationHub.client.notify = function (message) {
-                if (message && message.toLowerCase() === "added") {
-                    //console.log('New Noti');
-                    updateNotificationCount();
-                }
+                //if (message && message.toLowerCase() === "added") {
+                //    console.log('New Noti');
+                //    updateNotificationCount();
+                //}
+
+                //if (message && message.toLowerCase() === "test") {
+                //    console.log('Hurray!!!');
+                //    updateNotificationCount();
+                //}
             };
         });
 
