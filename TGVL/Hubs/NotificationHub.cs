@@ -20,12 +20,17 @@ namespace TGVL.Hubs
             return Groups.Remove(Context.ConnectionId, groupName);
         }
 
-        public static void SendNoti()
+        public Task Send(string userId)
         {
-            IHubContext context = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
-            //context.Clients.Group(groupName).notify("added");
-            
-            context.Clients.All.notify("add");
+            return Clients.User(userId).notify("test");
         }
+
+        //Gửi noti cho customer khi có người reply
+        public Task SendNotiReplyTo(string userId)
+        {
+            return Clients.User(userId).notify("test");
+        }
+
+        
     }
 }
