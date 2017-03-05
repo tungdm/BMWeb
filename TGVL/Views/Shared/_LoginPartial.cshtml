@@ -153,9 +153,15 @@
                     <div class="seeAll"><a href="#">See All</a></div>
                 </div>
             </li>
-
+            <li class="dropdown">
+                <a href="#" class="dropbtn">Yêu cầu</a>
+                <div class="dropdown-content">
+                    <p>@Html.ActionLink("Mua nhanh","Create","Request", new { mode = "normal" }, null)</p>
+                    <p>@Html.ActionLink("Đấu thầu","Create","Request", new { mode = "bid" }, null)</p>
+                </div>
+            </li>
             <li>
-                @Html.ActionLink("Chào mừng " + User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                @Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
             </li>
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Đăng xuất</a></li>
         </ul>
