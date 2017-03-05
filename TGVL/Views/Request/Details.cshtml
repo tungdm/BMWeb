@@ -1,4 +1,5 @@
 ﻿@model TGVL.Request
+@using Microsoft.AspNet.Identity
 
 @{
     ViewBag.Title = "ViewNormalDetail";
@@ -8,9 +9,7 @@
 @Styles.Render("~/Content/searchproductcss")
 @*@Scripts.Render("~/bundles/mainpagejquery") Error*@
 
-
-
-<style> 
+<style>
     ul {
         border: 0;
         margin: 0;
@@ -65,6 +64,7 @@
     #pagination-flickr a:hover {
         border: solid 1px #666666;
     }
+
     #border {
         border-top: 1px solid #e5e5e5;
         border-bottom: 1px solid #e5e5e5;
@@ -95,6 +95,7 @@
                                 </header>
                                 <!--blog_entry-header clearfix-->
                                 <div class="entry-content">
+
                                     <h4><strong>Thông tin thêm</strong></h4>
                                     <div class="table-responsive">
                                         <form>
@@ -102,6 +103,7 @@
                                                 <tbody>
                                                     <tr style="display:none;">
                                                         <td id="requestID">@Html.DisplayFor(model => model.Id)</td>
+                                                        <td id="requestType">@Html.DisplayFor(model => model.Flag)</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Loại nhà</td>
@@ -109,13 +111,13 @@
                                                     </tr>
                                                     <tr>
                                                         <td>Ngày nhận hàng</td>
-                                                        <td>@Html.DisplayFor(model => model.DeliveryDate)</td>
+                                                        <td>@Html.DisplayFor(model => model.ReceivingDate)</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Địa chỉ nhận hàng</td>
                                                         <td>@Html.DisplayFor(model => model.DeliveryAddress)</td>
                                                     </tr>
-                                                    
+
                                                     <tr>
                                                         <td>Hình thức thanh toán</td>
                                                         <td>@Html.DisplayFor(model => model.Payment.Type)</td>
@@ -148,36 +150,36 @@
                                                 <tbody>
                                                     @foreach (var item in Model.RequestProducts)
                                                     {
-                                                        <tr>
-                                                            <td>
-                                                                <strong>@Html.ActionLink((item.SysProduct.Name), "Details", "Products", new { id = item.SysProductId }, null)</strong>
-                                                            </td>
+                                                    <tr>
+                                                        <td>
+                                                            <strong>@Html.ActionLink((item.SysProduct.Name), "Details", "Products", new { id = item.SysProductId }, null)</strong>
+                                                        </td>
 
-                                                            <td>
-                                                                <img src="~/Images/Product/SysProduct/@item.SysProduct.Image" style="max-height:100px; max-width:100px" />
-                                                            </td>
+                                                        <td>
+                                                            <img src="~/Images/Product/SysProduct/@item.SysProduct.Image" style="max-height:100px; max-width:100px" />
+                                                        </td>
 
-                                                            <td>
-                                                                @Html.DisplayFor(modelItem => item.SysProduct.Manufacturer.Name)
-                                                            </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.SysProduct.Manufacturer.Name)
+                                                        </td>
 
-                                                            <td>
-                                                                @Html.DisplayFor(modelItem => item.Quantity)
-                                                            </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.Quantity)
+                                                        </td>
 
-                                                            @*<td>
+                                                        @*<td>
                                                                 @Html.DisplayFor(modelItem => item.UnitPrice)
                                                             </td>*@
 
-                                                            <td>
-                                                                @Html.DisplayFor(modelItem => item.SysProduct.UnitType.Type)
-                                                            </td>
-                                                            
-                                                            
-                                                        </tr>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.SysProduct.UnitType.Type)
+                                                        </td>
+
+
+                                                    </tr>
                                                     }
 
-                                                   
+
                                                 </tbody>
                                             </table>
                                         </form>
@@ -210,46 +212,161 @@
                                     </div>
                                 </div>
                             </article>
-                            <div class="comment-content wow bounceInUp animated">
-                                <div class="comments-wrapper">
-                                    <h4> <strong>Bình luận</strong> </h4>
-
-                                    <button id="replyBtn" type="button" class="btn btn-info btn-lg" onclick="reply(@ViewContext.RouteData.Values["id"])">Reply</button>
-                                    <hr/>
-                                    <!--commentlist-->
-
-                                    <ul class="commentlist" id="reply-content">
-                                        @{
-                                            List<TGVL.Models.BriefReply> replies = ViewBag.Replies;
-                                            foreach (var reply in replies)
+                            @if (Request.IsAuthenticated)
+                            {
+                                <div class="comment-content wow bounceInUp animated">
+                                    @if (Model.Flag == 0)
+                                    {
+                                    <!--Normal Replies-->
+                                        <div class="comments-wrapper">
+                                            <h4> <strong>Bình luận</strong> </h4>
+                                            @if (User.IsInRole("Supplier") && ViewBag.Repliable == true)
                                             {
-                                                <li class="comment" id="reply_@reply.Id">
-                                                    <div class="comment-wrapper">
-                                                        <div class="comment-author vcard">
-                                                            <p class="gravatar">
-                                                                <a href="#">
-                                                                    <img src="~/Images/UserAvatar/@reply.Avatar" width="100" height="100" alt="avatar" />
-                                                                </a>
-                                                            </p>
-                                                            <span class="author">@reply.Fullname</span>
-                                                        </div>
-                                                        <div class="comment-meta">
-                                                            <p><strong>@reply.Total VNĐ</strong></p>
-                                                        </div>
-                                                        <div class="comment-body">
-                                                            @reply.Description
-                                                            <p style="color:#b6b6b6">@reply.Address</p>
-                                                        </div>
-                                                    </div>
-                                                </li>
+                                                <button id="replyBtn" type="button" class="btn btn-info btn-lg" onclick="reply(@ViewContext.RouteData.Values["id"])">Reply</button>
                                             }
-                                        }
-                                    </ul>
-                                    <!--/commentlist-->
-                                </div>
-                                <!--comments-wrapper-->
+                                            <hr />
 
-                            </div>
+                                            <!--commentlist-->
+
+                                            <ul class="commentlist" id="reply-content">
+                                                @{
+                                                    List<TGVL.Models.BriefReply> replies = ViewBag.Replies;
+
+                                                    if (replies.Count() == 0)
+                                                    {
+                                                        <li>Chưa có phản hồi...</li>
+                                                    }
+                                                    else
+                                                    {
+                                                        foreach (var reply in replies)
+                                                        {
+                                                            <li class="comment" id="reply_@reply.Id">
+                                                                <div class="comment-wrapper">
+                                                                    <div class="comment-author vcard">
+                                                                        <p class="gravatar">
+                                                                            <a href="#">
+                                                                                <img src="~/Images/UserAvatar/@reply.Avatar" width="100" height="100" alt="avatar" />
+                                                                            </a>
+                                                                        </p>
+                                                                        <span class="author">@reply.Fullname</span>
+                                                                    </div>
+                                                                    <div class="comment-meta">
+                                                                        <p><strong>@reply.Total VNĐ</strong></p>
+                                                                    </div>
+                                                                    <div class="comment-body">
+                                                                        @reply.Description
+                                                                        <p style="color:#b6b6b6">@reply.Address</p>
+                                                                    </div>
+
+
+                                                                    <div>
+                                                                        <button id="viewDetails" type="button" class="btn btn-primary btn-sm" onclick="viewDetails(@reply.Id)">Details</button>
+                                                                        @if (User.Identity.GetUserId<int>() == reply.SupplierId)
+                                                                        {
+                                                                            <button id="edit" type="button" class="btn btn-primary btn-sm" onclick="edit(@reply.Id)">Edit</button>
+                                                                        }
+                                                                        else if (User.Identity.GetUserId<int>() == reply.CustomerId)
+                                                                        {
+                                                                            <button id="select" type="button" class="btn btn-primary btn-sm" onclick="select(@reply.Id)">Select</button>
+                                                                        }
+
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        }
+                                                    }
+                                                }
+                                            </ul>
+                                            <!--/commentlist-->
+                                        </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="comments-wrapper">
+                                                <h4> <strong>Đấu thầu</strong> </h4>
+                                                @{
+                                                    List<TGVL.Models.BriefBidReply> bidReplies = ViewBag.BidReplies;
+                                                    if (User.IsInRole("Supplier") && ViewBag.Bidable == true)
+                                                    {
+                                                        <button id="bidBtn" type="button" class="btn btn-info btn-lg" onclick="reply(@ViewContext.RouteData.Values["id"])">Bid</button>
+                                                    }
+
+                                                    <div id="bidtable">
+                                                        @if (User.IsInRole("Customer") && Model.CustomerId == User.Identity.GetUserId<int>() && bidReplies.Count() == 0)
+                                                        {
+                                                            <p>Chưa có ai bid...</p>
+                                                        }
+
+                                                        else if ((User.IsInRole("Customer") && Model.CustomerId == User.Identity.GetUserId<int>()) || User.IsInRole("Supplier"))
+                                                        {
+                                                            if (bidReplies.Count() != 0)
+                                                            {
+
+                                                                <table class="table">
+                                                                    <tr>
+                                                                        <th>
+                                                                            Rank
+                                                                        </th>
+
+                                                                        <th>
+                                                                            Supplier
+                                                                        </th>
+
+                                                                        <th>
+                                                                            Total
+                                                                        </th>
+
+                                                                        <th>
+                                                                            Delivery Date
+                                                                        </th>
+                                                                        <th>
+                                                                            Action
+                                                                        </th>
+                                                                    </tr>
+                                                                    @foreach (var reply in bidReplies)
+                                                                    {
+                                                                        <tr>
+                                                                            @*<td id="bidreplyId">@reply.Id</td>*@
+                                                                            <td id="rank">
+                                                                                @reply.Rank
+                                                                            </td>
+
+                                                                            <td>
+                                                                                <img src="~/Images/UserAvatar/@reply.Avatar" width="100" height="100" alt="avatar" />
+                                                                                @reply.Fullname
+                                                                            </td>
+
+                                                                            <td>
+                                                                                @reply.Total
+                                                                            </td>
+
+                                                                            <td>
+                                                                                @reply.DeliveryDate.Date.ToString("dd/MM/yyyy")
+                                                                            </td>
+
+                                                                            <td>
+                                                                                <button id="viewDetails" type="button" class="btn btn-primary btn-sm" onclick="viewDetails(@reply.Id)">Details</button>
+
+                                                                                @Html.ActionLink("Details", "Details", new { id = reply.Id }) |
+                                                                                @Html.ActionLink("Select", "Select", new { id = reply.Id })
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                </table>
+
+                                                            }
+
+                                                        }
+
+                                                    </div>              
+                                                }
+                                            </div>
+                                        }
+                                    <!--comments-wrapper-->
+
+                                </div>
+                                }
+
                             <br />
                             <ul id="pagination-flickr">
                                 <li class="previous-off">«Trước</li>
@@ -321,6 +438,7 @@
 </div>
 
 
+
 <div id="replyModal" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg" style="left:0%">
         <div class="modal-content">
@@ -332,7 +450,7 @@
                 <div id="replyInfo"></div>
             </div>
             <div class="modal-footer">
-                <input type="submit" value="Hoàn tất" class="btn btn-success" id="submit-btn-reply" />
+                <input type="button" value="Hoàn tất" class="btn btn-success" id="submit-btn-reply" style="display:none" />
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
