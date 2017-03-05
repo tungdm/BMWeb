@@ -6877,11 +6877,9 @@ fieldset {
 	width: 100%;
 }
 input.input-text, select, textarea {
-	background-color: #f0f0f0;
-	border: 1px solid #f0f0f0;
+	border: 1px solid #eaeaea;
 	padding: 8px 10px;
 	outline: none;
-	color: #999;
 }
 .crosssell{ margin-bottom:35px;}
 .crosssell .title h2 {
@@ -7390,11 +7388,13 @@ button.button.btn-proceed-checkout span {
 	padding-bottom: 0;
 	padding: 0px;
 	text-align: left;
-	width: 48%;
+	width: 80%;
 	min-height: 362px;
-	background: #f7f7f7;
 	border: 1px solid #eaeaea;
-	padding: 45px
+	padding-top:30px;
+    padding-bottom:30px;
+    padding-left:30px;
+    padding-right:5px;
 }
 .account-login .col2-set .col-2 {
 	float: right;
@@ -8879,13 +8879,13 @@ input.radio {
 .group-select li .input-box input.input-text, .group-select li .input-box textarea {
 	width: 95%;
 	margin-top: 5px;
-	background: #f0f0f0;
+	
 	border: 1px solid #dcdcdc;
 	padding: 10px;
 }
 .group-select li .input-box input.input-text:focus, .group-select li .input-box textarea:focus {
 	margin-top: 5px;
-	background: #fff;
+	
 	border: 1px solid #dcdcdc;
 	padding: 10px;
 }

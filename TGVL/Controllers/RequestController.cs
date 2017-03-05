@@ -139,7 +139,7 @@ namespace TGVL.Controllers
         //TungDM
         // GET: Request
         public ActionResult SelectProduct(RequestProductViewModel model, string[] selectedProduct)
-         {
+        {
             if (Request.IsAjaxRequest())
             {
                 if (selectedProduct != null)
@@ -148,7 +148,7 @@ namespace TGVL.Controllers
                     foreach (var productId in selectedProduct)
                     {
                         var productToAdd = db.SysProducts.Find(int.Parse(productId));
-                        model.SelectedProduct.Add(productToAdd); 
+                        model.SelectedProduct.Add(productToAdd);
                     }
                 }
             }
@@ -209,7 +209,7 @@ namespace TGVL.Controllers
                 return RedirectToAction("Index");
             }
 
-            
+
             return View(model);
         }
 
@@ -308,7 +308,7 @@ namespace TGVL.Controllers
         {
             return View();
         }
-        
+
         public ActionResult ChooseRequest()
         {
             return View();
@@ -320,6 +320,11 @@ namespace TGVL.Controllers
         }
 
         public ActionResult ViewBidDetail()
+        {
+            return View();
+        }
+
+        public ActionResult ShoppingCart()
         {
             return View();
         }

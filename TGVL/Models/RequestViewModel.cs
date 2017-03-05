@@ -15,7 +15,7 @@ namespace TGVL.Models
     public class CreateRequestViewModel
     {
         //TODO: validate data
-        [Required]
+        [Required(ErrorMessage ="Thông tin bắt buộc")]
         [Display(Name = "Tiêu đề")]
         public string Title { get; set; }
 
@@ -24,7 +24,7 @@ namespace TGVL.Models
         public string Administrative_area_level_1 { get; set; } //tỉnh, thành phố
         public string Formatted_address { get; set; } //địa chỉ đầy đủ (delivery address)
 
-        [Required]
+        [Required(ErrorMessage = "Thông tin bắt buộc")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Ngày nhận hàng")]

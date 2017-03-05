@@ -4,8 +4,7 @@
     Layout = "~/Views/Shared/_HomePageViewLayout.cshtml";
 }
 
-@Styles.Render("~/Content/viewdetailcss")
-@Scripts.Render("~/bundles/viewdetailjquery")
+@*@Scripts.Render("~/bundles/viewdetailjquery")*@
 
 <style>
     .item-img-info {
@@ -57,15 +56,6 @@
 
                             <div class="product-image">
                                 <div class="large-image"><img alt="product-image" src="~/Content/images/cement-fico-pcb-40.jpg"></div>
-                                @*<div class="flexslider flexslider-thumb">
-                                        <ul class="previews-list slides">
-                                            <li><a href='~/Content/images/product6.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '~/Content/images/product6.jpg' "><img src="~/Content/images/product6.jpg" alt="Thumbnail 1" /></a></li>
-                                            <li><a href='~/Content/images/product10.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '~/Content/images/product10.jpg' "><img src="~/Content/images/product10.jpg" alt="Thumbnail 2" /></a></li>
-                                            <li><a href='~/Content/images/product3.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '~/Content/images/product3.jpg' "><img src="~/Content/images/product3.jpg" alt="Thumbnail 1" /></a></li>
-                                            <li><a href='~/Content/images/product4.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '~/Content/images/product4.jpg' "><img src="~/Content/images/product4.jpg" alt="Thumbnail 2" /></a></li>
-                                            <li><a href='~/Content/images/product5.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '~/Content/images/product5.jpg' "><img src="~/Content/images/product5.jpg" alt="Thumbnail 2" /></a></li>
-                                        </ul>
-                                    </div>*@
                             </div>
                             <!-- end: more-images -->
                             <div class="clear"></div>
@@ -86,10 +76,11 @@
                                 </div>
                             </div>
                             <div class="add-to-box">
-                                <div class="add-to-cart">
-                                    
+                                <div>
+                                    <button type="button" class="button btn-info" data-toggle="modal" data-target="#selectSupplier">
+                                       Xem cửa hàng
+                                    </button>
                                 </div>
-                                <button type="button" title="Thêm vào giỏ hàng" class="button btn-cart" onClick="productAddToCartForm.submit(this)"><span>Thêm vào giỏ hàng</span></button>
                             </div>
                             <br />
                             <br />
@@ -172,36 +163,11 @@
                                                 <br />
                                             </li>
 
-                                            <li>
-                                                <figure class="featured-thumb"> <a href="#pellentesque-posuere"> <img width="80" height="53" alt="blog image" src="~/Content/images/logo1.jpg"> </a> </figure>
-                                                <!--featured-thumb-->
-                                                <h4><a href="#pellentesque-posuere">Cửa hàng VLXD Sỹ Mạnh</a></h4>
-                                                <p class="post-meta">
-                                                    36 Nguyễn Trãi Q1 TPHCM
-                                                </p>
-                                                <h4 class="post-meta" style="color:#ff1341">
-                                                    Giá: <strong>83.000 VNĐ</strong>
-                                                </h4>
-                                                <br />
-                                            </li>
-
-                                            <li>
-                                                <figure class="featured-thumb"> <a href="#pellentesque-posuere"> <img width="80" height="53" alt="blog image" src="~/Content/images/logo2.jpg"> </a> </figure>
-                                                <!--featured-thumb-->
-                                                <h4><a href="#pellentesque-posuere">Cửa hàng VLXD M&C</a></h4>
-                                                <p class="post-meta">
-                                                    36 Nguyễn Văn Trỗi Phú Nhuận TPHCM
-                                                </p>
-                                                <h4 class="post-meta" style="color:#ff1341">
-                                                    Giá: <strong>84.000 VNĐ</strong>
-                                                </h4>
-                                                <br />
-                                            </li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
-                            
+
                         </div>
 
 
@@ -258,10 +224,10 @@
                                                             <div class="item-img-info">
                                                                 <a href="product_detail.html" class="product-image"> <img src="~/Content/images/xi-mang-ha-tien-1-pcb-30.jpg"> </a>
                                                                 @*<div class="item-box-hover">
-                                                                    <div class="box-inner">
-                                                                        <div class="product-detail-bnt"><a href="quick_view.html" class="button detail-bnt"> <span> Xem chi tiết</span></a></div>
-                                                                    </div>
-                                                                </div>*@
+                                                                        <div class="box-inner">
+                                                                            <div class="product-detail-bnt"><a href="quick_view.html" class="button detail-bnt"> <span> Xem chi tiết</span></a></div>
+                                                                        </div>
+                                                                    </div>*@
                                                             </div>
                                                         </div>
                                                         <div class="item-info">
@@ -290,10 +256,10 @@
                                                             <div class="item-img-info">
                                                                 <a href="product_detail.html" class="product-image"> <img src="~/Content/images/xi-mang-ha-tien-1.jpg"> </a>
                                                                 @*<div class="item-box-hover">
-                                                                    <div class="box-inner">
-                                                                        <div class="product-detail-bnt"><a href="quick_view.html" class="button detail-bnt"> <span> Xem chi tiết</span></a></div>
-                                                                    </div>
-                                                                </div>*@
+                                                                        <div class="box-inner">
+                                                                            <div class="product-detail-bnt"><a href="quick_view.html" class="button detail-bnt"> <span> Xem chi tiết</span></a></div>
+                                                                        </div>
+                                                                    </div>*@
                                                             </div>
                                                         </div>
                                                         <div class="item-info">
@@ -326,4 +292,68 @@
         </div>
     </div>
 </section>
+
+<div id="selectSupplier" class="modal fade" role="dialog">
+    <div clas="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Danh sách cửa hàng</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="table-responsive">
+                        <table class="data-table" id="my-orders-table">
+                            <thead>
+                                <tr>
+                                    <th>Cửa hàng</th>
+                                    <th>Giá</th>
+                                    <th>Số lượng</th>
+                                    <th>Chọn</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Cửa hàng VLXD Vy Vy</td>
+                                    <td>80.000 VNĐ</td>
+                                    <td>
+                                        <input id="Quantity" name="Quantity" type="number"/>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" name="" value=""/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Cửa hàng VLXD Vy Vy</td>
+                                    <td>80.000 VNĐ</td>
+                                    <td>
+                                        <input id="Quantity" name="Quantity" type="number" />
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" name="" value="" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Cửa hàng VLXD Vy Vy</td>
+                                    <td>80.000 VNĐ</td>
+                                    <td>
+                                        <input id="Quantity" name="Quantity" type="number" />
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" name="" value="" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                
+                <button type="button" class="btn btn-warning" data-dismiss="modal">Thêm vào giỏ hàng</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
 
