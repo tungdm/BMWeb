@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNet.SignalR;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TGVL.Hubs;
 using TGVL.Models;
 
 namespace TGVL.Controllers
@@ -49,8 +52,15 @@ namespace TGVL.Controllers
             //Kiểm tra supplier có warehouse hay k
             if (warehouse == null || !warehouse.Any())
             {
-                model.Message = "Chưa có cửa hàng";
-                return PartialView("_Response", model);
+                return new JsonResult
+                {
+                    Data = new
+                    {
+                        Message = "Chưa có cửa hàng"
+                    },
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+
             }
 
             var requestedProduct = request.RequestProducts.ToList();
@@ -90,7 +100,8 @@ namespace TGVL.Controllers
                             + "AND [dbo].[SysProducts].[UnitTypeId] = [dbo].[UnitTypes].[Id] "
                             + "AND [dbo].[Products].[SupplierId] = {0} "
                             + "AND [dbo].[Products].[SysProductId] = {1} ";
-                            
+
+                        decimal? total = 0;
 
                         for (int i = 0; i < listRP.Count(); i++)
                         {
@@ -98,24 +109,33 @@ namespace TGVL.Controllers
 
                             WarehouseProductViewModel data = db.Database.SqlQuery<WarehouseProductViewModel>(query, supplierID, rp).SingleOrDefault();
 
-
                             if (data != null)
                             {
                                 var replyProduct = new ReplyProductViewModel();
                                 replyProduct.Product = data;
                                 replyProduct.Quantity = requestedProduct[i].Quantity;
+                                total += data.UnitPrice * requestedProduct[i].Quantity;
                                 test2.Add(replyProduct);
                             }
                         }
 
                         model.ReplyProducts = test2;
+                        model.DeliveryDate = request.ReceivingDate;
+                        model.Total = (decimal)total;
                         return PartialView("_Response", model);
                     }
                     else
                     {
                         //Supplier k đủ sp yêu cầu
-                        model.Message = "Bạn không đủ sản phẩm để phản hồi yêu cầu này.";
-                        return PartialView("_Response", model);
+                        return new JsonResult
+                        {
+                            Data = new
+                            {
+                                Message = "Bạn không đủ sản phẩm để phản hồi yêu cầu này."
+                            },
+                            JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                        };
+
                     }
                 }
             }
@@ -130,15 +150,33 @@ namespace TGVL.Controllers
         {
             if (ModelState.IsValid)
             {
+                var request = db.Requests.Find(requestId);
+
                 var reply = new Reply
                 {
                     RequestId = requestId,
                     SupplierId = User.Identity.GetUserId<int>(),
                     Description = model.Description,
                     Total = model.Total,
-                    CreatedDate = DateTime.Now
+                    DeliveryDate = model.DeliveryDate,
+                    CreatedDate = DateTime.Now,
+                    Flag = request.Flag == 1 ? 1 : 0 //normal reply: flag = 0; bid reply: flag = 1
                 };
+
                 db.Replies.Add(reply);
+
+                //Create bid reply
+                if (request.Flag == 1)
+                {
+                    var bidReply = new BidReply
+                    {
+                        ReplyId = reply.Id,
+                        Rank = -1,  //chưa update rank
+                        CreatedDate = reply.CreatedDate,
+                        Flag = 0
+                    };
+                    db.BidReplies.Add(bidReply);
+                }
 
                 if (replyProduct != null && quantity != null)
                 {
@@ -159,9 +197,8 @@ namespace TGVL.Controllers
                         db.ReplyProducts.Add(rp);
                     }
                 }
-                
+
                 var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
-                var request = db.Requests.Find(requestId);
 
                 var notify = new Notification
                 {
@@ -173,9 +210,115 @@ namespace TGVL.Controllers
                 db.Notifications.Add(notify);
 
                 db.SaveChanges();
-                return new JsonResult { Data = new { replyId = reply.Id, name = user.Fullname, total = model.Total, address = user.Address, description = model.Description, avatar = user.Avatar }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+
+                if (request.Flag == 1)
+                {
+                    //Update rank
+                    var query = "Update BidReplies "
+                                + "SET [Rank] = t2.[Rank] "
+                                + "FROM BidReplies t1 "
+                                + "LEFT OUTER JOIN "
+                                + "("
+                                + "SELECT BidReplies.ReplyId, Replies.RequestId, Rank() OVER (PARTITION BY RequestId ORDER BY Total asc) as [Rank] "
+                                + "FROM BidReplies, Replies "
+                                + "WHERE BidReplies.ReplyId = Replies.Id "
+                                + ") as t2 "
+                                + "ON t1.ReplyId = t2.ReplyId "
+                                + "AND t2.RequestId = {0} ";
+
+                    db.Database.ExecuteSqlCommand(query, requestId);
+
+                    //SignalR - Call another supplier update bid rank
+                    var listUser = new List<string>();
+                    var newestDate = reply.CreatedDate;
+
+                    query   = "SELECT[dbo].[Users].[UserName] "
+                            + "FROM[dbo].[Replies], [dbo].[Requests], [dbo].[Users] "
+                            + "WHERE[dbo].[Replies].[SupplierId] = [dbo].[Users].[Id] "
+                            + "AND[dbo].[Replies].[RequestId] = [dbo].[Requests].[Id] "
+                            + "AND[dbo].[Requests].[Id] = {0} "
+                            + "AND[dbo].[Replies].[CreatedDate] < {1}";
+                    List<string> listUser2 = db.Database.SqlQuery<string>(query, requestId, newestDate).ToList();
+                    if (listUser2.Count() != 0)
+                    {
+                        foreach (var u in listUser2)
+                        {
+                            listUser.Add(u);
+                        }
+
+                        var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+                        foreach (var userId in listUser)
+                        {
+                            notificationHub.Clients.User(userId).notify("update");
+                        }
+                    }
+
+                    return new JsonResult
+                    {
+                        Data = new
+                        {
+                            ReplyType = "Bid",
+                            ReplyId = reply.Id,  
+                        },
+                        JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                    };
+                }
+                else
+                {
+                    //return normal reply của supplier vừa reply
+                    return new JsonResult
+                    {
+                        Data = new
+                        {
+                            ReplyType = "Normal",
+                            ReplyId = reply.Id,
+                            SupplierName = user.Fullname,
+                            Total = model.Total,
+                            Address = user.Address,
+                            Description = model.Description,
+                            Avatar = user.Avatar,
+                            CreatedDate = reply.CreatedDate,
+                        },
+                        JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                    };
+                }
             }
-            return View();
+
+            var errorModel = from x in ModelState.Keys
+                             where ModelState[x].Errors.Count > 0
+                             select new
+                             {
+                                 key = x,
+                                 error = ModelState[x].Errors.Select(y => y.ErrorMessage).ToArray()
+                             };
+
+            return new JsonResult
+            {
+                Data = new
+                {
+                    Success = "Fail",
+                    Errors = errorModel
+                },
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        // GET: 
+        public ActionResult GetRank(int id)
+        {
+            var query = "SELECT[dbo].[BidReplies].[Rank], [dbo].[Users].[Fullname], [dbo].[Users].[Avatar], [dbo].[Users].[Address], [dbo].[Replies].[Total], [dbo].[Replies].[DeliveryDate], [dbo].[Replies].[Id] "
+                        + "FROM[dbo].[Replies], [dbo].[BidReplies], [dbo].[Users] "
+                        + "WHERE[dbo].[Replies].[Id] = {0} "
+                        + "AND[dbo].[BidReplies].[ReplyId] = [dbo].[Replies].[Id] "
+                        + "AND[dbo].[Replies].[SupplierId] = [dbo].[Users].[Id] ";
+
+            BriefBidReply data = db.Database.SqlQuery<BriefBidReply>(query, id).SingleOrDefault();
+
+            return new JsonResult
+            {
+                Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+
         }
     }
 }

@@ -19,13 +19,14 @@ namespace TGVL.Controllers
         [Authorize]
         public JsonResult GetNotificationReplies()
         {
-            var notificationRegisterTime = Session["LastUpdated"] != null ? Convert.ToDateTime(Session["LastUpdated"]) : DateTime.Now;
-            NotificationComponent NC = new NotificationComponent();
+            //var notificationRegisterTime = Session["LastUpdated"] != null ? Convert.ToDateTime(Session["LastUpdated"]) : DateTime.Now;
+            //NotificationComponent NC = new NotificationComponent();
             //var list = NC.GetReplies(notificationRegisterTime).ToList();
             var userId = User.Identity.GetUserId<int>();
 
+            //Hiển thị trên top
             var list2 = db.Notifications
-                .Where(r => r.CreatedDate > notificationRegisterTime && r.UserId == userId)
+                .Where(r => r.UserId == userId)
                 .Take(10)
                 
                 .Select(r => new {
@@ -33,6 +34,7 @@ namespace TGVL.Controllers
                     CreatedDate = r.CreatedDate,
                     Supplier = r.Reply.User.UserName,
                     RequestId = r.Reply.RequestId,
+                    IsSeen = r.IsSeen
                 })
                 .OrderByDescending(r => r.CreatedDate)
                 .ToList();
