@@ -6880,6 +6880,7 @@ input.input-text, select, textarea {
 	border: 1px solid #eaeaea;
 	padding: 8px 10px;
 	outline: none;
+    width: 100%;
 }
 .crosssell{ margin-bottom:35px;}
 .crosssell .title h2 {
@@ -7388,7 +7389,7 @@ button.button.btn-proceed-checkout span {
 	padding-bottom: 0;
 	padding: 0px;
 	text-align: left;
-	width: 80%;
+	width: 100%;
 	min-height: 362px;
 	border: 1px solid #eaeaea;
 	padding-top:30px;
