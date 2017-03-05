@@ -8,6 +8,8 @@ using System.Web.Mvc;
 using TGVL.Models;
 using System.Threading.Tasks;
 using System.Net;
+using Microsoft.AspNet.SignalR;
+using TGVL.Hubs;
 
 namespace TGVL.Controllers
 {
@@ -78,7 +80,7 @@ namespace TGVL.Controllers
                     if (productList == null || !productList.Any())
                     {
                         //Sản phẩm hiện k có trong hệ thống
-                        model.Message = "Sản phẩm hiện không có trong hệ thống";
+                        model.Message = "Sản phẩm hiện k có trong hệ thống";
 
                         //return Json(null, JsonRequestBehavior.AllowGet);
                     }
@@ -139,7 +141,7 @@ namespace TGVL.Controllers
         //TungDM
         // GET: Request
         public ActionResult SelectProduct(RequestProductViewModel model, string[] selectedProduct)
-        {
+         {
             if (Request.IsAjaxRequest())
             {
                 if (selectedProduct != null)
@@ -148,7 +150,7 @@ namespace TGVL.Controllers
                     foreach (var productId in selectedProduct)
                     {
                         var productToAdd = db.SysProducts.Find(int.Parse(productId));
-                        model.SelectedProduct.Add(productToAdd);
+                        model.SelectedProduct.Add(productToAdd); 
                     }
                 }
             }
@@ -169,14 +171,21 @@ namespace TGVL.Controllers
                 {
                     CustomerId = user.Id,
                     DeliveryAddress = user.Address,
-                    DeliveryDate = model.ReceivingDate,
+                    ReceivingDate = model.ReceivingDate,
                     Descriptions = WebUtility.HtmlDecode(model.Description),
                     StartDate = DateTime.Today,
                     DueDate = DateTime.Today.AddDays(model.TimeRange),
                     PaymentId = model.PaymentType,
                     Title = model.Title,
-                    TypeOfHouse = model.TypeOfHouse
+                    TypeOfHouse = model.TypeOfHouse,
+                    Flag = 0
                 };
+
+                if (mode == "bid")
+                {
+                    request.Flag = 1; //set flag = 1: bid request
+                }
+
                 db.Requests.Add(request);
 
                 if (selectedProduct != null && quantity != null)
@@ -200,10 +209,12 @@ namespace TGVL.Controllers
                     var bidRequest = new BidRequest
                     {
                         RequestId = request.Id,
-                        CreatedDate = request.StartDate
+                        CreatedDate = request.StartDate,
+                        Flag = 0
                     };
                     db.BidRequests.Add(bidRequest);
                 }
+
                 db.SaveChanges();
                 Session.Clear();
                 return RedirectToAction("Index");
@@ -215,7 +226,7 @@ namespace TGVL.Controllers
 
         //TungDM
         //GET: Request/Details/Id
-        public ActionResult Details(int? id)
+        public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -228,28 +239,131 @@ namespace TGVL.Controllers
                 return HttpNotFound();
             }
 
-            var query = "SELECT [dbo].[Users].[Fullname], [dbo].[Users].[Avatar], [dbo].[Users].[Address], [dbo].[Replies].[Total], [dbo].[Replies].[Description], [dbo].[Replies].[CreatedDate], [dbo].[Replies].[Id] "
-                    + "FROM[dbo].[Replies], [dbo].[Users] "
-                    + "WHERE[dbo].[Replies].[RequestId] = {0} "
-                    + "AND[dbo].[Replies].[SupplierId] = [dbo].[Users].[Id]"
-                    + "ORDER BY [dbo].[Replies].[CreatedDate] DESC"; ;
-            IEnumerable<BriefReply> data = db.Database.SqlQuery<BriefReply>(query, id).ToList();
-            ViewBag.Replies = data;
+            if (request.Flag == 0)
+            {
+                if (User.Identity.IsAuthenticated)
+                {
+                    var userId = User.Identity.GetUserId<int>();
+                    //Normar request
+                    var reply = db.Replies
+                                        .Where(r => r.SupplierId == userId && r.RequestId == id);
+
+
+                    ViewBag.Repliable = reply.Count() == 1 ? false : true;
+
+                    var query = "SELECT [dbo].[Requests].[CustomerId], [dbo].[Users].[Id] AS SupplierId, [dbo].[Users].[Fullname], [dbo].[Users].[Avatar], [dbo].[Users].[Address], [dbo].[Replies].[Total], [dbo].[Replies].[Description], [dbo].[Replies].[CreatedDate], [dbo].[Replies].[Id] "
+                        + "FROM [dbo].[Replies], [dbo].[Users], [dbo].[Requests] "
+                        + "WHERE [dbo].[Replies].[RequestId] = {0} "
+                        + "AND [dbo].[Replies].[SupplierId] = [dbo].[Users].[Id] "
+                        + "AND [dbo].[Requests].[Id] = [dbo].[Replies].[RequestId] "
+                        + "ORDER BY CASE WHEN [dbo].[Replies].[SupplierId] = {1} THEN 0 else 1 END, [dbo].[Replies].[CreatedDate] DESC ";
+                    IEnumerable<BriefReply> data = db.Database.SqlQuery<BriefReply>(query, id, userId).ToList();
+                    ViewBag.Replies = data;
+                }
+            }
+            else
+            {
+                //Bid request
+
+                if (User.Identity.IsAuthenticated)
+                {
+                    var userId = User.Identity.GetUserId<int>();
+
+                    if (await UserManager.IsInRoleAsync(userId, "Customer") && userId == request.CustomerId)
+                    {
+                        //View all bid reply: cho customer sở hữu request đó
+                        var query = "SELECT [dbo].[BidReplies].[Rank], [dbo].[Users].[Fullname], [dbo].[Users].[Avatar], [dbo].[Users].[Address], [dbo].[Replies].[Total], [dbo].[Replies].[DeliveryDate], [dbo].[Replies].[Id] "
+                            + "FROM [dbo].[Replies], [dbo].[BidReplies], [dbo].[Users] "
+                            + "WHERE [dbo].[Replies].[RequestId] = {0} "
+                            + "AND [dbo].[Replies].[SupplierId] = [dbo].[Users].[Id] "
+                            + "AND [dbo].[Replies].[Id] = [dbo].[BidReplies].[ReplyId] "
+                            + "ORDER BY [dbo].[BidReplies].[Rank] ASC ";
+
+                        IEnumerable<BriefBidReply> data = db.Database.SqlQuery<BriefBidReply>(query, id).ToList();
+                        ViewBag.BidReplies = data;
+                    }
+                    else if (await UserManager.IsInRoleAsync(userId, "Supplier"))
+                    {
+                        var reply = db.Replies
+                                        .Where(r => r.SupplierId == userId && r.RequestId == id);
+                        ViewBag.Bidable = reply.Count() == 1 ? false : true;
+
+                        var query = "SELECT [dbo].[BidReplies].[Rank], [dbo].[Users].[Fullname], [dbo].[Users].[Avatar], [dbo].[Users].[Address], [dbo].[Replies].[Total], [dbo].[Replies].[DeliveryDate], [dbo].[Replies].[Id] "
+                            + "FROM [dbo].[Replies], [dbo].[BidReplies], [dbo].[Users] "
+                            + "WHERE [dbo].[Replies].[RequestId] = {0} "
+                            + "AND [dbo].[Replies].[SupplierId] = [dbo].[Users].[Id] "
+                            + "AND [dbo].[Replies].[Id] = [dbo].[BidReplies].[ReplyId] "
+                            + "AND [dbo].[Replies].[SupplierId] = {1} "
+                            + "ORDER BY [dbo].[BidReplies].[Rank] ASC ";
+                        IEnumerable<BriefBidReply> data = db.Database.SqlQuery<BriefBidReply>(query, id, userId).ToList();
+                        ViewBag.BidReplies = data;
+                    }
+                }
+                
+            };
 
             return View(request);
         }
 
         //TungDM
         //GET: Request/UpdateReplies
-        public JsonResult UpdateReplies(int id)
+        public JsonResult UpdateReplies(int id, int type)
         {
+            var test = Session["LastUpdated"];
             var notificationRegisterTime = Session["LastUpdated"] != null ? Convert.ToDateTime(Session["LastUpdated"]) : DateTime.Now;
+            
+            if (type == 1)
+            {
+                //bid
 
-            //NotificationComponent NC = new NotificationComponent();
-            //var list = NC.GetReplies(notificationRegisterTime).ToList();
-            var userId = User.Identity.GetUserId<int>();
+                ///////////////////////////////////////////////////
+                //Request request = db.Requests.Find(id);
 
-            var list = db.Replies
+                //var newestDate = request.Replies.OrderByDescending(r => r.CreatedDate).FirstOrDefault().CreatedDate;
+                //var listUser = new List<string>();
+                
+                //var query = "SELECT[dbo].[Users].[UserName] "
+                //        + "FROM[dbo].[Replies], [dbo].[Requests], [dbo].[Users] "
+                //        + "WHERE[dbo].[Replies].[SupplierId] = [dbo].[Users].[Id] "
+                //        + "AND[dbo].[Replies].[RequestId] = [dbo].[Requests].[Id] "
+                //        + "AND[dbo].[Requests].[Id] = {0} "
+                //        + "AND[dbo].[Replies].[CreatedDate] < {1}";
+                //List<string> listUser2 = db.Database.SqlQuery<string>(query, id, newestDate).ToList();
+
+                //if (listUser2.Count() != 0)
+                //{
+                //    foreach (var u in listUser2)
+                //    {
+                //        listUser.Add(u);
+                //    }
+
+                //    var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+                //    foreach (var userId in listUser)
+                //    {
+                //        notificationHub.Clients.User(userId).notify("update");
+                //    }
+                //}
+                ///////////////////////////////////////////////////
+
+                var query = "SELECT [dbo].[BidReplies].[Rank], [dbo].[Users].[Fullname], [dbo].[Users].[Avatar], [dbo].[Users].[Address], [dbo].[Replies].[Total], [dbo].[Replies].[DeliveryDate], [dbo].[Replies].[Id] "
+                            + "FROM [dbo].[Replies], [dbo].[BidReplies], [dbo].[Users] "
+                            + "WHERE [dbo].[Replies].[RequestId] = {0} "
+                            + "AND [dbo].[Replies].[SupplierId] = [dbo].[Users].[Id] "
+                            + "AND [dbo].[Replies].[Id] = [dbo].[BidReplies].[ReplyId] "
+                            + "ORDER BY [dbo].[BidReplies].[Rank] ASC ";
+
+                IEnumerable<BriefBidReply> list = db.Database.SqlQuery<BriefBidReply>(query, id).ToList();
+
+                Session["LastUpdated"] = DateTime.Now;
+                return new JsonResult {
+                    Data = new {
+                        ReplyType = "Bid",
+                        BidReplies = list
+                    }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            } else
+            {
+                //normal
+                var list = db.Replies
                 .Where(r => r.CreatedDate > notificationRegisterTime && r.RequestId == id)
                 .Select(r => new {
                     SupplierName = r.User.Fullname,
@@ -263,9 +377,23 @@ namespace TGVL.Controllers
                 .OrderBy(r => r.CreatedDate)
                 .ToList();
 
-            //update session here for get only new added contacts (notification)
-            Session["LastUpdate"] = DateTime.Now;
-            return new JsonResult { Data = list, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                Session["LastUpdated"] = DateTime.Now;
+                return new JsonResult { Data = list, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }         
+        }
+
+        //GET: update bid rank của Supplier 
+        public ActionResult UpdateBidRank(int requestId)
+        {
+            var userId = User.Identity.GetUserId<int>();
+
+            var reply = db.Replies.Where(r => r.RequestId == requestId && r.SupplierId == userId).FirstOrDefault();
+            if (reply != null)
+            {
+                var rank = db.BidReplies.Where(r => r.ReplyId == reply.Id).FirstOrDefault().Rank;
+                return new JsonResult { Data = new { Rank = rank}, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+            return new JsonResult { Data = new { Success = "FAIL" }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         // GET: Request
@@ -308,7 +436,7 @@ namespace TGVL.Controllers
         {
             return View();
         }
-
+        
         public ActionResult ChooseRequest()
         {
             return View();
