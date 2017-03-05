@@ -1,110 +1,120 @@
 ﻿@model TGVL.Models.ReplyViewModel
 
-@if (Model.Message != null)
+@using (Ajax.BeginForm(
+                    new AjaxOptions
+                    {
+                        HttpMethod = "POST",
+                        InsertionMode = InsertionMode.Replace,
+                        UpdateTargetId = "",
+                        OnSuccess = "updateReplies"
+                    }
+                ))
 {
-    <p>@Html.Raw(@Model.Message)</p>
-}
-else
-{
-    using (Ajax.BeginForm(
-        new AjaxOptions
-        {
-            HttpMethod = "POST",
-            InsertionMode = InsertionMode.Replace,
-            UpdateTargetId = "",
-            OnSuccess = "updateReplies"
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <table class="table">
+        <tr>
+            <th>
+                ProductName2
+            </th>
+
+            <th>
+                ProductImage2
+            </th>
+
+            <th>
+                UnitPrice2
+            </th>
+
+            <th>
+                UnitType2
+            </th>
+
+            <th>
+                Quantity
+            </th>
+        </tr>
+        @{ 
+            int count = 0;
         }
-    ))
-    {
-        @Html.AntiForgeryToken()
 
-        <table class="table">
+        @foreach (var item in Model.ReplyProducts)
+        {
             <tr>
-                <th>
-                    ProductName2
-                </th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.Name)
+                </td>
 
-                <th>
-                    ProductImage2
-                </th>
+                <td>
+                    <img src="~/Images/Product/Warehouse/@item.Product.Image" style="max-height:100px; max-width:100px" />
+                </td>
 
-                <th>
-                    UnitPrice2
-                </th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.UnitPrice)
+                </td>
 
-                <th>
-                    UnitType2
-                </th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.Type)
+                </td>
 
-                <th>
-                    Quantity
-                </th>
+                <td>
+                    @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", @Value = item.Product.UnitPrice, style = "display:none" } })
+                    
+                    @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control", @Value = item.Quantity, id="Quantity"+count++ } })
+                    @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+
+                    
+
+                    <input type="checkbox"
+                           name="replyProduct"
+                           value="@item.Product.Id"
+                           checked="checked"
+                           style="display:none" />
+                </td>
+
+
             </tr>
-            @foreach (var item in Model.ReplyProducts)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Product.Name)
-                    </td>
-
-                    <td>
-                        <img src="~/Images/Product/Warehouse/@item.Product.Image" style="max-height:100px; max-width:100px" />
-                    </td>
-
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Product.UnitPrice)
-                    </td>
-
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Product.Type)
-                    </td>
-
-                    <td>
-                        @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", @Value = item.Product.UnitPrice, style= "display:none" } })
-
-                        @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control", @Value = item.Quantity } })
-    
-                        <input type="checkbox"
-                               name="replyProduct"
-                               value="@item.Product.Id"
-                               checked="checked"
-                               style="display:none" />
-                    </td>
-
-
-                </tr>
-            }
-        </table>
+        }
+    </table>
 
         <div class="form-horizontal">
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
             <div class="form-group">
                 @Html.LabelFor(model => model.Total, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
                     @Html.EditorFor(model => model.Total)
+                    @Html.ValidationMessageFor(model => model.Total, "", new { @class = "text-danger" })
                 </div>
             </div>
-        </div>
 
-        <div class="form-horizontal">
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.DeliveryDate, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.DeliveryDate)
+                    @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
             <div class="form-group">
                 @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-3" })
-                <div class="col-md-9">                 
+                <div class="col-md-9">
                     @Html.TextAreaFor(model => model.Description)
                 </div>
             </div>
+
         </div>
-    }
-
-
 }
+
+
 
 <script>
     $(document).ready(function () {
-        $("#submit-btn-reply").click(function () {
+        $("#submit-btn-reply").click(function (event) {
+            event.preventDefault();
+            $("form[id='form0']").submit();
 
-            $("#form0").submit();
             $('#replyModal').modal('toggle');
             $("#replyInfo").empty();
         });
