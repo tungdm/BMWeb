@@ -11,10 +11,10 @@ namespace TGVL
 {
     public class NotificationComponent
     {
-
         public void RegisterNotification(DateTime currentTime, string UserName)
         {
             string conStr = ConfigurationManager.ConnectionStrings["MyIdentityConnection"].ConnectionString;
+
             string sqlCommand = @"SELECT [dbo].[Notifications].[Id], [ReplyId], [UserId], [dbo].[Users].[UserName], [CreatedDate]";
             sqlCommand += "FROM [dbo].[Notifications]";
             sqlCommand += "Join [dbo].[Users]";
@@ -34,9 +34,7 @@ namespace TGVL
                 cmd.Notification = null;
                 SqlDependency sqlDep = new SqlDependency(cmd);
 
-                //sqlDep.OnChange += sqlDep_Onchange;
                 sqlDep.OnChange += new OnChangeEventHandler((sender, e) => sqlDep_Onchange(sender, e, UserName));
-                //excute command here
 
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -51,16 +49,19 @@ namespace TGVL
             {
                 //SqlDependency sqlDep = sender as SqlDependency;
                 //sqlDep.OnChange -= sqlDep_Onchange;
-                
+                 
 
                 var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
-                //notificationHub.Clients.All.notify("added");
 
-                notificationHub.Clients.Group(UserName).notify("added");
+                //Gửi notification cho customer khi có người reply
+                //Cách 1: gửi cho group có groupName = UserName đã đăng kí
+                //notificationHub.Clients.Group(UserName).notify("added"); 
 
-                //NotificationHub.SendNoti();
+                //Cách 2: gửi trực tiếp cho user có name = UserName đã đăng kí
+                notificationHub.Clients.User(UserName).notify("added");
+
+
                 //re-register notification
-
                 RegisterNotification(DateTime.Now, UserName);
 
             }
