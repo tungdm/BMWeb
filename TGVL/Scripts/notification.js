@@ -249,7 +249,7 @@ function updateBid(data) {
 	+'<th>Action</th>'
 	+'</tr>'
 	+'<tr>'
-	+'<td>'+ data.Rank +'</td>'
+	+ '<td id="rank">' + data.Rank + '</td>'
 
 	+ '<td><img src="/Images/UserAvatar/' + data.Avatar + '" width="100" height="100" alt="avatar"> ' + data.Fullname + '</td>'
 
