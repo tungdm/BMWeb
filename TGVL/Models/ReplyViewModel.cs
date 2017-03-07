@@ -98,4 +98,33 @@ namespace TGVL.Models
     {
         public ICollection<BriefReply> Reply { get; set; }
     }
+
+    public class ReplyDetails
+    {
+        public decimal Total { get; set; }
+        public string Description { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? DeliveryDate { get; set; }
+
+        public int Rank { get; set; }
+
+        public string RequestType { get; set; } 
+    }
+
+    public class RepliedProduct
+    {
+        public string Name { get; set; }
+
+        public decimal UnitPrice { get; set; }
+
+        public string Image { get; set; }
+
+        public string Type { get; set; }
+
+        public int Id { get; set; }
+
+        public int Quantity { get; set; }
+    }
 }
