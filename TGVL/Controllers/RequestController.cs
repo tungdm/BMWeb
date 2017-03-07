@@ -242,6 +242,7 @@ namespace TGVL.Controllers
 
             if (request.Flag == 0)
             {
+                //normal request
                 if (User.Identity.IsAuthenticated)
                 {
                     var userId = User.Identity.GetUserId<int>();
@@ -262,7 +263,7 @@ namespace TGVL.Controllers
                     ViewBag.Replies = data;
                 }
             }
-            else
+            else if(request.Flag == 1)
             {
                 //Bid request
 
@@ -301,7 +302,10 @@ namespace TGVL.Controllers
                     }
                 }
                 
-            };
+            } else if(request.Flag == 9)
+            {
+                //Request expired
+            }
 
             return View(request);
         }

@@ -38,8 +38,35 @@ namespace TGVL.Controllers
             }
         }
 
+        //GET: Reply/Details/6
+        public ActionResult Details(int replyId)
+        {
+            Reply reply = db.Replies.Find(replyId);
 
-        // GET: Reply
+            var replyProducts = reply.ReplyProducts.ToList();
+
+            var model = new ReplyDetails
+            {
+                Total = reply.Total,
+                Description = reply.Description,
+                DeliveryDate = reply.DeliveryDate,
+                Rank = reply.Flag == 1 ? reply.BidReply.Rank : 0
+            };
+
+            var query = "SELECT [dbo].[Products].[Id], [dbo].[Products].[UnitPrice], [dbo].[Products].[Image], [dbo].[SysProducts].[Name], [dbo].[UnitTypes].[Type], [dbo].[ReplyProducts].[Quantity] "
+                   + "FROM [dbo].[Replies], [dbo].[ReplyProducts], [dbo].[Products], [dbo].[SysProducts], [dbo].[UnitTypes] "
+                   + "WHERE [dbo].[Replies].[Id] = [dbo].[ReplyProducts].[ReplyId] "
+                   + "AND [dbo].[ReplyProducts].[ProductId] = [dbo].[Products].[Id] "
+                   + "AND [dbo].[Products].[SysProductId] = [dbo].[SysProducts].[Id] "
+                   + "AND [dbo].[SysProducts].[UnitTypeId] = [dbo].[UnitTypes].[Id] "
+                   + "AND [dbo].[Replies].[Id] = {0}";
+            IEnumerable<RepliedProduct> data = db.Database.SqlQuery<RepliedProduct>(query, replyId).ToList();
+            ViewBag.RepliedProduct = data;
+
+            return PartialView("_Details", model);
+        }
+
+        // GET: Reply/Create
         public ActionResult Create(int requestId)
         {
             var model = new ReplyViewModel();
@@ -320,5 +347,7 @@ namespace TGVL.Controllers
             };
 
         }
+
+       
     }
 }
