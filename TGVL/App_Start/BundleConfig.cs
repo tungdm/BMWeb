@@ -134,6 +134,11 @@ namespace TGVL
                          ));
 
             // VyCMT
+            bundles.Add(new StyleBundle("~/Content/alertcss").Include(
+
+                "~/Content/sweetalert.css"
+              ));
+
             bundles.Add(new StyleBundle("~/Content/mainpagecss").Include(
                 "~/Content/css/bootstrap.min.css",
                 "~/Content/css/slider.css",
@@ -213,6 +218,11 @@ namespace TGVL
                 ));
 
             // jquery
+            bundles.Add(new ScriptBundle("~/bundles/alertjquery").Include(
+                                    "~/Scripts/jquery-2.2.3.min.js",
+                                    "~/Scripts/sweetalert.js"
+                                    ));
+
             bundles.Add(new ScriptBundle("~/bundles/mainpagejquery").Include(
                                     "~/Scripts/js/jquery.min.js",
                                     "~/Scripts/js/bootstrap.min.js",
