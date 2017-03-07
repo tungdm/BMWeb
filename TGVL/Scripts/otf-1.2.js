@@ -42,7 +42,7 @@ function selectedSuccess() {
 }
 
 //Request/Details
-//Lấy thông tin của request đổ lên modal
+//Lấy thông tin của request đổ lên modal - supplier
 function reply(requestId) {
     var options = {
         url: '/Reply/Create',
@@ -76,12 +76,11 @@ function viewDetails(replyId) {
         data: 'replyId=' + replyId
     };
 
-    //$.ajax(options).done(function (data) {
-    //    //console.log("Hello");
-    //    var $target = $('#replyInfo');
-    //    $target.html(data);
-    //    $('#replyModal').modal('show');
-    //});
+    $.ajax(options).done(function (data) {
+        var $target = $('#replyInfo');
+        $target.html(data)
+        $('#replyModal').modal('show');
+    });
 }
 
 
