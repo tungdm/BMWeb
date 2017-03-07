@@ -28,14 +28,19 @@ namespace TGVL.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Ngày nhận hàng")]
+        [DateRange]
         public DateTime? ReceivingDate { get; set; }
 
         [Display(Name = "Hình thức thanh toán")]
         public int PaymentType { get; set; }
         [Display(Name = "Miêu tả chi tiết")]
         public string Description { get; set; }
+
+        [Required]
+        [Range(1, 30)]
         [Display(Name = "Thời hạn yêu cầu")]
         public int TimeRange { get; set; }
+
         [Display(Name = "Người yêu cầu")]
         public string CustomerName { get; set; }
         public string Email { get; set; }
