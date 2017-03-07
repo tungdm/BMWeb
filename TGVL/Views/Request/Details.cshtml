@@ -234,7 +234,7 @@
 
                                                     if (replies.Count() == 0)
                                                     {
-                                                        <li>Chưa có phản hồi...</li>
+                                                        <li id="replyCount">Chưa có phản hồi...</li>
                                                     }
                                                     else
                                                     {
@@ -450,7 +450,7 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Trả lời</h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="min-height:calc(100vh - 210px);max-height: calc(100vh - 210px);overflow-y: auto;">
                 <div id="replyInfo"></div>
             </div>
             <div class="modal-footer">

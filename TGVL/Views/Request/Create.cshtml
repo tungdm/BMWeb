@@ -46,7 +46,7 @@
                             <div class="form-group">
 
                                 @*@Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Tiêu đề<span style="color:#ff0000"> *</span></label>
+                                <label class = "control-label col-md-3 col-sm-3 col-xs-12">Tiêu đề<span style="color:#ff0000"> *</span></label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
                                     @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
@@ -55,9 +55,9 @@
 
                             <div class="form-group">
                                 @*@Html.LabelFor(model => model.TypeOfHouse, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Loại nhà<span style="color:#ff0000"> *</span></label>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Loại nhà</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    @Html.DropDownList("TypeOfHouse", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.DropDownList("TypeOfHouse", null, "-----[Chọn loại nhà]-----", htmlAttributes: new { @class = "form-control" })
                                 </div>
                             </div>
 
@@ -74,20 +74,20 @@
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Thời hạn yêu cầu<span style="color:#ff0000"> *</span></label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     @Html.EditorFor(model => model.TimeRange, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                    @Html.ValidationMessageFor(model => model.TimeRange, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group">
                                 @*@Html.LabelFor(model => model.PaymentType, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Hình thức thanh toán<span style="color:#ff0000"> *</span></label>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Hình thức thanh toán</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    @Html.DropDownList("PaymentType", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.DropDownList("PaymentType", null, "-----[Chọn hình thức thanh toán]-----", htmlAttributes: new { @class = "form-control" })
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 @*@Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Miêu tả chi tiết<span style="color:#ff0000"> *</span></label>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Miêu tả chi tiết</label>
                                 <div class="col-md-6">
                                     @*@Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", style = "max-width:80%" } })
                                         @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })*@
@@ -286,13 +286,34 @@ new AjaxOptions
     </div>
 </div>
 
-
-
 @section Scripts {
-
-    @Scripts.Render("~/bundles/jqueryval")
+    @*@Scripts.Render("~/bundles/jqueryval")*@
     @Scripts.Render("~/bundles/textareasjquery")
+    <script>
+        $(document).ready(function () {
+            $.validator.addMethod("daterange", function (value, element) {
+                var receivingDate = $("#ReceivingDate").val();
 
+                var now = moment().format('YYYY-MM-DD');
+                
+                console.log("now:" + now + ", receivingDate:" + receivingDate);
+                if (now > receivingDate) {
+                    console.log('Date is past');
+                } else {
+                    console.log('Date is future');
+                }
+
+                return receivingDate >= now;
+                
+                //return someDate >= today;
+            }, "Receiving date must be on or after today - test");
+
+            $('input[name="ReceivingDate"]').rules("add", {
+                daterange: true
+            });
+        });
+
+    </script>
 }
 <script>
     document.querySelector('.sweet-3').onclick = function () {

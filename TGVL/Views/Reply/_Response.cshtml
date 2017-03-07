@@ -18,6 +18,9 @@
             <thead>
                 <tr>
                     <th>
+                        Số thứ tự
+                    </th>
+                    <th>
                         Sản phẩm
                     </th>
 
@@ -45,7 +48,9 @@
 
                 @foreach (var item in Model.ReplyProducts)
                 {
+                    count++;
                     <tr>
+                        <td>@count</td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Product.Name)
                         </td>
@@ -65,7 +70,7 @@
                         <td>
                             @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", @Value = item.Product.UnitPrice, style = "display:none" } })
 
-                            @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control", @Value = item.Quantity, id = "Quantity" + count++ } })
+                            @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control", @Value = item.Quantity, id = "Quantity" + count } })
                             @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
 
 
@@ -123,6 +128,29 @@
 
 <script>
     $(document).ready(function () {
+        $.validator.addMethod("daterange", function (value, element) {
+            var deliveryDate = $("#DeliveryDate").val();
+
+            var now = moment().format('YYYY-MM-DD');
+
+            console.log("now:" + now + ", DeliveryDate:" + deliveryDate);
+            if (now > deliveryDate) {
+                console.log('Date is past');
+            } else {
+                console.log('Date is future');
+            }
+
+            return deliveryDate >= now;
+
+            //return someDate >= today;
+        }, "Delivery date must be on or after today");
+
+        $.validator.unobtrusive.adapters.addBool("daterange");
+
+        //$('input[name="ReceivingDate"]').rules("add", {
+        //    daterange: true
+        //});
+
         $("#submit-btn-reply").click(function (event) {
             event.preventDefault();
             $("form[id='form0']").submit();
