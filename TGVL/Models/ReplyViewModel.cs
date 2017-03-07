@@ -24,8 +24,9 @@ namespace TGVL.Models
 
         [Required]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Ngày giao hàng")]
+        [DateRange]
         public DateTime? DeliveryDate { get; set; }
 
         public ICollection<ReplyProductViewModel> ReplyProducts { get; set; }
