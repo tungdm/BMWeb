@@ -173,8 +173,8 @@ namespace TGVL.Controllers
                     DeliveryAddress = user.Address,
                     ReceivingDate = model.ReceivingDate,
                     Descriptions = WebUtility.HtmlDecode(model.Description),
-                    StartDate = DateTime.Today,
-                    DueDate = DateTime.Today.AddDays(model.TimeRange),
+                    StartDate = DateTime.Now,
+                    DueDate = DateTime.Now.AddDays(model.TimeRange),
                     PaymentId = model.PaymentType,
                     Title = model.Title,
                     TypeOfHouse = model.TypeOfHouse,
@@ -220,7 +220,8 @@ namespace TGVL.Controllers
                 return RedirectToAction("Index");
             }
 
-
+            ViewBag.PaymentType = new SelectList(db.Payments, "Id", "Type");
+            ViewBag.TypeOfHouse = new SelectList(db.Houses, "Id", "Type");
             return View(model);
         }
 

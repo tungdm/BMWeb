@@ -110,12 +110,14 @@ namespace TGVL.Controllers
                         else
                         {
                             NotificationComponent NC = new NotificationComponent();
+                            RequestComponent RC = new RequestComponent();
 
                             var currentTime = DateTime.Now;
                             Session["LastUpdated"] = currentTime;
                             
                             NC.RegisterNotification(currentTime, user.UserName);
-                            
+                            //RC.RegisterRequest(currentTime, user.UserName);
+
                             return RedirectToLocal(returnUrl);
                         }
                             
