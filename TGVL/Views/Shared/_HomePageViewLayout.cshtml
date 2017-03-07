@@ -221,6 +221,11 @@
                 console.log('Hurray');
                 updateBidTable(controllerName, actionName, requestId);
             }
+
+            if (message && message.toLowerCase() === "expired") {
+                console.log('expired');
+                
+            }
         };
 
     });
