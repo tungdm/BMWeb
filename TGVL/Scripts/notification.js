@@ -114,7 +114,7 @@ function supplierUpdateBidReply(requestId) {
 }
 
 
-//Realtime update normal reply/bid reply
+//Realtime update normal reply/bid reply - customer
 function updateReply(requestId, rType) {
     $.ajax({
         type: 'GET',
@@ -154,6 +154,7 @@ function updateReply(requestId, rType) {
                 //console.log(table);
                 $("#bidtable").html(table);
             } else {
+                $("#replyCount").empty();
                 $.each(data, function (index, value) {
 
                 var reply = '<li class="comment" id="reply_' + value.ReplyId + '">'
@@ -179,7 +180,8 @@ function updateReply(requestId, rType) {
                 +               '</div>'
                 +           '</div>'
                 +       '</li>';
-
+                
+                
                 $("#reply-content").prepend(reply);
             });
             }
@@ -191,6 +193,7 @@ function updateReply(requestId, rType) {
     });
 }
 
+//update reply - supplier
 function updateReplies(data) {
     //console.log("Hello from updateReplies");
     if (data.Success === "Fail") {
@@ -233,7 +236,8 @@ function updateReplies(data) {
                 +           '</div>'
                 +       '</li>';
 
-
+            $("#replyCount").empty();
+            $("#replyBtn").remove();
             $("#reply-content").prepend(reply);
         }
     }
