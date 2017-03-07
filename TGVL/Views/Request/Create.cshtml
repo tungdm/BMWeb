@@ -6,6 +6,8 @@
 }
 
 @*@Styles.Render("~/Content/textareascss")*@
+@Styles.Render("~/Content/alertcss")
+@Scripts.Render("~/bundles/alertjquery")
 @Styles.Render("~/Content/searchproductcss")
 
 <style>
@@ -25,6 +27,7 @@
     }
 </style>
 
+
 <section class="main-container">
     <div class="main container">
         <fieldset>
@@ -43,7 +46,7 @@
                             <div class="form-group">
 
                                 @*@Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
-                                <label class = "control-label col-md-3 col-sm-3 col-xs-12">Tiêu đề<span style="color:#ff0000"> *</span></label>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Tiêu đề<span style="color:#ff0000"> *</span></label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
                                     @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
@@ -209,7 +212,7 @@
                             <hr />
                             <div class="form-group">
                                 <div style="text-align:center">
-                                    <input type="submit" value="Hoàn tất" class="btn btn-success" id="submit-btn" />
+                                    <p><button class="btn btn-success sweet-3" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'sweet-3']);">Hoàn tất</button></p>
                                 </div>
                             </div>
 
@@ -274,16 +277,25 @@ new AjaxOptions
 
             </div>
             <div class="modal-footer">
-                <input id="select" type="submit" value="Chọn" class="btn btn-warning" style="display:none" />
+                <input id="select" type="submit" value="Xác nhận" class="btn btn-warning" style="display:none" />
 
-                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
             </div>
         </div>
 
     </div>
 </div>
 
+
+
 @section Scripts {
+
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/textareasjquery")
+
 }
+<script>
+    document.querySelector('.sweet-3').onclick = function () {
+        swal("Thành công", "Yêu cầu mới đã được tạo", "success");
+    };
+</script>
