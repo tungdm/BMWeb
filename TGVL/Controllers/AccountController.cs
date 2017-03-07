@@ -110,7 +110,7 @@ namespace TGVL.Controllers
                         else
                         {
                             NotificationComponent NC = new NotificationComponent();
-                            RequestComponent RC = new RequestComponent();
+                            //RequestComponent RC = new RequestComponent();
 
                             var currentTime = DateTime.Now;
                             Session["LastUpdated"] = currentTime;
