@@ -1,0 +1,127 @@
+﻿
+@{
+    ViewBag.Title = "ConfirmRequest";
+    Layout = "~/Views/Shared/_HomePageViewLayout.cshtml";
+}
+@Styles.Render("~/Content/searchproductcss")
+<section class="main-container col1-layout">
+    <div class="main container">
+        <div class="row">
+            
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th rowspan="1">&nbsp;</th>
+                            <th rowspan="1">Sản phẩm</th>
+                            <th colspan="1">Đơn giá</th>
+                            <th>Số lượng</th>
+                            <th>Giảm giá</th>
+                            <th colspan="1">Thành tiền</th>
+                        </tr>
+                    </thead>
+                    <tfoot style="">
+                        <tr>
+                            <th colspan="5" class="text-right">Tổng cộng đơn hàng</th>
+                            <th>1.788.999 VNĐ</th>
+                        </tr>
+                        <tr>
+                            <th colspan="5" class="text-right">Phí vận chuyển</th>
+                            <th>20.000 VNĐ</th>
+                        </tr>
+                        <tr>
+                            <th colspan="5" class="text-right">Ngày giao hàng</th>
+                            <th>8/3/2018</th>
+                        </tr>
+                        <tr>
+                            <th colspan="5" class="text-right">Tổng cộng</th>
+                            <th style="color:red; font-size:20px"><strong>1.900.999 VNĐ</strong></th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        <tr>
+
+                            <td class="image">
+                                <a href="product_detail.html" class="product-image"><img width="60" height="60" src="~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg"></a>
+                            </td>
+                            <td>Xi măng Hà Tiên 1</td>
+                            <td>80.000 VNĐ</td>
+                            <td>88</td>
+                            <td>5%</td>
+                            <td>999.000 VNĐ</td>
+                        </tr>
+                        <tr>
+
+                            <td class="image">
+                                <a href="product_detail.html" class="product-image"><img width="60" height="60" src="~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg"></a>
+                            </td>
+                            <td>Xi măng Hà Tiên 1</td>
+                            <td>80.000 VNĐ</td>
+                            <td>70</td>
+                            <td>2%</td>
+                            <td>888.000 VNĐ</td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="popular-posts widget widget__sidebar">
+                        <h3 class="widget-title">THÔNG TIN KHÁCH HÀNG</h3>
+                        <div class="widget-content">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <td>Tên khách hàng</td>
+                                            <td>Lê Thị Cà Chua</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Email</td>
+                                            <td>abc@yahoo.com</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Điện thoại</td>
+                                            <td>099993838</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Địa chỉ</td>
+                                            <td>133 Nguyễn Văn Trỗi Q.Phú Nhuận</td>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="popular-posts widget widget__sidebar">
+                        <h3 class="widget-title">THÔNG TIN CỬA HÀNG</h3>
+                        <div class="widget-content">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <td>Tên cửa hàng</td>
+                                            <td>Cửa hàng VLXD MinhMinh</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Địa chỉ</td>
+                                            <td>877 Phan Xích Long Q.Phú Nhuận</td>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align:center">
+                <button type="submit" class="btn btn-success">Thanh toán</button>
+            </div>
+        </div>
+    </div>
+</section>
+
