@@ -14,7 +14,7 @@
 
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="table-responsive">
-        <table class="data-table">
+        <table class="data-table" id="myTable">
             <thead>
                 <tr>
                     <th>
@@ -42,47 +42,40 @@
                 </tr>
             </thead>
             <tbody>
-                @{
-                    int count = 0;
+                @{                    
+                    int count2 = 0;
                 }
 
-                @foreach (var item in Model.ReplyProducts)
+                @for(int i = 0; i<Model.ReplyProductsTest.Count(); i++)
                 {
-                    count++;
+                    count2++;
                     <tr>
-                        <td>@count</td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Product.Name)
+                        <td>@count2</td>
+                        <td style="display:none">
+                            @Html.EditorFor(model => Model.ReplyProductsTest[i].Product.Id)
+                            @Html.EditorFor(model => Model.ReplyProductsTest[i].Product.UnitPrice)
                         </td>
-
-                        <td>
-                            <img src="~/Images/Product/Warehouse/@item.Product.Image" style="max-height:100px; max-width:100px" />
+                        <td>@Html.DisplayFor(model => Model.ReplyProductsTest[i].Product.Name)</td>
+                        <td><img src="~/Images/Product/Warehouse/@Model.ReplyProductsTest[i].Product.Image" style="max-height:100px; max-width:100px" /></td>
+                        <td class="price">
+                            @Html.DisplayFor(model => Model.ReplyProductsTest[i].Product.UnitPrice)
                         </td>
-
+                        <td>@Html.DisplayFor(model => Model.ReplyProductsTest[i].Product.Type)</td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Product.UnitPrice)
+                            @if (Model.Flag == 1)
+                            {
+                                //bid, k thể edit quantity
+                                <div class="qtyBid">@Html.DisplayFor(model => Model.ReplyProductsTest[i].Quantity)</div>
+                                @Html.HiddenFor(model => Model.ReplyProductsTest[i].Quantity)
+                            }
+                            else
+                            {
+                                //normal
+                                @Html.EditorFor(model => Model.ReplyProductsTest[i].Quantity, new { htmlAttributes = new { @class = "qty form-control" } })
+                                @Html.ValidationMessageFor(model => Model.ReplyProductsTest[i].Quantity, "", new { @class = "text-danger" })
+                            }
+                            
                         </td>
-
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Product.Type)
-                        </td>
-
-                        <td>
-                            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", @Value = item.Product.UnitPrice, style = "display:none" } })
-
-                            @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control", @Value = item.Quantity, id = "Quantity" + count } })
-                            @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
-
-
-
-                            <input type="checkbox"
-                                   name="replyProduct"
-                                   value="@item.Product.Id"
-                                   checked="checked"
-                                   style="display:none" />
-                        </td>
-
-
                     </tr>
                 }
             </tbody>
@@ -93,12 +86,30 @@
         <h3 class="widget-title"><strong>THÔNG TIN THÊM</strong></h3>
         <div class="widget-content">
             <div class="form-horizontal">
+
+                <div class="form-group">
+                    <labael class="control-label col-md-3">Shipping Fee</labael>
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.ShippingFee, new { htmlAttributes = new { @class = "fee form-control" } })
+                        @Html.ValidationMessageFor(model => model.ShippingFee, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <labael class="control-label col-md-3">Discount</labael>
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @class = "discount form-control" } })
+                        @Html.ValidationMessageFor(model => model.Discount, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <labael class="control-label col-md-3 col-sm-3 col-xs-12">Tổng cộng</labael>
                     @*@Html.LabelFor(model => model.Total, htmlAttributes: new { @class = "control-label col-md-3" })*@
                     <div class="col-md-9">
-                        @Html.EditorFor(model => model.Total, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Total, "", new { @class = "text-danger" })
+                        <span class="total"></span> &#x20AB;
+                        <div style="display:none">@Html.EditorFor(model => model.Total, new { htmlAttributes = new { @class = "total2" } })</div>
+                        
                     </div>
                 </div>
 
@@ -127,18 +138,32 @@
 
 
 <script>
+    
+
     $(document).ready(function () {
+        update_amounts();
+        
+        $('.qty').on('input', function () {
+            update_amounts();
+        });
+        $('.fee').on('input', function () {
+            $(this).text($(this).text().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+            update_amounts();
+        });
+        $('.discount').on('input', function () {
+            update_amounts();
+        });
         $.validator.addMethod("daterange", function (value, element) {
             var deliveryDate = $("#DeliveryDate").val();
 
             var now = moment().format('YYYY-MM-DD');
 
-            console.log("now:" + now + ", DeliveryDate:" + deliveryDate);
-            if (now > deliveryDate) {
-                console.log('Date is past');
-            } else {
-                console.log('Date is future');
-            }
+            //console.log("now:" + now + ", DeliveryDate:" + deliveryDate);
+            //if (now > deliveryDate) {
+            //    console.log('Date is past');
+            //} else {
+            //    console.log('Date is future');
+            //}
 
             return deliveryDate >= now;
 
@@ -147,17 +172,57 @@
 
         $.validator.unobtrusive.adapters.addBool("daterange");
 
-        //$('input[name="ReceivingDate"]').rules("add", {
-        //    daterange: true
-        //});
-
         $("#submit-btn-reply").click(function (event) {
-            event.preventDefault();
-            $("form[id='form0']").submit();
+            console.log("Hello from response");
 
-            $('#replyModal').modal('toggle');
-            $("#replyInfo").empty();
+            event.preventDefault();
+            var result = $('#form0').valid();
+            console.log(result);
+            if (result) {
+                $("form[id='form0']").submit();
+
+                $('#replyModal').modal('toggle');
+                $("#replyInfo").empty();
+                $('#submit-btn-reply').remove();
+            }
+            
         });
     });
+
+    function update_amounts() {
+        var sum = 0.0;
+        $('#myTable > tbody  > tr').each(function () {
+            var qty = $(this).find('.qty').val();
+            if (qty == null) {
+                qty = $(this).find('.qtyBid').text();
+            }
+            var price = $(this).find('.price').text();
+            var price2 = Number(price.replace(/[^0-9]+/g, ""));
+
+            console.log("qty:" + qty + ", price:" + price + ", price2:" + price2);
+
+            var amount = (qty * price2)
+            sum += amount;
+        });
+
+        var fee = parseInt($(".fee").val()) || 0;
+        var discount = parseInt($(".discount").val()) || 0;
+        var dec = (discount / 100).toFixed(2);
+
+        var total = (sum + fee) - ((sum + fee) * dec);
+        total = Math.round(total);
+        console.log(total);
+        //sum = (sum + fee) * discount / 100;
+        
+
+        var sumCur = addDot(total);
+        console.log(sumCur);
+
+        $('.total').text(sumCur);
+        $('.total2').val(total);
+
+    }
+
+    
 </script>
 

@@ -81,9 +81,22 @@
 
             <div class="form-group">
                 <labael class="control-label col-md-3 col-sm-3 col-xs-12">Tổng cộng</labael>
-                @*@Html.LabelFor(model => model.Total, htmlAttributes: new { @class = "control-label col-md-3" })*@
                 <div class="col-md-9">
                     @Html.DisplayFor(model => model.Total, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <labael class="control-label col-md-3 col-sm-3 col-xs-12">Shipping Fee</labael>
+                <div class="col-md-9">
+                    @Html.DisplayFor(model => model.ShippingFee, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <labael class="control-label col-md-3 col-sm-3 col-xs-12">Discount</labael>
+                <div class="col-md-9">
+                    @Html.DisplayFor(model => model.Discount, new { htmlAttributes = new { @class = "form-control" } }) <span>%</span>
                 </div>
             </div>
 
