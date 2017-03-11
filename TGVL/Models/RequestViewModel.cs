@@ -19,8 +19,12 @@ namespace TGVL.Models
         [Display(Name = "Tiêu đề")]
         public string Title { get; set; }
 
+        [Required]
         [Display(Name = "Loại nhà")]
         public int TypeOfHouse { get; set; }
+
+        public IEnumerable<House> AllTypeOfHouses { get; set; }
+
         public string Administrative_area_level_1 { get; set; } //tỉnh, thành phố
         public string Formatted_address { get; set; } //địa chỉ đầy đủ (delivery address)
 
@@ -31,8 +35,12 @@ namespace TGVL.Models
         [DateRange]
         public DateTime? ReceivingDate { get; set; }
 
+        [Required]
         [Display(Name = "Hình thức thanh toán")]
         public int PaymentType { get; set; }
+
+        public IEnumerable<Payment> AllTypeOfPayments { get; set; }
+
         [Display(Name = "Miêu tả chi tiết")]
         public string Description { get; set; }
 
@@ -53,8 +61,40 @@ namespace TGVL.Models
 
         public string RequestType { get; set; }
 
-        public IEnumerable<SysProduct> RequestProducts { get; set; }
+        //public IEnumerable<SysProduct> RequestProducts { get; set; }
+
+        public IList<RequestedProductWithQuantity> RequestProducts { get; set; }
+
+        public string Flag { get; set; }
+
     }
+
+    public class RequestedProduct
+    {
+        public string Name { get; set; } //Product name
+
+        public string ManufactureName { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:C0}")]
+        public decimal UnitPrice { get; set; }
+
+        public string Image { get; set; }
+
+        public string Type { get; set; }
+
+        public int Id { get; set; } //ProductId
+             
+        
+    }
+
+    public class RequestedProductWithQuantity
+    {
+        public RequestedProduct RequestedProduct { get; set; }
+
+       
+        public int Quantity { get; set; }
+    }
+
 
     public class RequestProductViewModel
     {
@@ -77,7 +117,10 @@ namespace TGVL.Models
         public string ProductImage { get; set; }
 
         [Display(Name = "Giá")]
+        [DisplayFormat(DataFormatString = "{0:C0}")]
         public decimal UnitPrice { get; set; }
+
+
         [Display(Name = "Số lượng")]
         public int Quantity { get; set; }
         public ICollection<int> ListQuantity { get; set; }
@@ -93,7 +136,7 @@ namespace TGVL.Models
 
         public string Message { get; set; }
 
-        
+        public string Flag { get; set; }
     }
 
 }

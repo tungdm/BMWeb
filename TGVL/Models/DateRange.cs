@@ -14,7 +14,11 @@ namespace TGVL.Models
 
         public override string FormatErrorMessage(string name)
         {
-            return string.Format(DefaultErrorMessage, name);
+            if (ErrorMessage == null)
+            {
+                return string.Format(DefaultErrorMessage, name);
+            }
+            return string.Format(ErrorMessage, name);
         }
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
