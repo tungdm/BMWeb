@@ -149,6 +149,17 @@
 
         });
 
+        $('.qty').each(function () {
+            $(this).rules("add", {
+                
+                range: [1, Infinity],
+                messages: {
+                    
+                    range: "Greater than 0"
+                }
+            });
+        });
+
         $("input[name='Quantity']").bind('keyup mouseup', function () {
             var myClass = $(this).attr("class").split(" ")[0];
             //alert(myClass);
