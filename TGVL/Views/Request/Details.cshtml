@@ -164,7 +164,14 @@
                                                         </td>
 
                                                         <td>
-                                                            @Html.DisplayFor(modelItem => item.Quantity)
+                                                            @if (item.Quantity == 0)
+                                                            {
+                                                                <strong>Thỏa thuận</strong>
+                                                            }
+                                                            else
+                                                            {
+                                                                @Html.DisplayFor(modelItem => item.Quantity)
+                                                            }
                                                         </td>
 
                                                         @*<td>
@@ -250,24 +257,27 @@
                                                                         </p>
                                                                         <span class="author">@reply.Fullname</span>
                                                                     </div>
-                                                                    <div class="comment-meta">
-                                                                        <p><strong>@reply.Total VNĐ</strong></p>
+                                                                    <div class="comment-meta"  id="total_@reply.Id">
+                                                                        <p><strong>@Html.DisplayFor(modelreply => reply.Total)</strong></p>
                                                                     </div>
                                                                     <div class="comment-body">
-                                                                        @reply.Description
+                                                                        @*@reply.Description*@
                                                                         <p style="color:#b6b6b6">@reply.Address</p>
                                                                     </div>
 
-
-                                                                    <div>
-                                                                        <button id="viewDetails" type="button" class="btn btn-primary btn-sm" onclick="viewDetails(@reply.Id)">Chi tiết</button>
+                                                                    <div> 
                                                                         @if (User.Identity.GetUserId<int>() == reply.SupplierId)
                                                                         {
-                                                                            <button id="edit" type="button" class="btn btn-success btn-sm" onclick="edit(@reply.Id)">Chỉnh sửa</button>
+                                                                            <button id="edit" type="button" class="btn btn-primary btn-sm" onclick="edit(@reply.Id)">Chỉnh sửa</button>
                                                                         }
                                                                         else if (User.Identity.GetUserId<int>() == reply.CustomerId)
                                                                         {
+                                                                            <button id="viewDetails" type="button" class="btn btn-primary btn-sm" onclick="viewDetails(@reply.Id)">Chi tiết</button>
                                                                             <button id="select" type="button" class="btn btn-success btn-sm" onclick="select(@reply.Id)">Lựa chọn</button>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <button id="viewDetails" type="button" class="btn btn-primary btn-sm" onclick="viewDetails(@reply.Id)">Chi tiết</button>
                                                                         }
 
                                                                     </div>
@@ -340,18 +350,24 @@
                                                                                     </td>
 
                                                                                     <td>
-                                                                                        @reply.Total
+                                                                                        @Html.DisplayFor(modelreply => reply.Total)
                                                                                     </td>
 
                                                                                     <td>
-                                                                                        @reply.DeliveryDate.Date.ToString("dd/MM/yyyy")
+                                                                                        @*@reply.DeliveryDate.Date.ToString("dd/MM/yyyy")*@
+                                                                                        @Html.DisplayFor(modelreply => reply.DeliveryDate)
                                                                                     </td>
 
                                                                                     <td>
-                                                                                        <button id="viewDetails" type="button" class="btn btn-primary btn-sm" onclick="viewDetails(@reply.Id)">Chi tiết</button>
-
-                                                                                        @Html.ActionLink("Chi tiết", "Details", new { id = reply.Id }) |
-                                                                                        @Html.ActionLink("Lựa chọn", "Select", new { id = reply.Id })
+                                                                                        @if (User.Identity.GetUserId<int>() == reply.SupplierId)
+                                                                                        {
+                                                                                            <button id="edit" type="button" class="btn btn-primary btn-sm" onclick="edit(@reply.Id)">Chỉnh sửa</button>
+                                                                                        }
+                                                                                        else if (User.Identity.GetUserId<int>() == reply.CustomerId)
+                                                                                        {
+                                                                                            <button id="viewDetails" type="button" class="btn btn-primary btn-sm" onclick="viewDetails(@reply.Id)">Chi tiết</button>
+                                                                                            <button id="select" type="button" class="btn btn-success btn-sm" onclick="select(@reply.Id)">Lựa chọn</button>
+                                                                                        } 
                                                                                     </td>
                                                                                 </tr>
                                                                             }
@@ -455,6 +471,7 @@
             </div>
             <div class="modal-footer">
                 <input type="button" value="Hoàn tất" class="btn btn-success" id="submit-btn-reply" style="display:none" />
+                <input type="button" value="Hoàn tất" class="btn btn-success" id="submit-btn-edit" style="display:none" />
                 <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
             </div>
         </div>
