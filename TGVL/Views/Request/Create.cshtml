@@ -31,14 +31,24 @@
 <section class="main-container">
     <div class="main container">
         <fieldset>
-
-            @using (Html.BeginForm())
-            {
+            @using (Ajax.BeginForm(
+                    new AjaxOptions
+                    {
+                        HttpMethod = "POST",
+                        InsertionMode = InsertionMode.Replace,
+                        UpdateTargetId = "",
+                        OnSuccess = "checkValidate(data, status, xhr)"
+                    }
+                ))
+                {
+            @*@using (Html.BeginForm())
+        {*@
                 @Html.AntiForgeryToken()
 
                 <div class="form-horizontal">
 
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Flag)
 
                     <div class="popular-posts widget widget__sidebar" id="recent-posts-4">
                         <h3 class="widget-title"><strong>YÊU CẦU</strong></h3>
@@ -46,7 +56,7 @@
                             <div class="form-group">
 
                                 @*@Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
-                                <label class = "control-label col-md-3 col-sm-3 col-xs-12">Tiêu đề<span style="color:#ff0000"> *</span></label>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Tiêu đề<span style="color:#ff0000"> *</span></label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
                                     @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
@@ -55,9 +65,15 @@
 
                             <div class="form-group">
                                 @*@Html.LabelFor(model => model.TypeOfHouse, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Loại nhà</label>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Loại nhà<span style="color:#ff0000"> *</span></label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    @Html.DropDownList("TypeOfHouse", null, "-----[Chọn loại nhà]-----", htmlAttributes: new { @class = "form-control" })
+                                    @Html.DropDownListFor(
+                                        model => model.TypeOfHouse,
+                                        new SelectList(Model.AllTypeOfHouses, "Id", "Type"),
+                                        "-----[Chọn loại nhà]-----",
+                                        htmlAttributes: new { @class = "form-control" }
+                                    )
+                                    @Html.ValidationMessageFor(model => model.TypeOfHouse, "", new { @class = "text-danger" })
                                 </div>
                             </div>
 
@@ -79,9 +95,15 @@
                             </div>
                             <div class="form-group">
                                 @*@Html.LabelFor(model => model.PaymentType, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Hình thức thanh toán</label>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Hình thức thanh toán<span style="color:#ff0000"> *</span></label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    @Html.DropDownList("PaymentType", null, "-----[Chọn hình thức thanh toán]-----", htmlAttributes: new { @class = "form-control" })
+                                    @Html.DropDownListFor(
+                                        model => model.PaymentType,
+                                        new SelectList(Model.AllTypeOfPayments, "Id", "Type"),
+                                        "-----[Chọn hình thức thanh toán]-----",
+                                        htmlAttributes: new { @class = "form-control" }
+                                    )
+                                    @Html.ValidationMessageFor(model => model.PaymentType, "", new { @class = "text-danger" })
                                 </div>
                             </div>
 
@@ -161,7 +183,9 @@
                             <h2 class="widget-title"><strong>SẢN PHẨM YÊU CẦU</strong></h2>
                             <br />
                             <div class="form-group">
-                                <div class="col-md-offset-1 col-md-10" id="productList"></div>
+                                <div class="col-md-offset-1 col-md-10" id="productList">
+                                    
+                                </div>
                             </div>
                             <div class="form-group">
                                 <div style="text-align:center">
@@ -212,7 +236,8 @@
                             <hr />
                             <div class="form-group">
                                 <div style="text-align:center">
-                                    <p><button class="btn btn-success sweet-3" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'sweet-3']);">Hoàn tất</button></p>
+                                    @*<p><button class="btn btn-success sweet-3" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'sweet-3']);">Hoàn tất</button></p>*@
+                                    <p><button class="btn btn-success" type="submit">Hoàn tất</button></p>
                                 </div>
                             </div>
 
@@ -220,7 +245,7 @@
                     </div>
                 </div>
 
-            }
+        }
 
         </fieldset>
     </div>
@@ -240,38 +265,38 @@
                 <div class="form-horizontal">
                     @*Tìm kiếm sản phẩm*@
                     @using (Ajax.BeginForm(
-new AjaxOptions
-{
-    HttpMethod = "GET",
-    InsertionMode = InsertionMode.Replace,
-    UpdateTargetId = "listProduct",
-    OnSuccess = "$('#select').show()"
-}
-))
+                    new AjaxOptions
                     {
+                        HttpMethod = "GET",
+                        InsertionMode = InsertionMode.Replace,
+                        UpdateTargetId = "listProduct",
+                        OnSuccess = "$('#select').show()"
+                    }
+                ))
+                {
                         <p style="text-align:center">
                             @Html.TextBox("searchString", null, new { @class = "form-control text-box", style = "display:inline-block", placeholder = "Nhập vào đây để tìm kiếm" })
                             <input type="submit" value="Tìm kiếm" class="btn btn-primary" />
                         </p>
 
                         <div id="clone" style="display:none"></div>
-                    }
+                }
+
                 </div>
 
                 <div id="result">
                     @using (Ajax.BeginForm("SelectProduct", "Request",
-new AjaxOptions
-{
-    HttpMethod = "GET",
-    InsertionMode = InsertionMode.Replace,
-    UpdateTargetId = "productList",
-    OnSuccess = "selectedSuccess"
-}, new { @id = "formAjax" }
-))
+                    new AjaxOptions
                     {
-                        <div id="listProduct">
-                        </div>
-                    }
+                        HttpMethod = "GET",
+                        InsertionMode = InsertionMode.Replace,
+                        UpdateTargetId = "productList",
+                        OnSuccess = "selectedSuccess"
+                    }, new { @id = "formAjax" }
+                ))
+                {
+                        <div id="listProduct"></div>
+                }
                 </div>
 
 
@@ -286,11 +311,16 @@ new AjaxOptions
     </div>
 </div>
 
+
+
 @section Scripts {
     @*@Scripts.Render("~/bundles/jqueryval")*@
     @Scripts.Render("~/bundles/textareasjquery")
     <script>
         $(document).ready(function () {
+
+            
+
             $.validator.addMethod("daterange", function (value, element) {
                 var receivingDate = $("#ReceivingDate").val();
 
@@ -306,7 +336,7 @@ new AjaxOptions
                 return receivingDate >= now;
                 
                 //return someDate >= today;
-            }, "Receiving date must be on or after today - test");
+            }, "Ngày nhận hàng phải từ ngày hôm nay về sau");
 
             $('input[name="ReceivingDate"]').rules("add", {
                 daterange: true
@@ -316,7 +346,7 @@ new AjaxOptions
     </script>
 }
 <script>
-    document.querySelector('.sweet-3').onclick = function () {
-        swal("Thành công", "Yêu cầu mới đã được tạo", "success");
-    };
+    //document.querySelector('.sweet-3').onclick = function () {
+    //    swal("Thành công", "Yêu cầu mới đã được tạo", "success");
+    //};
 </script>
