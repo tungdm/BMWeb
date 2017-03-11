@@ -1,0 +1,127 @@
+﻿@model TGVL.Models.CreateRequestViewModel
+
+<div class="table-responsive">
+    <table class="data-table removable" id="my-orders-table">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>
+                    ProductName
+                </th>
+               
+                <th>
+                   ProductImage
+                </th>
+
+                <th>
+                    ManufactureName
+                </th>
+
+                <th>
+                    UnitPrice
+                </th>
+
+                <th>
+                    Quantity
+                </th>
+                
+
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int count = 0;
+            }
+
+            @for (int i = 0; i < Model.RequestProducts.Count(); i++)
+            {
+                count++;
+                <tr>
+                    <td>
+                        @count
+                        @Html.HiddenFor(model => Model.RequestProducts[i].RequestedProduct.Id)
+                    </td>
+                    
+                    <td>@Html.DisplayFor(model => Model.RequestProducts[i].RequestedProduct.Name)</td>
+                    <td><img src="~/Images/Product/SysProduct/@Model.RequestProducts[i].RequestedProduct.Image" style="max-height:100px; max-width:100px" /></td>
+                    <td>@Html.DisplayFor(model => Model.RequestProducts[i].RequestedProduct.ManufactureName)</td>
+                    <td class="price">
+                        @Html.DisplayFor(model => Model.RequestProducts[i].RequestedProduct.UnitPrice) / @Html.DisplayFor(model => Model.RequestProducts[i].RequestedProduct.Type)
+                    </td>
+                    
+                    <td>
+                        @{
+                            var productSessionKey = "product" + @Model.RequestProducts[i].RequestedProduct.Id;
+                        }
+
+                        @Html.EditorFor(model => Model.RequestProducts[i].Quantity, new { htmlAttributes = new { @class = @Model.RequestProducts[i].RequestedProduct.Id + " qty form-control", @Value = Session[productSessionKey] == null ? 0 : Session[productSessionKey] } })
+                        @Html.ValidationMessageFor(model => Model.RequestProducts[i].Quantity, "", new { @class = "text-danger" })
+                    </td>
+                    <td>
+                        <input type="checkbox"
+                               name="selectedProduct"
+                               value="@Model.RequestProducts[i].RequestedProduct.Id"
+                               checked="checked"
+                               style="display:none" />
+
+                        <a name="delete" id="@Model.RequestProducts[i].RequestedProduct.Id" href="javascript:;">Xóa</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+
+</div>
+<div class="col-md-offset-2 col-md-10" id="productList"></div>
+
+<script>
+    $(document).ready(function () {
+        $("a[name='delete']").click(function () {
+            var rowIndex = $(this).closest('tr').prop('rowIndex');
+            $('.removable tr').filter(function () {
+                return this.rowIndex === rowIndex;
+            }).remove();
+
+            //$(this).closest('tr').remove();
+
+        });
+
+        //$("#form0").validate();
+
+        if ($('#Flag').val() == "bid") {
+            $('.qty').each(function () {
+                $(this).rules("add", {
+                    required: true,
+                    range: [1, Infinity],
+                    messages: {
+                        required: "Required input",
+                        range: "Greater than 0"
+                    }
+                });
+            });
+        } else {
+            $('.qty').each(function () {
+                $(this).rules("add", {
+                    range: [0, Infinity],
+                    messages: {
+                        range: "Greater than or equal 0"
+                    }
+                });
+            });
+        }
+
+        
+
+        $(".qty").bind('keyup mouseup', function () {
+            var myClass = $(this).attr("class").split(" ")[0];
+            //alert(myClass);
+
+            var test = "." + myClass;
+            $(test).on('keyup mouseup', function () {
+                $(test).val($(this).val());
+            });
+        });
+    });
+</script>
