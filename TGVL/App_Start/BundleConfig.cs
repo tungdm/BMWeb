@@ -53,10 +53,12 @@ namespace TGVL
                 "~/Scripts/jquery-ui.js",
                 "~/Scripts/jquery.unobtrusive*",
                 "~/Scripts/jquery.validate*",
+                "~/Client_Scripts/mvcfoolproof.unobtrusive.js",
                 "~/Scripts/otf-1.2.js",
                 //"~/Scripts/custom.min.js",
                 "~/Scripts/dateformat.js",
                 "~/Scripts/moment.js"
+              
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/signalR").Include(
