@@ -31,18 +31,30 @@
 
 //Request/Create
 function selectedSuccess() {
+    console.log("SelectedSuccess");
     var table = $("#productList").children().clone(true, true);
 
-    
     $("#clone").html(table);
+
+    $("#clone").find(".qty").attr('name', 'quantity');
+    $("#clone").find(".qty").removeClass("qty");
+
     $("#listProduct").empty();
     $("#searchString").val('');
     $('#select').hide();
+
     $('#searchProduct').modal('toggle');
 }
 
-//Request/Details
-//Lấy thông tin của request đổ lên modal - supplier
+//Create request
+function checkValidate(data, status, xhr) {
+    var message = "<span class='text-danger field-validation-error'><span>" + data.Message + "</span></span>";
+    console.log(message);
+    $("#productList").html(message);
+}
+
+//Tạo reply - supplier
+//Lấy thông tin của request đổ lên modal 
 function reply(requestId) {
     var options = {
         url: '/Reply/Create',
@@ -61,29 +73,61 @@ function reply(requestId) {
         } else {
             $target.html(data);
             $('#submit-btn-reply').show();
-            $.validator.unobtrusive.parse($("#form0"));
+            var form = $("#form0");
+            $.validator.unobtrusive.parse(form);
+
         }
         $('#replyModal').modal('show');
     });
 }
 
 
-//View Detail Của Bid Reply
+//View Detail Của Reply - All user
 function viewDetails(replyId) {
     var options = {
         url: '/Reply/Details',
         type: 'GET',
-        data: 'replyId=' + replyId
+        data: { replyId: replyId, type: "Details" }
     };
 
     $.ajax(options).done(function (data) {
         var $target = $('#replyInfo');
-        $target.html(data)
+        $target.html(data);
         $('#replyModal').modal('show');
     });
 }
 
+//Edit Reply - Supplier
+function edit(replyId) {
+    var options = {
+        url: '/Reply/Details',
+        type: 'GET',
+        data: {replyId:replyId, type:"Edit"}
+    };
 
+    $.ajax(options).done(function (data) {
+        var $target = $('#replyInfo');
+        $target.html(data);
 
+        
+        $('#submit-btn-edit').show();
 
+        var form = $("#form0");
+        $.validator.unobtrusive.parse(form);
+
+        $('#replyModal').modal('show');
+    });
+}
+
+function addDot(nStr) {
+    nStr += '';
+    x = nStr.split('.');
+    x1 = x[0];
+    x2 = x.length > 1 ? '.' + x[1] : '';
+    var rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1)) {
+        x1 = x1.replace(rgx, '$1' + '.' + '$2');
+    }
+    return x1 + x2;
+}
 
