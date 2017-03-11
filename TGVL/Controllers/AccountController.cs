@@ -61,6 +61,16 @@ namespace TGVL.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            if (string.IsNullOrEmpty(returnUrl) && Request.UrlReferrer != null)
+            {
+                returnUrl = Server.UrlEncode(Request.UrlReferrer.PathAndQuery);
+            }
+
+            if (Url.IsLocalUrl(returnUrl) && !string.IsNullOrEmpty(returnUrl))
+            {
+                ViewBag.ReturnURL = returnUrl;
+            }
+
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -109,6 +119,12 @@ namespace TGVL.Controllers
                         }
                         else
                         {
+                            string decodedUrl = "";
+                            if (!string.IsNullOrEmpty(returnUrl))
+                            {
+                                decodedUrl = Server.UrlDecode(returnUrl);
+                            }
+                                
                             NotificationComponent NC = new NotificationComponent();
                             //RequestComponent RC = new RequestComponent();
 
@@ -118,7 +134,16 @@ namespace TGVL.Controllers
                             NC.RegisterNotification(currentTime, user.UserName);
                             //RC.RegisterRequest(currentTime, user.UserName);
 
-                            return RedirectToLocal(returnUrl);
+                            //return RedirectToLocal(returnUrl);
+
+                            if (Url.IsLocalUrl(decodedUrl))
+                            {
+                                return RedirectToLocal(decodedUrl);
+                            }
+                            else
+                            {
+                                return RedirectToAction("Index", "Home");
+                            }
                         }
                             
                     }

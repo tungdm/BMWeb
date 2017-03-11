@@ -38,8 +38,9 @@ namespace TGVL.Controllers
             }
         }
 
+        
         //GET: Reply/Details/6
-        public ActionResult Details(int replyId)
+        public ActionResult Details(int replyId, string type)
         {
             Reply reply = db.Replies.Find(replyId);
 
@@ -47,22 +48,32 @@ namespace TGVL.Controllers
 
             var model = new ReplyDetails
             {
+                Id = reply.Id,
                 Total = reply.Total,
+               
                 Description = reply.Description,
                 DeliveryDate = reply.DeliveryDate,
-                Rank = reply.Flag == 1 ? reply.BidReply.Rank : 0
+                ShippingFee = (int) reply.ShippingFee,
+                Discount = (int) reply.Discount,
+                Rank = reply.Flag == 1 ? reply.BidReply.Rank : 0,
+                Flag = (int) reply.Flag
             };
 
-            var query = "SELECT [dbo].[Products].[Id], [dbo].[Products].[UnitPrice], [dbo].[Products].[Image], [dbo].[SysProducts].[Name], [dbo].[UnitTypes].[Type], [dbo].[ReplyProducts].[Quantity] "
+            var query = "SELECT [dbo].[ReplyProducts].[Id] AS [ReplyProductId], [dbo].[Products].[Id], [dbo].[Products].[UnitPrice], [dbo].[Products].[Image], [dbo].[SysProducts].[Name], [dbo].[UnitTypes].[Type], [dbo].[ReplyProducts].[Quantity] "
                    + "FROM [dbo].[Replies], [dbo].[ReplyProducts], [dbo].[Products], [dbo].[SysProducts], [dbo].[UnitTypes] "
                    + "WHERE [dbo].[Replies].[Id] = [dbo].[ReplyProducts].[ReplyId] "
                    + "AND [dbo].[ReplyProducts].[ProductId] = [dbo].[Products].[Id] "
                    + "AND [dbo].[Products].[SysProductId] = [dbo].[SysProducts].[Id] "
                    + "AND [dbo].[SysProducts].[UnitTypeId] = [dbo].[UnitTypes].[Id] "
                    + "AND [dbo].[Replies].[Id] = {0}";
-            IEnumerable<RepliedProduct> data = db.Database.SqlQuery<RepliedProduct>(query, replyId).ToList();
+            IList<RepliedProduct> data = db.Database.SqlQuery<RepliedProduct>(query, replyId).ToList();
             ViewBag.RepliedProduct = data;
+            model.ReplyProducts = data;
 
+            if (type == "Edit" && reply.SupplierId == User.Identity.GetUserId<int>())
+            {
+                return PartialView("_Edit", model);
+            }
             return PartialView("_Details", model);
         }
 
@@ -72,6 +83,20 @@ namespace TGVL.Controllers
             var model = new ReplyViewModel();
 
             Request request = db.Requests.Find(requestId);
+            model.Flag = (int) request.Flag;
+
+            if (request.Flag == 9)
+            {
+                //request expired
+                return new JsonResult
+                {
+                    Data = new
+                    {
+                        Message = "Request Expired."
+                    },
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            }
 
             var supplierID = User.Identity.GetUserId<int>();
             var warehouse = db.Warehouses.Where(w => w.SupplierId == supplierID);
@@ -145,10 +170,11 @@ namespace TGVL.Controllers
                                 test2.Add(replyProduct);
                             }
                         }
-
-                        model.ReplyProducts = test2;
+       
+                        model.ReplyProductsTest = test2;
                         model.DeliveryDate = request.ReceivingDate;
                         model.Total = (decimal)total;
+                        
                         return PartialView("_Response", model);
                     }
                     else
@@ -185,6 +211,8 @@ namespace TGVL.Controllers
                     SupplierId = User.Identity.GetUserId<int>(),
                     Description = model.Description,
                     Total = model.Total,
+                    ShippingFee = model.ShippingFee,
+                    Discount = model.Discount,
                     DeliveryDate = model.DeliveryDate,
                     CreatedDate = DateTime.Now,
                     Flag = request.Flag == 1 ? 1 : 0 //normal reply: flag = 0; bid reply: flag = 1
@@ -205,24 +233,17 @@ namespace TGVL.Controllers
                     db.BidReplies.Add(bidReply);
                 }
 
-                if (replyProduct != null && quantity != null)
+                //Reply Product
+                foreach (var p in model.ReplyProductsTest)
                 {
-                    for (int i = 0; i < quantity.Count(); i++)
+                    var rp = new ReplyProduct
                     {
-                        if (quantity[i] == 0)
-                        {
-                            continue;
-                        }
-
-                        var rp = new ReplyProduct
-                        {
-                            ReplyId = reply.Id,
-                            ProductId = replyProduct[i],
-                            Quantity = quantity[i],
-                            Price = price[i]
-                        };
-                        db.ReplyProducts.Add(rp);
-                    }
+                        ReplyId = reply.Id,
+                        ProductId = p.Product.Id,
+                        Quantity = (int)p.Quantity,
+                        UnitPrice = p.Product.UnitPrice
+                    };
+                    db.ReplyProducts.Add(rp);
                 }
 
                 var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
@@ -237,61 +258,32 @@ namespace TGVL.Controllers
                 db.Notifications.Add(notify);
 
                 db.SaveChanges();
-
-                if (request.Flag == 1)
+                if (request.Flag == 0)
                 {
-                    //Update rank
-                    var query = "Update BidReplies "
-                                + "SET [Rank] = t2.[Rank] "
-                                + "FROM BidReplies t1 "
-                                + "LEFT OUTER JOIN "
-                                + "("
-                                + "SELECT BidReplies.ReplyId, Replies.RequestId, Rank() OVER (PARTITION BY RequestId ORDER BY Total asc) as [Rank] "
-                                + "FROM BidReplies, Replies "
-                                + "WHERE BidReplies.ReplyId = Replies.Id "
-                                + ") as t2 "
-                                + "ON t1.ReplyId = t2.ReplyId "
-                                + "AND t2.RequestId = {0} ";
-
-                    db.Database.ExecuteSqlCommand(query, requestId);
-
-                    //SignalR - Call another supplier update bid rank
-                    var listUser = new List<string>();
                     var newestDate = reply.CreatedDate;
 
-                    query   = "SELECT[dbo].[Users].[UserName] "
-                            + "FROM[dbo].[Replies], [dbo].[Requests], [dbo].[Users] "
-                            + "WHERE[dbo].[Replies].[SupplierId] = [dbo].[Users].[Id] "
-                            + "AND[dbo].[Replies].[RequestId] = [dbo].[Requests].[Id] "
-                            + "AND[dbo].[Requests].[Id] = {0} "
-                            + "AND[dbo].[Replies].[CreatedDate] < {1}";
-                    List<string> listUser2 = db.Database.SqlQuery<string>(query, requestId, newestDate).ToList();
-                    if (listUser2.Count() != 0)
-                    {
-                        foreach (var u in listUser2)
-                        {
-                            listUser.Add(u);
-                        }
+                    //SignalR - Call another supplier update reply table
+                    //var query = "SELECT[dbo].[Users].[UserName] "
+                    //            + "FROM[dbo].[Replies], [dbo].[Requests], [dbo].[Users] "
+                    //            + "WHERE[dbo].[Replies].[SupplierId] = [dbo].[Users].[Id] "
+                    //            + "AND[dbo].[Replies].[RequestId] = [dbo].[Requests].[Id] "
+                    //            + "AND[dbo].[Requests].[Id] = {0} "
+                    //            + "AND[dbo].[Replies].[CreatedDate] < {1}";
+                    //List<string> listUserReply = db.Database.SqlQuery<string>(query, requestId, newestDate).ToList();
+                    //if (listUserReply.Count() != 0)
+                    //{
+                    //    var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+                    //    foreach (var userId in listUserReply)
+                    //    {
+                    //        notificationHub.Clients.User(userId).notify("updatereplytable"); //noti supplier
+                    //    }
+                    //}
 
-                        var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
-                        foreach (var userId in listUser)
-                        {
-                            notificationHub.Clients.User(userId).notify("update");
-                        }
-                    }
+                    //SignalR - Call all client update reply table
+                    var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
 
-                    return new JsonResult
-                    {
-                        Data = new
-                        {
-                            ReplyType = "Bid",
-                            ReplyId = reply.Id,  
-                        },
-                        JsonRequestBehavior = JsonRequestBehavior.AllowGet
-                    };
-                }
-                else
-                {
+                    notificationHub.Clients.All.broadcastMessage("updatereplytable", requestId, reply.Id);   //noti all client
+
                     //return normal reply của supplier vừa reply
                     return new JsonResult
                     {
@@ -305,6 +297,54 @@ namespace TGVL.Controllers
                             Description = model.Description,
                             Avatar = user.Avatar,
                             CreatedDate = reply.CreatedDate,
+                        },
+                        JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                    };
+
+                }
+                 else if (request.Flag == 1)
+                {
+                    //Update rank
+                    var query = "Update BidReplies "
+                                + "SET [Rank] = t2.[Rank], [OldRank] = t1.[Rank]"
+                                + "FROM BidReplies t1 "
+                                + "LEFT OUTER JOIN "
+                                + "("
+                                + "SELECT BidReplies.ReplyId, Replies.RequestId, Rank() OVER (PARTITION BY RequestId ORDER BY Total asc) as [Rank] "
+                                + "FROM BidReplies, Replies "
+                                + "WHERE BidReplies.ReplyId = Replies.Id "
+                                + ") as t2 "
+                                + "ON t1.ReplyId = t2.ReplyId "
+                                + "AND t2.RequestId = {0} ";
+
+                    db.Database.ExecuteSqlCommand(query, requestId);
+
+                    //SignalR - Call another supplier update bid rank
+                   
+                    var newestDate = reply.CreatedDate;
+                    query = "SELECT[dbo].[Users].[UserName] "
+                            + "FROM[dbo].[Replies], [dbo].[Requests], [dbo].[Users] "
+                            + "WHERE[dbo].[Replies].[SupplierId] = [dbo].[Users].[Id] "
+                            + "AND[dbo].[Replies].[RequestId] = [dbo].[Requests].[Id] "
+                            + "AND[dbo].[Requests].[Id] = {0} "
+                            + "AND[dbo].[Replies].[CreatedDate] < {1}";
+                            
+                    List<string> listUser = db.Database.SqlQuery<string>(query, requestId, newestDate).ToList();
+                    if (listUser.Count() != 0)
+                    {
+                        var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+                        foreach (var userId in listUser)
+                        {
+                            notificationHub.Clients.User(userId).notify("update");
+                        }
+                    }
+
+                    return new JsonResult
+                    {
+                        Data = new
+                        {
+                            ReplyType = "Bid",
+                            ReplyId = reply.Id,  
                         },
                         JsonRequestBehavior = JsonRequestBehavior.AllowGet
                     };
@@ -325,6 +365,150 @@ namespace TGVL.Controllers
                 {
                     Success = "Fail",
                     Errors = errorModel
+                },
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        //POST: Reply/Edit
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(ReplyDetails model)
+        {
+            if (ModelState.IsValid)
+            {
+                var reply = db.Replies.FirstOrDefault(r => r.Id == model.Id);
+                if (reply != null)
+                {
+                    var test1 = (int)reply.Total;
+        
+                    bool changed = reply.Total != model.Total
+                        || reply.ShippingFee != model.ShippingFee
+                        || reply.Discount != model.Discount; 
+                    if (changed)
+                    {                                           
+                        reply.ShippingFee = model.ShippingFee;
+                        reply.Discount = model.Discount;
+                        reply.Description = model.Description;
+                        reply.DeliveryDate = model.DeliveryDate;
+
+                        foreach (var rp in model.ReplyProducts)
+                        {
+                            var replyProduct = db.ReplyProducts.FirstOrDefault(r => r.Id == rp.ReplyProductId);
+                            if (replyProduct != null)
+                            {
+                                replyProduct.Quantity = rp.Quantity;
+                            }
+                        }
+
+                        if (reply.Flag == 0)
+                        {
+                            //normal
+                            reply.Total = model.Total;
+                            db.SaveChanges();
+
+                            //SignalR - Call all Client update table reply
+                            var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+
+                            notificationHub.Clients.All.broadcastMessage("updatereplytable2", reply.RequestId, reply.Id);   //noti all client
+
+                            return new JsonResult
+                            {
+                                Data = new
+                                {
+                                    Success = "Success",
+                                    NewTotal = model.Total,
+                                    ReplyId = model.Id
+                                },
+                                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                            };
+                        }
+                        else if (reply.Flag == 1 && test1 > model.Total)
+                        {
+                            //bid            
+                            reply.Total = model.Total;
+
+                            //Update rank
+                            reply.BidReply.OldRank = reply.BidReply.Rank;
+                            db.SaveChanges();
+
+                            var requestId = reply.RequestId;
+                            var query = "Update BidReplies "
+                                        + "SET [Rank] = t2.[Rank], [OldRank] = t1.[Rank] "
+                                        + "FROM BidReplies t1 "
+                                        + "LEFT OUTER JOIN "
+                                        + "("
+                                        + "SELECT BidReplies.ReplyId, Replies.RequestId, Rank() OVER (PARTITION BY RequestId ORDER BY Total asc) as [Rank] "
+                                        + "FROM BidReplies, Replies "
+                                        + "WHERE BidReplies.ReplyId = Replies.Id "
+                                        + ") as t2 "
+                                        + "ON t1.ReplyId = t2.ReplyId "
+                                        + "AND t2.RequestId = {0} ";
+
+                            var result = db.Database.ExecuteSqlCommand(query, requestId);
+                            
+                            var supplierId = User.Identity.GetUserId<int>();
+
+                            query = "SELECT[dbo].[Users].[UserName] "
+                                    + "FROM[dbo].[Replies], [dbo].[Requests], [dbo].[Users] "
+                                    + "WHERE[dbo].[Replies].[SupplierId] = [dbo].[Users].[Id] "
+                                    + "AND[dbo].[Replies].[RequestId] = [dbo].[Requests].[Id] "
+                                    + "AND[dbo].[Requests].[Id] = {0} "
+                                    + "AND[dbo].[Replies].[SupplierId] != {1} ";
+
+
+                            List<string> listUser = db.Database.SqlQuery<string>(query, requestId, supplierId).ToList();
+                            if (listUser.Count() != 0)
+                            {
+                                var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+
+                                notificationHub.Clients.User(reply.Request.User.UserName).notify("updatebidtable"); //noti customer
+
+                                foreach (var userId in listUser)
+                                {
+                                    notificationHub.Clients.User(userId).notify("update"); //noti supplier
+                                }
+                            } else
+                            {
+                                var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+
+                                notificationHub.Clients.User(reply.Request.User.UserName).notify("updatebidtable"); //noti customer
+                            }
+                            
+                            //update bid info
+                            return new JsonResult
+                            {
+                                Data = new
+                                {
+                                    Success = "Success",
+                                    ReplyType = "Bid",
+                                    ReplyId = reply.Id,
+                                },
+                                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                            };
+                        } else
+                        {
+                            return new JsonResult
+                            {
+                                Data = new
+                                {
+                                    Success = "Fail",
+                                    ReplyType = "Bid",
+                                    Message = "Giá bid mới phải bằng hoặc nhỏ hơn giá cũ",
+                                    OldTotal = (int)reply.Total
+                                },
+                                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                            };
+                        }
+                    }
+                }
+            }
+
+            return new JsonResult
+            {
+                Data = new
+                {
+                    Success = "Fail",
                 },
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
