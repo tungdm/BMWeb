@@ -70,6 +70,7 @@
 }
 else
 {
+    @Html.HiddenFor(model => model.Flag)
     <div class="table-responsive">
         <table class="data-table removable" id="my-orders-table">
             <thead>
@@ -99,7 +100,6 @@ else
                 </tr>
             </thead>
             <tbody>
-                @{ int i = 0;}
                 @foreach (var item in Model.Products)
                 {
                     <tr>
