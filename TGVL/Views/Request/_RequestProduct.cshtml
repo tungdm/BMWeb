@@ -75,7 +75,6 @@ else
         <table class="data-table removable" id="my-orders-table">
             <thead>
                 <tr>
-                    <th>STT</th>
                     <th>
                         @Html.DisplayNameFor(model => model.ProductName)
                     </th>
@@ -103,7 +102,6 @@ else
                 @foreach (var item in Model.Products)
                 {
                     <tr>
-                        <td>@(i+=1)</td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Name)
                         </td>
