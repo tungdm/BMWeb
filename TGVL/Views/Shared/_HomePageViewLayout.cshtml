@@ -180,8 +180,31 @@
 
     </div>
 
+    
+
+    <div id="messageModal" class="modal fade" role="dialog">
+        <div class="modal-dialog" style="left:0%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Message</h4>
+                </div>
+                <div class="modal-body" style="min-height:calc(100vh - 210px);max-height: calc(100vh - 210px);overflow-y: auto;">
+                    <div id="message"></div>
+                </div>
+                @*<div class="modal-footer">
+                    <input type="button" value="Hoàn tất" class="btn btn-success" id="submit-btn-reply" style="display:none" />
+                    <input type="button" value="Hoàn tất" class="btn btn-success" id="submit-btn-edit" style="display:none" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                </div>*@
+            </div>
+
+        </div>
+    </div>
 
 </body>
+
+
 </html>
 
 @Scripts.Render("~/bundles/otf2")
@@ -249,7 +272,7 @@
 
             if (message && message.toLowerCase() === "expired") {
                 console.log('expired');
-
+                showExpired();
             }
         };
 

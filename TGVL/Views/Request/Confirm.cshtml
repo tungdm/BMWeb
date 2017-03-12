@@ -1,4 +1,5 @@
-﻿
+﻿@model TGVL.Models.ReplyDetails
+
 @{
     ViewBag.Title = "ConfirmRequest";
     Layout = "~/Views/Shared/_HomePageViewLayout.cshtml";
@@ -14,53 +15,50 @@
                         <tr>
                             <th rowspan="1">&nbsp;</th>
                             <th rowspan="1">Sản phẩm</th>
-                            <th colspan="1">Đơn giá</th>
+                            <th colspan="2">Đơn giá</th>
                             <th>Số lượng</th>
-                            <th>Giảm giá</th>
-                            <th colspan="1">Thành tiền</th>
+                            <th colspan="2">Thành tiền</th>
                         </tr>
                     </thead>
                     <tfoot style="">
-                        <tr>
+                        @*<tr>
                             <th colspan="5" class="text-right">Tổng cộng đơn hàng</th>
                             <th>1.788.999 VNĐ</th>
-                        </tr>
+                        </tr>*@
                         <tr>
                             <th colspan="5" class="text-right">Phí vận chuyển</th>
-                            <th>20.000 VNĐ</th>
+                            <th>@Html.DisplayFor(model => model.ShippingFee)</th>
+                        </tr>
+                        <tr>
+                            <th colspan="5" class="text-right">Giảm giá</th>
+                            <th>@Html.DisplayFor(model => model.Discount) <span>%</span></th>
                         </tr>
                         <tr>
                             <th colspan="5" class="text-right">Ngày giao hàng</th>
-                            <th>8/3/2018</th>
+                            <th>@Html.DisplayFor(model => model.DeliveryDate)</th>
                         </tr>
                         <tr>
                             <th colspan="5" class="text-right">Tổng cộng</th>
-                            <th style="color:red; font-size:20px"><strong>1.900.999 VNĐ</strong></th>
+                            <th style="color:red; font-size:20px"><strong>@Html.DisplayFor(model => model.Total)</strong></th>
                         </tr>
                     </tfoot>
                     <tbody>
-                        <tr>
+                        @{
+                            List<TGVL.Models.RepliedProduct> rp = ViewBag.RepliedProduct;
+                        }
+                        @foreach (var item in rp)
+                        {
+                            <tr>
+                                <td class="image">
+                                    <img src="~/Images/Product/Warehouse/@item.Image" style="max-height:60px; max-width:60px" />
+                                </td>
+                                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                <td colspan="2">@Html.DisplayFor(modelItem => item.UnitPrice)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
 
-                            <td class="image">
-                                <a href="product_detail.html" class="product-image"><img width="60" height="60" src="~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg"></a>
-                            </td>
-                            <td>Xi măng Hà Tiên 1</td>
-                            <td>80.000 VNĐ</td>
-                            <td>88</td>
-                            <td>5%</td>
-                            <td>999.000 VNĐ</td>
-                        </tr>
-                        <tr>
-
-                            <td class="image">
-                                <a href="product_detail.html" class="product-image"><img width="60" height="60" src="~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg"></a>
-                            </td>
-                            <td>Xi măng Hà Tiên 1</td>
-                            <td>80.000 VNĐ</td>
-                            <td>70</td>
-                            <td>2%</td>
-                            <td>888.000 VNĐ</td>
-                        </tr>
+                                <td>@Html.DisplayFor(modelItem => item.Total)</td>
+                            </tr>
+                        }
                     </tbody>
 
                 </table>
@@ -76,19 +74,19 @@
                                     <thead>
                                         <tr>
                                             <td>Tên khách hàng</td>
-                                            <td>Lê Thị Cà Chua</td>
+                                            <td>@ViewBag.Customer.Fullname</td>
                                         </tr>
                                         <tr>
                                             <td>Email</td>
-                                            <td>abc@yahoo.com</td>
+                                            <td>@ViewBag.Customer.Email</td>
                                         </tr>
                                         <tr>
                                             <td>Điện thoại</td>
-                                            <td>099993838</td>
+                                            <td>@ViewBag.Customer.PhoneNumber</td>
                                         </tr>
                                         <tr>
                                             <td>Địa chỉ</td>
-                                            <td>133 Nguyễn Văn Trỗi Q.Phú Nhuận</td>
+                                            <td>@ViewBag.Customer.Address</td>
                                         </tr>
                                     </thead>
                                 </table>
@@ -105,11 +103,19 @@
                                     <thead>
                                         <tr>
                                             <td>Tên cửa hàng</td>
-                                            <td>Cửa hàng VLXD MinhMinh</td>
+                                            <td>@ViewBag.Supplier.Fullname</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Email</td>
+                                            <td>@ViewBag.Supplier.Email</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Điện thoại</td>
+                                            <td>@ViewBag.Supplier.PhoneNumber</td>
                                         </tr>
                                         <tr>
                                             <td>Địa chỉ</td>
-                                            <td>877 Phan Xích Long Q.Phú Nhuận</td>
+                                            <td>@ViewBag.Supplier.Address</td>
                                         </tr>
                                     </thead>
                                 </table>

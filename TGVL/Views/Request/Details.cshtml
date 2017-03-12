@@ -84,8 +84,12 @@
                                 <header class="blog_entry-header clearfix">
                                     <div class="blog_entry-header-inner">
                                         <h4 class="pull-right">
-                                            <strong>
-                                                @Html.ActionLink("KẾT THÚC", "", "", null, new { @class = "btn btn-info" })
+                                            <strong style="color:red" id="expired">
+                                                @{ 
+                                                    var message = ViewBag.Expired == true ? "Expired" : "Available";
+                                                }
+
+                                                @message
                                             </strong>
                                         </h4>
                                         <br />
@@ -227,7 +231,7 @@
                                     <!--Normal Replies-->
                                         <div class="comments-wrapper">
                                             <h4> <strong>Bình luận</strong> </h4>
-                                            @if (User.IsInRole("Supplier") && ViewBag.Repliable == true)
+                                            @if (User.IsInRole("Supplier") && ViewBag.Repliable == true && ViewBag.Expired == false)
                                             {
                                                 <button id="replyBtn" type="button" class="btn btn-info btn-lg" onclick="reply(@ViewContext.RouteData.Values["id"])">Trả lời</button>
                                             }
@@ -290,7 +294,7 @@
                                             <!--/commentlist-->
                                         </div>
                                         }
-                                        else
+                                        else if (Model.Flag == 1)
                                         {
                                             <div class="comments-wrapper">
                                                 <h4> <strong>Đấu thầu</strong> </h4>
@@ -305,12 +309,12 @@
                                                         @if (User.IsInRole("Customer") && Model.CustomerId == User.Identity.GetUserId<int>() && bidReplies.Count() == 0)
                                                         {
                                                             <p>Chưa có ai bid...</p>
-                                                        }
+                                                            }
 
-                                                        else if ((User.IsInRole("Customer") && Model.CustomerId == User.Identity.GetUserId<int>()) || User.IsInRole("Supplier"))
-                                                        {
-                                                            if (bidReplies.Count() != 0)
+                                                            else if ((User.IsInRole("Customer") && Model.CustomerId == User.Identity.GetUserId<int>()) || User.IsInRole("Supplier"))
                                                             {
+                                                                if (bidReplies.Count() != 0)
+                                                                {
                                                                 <div class="table-responsive">
                                                                     <table class="data-table">
                                                                         <thead>
@@ -337,7 +341,7 @@
                                                                         </thead>
                                                                         <tbody>
                                                                             @foreach (var reply in bidReplies)
-                                                                            {
+                                                        {
                                                                                 <tr>
                                                                                     @*<td id="bidreplyId">@reply.Id</td>*@
                                                                                     <td id="rank">
@@ -365,8 +369,13 @@
                                                                                         }
                                                                                         else if (User.Identity.GetUserId<int>() == reply.CustomerId)
                                                                                         {
-                                                                                            <button id="viewDetails" type="button" class="btn btn-primary btn-sm" onclick="viewDetails(@reply.Id)">Chi tiết</button>
-                                                                                            <button id="select" type="button" class="btn btn-success btn-sm" onclick="select(@reply.Id)">Lựa chọn</button>
+                                                                                            <button type="button" class="btn btn-primary btn-sm" onclick="viewDetails(@reply.Id)">Chi tiết</button>
+                                                                                            <button type="button" class="select btn btn-success btn-sm" style="display:none" onclick="select(@reply.Id)">Lựa chọn</button>
+                                                                                            if (ViewBag.Expired)
+                                                                                            {
+                                                                                                <button type="button" class="select btn btn-success btn-sm" onclick="select(@reply.Id)">Lựa chọn</button>
+                                                                                            }
+
                                                                                         } 
                                                                                     </td>
                                                                                 </tr>
