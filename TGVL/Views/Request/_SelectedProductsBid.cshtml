@@ -84,6 +84,11 @@
                 return this.rowIndex === rowIndex;
             }).remove();
 
+            var rowCount = $('.removable > tbody > tr').length;
+            if (rowCount == 0) {
+                $('#productList').empty();
+            }
+           
             //$(this).closest('tr').remove();
 
         });
@@ -104,8 +109,10 @@
         } else {
             $('.qty').each(function () {
                 $(this).rules("add", {
+                    required: true,
                     range: [0, Infinity],
                     messages: {
+                        required: "Required input",
                         range: "Greater than or equal 0"
                     }
                 });

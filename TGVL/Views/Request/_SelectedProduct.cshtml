@@ -151,11 +151,11 @@
 
         $('.qty').each(function () {
             $(this).rules("add", {
-                
-                range: [1, Infinity],
+                required: true,
+                range: [0, Infinity],
                 messages: {
-                    
-                    range: "Greater than 0"
+                    required: "Required input",
+                    range: "Greater than or equal 0"
                 }
             });
         });
