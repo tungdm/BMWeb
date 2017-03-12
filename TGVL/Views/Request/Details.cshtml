@@ -115,7 +115,8 @@
                                                     </tr>
                                                     <tr>
                                                         <td>Ngày nhận hàng</td>
-                                                        <td>@Html.DisplayFor(model => model.ReceivingDate)</td>
+                                             
+                                                        <td>@Convert.ToDateTime(Model.ReceivingDate).ToString("dd/MM/yyyy")</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Địa chỉ nhận hàng</td>
@@ -342,7 +343,7 @@
                                                                         <tbody>
                                                                             @foreach (var reply in bidReplies)
                                                         {
-                                                                                <tr>
+                                                                                <tr id="reply_@reply.Id">
                                                                                     @*<td id="bidreplyId">@reply.Id</td>*@
                                                                                     <td id="rank">
                                                                                         @reply.Rank
