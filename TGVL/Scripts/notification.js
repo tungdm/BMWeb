@@ -44,8 +44,9 @@ function updateNotification() {
                 $.each(response, function (index, value) {
                     var redirectUrl = "/Request/Details/" + value.RequestId + "#reply_" + value.ReplyId;
                     console.log(redirectUrl);
-                   
-                    $('#notiContent').append($('<li><a href="' + redirectUrl + '">New reply a by : ' + value.Supplier + ' at : ' + new Date(parseInt(value.CreatedDate.substr(6))).format("dd/mm/yyyy HH:MM:ss") + '</a></li>'));
+                    var message = '<li><a href="' + redirectUrl + '">' + value.Message + '<br/>' + new Date(parseInt(value.CreatedDate.substr(6))).format("dd/mm/yyyy HH:MM:ss") + '</a></li><hr/>';
+                    
+                    $('#notiContent').append(message);
                 });
             }
 
@@ -142,7 +143,7 @@ function updateReply(requestId, userName) {
                     + '</tr>';
 
                 $.each(data.BidReplies, function (index, value) {
-                    table += '<tr>'
+                    table += '<tr id="reply_' + value.Id + '">'
                 + '<td>' + value.Rank + '</td>'
 
                 + '<td><img src="/Images/UserAvatar/' + value.Avatar + '" width="100" height="100" alt="avatar"> ' + value.Fullname + '</td>'
@@ -437,6 +438,21 @@ function updateExistReplies(data, status, xhr) {
 
 
 function showExpired() {
+    var count = 0;
+    count = parseInt($('div.count').html()) || 0;
+    count++;
+    console.log("updateNotificationCount:" + count);
+
+    //$('span.count').html(count);
+
+    // ANIMATEDLY DISPLAY THE NOTIFICATION COUNTER.
+    $('#noti_Counter')
+        .css({ opacity: 0 })
+        .text(count)
+        .css({ top: '-10px' })
+        .animate({ top: '10px', opacity: 1 }, 500)
+        .fadeIn('slow');
+
     $.ajax({
         type: 'GET',
         url: '/Request/Expired',
