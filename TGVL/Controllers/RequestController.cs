@@ -13,6 +13,7 @@ using TGVL.Hubs;
 
 namespace TGVL.Controllers
 {
+    [System.Web.Mvc.Authorize]
     public class RequestController : Controller
     {
         private BMWEntities db = new BMWEntities();
@@ -352,10 +353,8 @@ namespace TGVL.Controllers
                     }
                 }
 
-            } else if (request.Flag == 9)
-            {
-                //Request expired
             }
+            ViewBag.Expired = request.Expired;
 
             return View(request);
         }
@@ -523,6 +522,28 @@ namespace TGVL.Controllers
                 return new JsonResult { Data = new { Rank = rank}, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
             return new JsonResult { Data = new { Success = "FAIL" }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        //TungDM: show message bid request expired
+        public ActionResult Expired()
+        {
+            var userId = User.Identity.GetUserId<int>(); //customerID 
+
+           
+            var request = db.Requests.Where(r => r.Flag == 1 && r.CustomerId == userId && r.Expired == true).OrderByDescending(r => r.DueDate).FirstOrDefault();
+            var message = "Yêu cầu \"" + request.Title + "\" của bạn vừa mới kết thúc!";
+            //var notify = new Notification
+            //{
+            //    RequestId = request.Id,
+            //    UserId = userId,
+            //    Message = message,
+            //    CreatedDate = DateTime.Now,
+            //    IsSeen = false
+            //};
+            //db.Notifications.Add(notify);
+            //db.SaveChanges();
+
+            return new JsonResult { Data = new { Message = message, RequestId = request.Id }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         // GET: Request
