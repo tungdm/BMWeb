@@ -547,6 +547,43 @@ namespace TGVL.Controllers
         }
 
         // GET: Request
+        public ActionResult Confirm(int id)
+        {
+            Reply reply = db.Replies.Find(id);
+
+            var model = new ReplyDetails
+            {
+                Id = reply.Id,
+                Total = reply.Total,
+
+                //Description = reply.Description,
+                DeliveryDate = reply.DeliveryDate,
+                ShippingFee = (int)reply.ShippingFee,
+                Discount = (int)reply.Discount,
+                //Rank = reply.Flag == 1 ? reply.BidReply.Rank : 0,
+                Flag = (int)reply.Flag
+            };
+
+            var query = "SELECT [dbo].[ReplyProducts].[Id] AS [ReplyProductId], [dbo].[Products].[Id], [dbo].[Products].[UnitPrice], "
+                   + "[dbo].[Products].[Image], [dbo].[SysProducts].[Name], [dbo].[UnitTypes].[Type], [dbo].[ReplyProducts].[Quantity], "
+                   + "[dbo].[ReplyProducts].[Quantity] * [dbo].[Products].[UnitPrice] AS Total "
+                   + "FROM [dbo].[Replies], [dbo].[ReplyProducts], [dbo].[Products], [dbo].[SysProducts], [dbo].[UnitTypes] "
+                   + "WHERE [dbo].[Replies].[Id] = [dbo].[ReplyProducts].[ReplyId] "
+                   + "AND [dbo].[ReplyProducts].[ProductId] = [dbo].[Products].[Id] "
+                   + "AND [dbo].[Products].[SysProductId] = [dbo].[SysProducts].[Id] "
+                   + "AND [dbo].[SysProducts].[UnitTypeId] = [dbo].[UnitTypes].[Id] "
+                   + "AND [dbo].[Replies].[Id] = {0}";
+            IList<RepliedProduct> data = db.Database.SqlQuery<RepliedProduct>(query, id).ToList();
+            ViewBag.RepliedProduct = data;
+            ViewBag.Customer = UserManager.FindById(reply.Request.CustomerId);
+            ViewBag.Supplier = UserManager.FindById(reply.SupplierId);
+
+            //model.ReplyProducts = data;
+
+            return View(model);
+        }
+
+        // GET: Request
         public ActionResult CreateRequest()
         {
             return View();
