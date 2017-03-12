@@ -204,7 +204,10 @@ namespace TGVL.Controllers
             if (ModelState.IsValid)
             {
                 var request = db.Requests.Find(requestId);
+                var message = "";
+                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
 
+                //Create normal reply
                 var reply = new Reply
                 {
                     RequestId = requestId,
@@ -231,7 +234,12 @@ namespace TGVL.Controllers
                         Flag = 0
                     };
                     db.BidReplies.Add(bidReply);
+                    message = user.Fullname + " đã tham gia đấu thầu yêu cầu \"" + request.Title + "\" của bạn.";
+                } else
+                {
+                    message = user.Fullname + " đã phản hồi yêu cầu \"" + request.Title + "\" của bạn.";
                 }
+
 
                 //Reply Product
                 foreach (var p in model.ReplyProductsTest)
@@ -246,18 +254,27 @@ namespace TGVL.Controllers
                     db.ReplyProducts.Add(rp);
                 }
 
-                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
-
+                //Create noti
                 var notify = new Notification
                 {
                     ReplyId = reply.Id,
+                    RequestId = requestId,
                     UserId = request.CustomerId,
                     CreatedDate = reply.CreatedDate,
+                    Message = message,
                     IsSeen = false
                 };
                 db.Notifications.Add(notify);
 
                 db.SaveChanges();
+
+                //SignalR
+                var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+
+                //Call customer update noti count
+                var customer = UserManager.FindById(request.CustomerId).UserName;
+                notificationHub.Clients.User(customer).notify("added");
+
                 if (request.Flag == 0)
                 {
                     var newestDate = reply.CreatedDate;
@@ -279,9 +296,8 @@ namespace TGVL.Controllers
                     //    }
                     //}
 
-                    //SignalR - Call all client update reply table
-                    var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
-
+                    
+                    //Call all client update reply table
                     notificationHub.Clients.All.broadcastMessage("updatereplytable", requestId, reply.Id);   //noti all client
 
                     //return normal reply của supplier vừa reply
@@ -332,7 +348,7 @@ namespace TGVL.Controllers
                     List<string> listUser = db.Database.SqlQuery<string>(query, requestId, newestDate).ToList();
                     if (listUser.Count() != 0)
                     {
-                        var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+                        //var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
                         foreach (var userId in listUser)
                         {
                             notificationHub.Clients.User(userId).notify("update");

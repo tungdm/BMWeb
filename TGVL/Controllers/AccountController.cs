@@ -125,16 +125,15 @@ namespace TGVL.Controllers
                                 decodedUrl = Server.UrlDecode(returnUrl);
                             }
                                 
-                            NotificationComponent NC = new NotificationComponent();
+                            //NotificationComponent NC = new NotificationComponent();
                             RequestComponent RC = new RequestComponent();
 
-                            var currentTime = DateTime.Now;
-                            Session["LastUpdated"] = currentTime;
+                            //var currentTime = DateTime.Now;
+                            //Session["LastUpdated"] = currentTime;
                             
-                            NC.RegisterNotification(currentTime, user.UserName);
+                            //NC.RegisterNotification(currentTime, user.UserName);
                             RC.RegisterRequestNotification(user.UserName);
 
-                            //return RedirectToLocal(returnUrl);
 
                             if (Url.IsLocalUrl(decodedUrl))
                             {

@@ -532,16 +532,18 @@ namespace TGVL.Controllers
            
             var request = db.Requests.Where(r => r.Flag == 1 && r.CustomerId == userId && r.Expired == true).OrderByDescending(r => r.DueDate).FirstOrDefault();
             var message = "Yêu cầu \"" + request.Title + "\" của bạn vừa mới kết thúc!";
-            //var notify = new Notification
-            //{
-            //    RequestId = request.Id,
-            //    UserId = userId,
-            //    Message = message,
-            //    CreatedDate = DateTime.Now,
-            //    IsSeen = false
-            //};
-            //db.Notifications.Add(notify);
-            //db.SaveChanges();
+
+            //Create noti
+            var notify = new Notification
+            {
+                RequestId = request.Id,
+                UserId = userId,
+                Message = message,
+                CreatedDate = DateTime.Now,
+                IsSeen = false
+            };
+            db.Notifications.Add(notify);
+            db.SaveChanges();
 
             return new JsonResult { Data = new { Message = message, RequestId = request.Id }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }

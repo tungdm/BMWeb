@@ -31,16 +31,17 @@ namespace TGVL.Controllers
                 
                 .Select(r => new {
                     ReplyId = r.ReplyId,
+                    RequestId = r.RequestId,
                     CreatedDate = r.CreatedDate,
                     Supplier = r.Reply.User.UserName,
-                    RequestId = r.Reply.RequestId,
+                    Message = r.Message,
                     IsSeen = r.IsSeen
                 })
                 .OrderByDescending(r => r.CreatedDate)
                 .ToList();
 
             //update session here for get only new added contacts (notification)
-            Session["LastUpdate"] = DateTime.Now;
+            //Session["LastUpdate"] = DateTime.Now;
             return new JsonResult { Data = list2, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
