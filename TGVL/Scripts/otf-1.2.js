@@ -97,6 +97,13 @@ function viewDetails(replyId) {
     });
 }
 
+
+function select(replyId) {
+    var url = "/Request/Confirm/" + replyId;
+    
+    window.location.href = url;
+}
+
 //Edit Reply - Supplier
 function edit(replyId) {
     var options = {

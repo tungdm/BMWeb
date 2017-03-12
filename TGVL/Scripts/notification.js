@@ -151,8 +151,9 @@ function updateReply(requestId, userName) {
 
                 + '<td>' + new Date(parseInt(value.DeliveryDate.substr(6))).format("dd/mm/yyyy") + '</td>'
 
-                + '<td><button id="viewDetails" type="button" class="btn btn-primary btn-sm" onclick="viewDetails(' + value.Id + ')">Chi tiết</button>'
+                + '<td><button type="button" class="btn btn-primary btn-sm" onclick="viewDetails(' + value.Id + ')">Chi tiết</button> '
 
+                + '<button type="button" class="select btn btn-success btn-sm" style="display:none" onclick="select(' + value.Id + ')">Lựa chọn</button>'
 
                 + '</td></tr>';
                 });
@@ -183,8 +184,8 @@ function updateReply(requestId, userName) {
                 +                   '<p style="color:#b6b6b6">' + value.Address + '</p>'
                 +               '</div>'
                 +               '<div>'
-                +                    '<button id="viewDetails" type="button" class="btn btn-primary btn-sm" onclick="viewDetails(' + value.Id + ')">Chi tiết</button> '
-                +                    '<button id="Select" type="button" class="btn btn-success btn-sm" onclick="select(' + value.Id + ')">Lựa chọn</button>'                                                   
+                +                    '<button type="button" class="btn btn-primary btn-sm" onclick="viewDetails(' + value.Id + ')">Chi tiết</button> '
+                +                    '<button type="button" class="btn btn-success btn-sm" onclick="select(' + value.Id + ')">Lựa chọn</button>'                                                   
                 +               '</div>'
                 +           '</div>'
                 +       '</li>';
@@ -315,9 +316,9 @@ function updateClientReply(requestId, userName, newreplyId) {
                     + '<div class="comment-body">'
                     + '<p style="color:#b6b6b6">' + value.Address + '</p>'
                     + '</div>'
-                    + '<div>'
+                    + '<div>';
                     
-                    if (replyId == value.Id) {
+                    if (replyId === value.Id) {
                         reply += '<button id="viewDetails" type="button" class="btn btn-primary btn-sm" onclick="edit(' + value.Id + ')">Chỉnh sửa</button>';
                     } else {
                         reply += '<button id="viewDetails" type="button" class="btn btn-primary btn-sm" onclick="viewDetails(' + value.Id + ')">Chi tiết</button> ';
@@ -379,12 +380,12 @@ function updateClientReply2(requestId, userName, newreplyId) {
                     + '<div class="comment-body">'
                     + '<p style="color:#b6b6b6">' + value.Address + '</p>'
                     + '</div>'
-                    + '<div>'
-                    if (flag == "owner") {
+                    + '<div>';
+                    if (flag === "owner") {
                         reply += '<button id="viewDetails" type="button" class="btn btn-primary btn-sm" onclick="viewDetails(' + value.Id + ')">Chi tiết</button> ';
                         reply += '<button id="viewDetails" type="button" class="btn btn-success btn-sm" onclick="select(' + value.Id + ')">Lựa chọn</button> ';
                     }
-                    else if (replyId == value.Id) {
+                    else if (replyId === value.Id) {
                         reply += '<button id="viewDetails" type="button" class="btn btn-primary btn-sm" onclick="edit(' + value.Id + ')">Chỉnh sửa</button>';
                     } else {
                         reply += '<button id="viewDetails" type="button" class="btn btn-primary btn-sm" onclick="viewDetails(' + value.Id + ')">Chi tiết</button> ';
@@ -432,4 +433,32 @@ function updateExistReplies(data, status, xhr) {
         $('#replyModal').modal('toggle');
         $("#replyInfo").empty();
     }
+}
+
+
+function showExpired() {
+    $.ajax({
+        type: 'GET',
+        url: '/Request/Expired',
+        success: function (data) {
+            console.log("Heelo");
+
+            var message = '<p>' + data.Message + '</p>';
+            message += '<p><button type="button" class="btn btn-primary btn-sm" onclick="viewRequest(' + data.RequestId + ')">Go there...</button></p>';
+            $('#message').html(message);
+            $('#messageModal').modal('show');
+            $('.select').show();
+            $('#expired').html("Expired");
+
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
+
+function viewRequest(requestId) {
+    var url = "/Request/Details/" + requestId;
+    console.log(url);
+    window.location.href = url;
 }
