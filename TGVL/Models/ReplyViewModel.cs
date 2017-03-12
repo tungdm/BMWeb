@@ -147,7 +147,7 @@ namespace TGVL.Models
         [Required]
         [DataType(DataType.Date)]
         [DateRange(ErrorMessage = "Ngày giao hàng phải từ ngày hôm nay về sau")]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? DeliveryDate { get; set; }
 
         public int Rank { get; set; }
@@ -175,5 +175,8 @@ namespace TGVL.Models
         [Required]
         [Range(1, int.MaxValue, ErrorMessage = "Please enter a value bigger than 0")]
         public int Quantity { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:C0}")]
+        public decimal Total { get; set; }
     }
 }
