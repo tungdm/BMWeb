@@ -196,7 +196,7 @@ namespace TGVL.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (model.Flag == "bid" && selectedProduct == null)
+                if (selectedProduct == null)
                 {
                     return new JsonResult
                     {
