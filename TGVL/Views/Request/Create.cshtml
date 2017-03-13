@@ -51,10 +51,17 @@
                         <div>
                             <h2 class="widget-title"><strong>SẢN PHẨM YÊU CẦU</strong></h2>
                             <br />
-                            <div class="form-group">
+
+                            <div id="mydiv" class="form-group" style="display:none">
+                                <div style="visibility: hidden">
+                                    <input name="sum" id="total" value="0" />
+                                    <div id="min"></div>
+                                </div>
                                 <div class="col-md-offset-1 col-md-10" id="productList"></div>
+                                <div style="text-align:center" tabindex="1" class="text-danger col-md-offset-1 col-md-10" id="errorTotal"></div>
                             </div>
                             <div class="form-group">
+                                
                                 <div style="text-align:center">
                                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#searchProduct">Thêm sản phẩm</button>
                                 </div>
