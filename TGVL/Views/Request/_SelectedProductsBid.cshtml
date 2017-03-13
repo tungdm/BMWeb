@@ -21,6 +21,8 @@
                     UnitPrice
                 </th>
 
+                <th>UnitType</th>
+
                 <th>
                     Quantity
                 </th>
@@ -47,9 +49,11 @@
                     <td><img src="~/Images/Product/SysProduct/@Model.RequestProducts[i].RequestedProduct.Image" style="max-height:100px; max-width:100px" /></td>
                     <td>@Html.DisplayFor(model => Model.RequestProducts[i].RequestedProduct.ManufactureName)</td>
                     <td class="price">
-                        @Html.DisplayFor(model => Model.RequestProducts[i].RequestedProduct.UnitPrice) / @Html.DisplayFor(model => Model.RequestProducts[i].RequestedProduct.Type)
+                        @Html.DisplayFor(model => Model.RequestProducts[i].RequestedProduct.UnitPrice)
                     </td>
-                    
+                    <td>
+                        @Html.DisplayFor(model => Model.RequestProducts[i].RequestedProduct.Type)
+                    </td>
                     <td>
                         @{
                             var productSessionKey = "product" + @Model.RequestProducts[i].RequestedProduct.Id;
@@ -78,6 +82,11 @@
 
 <script>
     $(document).ready(function () {
+        $('.qty').on('input', function () {
+            update_amounts();
+        });
+
+
         $("a[name='delete']").click(function () {
             var rowIndex = $(this).closest('tr').prop('rowIndex');
             $('.removable tr').filter(function () {
@@ -110,10 +119,10 @@
             $('.qty').each(function () {
                 $(this).rules("add", {
                     required: true,
-                    range: [0, Infinity],
+                    range: [1, Infinity],
                     messages: {
                         required: "Required input",
-                        range: "Greater than or equal 0"
+                        range: "Greater than 0"
                     }
                 });
             });
@@ -144,4 +153,34 @@
             });
         });
     });
+
+    function update_amounts() {
+        var sum = 0.0;
+        var min = $('#min').text();  //set config 
+      
+        $('#my-orders-table > tbody  > tr').each(function () {
+            var qty = $(this).find('.qty').val();
+            
+            var price = $(this).find('.price').text();
+           
+            var price2 = Number(price.replace(/[^0-9]+/g, ""));
+
+            console.log("qty:" + qty + ", price:" + price + ", price2:" + price2);
+
+            var amount = (qty * price2)
+            sum += amount;
+        });
+        console.log(sum);
+        if (min != 0) {
+            if (sum >= min) {
+                $('#errorTotal').empty();
+            } else {
+                var message = "Total > " + addDot(min) + " &#x20AB;)";
+                var message = "Must greater than " + addDot(min) + " &#x20AB; (Now: " + addDot(sum) + " &#x20AB;)"
+                $('#errorTotal').html(message);
+            }
+        }
+
+        $('#total').val(sum);
+    }
 </script>
