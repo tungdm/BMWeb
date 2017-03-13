@@ -32,11 +32,13 @@ namespace TGVL.Models
         public DateTime? DeliveryDate { get; set; }
 
         [Required]
-        [Range(0, int.MaxValue, ErrorMessage = "Please enter a value >= 0")]
+        [Display(Name = "Phí vận chuyển")]
+        [Range(0, int.MaxValue, ErrorMessage = "Xin hãy nhập giá trị lớn hơn 0")]
         public int ShippingFee { get; set; }
 
         [Required]
-        [Range(0, 100, ErrorMessage = "Please enter a value >= 0 and <= 100")]
+        [Display(Name = "Giảm giá(%)")]
+        [Range(0, 100, ErrorMessage = "Xin hãy nhập trong khoảng từ 1 đến 100")]
         public int Discount { get; set; }
 
         //public ICollection<ReplyProductViewModel> ReplyProducts { get; set; }
@@ -65,7 +67,7 @@ namespace TGVL.Models
         public WarehouseProductViewModel Product { get; set; }
 
         [Required]
-        [Range(1, int.MaxValue, ErrorMessage = "Please enter a value > 0")]
+        [Range(1, int.MaxValue, ErrorMessage = "Xin hãy nhập số lượng lớn hơn 0")]
         public int? Quantity { get; set; }
     }
 
@@ -135,18 +137,18 @@ namespace TGVL.Models
 
         [Required]
         [DisplayFormat(DataFormatString = "{0:C0}")]
-        [Range(0, int.MaxValue, ErrorMessage = "Please enter a value >= 0")]
+        [Range(0, int.MaxValue, ErrorMessage = "Phí vận chuyển phải lớn hơn hoặc bằng 0")]
         public int ShippingFee { get; set; }
 
         [Required]
-        [Range(0, 100, ErrorMessage = "Please enter a value >= 0 and <= 100")]
+        [Range(0, 100, ErrorMessage = "Xin hãy nhập trong khoảng từ 1 đến 100")]
         public int Discount { get; set; }
 
         public int Flag { get; set; }
 
         [Required]
         [DataType(DataType.Date)]
-        [DateRange(ErrorMessage = "Ngày giao hàng phải từ ngày hôm nay về sau")]
+        [DateRange(ErrorMessage = "Ngày giao hàng phải từ ngày hôm nay trở về sau")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? DeliveryDate { get; set; }
 
@@ -173,7 +175,7 @@ namespace TGVL.Models
         public int ReplyProductId { get; set; }
 
         [Required]
-        [Range(1, int.MaxValue, ErrorMessage = "Please enter a value bigger than 0")]
+        [Range(1, int.MaxValue, ErrorMessage = "Xin hãy nhập giá trị lớn hơn 0")]
         public int Quantity { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:C0}")]
