@@ -48,6 +48,19 @@
                     @Html.HiddenFor(model => model.Flag)
 
                     <div class="popular-posts widget widget__sidebar" id="recent-posts-4">
+                        <div>
+                            <h2 class="widget-title"><strong>SẢN PHẨM YÊU CẦU</strong></h2>
+                            <br />
+                            <div class="form-group">
+                                <div class="col-md-offset-1 col-md-10" id="productList"></div>
+                            </div>
+                            <div class="form-group">
+                                <div style="text-align:center">
+                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#searchProduct">Thêm sản phẩm</button>
+                                </div>
+                            </div>
+
+                        </div>
                         <h3 class="widget-title"><strong>YÊU CẦU</strong></h3>
                         <div class="widget-content">
                             <div class="form-group">
@@ -185,19 +198,6 @@
                             </div>
                         </div>
                         <br />
-                        <div>
-                            <h2 class="widget-title"><strong>SẢN PHẨM YÊU CẦU</strong></h2>
-                            <br />
-                            <div class="form-group">
-                                <div class="col-md-offset-1 col-md-10" id="productList"></div>
-                            </div>
-                            <div class="form-group">
-                                <div style="text-align:center">
-                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#searchProduct">Thêm sản phẩm</button>
-                                </div>
-                            </div>
-
-                        </div>
 
                         <div>
                             <h2 class="widget-title"><strong>THÔNG TIN LIÊN HỆ</strong></h2>
@@ -354,7 +354,7 @@
                 return receivingDate >= now;
                 
                 //return someDate >= today;
-            }, "Ngày nhận hàng phải từ ngày hôm nay về sau");
+            }, "Ngày nhận hàng phải từ hôm nay về sau");
 
             $('input[name="ReceivingDate"]').rules("add", {
                 daterange: true
