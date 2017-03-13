@@ -138,6 +138,7 @@ namespace TGVL.Controllers
             model2.Flag = mode;
             model2.AllTypeOfHouses = db.Houses;
             model2.AllTypeOfPayments = db.Payments;
+            model2.ReceivingAddress = user.Address;
 
             //ViewBag.PaymentType = new SelectList(db.Payments, "Id", "Type");
             //ViewBag.TypeOfHouse = new SelectList(db.Houses, "Id", "Type");
@@ -213,7 +214,7 @@ namespace TGVL.Controllers
                     var request = new Request
                     {
                         CustomerId = user.Id,
-                        DeliveryAddress = user.Address,
+                        DeliveryAddress = model.ReceivingAddress,
                         ReceivingDate = model.ReceivingDate,
                         Descriptions = WebUtility.HtmlDecode(model.Description),
                         StartDate = DateTime.Now,
@@ -221,6 +222,7 @@ namespace TGVL.Controllers
                         PaymentId = model.PaymentType,
                         Title = model.Title,
                         TypeOfHouse = model.TypeOfHouse,
+                        Expired = false,
                         Flag = 0
                     };
 
