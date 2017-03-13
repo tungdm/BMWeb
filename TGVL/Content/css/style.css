@@ -8434,7 +8434,8 @@ form-list label.required em {
 	clear: both;
 }
 .toggle-content {
-	border-top: 1px solid #CCCCCC;
+	border-top: 1px solid #eaeaea;
+    border-bottom: 1px solid #eaeaea;
 	clear: both;
 	overflow: hidden;
 	padding-top: 15px;
