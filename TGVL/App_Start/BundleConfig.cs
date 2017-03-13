@@ -146,7 +146,7 @@ namespace TGVL
                 "~/Content/css/slider.css",
                 "~/Content/css/owl.carousel.css",
                 "~/Content/css/owl.theme.css",
-                "~/Content/font-awesome.min.css",
+                //"~/Content/font-awesome.min.css",
                 //"~/Content/bootstrap.css",
                 "~/Content/AdminLTE.min.css",
                 "~/Content/css/style.css"
@@ -157,19 +157,21 @@ namespace TGVL
                 "~/Content/css/owl.carousel.css",
                 "~/Content/css/owl.theme.css",
                 "~/Content/css/flexslider.css",
-                "~/Content/css/fancybox.css.css",
-                "~/Content/font-awesome.min.css",
+                "~/Content/css/fancybox.css",
+                //"~/Content/font-awesome.min.css",
                 "~/Content/css/style.css"
              ));
 
             bundles.Add(new StyleBundle("~/Content/searchproductcss").Include(
                 //"~/Content/css/bootstrap.min.css",
-                "~/Content/css/owl.carousel.css",
-                "~/Content/css/owl.theme.css",
-                "~/Content/font-awesome.min.css",
+                //"~/Content/css/owl.carousel.css",
+                //"~/Content/css/owl.theme.css",
+                //"~/Content/font-awesome.min.css",
+                "~/Content/css/flexslider.css",
+                "~/Content/css/fancybox.css",
                 "~/Content/css/blogmate.css",
-                "~/Content/css/flipclock.css",
-                "~/Content/css/style.css"
+                "~/Content/timeTo.css"
+                //"~/Content/css/style.css"
 
              ));
 
@@ -225,24 +227,29 @@ namespace TGVL
                                     "~/Scripts/sweetalert.js"
                                     ));
 
+            bundles.Add(new ScriptBundle("~/bundles/clockjquery").Include(
+                                    "~/Scripts/jquery-2.2.3.min.js",
+                                    "~/Scripts/jquery.time-to.js"
+                                    ));
+
             bundles.Add(new ScriptBundle("~/bundles/mainpagejquery").Include(
                                     "~/Scripts/js/jquery.min.js",
                                     "~/Scripts/js/bootstrap.min.js",
-                                    "~/Scripts/js/parallax.js",
-                                    "~/Scripts/js/common.js",
-                                    "~/Scripts/js/slider.js",
-                                    "~/Scripts/js/owl.carousel.min.js",
-                                    "~/Scripts/js/flipclock.js"
+                                    //"~/Scripts/js/parallax.js",
+                                    //"~/Scripts/js/common.js",
+                                    "~/Scripts/js/slider.js"
+                                    //"~/Scripts/js/owl.carousel.min.js",
+                                    //"~/Scripts/js/flipclock.js"
                                     ));
 
             bundles.Add(new ScriptBundle("~/bundles/viewdetailjquery").Include(
-                                    "~/Scripts/js/prototype.js",
-                                    "~/Scripts/js/jquery.min.js",
-                                    "~/Scripts/js/bootstrap.min.js",
-                                    "~/Scripts/js/common.js",
+                                    //"~/Scripts/js/prototype.js",
+                                    //"~/Scripts/js/jquery.min.js",
+                                    //"~/Scripts/js/bootstrap.min.js",
+                                    //"~/Scripts/js/common.js",
                                     "~/Scripts/js/owl.carousel.min.js",
                                     "~/Scripts/js/toggle.js",
-                                    "~/Scripts/js/pro-img-slider.js",
+                                    //"~/Scripts/js/pro-img-slider.js",
                                     "~/Scripts/js/jquery.flexslider.js",
                                     "~/Scripts/js/cloud-zoom.js"
                                     ));

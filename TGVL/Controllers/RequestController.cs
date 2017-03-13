@@ -665,5 +665,20 @@ namespace TGVL.Controllers
         {
             return View();
         }
+
+        public ActionResult CheckOut()
+        {
+            return View();
+        }
+
+        public ActionResult DealDetail()
+        {
+            return View();
+        }
+
+        public ActionResult CreateDeal()
+        {
+            return View();
+        }
     }
 }

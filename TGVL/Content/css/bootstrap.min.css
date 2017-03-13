@@ -901,7 +901,7 @@ hr {
 	margin-top: 20px;
 	margin-bottom: 20px;
 	border: 0;
-	border-top: 1px solid #eee
+	border-top: 1px solid #eaeaea
 }
 .sr-only {
 	position: absolute;
@@ -3605,7 +3605,7 @@ textarea.input-group-sm>.form-control, textarea.input-group-sm>.input-group-addo
 	color: #9d9d9d
 }
 .navbar-inverse .navbar-nav>li>a:hover, .navbar-inverse .navbar-nav>li>a:focus {
-	color: #fff;
+	color: #000;
 	background-color: transparent
 }
 .navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:hover, .navbar-inverse .navbar-nav>.active>a:focus {

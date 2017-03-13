@@ -1,0 +1,130 @@
+﻿
+@{
+    ViewBag.Title = "CreateDeal";
+    Layout = "~/Views/Shared/_HomePageViewLayout.cshtml";
+}
+
+@Styles.Render("~/Content/searchproductcss")
+
+<style>
+    #border_layout {
+        float: left;
+        text-align: left;
+        width: 100%;
+        background: #FFFFFF;
+        border: 1px solid #e5e5e5;
+    }
+
+    #dep {
+        background: #eaeaea;
+        border-bottom: 1px solid #e5e5e5;
+        font-family: 'Roboto';
+        padding: 6px 5px 6px 5px;
+    }
+</style>
+
+<section class="main-container">
+    <div class="main container">
+        <div class="form-horizontal">
+            <div class="popular-posts widget widget__sidebar">
+                <h3 class="widget-title"><strong>DEAL</strong></h3>
+                <div class="widget-content">
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Tiêu đề<span style="color:#ff0000"> *</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Sản phẩm<span style="color:#ff0000"> *</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Số lượng<span style="color:#ff0000"> *</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="number" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Giá cũ<span style="color:#ff0000"> *</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="number" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Giảm giá<span style="color:#ff0000"> *</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="number" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Giá mới<span style="color:#ff0000"> *</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="number" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Thời gian bắt đầu<span style="color:#ff0000"> *</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="date" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Thời gian kết thúc<span style="color:#ff0000"> *</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="date" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div>
+                    <h2 class="widget-title"><strong>THÔNG TIN LIÊN HỆ</strong></h2>
+                    <br />
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Cửa hàng<span style="color:#ff0000"> *</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Email<span style="color:#ff0000"> *</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Điện thoại<span style="color:#ff0000"> *</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Địa chỉ<span style="color:#ff0000"> *</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" class="form-control" />
+                        </div>
+                    </div>
+
+                    <hr />
+                    <div class="form-group">
+                        <div style="text-align:center">
+                            <p><button class="btn btn-success sweet-3" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'sweet-3']);">Hoàn tất</button></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
