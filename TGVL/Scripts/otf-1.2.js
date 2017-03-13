@@ -36,6 +36,7 @@ function selectedSuccess() {
 
     $("#clone").html(table);
 
+    $("#clone").find("#my-orders-table").attr('id', 'clonetable');
     $("#clone").find(".qty").attr('name', 'quantity');
     $("#clone").find(".qty").removeClass("qty");
 
@@ -48,9 +49,19 @@ function selectedSuccess() {
 
 //Create request
 function checkValidate(data, status, xhr) {
-    var message = "<span class='text-danger field-validation-error'><span>" + data.Message + "</span></span>";
-    console.log(message);
-    $("#productList").html(message);
+    if (data.Success == "Fail") {
+        var message = "";
+        if (data.ErrorType == "RequireProduct") {
+            message = "<span class='text-danger field-validation-error'><span>" + data.Message + "</span></span>";
+            console.log(message);
+            $("#productList").html(message);
+        } else if (data.ErrorType == "GreaterThanMin") {
+            message = "<span class='text-danger field-validation-error'><span>Must greater than " + addDot(data.Min) + " &#x20AB; (Now: " + addDot(data.Sum) + " &#x20AB;)</span></span>";
+            console.log(message);
+            $("#errorTotal").html(message);
+            $("#min").html(data.Min);
+        } 
+    }
 }
 
 //Tạo reply - supplier
