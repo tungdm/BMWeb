@@ -147,7 +147,7 @@ namespace TGVL.Models
         [Required]
         [DataType(DataType.Date)]
         [DateRange(ErrorMessage = "Ngày giao hàng phải từ ngày hôm nay về sau")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? DeliveryDate { get; set; }
 
         public int Rank { get; set; }

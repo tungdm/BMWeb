@@ -36,6 +36,9 @@ namespace TGVL.Models
         public DateTime? ReceivingDate { get; set; }
 
         [Required]
+        public string ReceivingAddress { get; set; }
+
+        [Required]
         [Display(Name = "Hình thức thanh toán")]
         public int PaymentType { get; set; }
 
