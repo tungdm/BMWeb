@@ -192,7 +192,7 @@ namespace TGVL.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [System.Web.Mvc.Authorize(Roles = "Customer")]
-        public async Task<ActionResult> Create(CreateRequestViewModel model, string mode, string[] selectedProduct, int[] quantity)
+        public async Task<ActionResult> Create(CreateRequestViewModel model, string mode, string[] selectedProduct, int[] quantity, int sum)
         {
             if (ModelState.IsValid)
             {
@@ -203,12 +203,30 @@ namespace TGVL.Controllers
                         Data = new
                         {
                             Success = "Fail",
-                            Message = "Chọn ít nhất một sản phẩm"
+                            ErrorType = "RequireProduct",
+                            Message = "Chọn ít nhất một sản phẩm",                            
                         },
                         JsonRequestBehavior = JsonRequestBehavior.AllowGet
                     };
                 } else
                 {
+                    //TODO: lấy liệu minTotal trong db
+                    var minTotal = 10000000;
+                    if (mode == "bid" && sum < minTotal)
+                    {
+                        return new JsonResult
+                        {
+                            Data = new
+                            {
+                                Success = "Fail",
+                                ErrorType = "GreaterThanMin",
+                                Min = minTotal,
+                                Sum = sum
+                            },
+                            JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                        };
+                    }
+
                     var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
 
                     var request = new Request
