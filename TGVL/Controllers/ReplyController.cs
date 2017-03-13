@@ -184,7 +184,7 @@ namespace TGVL.Controllers
                         {
                             Data = new
                             {
-                                Message = "Bạn không đủ sản phẩm để phản hồi yêu cầu này."
+                                Message = "Bạn không có sản phẩm phù hợp yêu cầu này."
                             },
                             JsonRequestBehavior = JsonRequestBehavior.AllowGet
                         };
