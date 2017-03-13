@@ -195,27 +195,27 @@
                             <br />
                             <div class="form-group">
                                 @*@Html.LabelFor(model => model.CustomerName, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Thông tin liên hệ<span style="color:#ff0000"> *</span></label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    @Html.EditorFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Tên người đăng<span style="color:#ff0000"> *</span></label>
+                                <div class="col-md-6 col-sm-6 col-xs-12" style="margin-top: 6px;">
+                                    @Html.DisplayFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @*@Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })*@
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 @*@Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Email<span style="color:#ff0000"> *</span></label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                <div class="col-md-6 col-sm-6 col-xs-12" style="margin-top: 6px;">
+                                    @Html.DisplayFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                    @*@Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })*@
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 @*@Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Điện thoại<span style="color:#ff0000"> *</span></label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                                <div class="col-md-6 col-sm-6 col-xs-12" style="margin-top: 6px;">
+                                    @Html.DisplayFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
                                     @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -223,8 +223,8 @@
                             <div class="form-group">
                                 @*@Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Địa chỉ<span style="color:#ff0000"> *</span></label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                                <div class="col-md-6 col-sm-6 col-xs-12" style="margin-top: 6px;">
+                                    @Html.DisplayFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
                                     @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -314,6 +314,20 @@
     <script>
         $(document).ready(function () {
 
+            $('input[type="number"]').bind('keypress', function (e) {
+                if (e.keyCode == '9' || e.keyCode == '16') {
+                    return;
+                }
+                var code;
+                if (e.keyCode) code = e.keyCode;
+                else if (e.which) code = e.which;
+                if (e.which == 46)
+                    return false;
+                if (code == 8 || code == 46)
+                    return true;
+                if (code < 48 || code > 57)
+                    return false;
+            });
             
 
             $.validator.addMethod("daterange", function (value, element) {
