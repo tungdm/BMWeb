@@ -45,21 +45,25 @@ function selectedSuccess() {
     $('#select').hide();
 
     $('#searchProduct').modal('toggle');
+    $('#mydiv').show();
 }
 
 //Create request
 function checkValidate(data, status, xhr) {
     if (data.Success == "Fail") {
         var message = "";
+        $('#mydiv').show();
         if (data.ErrorType == "RequireProduct") {
-            message = "<span class='text-danger field-validation-error'><span>" + data.Message + "</span></span>";
+            message = "<span id='error' tabindex='1' class='text-danger field-validation-error'><span>" + data.Message + "</span></span>";
             console.log(message);
             $("#productList").html(message);
+            $('#error').focus();
         } else if (data.ErrorType == "GreaterThanMin") {
             message = "<span class='text-danger field-validation-error'><span>Must greater than " + addDot(data.Min) + " &#x20AB; (Now: " + addDot(data.Sum) + " &#x20AB;)</span></span>";
             console.log(message);
             $("#errorTotal").html(message);
             $("#min").html(data.Min);
+            $('#errorTotal').focus();
         } 
     }
 }
