@@ -1,0 +1,149 @@
+﻿@model TGVL.Models.DealDetailsViewModel
+
+@{
+    ViewBag.Title = "DealDetail";
+    Layout = "~/Views/Shared/_HomePageViewLayout.cshtml";
+}
+
+@Styles.Render("~/Content/searchproductcss")
+@Scripts.Render("~/bundles/viewdetailjquery")
+@Scripts.Render("~/bundles/clockjquery")
+
+<style>
+    #time {
+        border-left: 1px solid #eaeaea;
+        padding-left: 20px;
+    }
+</style>
+
+<section class="main-container">
+    <div class="main container">
+        <div class="col-main">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="product-view">
+                        <div class="product-essential">
+                            <div class="product-img-box col-sm-4 col-xs-12">
+                                <div class="product-image">
+                                    <div>
+                                        @*<img alt="product-image" src="~/Content/images/Xi măng Hạ Long PCB 40.jpg" width="100" height="100">*@
+                                        <img src="~/Images/Product/Warehouse/@Model.ProductImage"  width="100" height="100" />
+                                    </div>
+                                    @*<div class="flexslider flexslider-thumb">
+                                        <ul class="previews-list slides">
+                                            <li><a href="~/Content/images/gachbong.jpg" class="cloud-zoom-gallery" rel="useZoom: 'zoom1', smallImage: '~/Content/images/gachbong.jpg' "><img src="~/Content/images/gachbong.jpg" alt="Thumbnail 1" /></a></li>
+                                            <li><a href='~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' "><img src="~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg" alt="Thumbnail 2" /></a></li>
+                                            <li><a href='~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' "><img src="~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg" alt="Thumbnail 1" /></a></li>
+                                            <li><a href='~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' "><img src="~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg" alt="Thumbnail 2" /></a></li>
+                                            <li><a href='~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' "><img src="~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg" alt="Thumbnail 2" /></a></li>
+                                        </ul>
+                                    </div>*@
+                                </div>
+
+                                <div class="clear"></div>
+                            </div>
+                            <div class="product-shop col-sm-8 col-xs-12">
+                                <div class="product-name">
+                                    <h1>@Model.Title</h1>
+                                </div>
+                                <div class="short-description">
+                                    <p>
+                                        @Model.Description
+                                    </p>
+                                    <p>
+                                        Còn lại: @Model.Quantity @Model.UnitType
+                                    </p>
+                                </div>
+                                <hr />
+                                <div class="price-block">
+                                    <div class="price-box">
+                                        <p class="old-price"> Giá gốc: <span class="price-label">Regular Price:</span> <span class="price"> @Html.DisplayFor(model => model.UnitPrice)/@Model.UnitType </span> </p>
+                                        <br />
+                                        <p class="special-price"> <span class="price-label">Special Price</span> <span class="price"> @Html.DisplayFor(model => model.PriceSave)/@Model.UnitType</span> Giảm <strong style="color:#ff1341; font-size:24px">@Model.Discount %</strong> </p>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="add-to-box">
+                                    @using (Html.BeginForm("AddToCart", "Deal", FormMethod.Post))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.HiddenFor(model => model.Id)
+                                        @Html.HiddenFor(model => model.Quantity)
+                                        <div class="add-to-cart">
+                                            <label>Số lượng :</label>
+                                            @Html.EditorFor(model => model.CustomerQuantity)
+                                        </div>
+                                        <button type="submit" class="button btn-cart"><span>Thêm vào giỏ hàng</span></button>
+                                        @Html.ValidationMessageFor(model => Model.CustomerQuantity, "", new { @class = "text-danger" })
+                                        
+                                    }
+                                </div>
+                                <br />
+                                <br />
+                                <div class="toggle-content">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <i class="fa fa-user"></i> <strong style="font-size:18px">2222 người đã mua</strong>
+                                        </div>
+                                        <div id="time" class="col-md-8">
+                                            
+                                            <span id="countdown-2">
+                                                
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="popular-posts widget widget__sidebar">
+                <h3 class="widget-title">THÔNG TIN CHI TIẾT</h3>
+                <div class="widget-content">
+                    @Html.Raw(Model.ProductDetails)
+                </div>
+            </div>
+            <br />
+            <div class="popular-posts widget widget__sidebar">
+                <h3 class="widget-title">DEAL TƯƠNG TỰ</h3>
+                <div class="widget-content">
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    //var date = getRelativeDate(02, 01, 10);
+    //console.log(date);
+
+    var test = new Date("@Model.DueDateCountdown");
+    console.log(test);
+
+    //$('#countdown-2').timeTo(test, function () {
+    //    alert('Hello');
+    //});
+
+    $('#countdown-2').timeTo({
+        timeTo: test,
+        displayDays: 2,
+        theme: "black",
+        displayCaptions: true,
+        fontSize: 35,
+        captionSize: 10
+    });
+
+    function getRelativeDate(days, hours, minutes) {
+        var date = new Date((new Date()).getTime() + 60000 /* milisec */ * 60 /* minutes */ * 24 /* hours */ * days /* days */);
+
+        date.setHours(hours || 0);
+        date.setMinutes(minutes || 0);
+        date.setSeconds(0);
+
+        return date;
+    }
+</script>
