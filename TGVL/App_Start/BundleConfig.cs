@@ -59,7 +59,6 @@ namespace TGVL
                 //"~/Scripts/custom.min.js",
                 "~/Scripts/dateformat.js",
                 "~/Scripts/moment.js"
-              
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/signalR").Include(
