@@ -160,7 +160,34 @@ function removefromcart(type, id) {
     };
 
     $.ajax(options).done(function (data) {
-        console.log(data);
+        if (data.Success == "Success") {
+            var removeElement = "#shopping-cart-table tr#" + data.RemoveElement;
+            console.log(data.RemoveElement);
+            
+            $(removeElement).remove();
+            var sum = 0.0;
+
+            $('#shopping-cart-table > tbody  > tr').each(function () {
+                var qty = $(this).find('.qty').val();
+                if (qty == null) {
+                    qty = $(this).find('.qtyBid').text();
+                }
+                var price = $(this).find('.price').text();
+                var price2 = Number(price.replace(/[^0-9]+/g, ""));
+
+                console.log("qty:" + qty + ", price:" + price + ", price2:" + price2);
+
+                var amount = (qty * price2);
+                var miniTotal = addDot(amount);
+                $(this).find('.minitotal').html("<strong>" + miniTotal + " &#x20AB;</strong>");
+                sum += amount;
+            });
+
+            console.log(sum);
+
+            $('.total').html(addDot(sum) + " &#x20AB;");
+        }
+
     });
 }
 
