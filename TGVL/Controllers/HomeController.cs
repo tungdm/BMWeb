@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TGVL.Models;
 
 namespace TGVL.Controllers
 {
@@ -91,7 +92,87 @@ namespace TGVL.Controllers
 
         public ActionResult ShoppingCart()
         {
+            var cartSession = (CartViewModel)Session["Cart"];
+            if (cartSession != null)
+            {
+                var model = new ShoppingCart();
+                model.ShoppingCartProducts = new List<ShoppingCartProducts>();
+                decimal total = 0;
+
+                foreach (var c in cartSession.CartDetails)
+                {
+                    if (c.Type == "deal")
+                    {
+                        var deal = db.Deals.Find(c.DealId);
+
+                        var scProducts = new ShoppingCartProducts
+                        {
+                            DealId = deal.Id,
+                            Type = "deal",
+                            Image = deal.Product.Image,
+                            ProductName = deal.Product.SysProduct.Name,
+                            Quantity = c.Quantity,
+                            UnitPrice = deal.UnitPrice,
+                            UnitType = deal.Product.SysProduct.UnitType.Type,
+                            MiniTotal = deal.UnitPrice * c.Quantity
+                        };
+                        model.ShoppingCartProducts.Add(scProducts);
+                        total += scProducts.MiniTotal;
+                    } else
+                    {
+                        //normal
+                    }          
+                }
+                model.Total = total;
+                return View(model);
+            }
             return View();
+        }
+
+        public JsonResult RemoveFromCart(string type, int id)
+        {
+            var cartSession = (CartViewModel)Session["Cart"];
+
+            if (cartSession != null)
+            {
+                if (type == "deal")
+                {
+                    var check = cartSession.CartDetails.Where(c => c.DealId == id).FirstOrDefault();
+                    if (check != null)
+                    {
+                        cartSession.CartDetails.Remove(check);
+                    }
+                } else
+                {
+                    var check = cartSession.CartDetails.Where(c => c.ProductId == id).FirstOrDefault();
+                    if (check != null)
+                    {
+                        cartSession.CartDetails.Remove(check);
+                    }
+                }
+                
+               
+                Session["Cart"] = cartSession; //save vao session
+
+                return new JsonResult
+                {
+                    Data = new
+                    {
+                        Success = "Success",
+                        RemoveElement = type + "_"+ id
+                    },
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            }
+
+            return new JsonResult
+            {
+                Data = new
+                {
+                    Success = "Fail"
+                },
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
         }
 
     }

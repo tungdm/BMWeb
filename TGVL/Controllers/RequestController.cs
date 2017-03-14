@@ -179,11 +179,27 @@ namespace TGVL.Controllers
                     }
 
                     model2.RequestProducts = test;
-
+                    return PartialView("_SelectedProductsBid", model2);
+                } else
+                {
+                    return new JsonResult {
+                        Data = new
+                        {
+                            Success = "Nothing"
+                        },
+                        JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                    };
                 }
             }
 
-            return PartialView("_SelectedProductsBid", model2);
+            return new JsonResult
+            {
+                Data = new
+                {
+                    Success = "Fail"
+                },
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
 
         }
 
