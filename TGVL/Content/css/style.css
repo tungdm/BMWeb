@@ -3159,7 +3159,6 @@ small {
 	margin-right:-100px;
 }
 
-
 .product-detail-bnt a.button.detail-bnt:hover {
 	background: #ff1341 !important;
 	margin: 0 11px 0 8px;
@@ -7389,8 +7388,6 @@ button.button.btn-proceed-checkout span {
 	float: left;
 	font-family: 'Roboto',serif;
 	font-size: 24px; margin-top:5px;
-
-
 }
 .multiple-checkout .grand-total {
 	font-size: 1.5em;
@@ -8884,10 +8881,11 @@ input.radio {
 .group-select li .input-box {
 	float: left;
 	width: 45%;
+    padding-left:10px;
 }
 .group-select li input.input-text, .group-select li textarea {
 	width: 95%;
-	background: #f0f0f0;
+	/*background: #f0f0f0;*/
 	border: 1px solid #dcdcdc;
 	padding: 10px;
 	outline: none;
@@ -8901,7 +8899,7 @@ input.radio {
 .group-select li select {
 	width: 80%;
 	padding: 3px;
-	background: #f0f0f0;
+	/*background: #f0f0f0;*/
 	border: 1px solid #dcdcdc;
 	padding: 10px;
 }
@@ -8912,7 +8910,7 @@ input.radio {
 	padding: 10px;
 }
 .group-select li .input-box input.input-text, .group-select li .input-box textarea {
-	width: 95%;
+	width: 100%;
 	margin-top: 5px;
 	
 	border: 1px solid #dcdcdc;
@@ -8925,7 +8923,7 @@ input.radio {
 	padding: 10px;
 }
 .group-select li .input-box select {
-	width: 96%;
+	width: 100%;
 	margin-top: 5px;
 	outline: none;
 }
