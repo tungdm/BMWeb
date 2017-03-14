@@ -302,7 +302,7 @@
                         HttpMethod = "GET",
                         InsertionMode = InsertionMode.Replace,
                         UpdateTargetId = "productList",
-                        OnSuccess = "selectedSuccess"
+                        OnSuccess = "selectedSuccess(data)"
                     }, new { @id = "formAjax" }
                 ))
                 {
@@ -313,7 +313,7 @@
 
             </div>
             <div class="modal-footer">
-                <input id="select" type="submit" value="Xác nhận" class="btn btn-warning" style="display:none" />
+                <input id="select" type="button" value="Xác nhận" class="btn btn-warning" style="display:none" />
 
                 <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
             </div>

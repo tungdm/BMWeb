@@ -1,84 +1,91 @@
 ﻿@model TGVL.Models.CreateRequestViewModel
-
-<div class="table-responsive">
-    <table class="data-table removable" id="my-orders-table">
-        <thead>
-            <tr>
-                <th>STT</th>
-                <th>
-                    ProductName
-                </th>
-               
-                <th>
-                   ProductImage
-                </th>
-
-                <th>
-                    ManufactureName
-                </th>
-
-                <th>
-                    UnitPrice
-                </th>
-
-                <th>UnitType</th>
-
-                <th>
-                    Quantity
-                </th>
-                
-
-                <th>Thao tác</th>
-            </tr>
-        </thead>
-        <tbody>
-            @{
-                int count = 0;
-            }
-
-            @for (int i = 0; i < Model.RequestProducts.Count(); i++)
-            {
-                count++;
+@if (Model.RequestProducts != null)
+{
+    <div class="table-responsive">
+        <table class="data-table removable" id="my-orders-table">
+            <thead>
                 <tr>
-                    <td>
-                        @count
-                        @Html.HiddenFor(model => Model.RequestProducts[i].RequestedProduct.Id)
-                    </td>
-                    
-                    <td>@Html.DisplayFor(model => Model.RequestProducts[i].RequestedProduct.Name)</td>
-                    <td><img src="~/Images/Product/SysProduct/@Model.RequestProducts[i].RequestedProduct.Image" style="max-height:100px; max-width:100px" /></td>
-                    <td>@Html.DisplayFor(model => Model.RequestProducts[i].RequestedProduct.ManufactureName)</td>
-                    <td class="price">
-                        @Html.DisplayFor(model => Model.RequestProducts[i].RequestedProduct.UnitPrice)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => Model.RequestProducts[i].RequestedProduct.Type)
-                    </td>
-                    <td>
-                        @{
-                            var productSessionKey = "product" + @Model.RequestProducts[i].RequestedProduct.Id;
-                        }
+                    <th>STT</th>
+                    <th>
+                        ProductName
+                    </th>
 
-                        @Html.EditorFor(model => Model.RequestProducts[i].Quantity, new { htmlAttributes = new { @class = @Model.RequestProducts[i].RequestedProduct.Id + " qty form-control", @Value = Session[productSessionKey] == null ? 0 : Session[productSessionKey] } })
-                        @Html.ValidationMessageFor(model => Model.RequestProducts[i].Quantity, "", new { @class = "text-danger" })
-                    </td>
-                    <td>
-                        <input type="checkbox"
-                               name="selectedProduct"
-                               value="@Model.RequestProducts[i].RequestedProduct.Id"
-                               checked="checked"
-                               style="display:none" />
+                    <th>
+                        ProductImage
+                    </th>
 
-                        <a name="delete" id="@Model.RequestProducts[i].RequestedProduct.Id" href="javascript:;">Xóa</a>
-                    </td>
+                    <th>
+                        ManufactureName
+                    </th>
+
+                    <th>
+                        UnitPrice
+                    </th>
+
+                    <th>UnitType</th>
+
+                    <th>
+                        Quantity
+                    </th>
+
+
+                    <th>Thao tác</th>
                 </tr>
-            }
-        </tbody>
+            </thead>
+            <tbody>
+                @{
+                    int count = 0;
+                }
 
-    </table>
 
-</div>
-<div class="col-md-offset-2 col-md-10" id="productList"></div>
+                @for (int i = 0; i < Model.RequestProducts.Count(); i++)
+                {
+                    count++;
+                    <tr>
+                        <td>
+                            @count
+                            @Html.HiddenFor(model => Model.RequestProducts[i].RequestedProduct.Id)
+                        </td>
+
+                        <td>@Html.DisplayFor(model => Model.RequestProducts[i].RequestedProduct.Name)</td>
+                        <td><img src="~/Images/Product/SysProduct/@Model.RequestProducts[i].RequestedProduct.Image" style="max-height:100px; max-width:100px" /></td>
+                        <td>@Html.DisplayFor(model => Model.RequestProducts[i].RequestedProduct.ManufactureName)</td>
+                        <td class="price">
+                            @Html.DisplayFor(model => Model.RequestProducts[i].RequestedProduct.UnitPrice)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => Model.RequestProducts[i].RequestedProduct.Type)
+                        </td>
+                        <td>
+                            @{
+                                var productSessionKey = "product" + @Model.RequestProducts[i].RequestedProduct.Id;
+                            }
+
+                            @Html.EditorFor(model => Model.RequestProducts[i].Quantity, new { htmlAttributes = new { @class = @Model.RequestProducts[i].RequestedProduct.Id + " qty form-control", @Value = Session[productSessionKey] == null ? 0 : Session[productSessionKey] } })
+                            @Html.ValidationMessageFor(model => Model.RequestProducts[i].Quantity, "", new { @class = "text-danger" })
+                        </td>
+                        <td>
+                            <input type="checkbox"
+                                   name="selectedProduct"
+                                   value="@Model.RequestProducts[i].RequestedProduct.Id"
+                                   checked="checked"
+                                   style="display:none" />
+
+                            <a name="delete" id="@Model.RequestProducts[i].RequestedProduct.Id" href="javascript:;">Xóa</a>
+                        </td>
+                    </tr>
+                }
+
+
+
+            </tbody>
+
+        </table>
+
+    </div>
+    <div class="col-md-offset-2 col-md-10" id="productList"></div>
+}
+
 
 <script>
     $(document).ready(function () {

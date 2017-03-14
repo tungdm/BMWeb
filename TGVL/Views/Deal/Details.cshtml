@@ -64,7 +64,13 @@
                                 </div>
                                 <hr />
                                 <div class="add-to-box">
-                                    @using (Html.BeginForm("AddToCart", "Deal", FormMethod.Post))
+                                    @using (Ajax.BeginForm("AddToCart",
+                                        new AjaxOptions
+                                        {
+                                            HttpMethod = "POST",
+                                            OnSuccess = "updateCart(data, status, xhr)"
+                                        }
+                                    ))
                                     {
                                         @Html.AntiForgeryToken()
                                         @Html.HiddenFor(model => model.Id)
