@@ -1,0 +1,289 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THẾ GIỚI VẬT LIỆU</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/mainpagecss")
+    @Scripts.Render("~/bundles/mainpagejquery")
+    @Styles.Render("~/Content/notification")
+    @Scripts.Render("~/bundles/modernizr")
+
+
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,400italic,700italic&subset=latin,vietnamese' rel='stylesheet' type='text/css'>
+    <style>
+        body {
+            font-family: Roboto, sans-serif;
+        }
+
+        #top-header {
+            background: #F3F3F3;
+            border-bottom: 2px solid #FFFFFF;
+            height: 35px;
+        }
+
+        #searchForm {
+            width: 80%;
+            padding: 11px 20px;
+            font-size: 14px;
+        }
+    </style>
+
+</head>
+@using Microsoft.AspNet.Identity
+<body class="cms-index-index">
+
+    <div class="page">
+        <!-- Header -->
+        <header class="header-container">
+            <div id="top-header" class="header-top">
+                <div class="navbar navbar-inverse navbar-fixed-top" style="background-color: white">
+                    <div class="container">
+                        <div class="navbar-header">
+                        </div>
+                        <div class="navbar-collapse collapse">
+                            <ul class="nav navbar-nav" style="width: 250px;float: right;">
+                                @*Chỉnh header float right*@
+                                <li>@Html.Partial("_LoginPartial")</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            
+        </header>
+        <!-- end header -->
+        <!-- Navbar -->
+        <nav>
+            <div class="container">
+                <div class="nav-inner">
+                    <ul id="nav" class="hidden-xs">
+                        <li class="level0 parent drop-menu" style="width:171px;float:left">
+                            <a href="#"><span><strong>DANH MỤC</strong></span> </a>
+                            <ul style="display: none;" class="level1">
+                                <li class="level1 first parent">
+                                    <a href="grid.html"><span> <strong>SẮT, THÉP</strong></span></a>
+                                    <ul class="level2">
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                    </ul>
+                                </li>
+                                <li class="level1 first parent">
+                                    <a href="grid.html"><span> <strong>GẠCH XÂY</strong></span></a>
+                                    <ul class="level2">
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                    </ul>
+                                </li>
+                                <li class="level1 first parent">
+                                    <a href="grid.html"><span> <strong>XI MĂNG</strong></span></a>
+                                    <ul class="level2">
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                    </ul>
+                                </li>
+                                <li class="level1 first parent">
+                                    <a href="grid.html"><span> <strong>ĐÁ ỐP LÁT</strong></span></a>
+                                    <ul class="level2">
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                    </ul>
+                                </li>
+                                <li class="level1 first parent">
+                                    <a href="grid.html"><span> <strong>BÊ TÔNG, VỮA</strong></span></a>
+                                    <ul class="level2">
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                    </ul>
+                                </li>
+                                <li class="level1 first parent">
+                                    <a href="grid.html"><span> <strong>NGÓI</strong></span></a>
+                                    <ul class="level2">
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                    </ul>
+                                </li>
+                                <li class="level1 first parent">
+                                    <a href="grid.html"><span> <strong>TÔN</strong></span></a>
+                                    <ul class="level2">
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                    </ul>
+                                </li>
+                                <li class="level1 first parent">
+                                    <a href="grid.html"><span> <strong>VL CHỐNG THẤM</strong></span></a>
+                                    <ul class="level2">
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                    </ul>
+                                </li>
+                                <li class="level1 first parent">
+                                    <a href="grid.html"><span> <strong>INOX</strong></span></a>
+                                    <ul class="level2">
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                    </ul>
+                                </li>
+                                <li class="level1 first parent">
+                                    <a href="grid.html"><span> <strong>NHÔM</strong></span></a>
+                                    <ul class="level2">
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                        <li class="level2 nav-2-1-1 first"><a href="checkout_method.html"><span>Checkout Method</span></a></li>
+                                        <li class="level2 nav-2-1-5 last"><a href="checkout_billing_info.html"><span>Checkout Billing Info</span></a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="level0 nav-8 level-top"> <a href="grid.html" class="level-top"> <span><strong>Trang chủ</strong></span> </a> </li>
+
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+
+        @RenderBody();
+        <!-- End main container -->
+        <!-- Footer -->
+        <footer class="footer">
+
+            <div class="footer-bottom">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-4 col-xs-12 coppyright"> &copy; 2017 BMW</div>
+
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- End Footer -->
+
+    </div>
+
+
+
+    <div id="messageModal" class="modal fade" role="dialog">
+        <div class="modal-dialog" style="left:0%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Message</h4>
+                </div>
+                <div class="modal-body" style="min-height:calc(100vh - 210px);max-height: calc(100vh - 210px);overflow-y: auto;">
+                    <div id="message"></div>
+                </div>
+                @*<div class="modal-footer">
+                        <input type="button" value="Hoàn tất" class="btn btn-success" id="submit-btn-reply" style="display:none" />
+                        <input type="button" value="Hoàn tất" class="btn btn-success" id="submit-btn-edit" style="display:none" />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    </div>*@
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+
+</html>
+
+@Scripts.Render("~/bundles/otf2")
+@Scripts.Render("~/bundles/signalR")
+@Scripts.Render("~/signalr/hubs")
+@RenderSection("scripts", required: false)
+
+
+<script>
+    $(document).ready(function () {
+        if (window.location.hash != null && window.location.hash != '') {
+
+            $('html, body').animate({
+                scrollTop: $(window.location.hash).offset().top
+            }, 1500);
+        }
+
+        var controllerName = '@ViewContext.RouteData.Values["Controller"].ToString()';
+        var actionName = '@ViewContext.RouteData.Values["Action"].ToString()';
+        var requestId = '@ViewContext.RouteData.Values["id"]';
+        var userName = '@User.Identity.GetUserName()';
+
+        // signalr js code for start hub and send receive notification
+        var notificationHub = $.connection.notificationHub;
+        $.connection.hub.start().done(function () {
+            //notificationHub.server.joinGroup("@User.Identity.GetUserName()");
+
+            console.log('Notification hub started');
+        });
+
+        notificationHub.client.broadcastMessage = function (message, requestId, newreplyId) {
+            if (message && message.toLowerCase() === "updatereplytable") {
+                console.log('Update client reply:' + requestId);
+                updateClientReplyTable(controllerName, actionName, requestId, userName, newreplyId);
+            }
+
+            if (message && message.toLowerCase() === "updatereplytable2") {
+                console.log('Update client reply2:' + requestId);
+                updateClientReplyTable2(controllerName, actionName, requestId, userName, newreplyId);
+            }
+        }
+
+        //signalr method for push server message to client
+        notificationHub.client.notify = function (message) {
+            if (message && message.toLowerCase() === "added") {
+                console.log('updateNotificationCount from homepage layout Method 2');
+                updateNotificationCount(controllerName, actionName, requestId, userName);
+            }
+
+            if (message && message.toLowerCase() === "newreplyadded") {
+                console.log('new reply added');
+                updateNotificationCount(controllerName, actionName, requestId, userName);
+            }
+
+            if (message && message.toLowerCase() === "update") { //supplier update bid table
+                console.log('Supplier update bid table');
+                updateBidTable(controllerName, actionName, requestId);
+            }
+
+            if (message && message.toLowerCase() === "updatebidtable") { //customer update bid table
+                console.log('Customer update bid table');
+                updateCustomerBidTable(controllerName, actionName, requestId);
+            }
+
+            if (message && message.toLowerCase() === "updatereplytable") { //supplier update reply table
+                console.log('updatereplytable');
+                updateSupplierReplyTable(controllerName, actionName, requestId, userName);
+
+            }
+
+            if (message && message.toLowerCase() === "expired") {
+                console.log('expired');
+                showExpired();
+            }
+        };
+
+    });
+
+
+</script>
