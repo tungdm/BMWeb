@@ -83,6 +83,16 @@ namespace TGVL.Controllers
         {
             return View();
         }
-        
+
+        public ActionResult CheckOut()
+        {
+            return View();
+        }
+
+        public ActionResult ShoppingCart()
+        {
+            return View();
+        }
+
     }
 }
