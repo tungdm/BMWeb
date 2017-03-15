@@ -7,7 +7,7 @@
 @Styles.Render("~/Content/loginformcss")
 <style>
     body {
-        background: url('../../Images/login.jpg') !important;
+        /*background: url('../../Images/login.jpg') !important;*/
         /*background-repeat: no-repeat;
         background-size: cover;*/
         /*background-position: center center;*/
@@ -15,7 +15,7 @@
 
     #login {
         border-radius:15px;
-        background:#808080;
+        background:#E8E8E8;
         padding: 15px;
     }
 </style>
@@ -24,7 +24,7 @@
 @*<a class="hiddenanchor" id="toregister"></a>
     <a class="hiddenanchor" id="tologin"></a>*@
 <div id="wrapper">
-    <div id="login" class="animate form login_form" style="margin-top: -55px;">
+    <div id="login" class="animate form login_form" style="margin-top: 50px;">
         <section class="login_content">
 
             @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl, RegOrLog = "Đăng nhập" })
