@@ -160,10 +160,14 @@
                     <p>@Html.ActionLink("Đấu thầu","Create","Request", new { mode = "bid" }, null)</p>
                 </div>
             </li>
-            <li>
+            <li class="dropdown">
                 @Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                <div class="dropdown-content">
+                    <p>@Html.ActionLink("Thông tin cá nhân","","")</p>
+                    <p><a href="javascript:document.getElementById('logoutForm').submit()">Đăng xuất</a></p>
+                </div>
             </li>
-            <li><a href="javascript:document.getElementById('logoutForm').submit()">Đăng xuất</a></li>
+            @*<li><a href="javascript:document.getElementById('logoutForm').submit()">Đăng xuất</a></li>*@
         </ul>
     }
 }
