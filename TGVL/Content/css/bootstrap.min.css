@@ -3602,7 +3602,7 @@ textarea.input-group-sm>.form-control, textarea.input-group-sm>.input-group-addo
 	color: #9d9d9d
 }
 .navbar-inverse .navbar-nav>li>a {
-	color: #9d9d9d
+	color: #000000;
 }
 .navbar-inverse .navbar-nav>li>a:hover, .navbar-inverse .navbar-nav>li>a:focus {
 	color: #000;
