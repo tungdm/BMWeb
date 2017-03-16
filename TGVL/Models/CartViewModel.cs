@@ -38,12 +38,15 @@ namespace TGVL.Models
 
         public int DealId { get; set; } //cho t/h mua deal
 
+        public int SupplierId { get; set; }
+
         public string Type { get; set; } //Type=normal/deal
 
         public string Image { get; set; }
 
         public string ProductName { get; set; }
 
+        [Range(1, int.MaxValue, ErrorMessage = "Xin hãy nhập giá trị lớn hơn 0")]
         public int Quantity { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:C0}")]
