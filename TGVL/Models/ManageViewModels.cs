@@ -13,7 +13,7 @@ namespace TGVL.Models
 
         [Phone]
         [Display(Name = "Phone Number")]
-        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid Phone number")]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Số điện thoại không đúng")]
         public string PhoneNumber { get; set; }
 
         public bool TwoFactor { get; set; }
@@ -21,10 +21,10 @@ namespace TGVL.Models
         public string Username { get; set; }
 
         // Edit Profile
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0} phải dài ít nhất {2} kí tự.", MinimumLength = 6)]
         public string Fullname { get; set; }
 
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0} phải dài ít nhất {2} kí tự.", MinimumLength = 6)]
         public string Address { get; set; }
 
         [Display(Name = "Date Of Birth")]
@@ -38,11 +38,11 @@ namespace TGVL.Models
     public class CreateShopViewModel
     {
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0} phải dài ít nhất {2} kí tự.", MinimumLength = 6)]
         public string Fullname { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0} phải dài ít nhất {2} kí tự.", MinimumLength = 6)]
         public string Address { get; set; }
     }
 
@@ -60,14 +60,14 @@ namespace TGVL.Models
     public class SetPasswordViewModel
     {
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0} phải dài ít nhất {2} kí tự.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "New password")]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        [Compare("NewPassword", ErrorMessage = "Mật khẩu chưa khớp.")]
         public string ConfirmPassword { get; set; }
 
         public string Username { get; set; }
@@ -87,14 +87,14 @@ namespace TGVL.Models
         public string OldPassword { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0} phải dài ít nhất {2} kí tự.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "New password")]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        [Compare("NewPassword", ErrorMessage = "Mật khẩu mới chưa khớp")]
         public string ConfirmPassword { get; set; }
     }
 
@@ -129,7 +129,7 @@ namespace TGVL.Models
     public class ChangeUserNameViewModel
     {
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0} phải dài ít nhất {2} kí tự.", MinimumLength = 6)]
         [Display(Name = "Username")]
         public string Username { get; set; }
     }
