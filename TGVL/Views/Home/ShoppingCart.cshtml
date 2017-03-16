@@ -12,107 +12,120 @@
         <div class="col-main">
             <div class="cart">
                 <div class="row">
-                    <div class="col-md-9">
-                        <div class="page-title">
-                            <h2>Giỏ hàng</h2>
-                        </div>
-                        <div class="box">
-                            <div class="table-responsive">
-                                <table id="shopping-cart-table" class="data-table cart-table">
-                                    <thead>
-                                        <tr>
-                                            <th rowspan="1">&nbsp;</th>
-                                            <th rowspan="1">Sản phẩm</th>
-                                            <th colspan="1">Đơn giá</th>
-                                            <th>Số lượng</th>
-                                            <th colspan="1">Thành tiền</th>
-                                            <th rowspan="1">&nbsp;</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th colspan="4">TỔNG CỘNG</th>
-                                            <th colspan="2" style="color:red; font-size:20px"><strong><span class="total">@Html.DisplayFor(model => model.Total)</span></strong></th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                        @using (Html.BeginForm("Create", "SysProduct", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                                        {
-                                            for (int i = 0; i < Model.ShoppingCartProducts.Count(); i++)
-                                            {
-                                                var id = Model.ShoppingCartProducts[i].Type == "deal" ? Model.ShoppingCartProducts[i].Type + "_" + Model.ShoppingCartProducts[i].DealId : Model.ShoppingCartProducts[i].Type + "_" + Model.ShoppingCartProducts[i].ProductId; 
-                                                <tr id="@id">
-                                                    <td class="image">
-                                                        <a href="#" class="product-image"><img width="60" height="60" src="~/Images/Product/Warehouse/@Model.ShoppingCartProducts[i].Image"></a>
-                                                    </td>
-                                                    <td>@Model.ShoppingCartProducts[i].ProductName</td>
-
-                                                    <td class="a-center hidden-table"><span class="cart-price"> <span class="price">@Html.DisplayFor(modelItem => Model.ShoppingCartProducts[i].UnitPrice)</span> </span></td>
-                                                    <td>
-                                                        @Html.EditorFor(model => Model.ShoppingCartProducts[i].Quantity, new { htmlAttributes = new { @class = "qty form-control" } })
-                                                        @Html.ValidationMessageFor(model => Model.ShoppingCartProducts[i].Quantity, "", new { @class = "text-danger" })
-                                                    </td>
-                                                    <td class="a-center movewishlist"><span class="cart-price"> <span class="minitotal"><strong>@Html.DisplayFor(modelItem => Model.ShoppingCartProducts[i].MiniTotal)</strong></span> </span></td>
-                                                    <td class="a-center last">
-                                                        @if (Model.ShoppingCartProducts[i].Type == "deal")
-                                                        {
-                                                            <a href="#" onclick="removefromcart('@Model.ShoppingCartProducts[i].Type' , @Model.ShoppingCartProducts[i].DealId)" title="Remove item" class="button remove-item"><span><span>Remove item</span></span></a>
-                                                        }
-                                                        else
-                                                        {
-                                                            <a href="#" onclick="removefromcart('@Model.ShoppingCartProducts[i].Type', @Model.ShoppingCartProducts[i].ProductId)" title="Remove item" class="button remove-item"><span><span>Remove item</span></span></a>
-                                                        }
-
-                                                    </td>
+                    @if (Model.ShoppingCartProducts != null)
+                    {
+                        <div class="col-md-9">
+                            <div class="page-title">
+                                <h2>Giỏ hàng</h2>
+                            </div>
+                            <div class="box">
+                                @using (Html.BeginForm("DeliveryAddress", "Home", FormMethod.Post, new { id = "submitFormWithButton" }))
+                                {
+                                    <div class="table-responsive">
+                                        <table id="shopping-cart-table" class="data-table cart-table">
+                                            <thead>
+                                                <tr>
+                                                    <th rowspan="1">&nbsp;</th>
+                                                    <th rowspan="1">Sản phẩm</th>
+                                                    <th colspan="1">Đơn giá</th>
+                                                    <th>Số lượng</th>
+                                                    <th colspan="1">Thành tiền</th>
+                                                    <th rowspan="1">&nbsp;</th>
                                                 </tr>
-                                            }
-                                        }
+                                            </thead>
+                                            <tfoot>
+                                                <tr>
+                                                    <th colspan="4">TỔNG CỘNG</th>
+                                                    <th colspan="2" style="color:red; font-size:20px"><strong><span class="total">@Html.DisplayFor(model => model.Total)</span></strong></th>
+                                                </tr>
+                                            </tfoot>
+                                            <tbody>
+
+                                                @for (int i = 0; i < Model.ShoppingCartProducts.Count(); i++)
+                                                {
+                                                   
+                                                    var id = Model.ShoppingCartProducts[i].Type == "deal" ? Model.ShoppingCartProducts[i].Type + "_" + Model.ShoppingCartProducts[i].DealId : Model.ShoppingCartProducts[i].Type + "_" + Model.ShoppingCartProducts[i].ProductId;
+                                                    <tr id="@id">
+                                                        <td class="image">
+                                                            <a href="#" class="product-image"><img width="60" height="60" src="~/Images/Product/Warehouse/@Model.ShoppingCartProducts[i].Image"></a>
+                                                        </td>
+                                                        <td>
+                                                            @Model.ShoppingCartProducts[i].ProductName
+                                                            @Html.HiddenFor(modelItem => Model.ShoppingCartProducts[i].ProductName)
+                                                        </td>
+
+                                                        <td class="a-center hidden-table"><span class="cart-price"> <span class="price">@Html.DisplayFor(modelItem => Model.ShoppingCartProducts[i].UnitPrice)</span> </span></td>
+                                                        <td>
+                                                            @Html.EditorFor(model => Model.ShoppingCartProducts[i].Quantity, new { htmlAttributes = new { @class = "qty form-control" } })
+                                                            @Html.ValidationMessageFor(model => Model.ShoppingCartProducts[i].Quantity, "", new { @class = "text-danger" })
+                                                        </td>
+
+                                                        <td class="a-center movewishlist">
+                                                            <span class="cart-price"> <span class="minitotal"><strong>@Html.DisplayFor(modelItem => Model.ShoppingCartProducts[i].MiniTotal)</strong></span> </span>
+                                                            @Html.HiddenFor(modelItem => Model.ShoppingCartProducts[i].MiniTotal)
+                                                        </td>
+
+                                                        <td class="a-center last">
+                                                            @if (Model.ShoppingCartProducts[i].Type == "deal")
+                                                            {
+                                                                <a href="javascript:;" onclick="removefromcart('@Model.ShoppingCartProducts[i].Type' , @Model.ShoppingCartProducts[i].DealId)" title="Remove item" class="button remove-item"><span><span>Remove item</span></span></a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <a href="javascript" onclick="removefromcart('@Model.ShoppingCartProducts[i].Type', @Model.ShoppingCartProducts[i].ProductId)" title="Remove item" class="button remove-item"><span><span>Remove item</span></span></a>
+                                                            }
+
+                                                        </td>
+                                                    </tr>
+                                                }
 
 
-                                       
-                                    </tbody>
-                                </table>
-                            </div>
+                                            </tbody>
+                                        </table>
+                                    </div>
                             <!--End table responsive-->
-                            <div class="box-footer">
-                                <div class="pull-left">
-                                    <a href="shop-category.html" class="btn btn-primary"><i class="fa fa-chevron-left"></i> Tiếp tục mua hàng</a>
-                                </div>
-                                <div class="pull-right">
-                                    <button type="submit" class="btn btn-success">
-                                        ĐẶT HÀNG <i class="fa fa-chevron-right"></i>
-                                    </button>
+                                    <div class="box-footer">
+                                        <div class="pull-left">
+                                            <a href="shop-category.html" class="btn btn-primary"><i class="fa fa-chevron-left"></i> Tiếp tục mua hàng</a>
+                                        </div>
+                                        <div class="pull-right">
+                                            <button id="checkout" type="submit" class="btn btn-success">
+                                                ĐẶT HÀNG <i class="fa fa-chevron-right"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="popular-posts widget widget__sidebar">
+                                <h3 class="widget-title">THÔNG TIN CHUNG</h3>
+                                <div class="table-responsive">
+                                    <table class="data-table">
+                                        <tbody>
+                                            <tr>
+                                                <td>Tổng sản phẩm</td>
+                                                <td>@Model.ShoppingCartProducts.Count()</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tổng tạm tính</td>
+                                                <td class="total">@Html.DisplayFor(model => model.Total)</td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td>
+                                                    <strong>TỔNG CỘNG</strong>
+                                                </td>
+                                                <td style="font-size:20px; color:red"><strong><span class="total">@Html.DisplayFor(model => model.Total)</span></strong></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="popular-posts widget widget__sidebar">
-                            <h3 class="widget-title">THÔNG TIN CHUNG</h3>
-                            <div class="table-responsive">
-                                <table class="data-table">
-                                    <tbody>
-                                        <tr>
-                                            <td>Tổng sản phẩm</td>
-                                            <td>@Model.ShoppingCartProducts.Count()</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tổng tạm tính</td>
-                                            <td class="total">@Html.DisplayFor(model => model.Total)</td>
-                                        </tr>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <td>
-                                                <strong>TỔNG CỘNG</strong>
-                                            </td>
-                                            <td style="font-size:20px; color:red"><strong><span class="total">@Html.DisplayFor(model => model.Total)</span></strong></td>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+                    }
+                    
                 </div>
             </div>
         </div>
@@ -125,8 +138,15 @@
     
 <script>
     $(document).ready(function () {
+
         $('.qty').on('input', function () {
             update_amounts_shoppingcart();
+            var newQty = $(this).val();
+            
+            var trId = $(this).closest('tr').attr('id');
+            var res = trId.split("_");
+            console.log("newQty=" + newQty + ", type=" + res[0] + ", id=" + res[1]);
+            updateQuantitySession(newQty, res[0], res[1]);
         });
 
         function update_amounts_shoppingcart() {

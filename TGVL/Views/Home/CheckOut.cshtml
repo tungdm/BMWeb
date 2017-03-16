@@ -1,4 +1,4 @@
-﻿
+﻿@model TGVL.Models.OrderViewModel
 @{
     ViewBag.Title = "CheckOut";
     Layout = "~/Views/Shared/_HomePageViewLayout.cshtml";
@@ -11,23 +11,40 @@
         <div class="row">
             <div class="col-md-9">
                 <div class="popular-posts widget widget__sidebar">
-                    <h2 class="widget-title">Hình thức thanh toán</h2>
-                    <div class="widget-content">
-                        
-                            <div class="form-group">
-                                <input type="radio" />
-                                <label style="font-size:18px">Thanh toán bằng tiền mặt khi nhận hàng</label>
+                    <h2 class="widget-title">Thanh toán và vận chuyển</h2>
+                    @using (Html.BeginForm("Create", "Order", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-horizontal">
+                            <div class="form-group" style="margin-top:10px">
+                                @*@Html.LabelFor(model => model.PaymentType, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Hình thức thanh toán<span style="color:#ff0000"> *</span></label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @Html.DropDownListFor(
+                                        model => model.PaymentType,
+                                        new SelectList(Model.AllTypeOfPayments, "Id", "Type"),
+                                        "-----[Chọn hình thức thanh toán]-----",
+                                        htmlAttributes: new { @class = "form-control" }
+                                    )
+                                    @Html.ValidationMessageFor(model => model.PaymentType, "", new { @class = "text-danger" })
+                                </div>
                             </div>
                             <div class="form-group">
-                                <input type="radio" />
-                                <label style="font-size:18px">Thanh toán qua NganLuong.vn</label>
+                                @*@Html.LabelFor(model => model.PaymentType, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Ghi chú cho bên giao hàng</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @rows = "5", @columns = "30" })
+                                </div>
                             </div>
+
                             <div class="form-group">
-                                <button type="submit" name="update_cart_action" value="empty_cart" class="btn btn-primary" id="empty_cart_button"><span>ĐẶT HÀNG</span></button>
+                                
+                                    <button class="btn btn-success" style="float: right;margin-right: 50px;" type="submit">Hoàn tất</button>
+                                
                             </div>
-                        
-                        
-                    </div>
+                        </div>
+                    }
+                    
                 </div>
             </div>
             <div class="col-md-3">
@@ -36,17 +53,16 @@
                     <div class="table-responsive">
                         <table class="data-table">
                             <tbody>
+                                
                                 <tr>
-                                    <td><strong>Cao Minh Thúy Vy</strong></td>
+                                    <td><strong>@Model.CustomerFullName</strong></td>
                                 </tr>
                                 <tr>
-                                    <td>36 Nguyễn Trãi</td>
+                                    <td>@Model.Address</td>
                                 </tr>
+                                
                                 <tr>
-                                    <td>Phường 1, Quận 5, Hồ Chí Minh</td>
-                                </tr>
-                                <tr>
-                                    <td>0903307533</td>
+                                    <td>@Model.PhoneNumber</td>
                                 </tr>
                             </tbody>
 
@@ -61,18 +77,17 @@
                     <div class="table-responsive">
                         <table class="data-table">
                             <tbody>
-                                <tr>
-                                    <td>1 x Xi măng Hà Tiên</td>
-                                    <td>80.000 VNĐ</td>
-                                </tr>
-                                <tr>
-                                    <td>1 x Xi măng Nghi Sơn</td>
-                                    <td>89.000 VNĐ</td>
-                                </tr>
+                                @for (int i = 0; i < Model.ShoppingCart.ShoppingCartProducts.Count(); i++)
+                                {
+                                    <tr>
+                                        <td>@Model.ShoppingCart.ShoppingCartProducts[i].Quantity x @Model.ShoppingCart.ShoppingCartProducts[i].ProductName</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.ShoppingCart.ShoppingCartProducts[i].MiniTotal)</td>
+                                    </tr>
+                                }
 
                                 <tr>
                                     <td>Tổng sản phẩm</td>
-                                    <td>2</td>
+                                    <td>@Model.ShoppingCart.ShoppingCartProducts.Count()</td>
                                 </tr>
                             </tbody>
                             <tfoot>
@@ -80,7 +95,7 @@
                                     <td>
                                         <strong>TỔNG CỘNG</strong>
                                     </td>
-                                    <td>169.000 VNĐ</td>
+                                    <td>@Html.DisplayFor(modelItem => Model.ShoppingCart.Total)</td>
                                 </tr>
                             </tfoot>
                         </table>

@@ -1,0 +1,44 @@
+﻿@model TGVL.Models.OrderViewModel
+@using (Ajax.BeginForm("UpdateInfo", "Home",
+    new AjaxOptions
+    {
+        HttpMethod = "POST",
+        OnSuccess = "updateDeliveryAddress(data, status, xhr)"
+    }, new { id = "form1"}
+))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.CustomerId)
+    <ul>
+        <li>
+            <div class="input-box">
+                <label style="font-size:16px"> Họ tên<span class="required">*</span></label>
+                <br />
+                @Html.EditorFor(model => model.CustomerFullName, new { htmlAttributes = new { @class = "form-control", placeholder = "Họ tên người nhận" } })
+                @Html.ValidationMessageFor(model => model.CustomerFullName, "", new { @class = "text-danger" })
+            </div>
+        </li>
+        <li>
+            <div class="input-box">
+                <label style="font-size:16px"> Số điện thoại<span class="required">*</span> </label>
+                <br />
+                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "Số điện thoại liên hệ" } })
+                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+            </div>
+        </li>
+
+        <li>
+            <div class="input-box">
+                <label style="font-size:16px">Địa chỉ<span class="required">*</span> </label>
+                <br />
+                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", placeholder = "Địa chỉ nhận hàng" } })
+                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+            </div>
+
+        </li>
+    </ul>
+    <div style="padding-right:10px">
+        <button type="submit" class="btn btn-success"><span>Cập nhật</span></button>
+    </div>
+    
+}
