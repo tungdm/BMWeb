@@ -485,6 +485,8 @@ namespace TGVL.Controllers
             {
                 var registerType = model.RegisterType;
 
+                registerType = registerType == null ? "Customer" : registerType;
+
                 // Get the information about the user from the external login provider
                 var info = await AuthenticationManager.GetExternalLoginInfoAsync();
                 if (info == null)
