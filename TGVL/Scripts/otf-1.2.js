@@ -152,6 +152,17 @@ function updateCart(data, status, xhr) {
     }
 }
 
+function updateQuantitySession(newQty, type, id) {
+    var options = {
+        url: '/Home/UpdateQuantity',
+        type: 'GET',
+        data: { type: type, id: id, newQty: newQty }
+    };
+    $.ajax(options).done(function (data) {
+
+    });
+}
+
 function removefromcart(type, id) {
     var options = {
         url: '/Home/RemoveFromCart',
@@ -165,6 +176,12 @@ function removefromcart(type, id) {
             console.log(data.RemoveElement);
             
             $(removeElement).remove();
+
+            var rowCount = $('#shopping-cart-table > tbody > tr').length;
+            if (rowCount == 0) {
+                $('#checkout').remove();
+            }
+
             var sum = 0.0;
 
             $('#shopping-cart-table > tbody  > tr').each(function () {
@@ -177,7 +194,7 @@ function removefromcart(type, id) {
 
                 console.log("qty:" + qty + ", price:" + price + ", price2:" + price2);
 
-                var amount = (qty * price2);
+                var amount = qty * price2;
                 var miniTotal = addDot(amount);
                 $(this).find('.minitotal').html("<strong>" + miniTotal + " &#x20AB;</strong>");
                 sum += amount;
@@ -191,6 +208,35 @@ function removefromcart(type, id) {
     });
 }
 
+function updateDeliveryAddress(data, status, xhr) {
+    $("#deliveryAddress").html(data);
+    if ($('#messageModal').hasClass('in')) {
+        $('#messageModal').modal('toggle');
+    }
+}
+
+
+
+function updateExistedAddress() {
+    var options = {
+        url: '/Home/UpdateExistedAddress',
+        data : {type : "update"},
+        type: 'GET',
+    };
+
+    $.ajax(options).done(function (data) {
+        $("#message").html(data);
+        var form = $("#form1");
+        $.validator.unobtrusive.parse(form);
+        $('#messageModal').modal('show');
+    });
+}
+
+function gotToCheckOut() {
+    var url = "/Home/CheckOut";
+
+    window.location.href = url;
+}
 function addDot(nStr) {
     nStr += '';
     x = nStr.split('.');
@@ -203,3 +249,18 @@ function addDot(nStr) {
     return x1 + x2;
 }
 
+if (window.location.hash && window.location.hash == '#_=_') {
+    if (window.history && history.pushState) {
+        window.history.pushState("", document.title, window.location.pathname);
+    } else {
+        // Prevent scrolling by storing the page's current scroll offset
+        var scroll = {
+            top: document.body.scrollTop,
+            left: document.body.scrollLeft
+        };
+        window.location.hash = '';
+        // Restore the scroll offset, should be flicker free
+        document.body.scrollTop = scroll.top;
+        document.body.scrollLeft = scroll.left;
+    }
+}
