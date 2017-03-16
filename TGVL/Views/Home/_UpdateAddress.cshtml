@@ -1,38 +1,39 @@
 ﻿@model TGVL.Models.OrderViewModel
 
 
-    <ul>
-        <li>
-            <div class="input-box">
-                <label style="font-size:16px"> Họ tên </label>
-                <br />
+<ul>
+    <li>
+        <div class="input-box">
+            <strong>
                 @Html.DisplayFor(model => model.CustomerFullName, new { htmlAttributes = new { @class = "form-control", placeholder = "Họ tên người nhận" } })
-           
-            </div>
-        </li>
-        <li>
-            <div class="input-box">
-                <label style="font-size:16px"> Số điện thoại </label>
-                <br />
-                @Html.DisplayFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "Số điện thoại liên hệ" } })
-            
-            </div>
-        </li>
+            </strong>
+        </div>
+    </li>
+    <li>
+        <div class="input-box">
 
-        <li>
-            <div class="input-box">
-                <label style="font-size:16px"> Địa chỉ </label>
-                <br />
-                @Html.DisplayFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", placeholder = "Địa chỉ nhận hàng" } })
-            
-            </div>
+            @Html.DisplayFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "Số điện thoại liên hệ" } })
 
-        </li>
-    </ul>
-   
-    <div style="padding-right:10px">
-        <button type="button" class="btn btn-success" onclick="updateExistedAddress()"><span>Sửa địa chỉ</span></button>
-        <button type="submit" class="btn btn-success" onclick="gotToCheckOut()"><span>Tiếp tục</span></button>
+        </div>
+    </li>
+
+    <li>
+        <div class="input-box">
+
+            @Html.DisplayFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", placeholder = "Địa chỉ nhận hàng" } })
+
+        </div>
+
+    </li>
+</ul>
+<hr />
+<div class="box-footer" style="padding-right:10px">
+    <div class="pull-left">
+        <button type="button" class="btn btn-default" onclick="updateExistedAddress()"><span>Sửa địa chỉ</span></button>
     </div>
+    <div class="pull-right">
+        <button type="submit" class="btn btn-success" onclick="gotToCheckOut()" style="font-size:18px"><span>TIẾP TỤC</span></button>
+    </div>
+</div>
 
 

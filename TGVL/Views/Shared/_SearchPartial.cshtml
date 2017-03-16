@@ -39,7 +39,7 @@
                         var cartViewModel = (TGVL.Models.CartViewModel)Session["Cart"];
                         var count = cartViewModel == null ? 0 : cartViewModel.CartDetails.Count();
                     }
-                    <div class="basket"> <a href="/Home/ShoppingCart"><span>Giỏ hàng (<span id="cartCount">@count</span>)</span></a></div>
+                    <div class="basket"> <a href="/Home/ShoppingCart"><span>Giỏ hàng (<span id="cartCount" style="color:red;font-size:20px">@count</span>)</span></a></div>
                 </div>
                 <div id="ajaxconfig_info" style="display:none">
                     <a href="#/"></a>

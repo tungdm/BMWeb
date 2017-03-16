@@ -267,7 +267,7 @@
                                                                     </div>
                                                                     <div class="comment-body">
                                                                         @*@reply.Description*@
-                                                                        <p style="color:#b6b6b6">@reply.Address</p>
+                                                                        <p style="color:#333">@reply.Address</p>
                                                                     </div>
 
                                                                     <div> 
@@ -366,7 +366,7 @@
                                                                                     <td>
                                                                                         @if (User.Identity.GetUserId<int>() == reply.SupplierId)
                                                                                         {
-                                                                                            <button id="edit" type="button" class="btn btn-primary btn-sm" onclick="edit(@reply.Id)">Chỉnh sửa</button>
+                                                                                            <button id="edit" type="button" class="btn btn-warning btn-sm" onclick="edit(@reply.Id)">Chỉnh sửa</button>
                                                                                         }
                                                                                         else if (User.Identity.GetUserId<int>() == reply.CustomerId)
                                                                                         {

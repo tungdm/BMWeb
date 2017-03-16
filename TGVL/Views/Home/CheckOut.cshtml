@@ -36,10 +36,10 @@
                                     @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @rows = "5", @columns = "30" })
                                 </div>
                             </div>
-
+                            <hr />
                             <div class="form-group">
                                 
-                                    <button class="btn btn-success" style="float: right;margin-right: 50px;" type="submit">Hoàn tất</button>
+                                    <button class="btn btn-success" style="float: right;margin-right: 50px;font-size:18px" type="submit">HOÀN TẤT</button>
                                 
                             </div>
                         </div>
@@ -88,6 +88,10 @@
                                 <tr>
                                     <td>Tổng sản phẩm</td>
                                     <td>@Model.ShoppingCart.ShoppingCartProducts.Count()</td>
+                                </tr>
+                                <tr>
+                                    <td>Phí vận chuyển</td>
+                                    <td>0 ₫</td>
                                 </tr>
                             </tbody>
                             <tfoot>

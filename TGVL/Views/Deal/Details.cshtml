@@ -7,7 +7,7 @@
 
 @Styles.Render("~/Content/searchproductcss")
 @*@Scripts.Render("~/bundles/viewdetailjquery")*@
-@Scripts.Render("~/bundles/clockjquery")
+
 
 <style>
     #time {
@@ -122,7 +122,8 @@
         </div>
     </div>
 </section>
-
+@Scripts.Render("~/bundles/clockjquery")
+@*@RenderSection("scripts", required: false)*@
 <script>
     //var date = getRelativeDate(02, 01, 10);
     //console.log(date);
