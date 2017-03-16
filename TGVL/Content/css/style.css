@@ -88,7 +88,7 @@ body {
 	padding: 0;
 }
 a {
-	
+	color: #333;
 	text-decoration: none;
 }
 a:hover, a:focus {
@@ -260,6 +260,7 @@ ul.currencies_list li a:hover {
 	color: #333;
 	font-size: 12px;
 }
+
 a.block-language:hover {
 	color: #ff1341;
 	text-decoration: none;
@@ -893,6 +894,8 @@ nav {
 	height: 56px;
 	border-top: 1px solid #efefef;
 	border-bottom: 1px solid #efefef;
+    background-color: #ed1c24;
+
 }
 .nav-inner {
 	margin: auto;
@@ -900,26 +903,26 @@ nav {
 	text-align: center
 }
 #nav > li > a:hover:nth-child(1), #nav > li > a.active:nth-child(1) {
-	background: #ADD8E6;
-	color: #333 !important;
-	border: 1px #F0F0F0 solid;
+	/*background: #ff1341;
+	color: #fff !important;
+	border: 1px #F0F0F0 solid;*/
 }
 #nav > li > a:first-child {
 	margin-left: 0px;
 }
 #nav > li > a:last-child a {
-	color: #333
+	color: #fff;
 }
 .nav {
 	width: 1000px;
 	margin: 0px auto 0
 }
 #nav > li:hover > a, .vertnav-top li > a:hover {
-	color: #333;
+	/*color: #333;
 	background: #fff;
 	border: 1px #F0F0F0 solid;
 	border-bottom: none;
-	padding: 14px 0px 15px;
+	padding: 14px 0px 15px;*/
 }
 .cms-index-index #nav #nav-home > a, #nav > li.active > a, .vertnav-top li.current > a {
 	color: #fff;
@@ -1234,7 +1237,7 @@ li.level0 > a:hover > span > .pin-bottom:before, #nav li.level0:hover > a > span
 	width: 100%;
 }
 #nav > li > a {
-	color: #000;
+	color: #fff;
 }
 	/* 1st level only */
 #nav > li:hover > a {
@@ -3072,8 +3075,8 @@ small {
 	width: 100%;
 }
 .item .item-inner .item-img .item-img-info a.product-image img {
-	width: 80%;
-	height: 80%;
+	/*width: 80%;
+	height: 80%;*/
 	line-height: 0;
 	-webkit-transition: all 0.3s ease;
 	-moz-transition: all 0.3s ease;
@@ -3211,8 +3214,10 @@ a.button.detail-bnt span {
 /* 14. BREADCRUMBS  */
 
 .breadcrumbs {
-	font-size: 11px;
-	padding: 10px 0px 0;
+	font-size: 14px;
+	padding: 5px 10px;
+    margin-bottom:50px;
+    background-color:#f6f6f6;
 }
 .breadcrumbs ul {
 	margin: 0px 0px 0px 15px;
@@ -3222,7 +3227,7 @@ a.button.detail-bnt span {
 	display: inline;
 }
 .breadcrumbs a {
-	color: #666;
+	/*color: #666;*/
 }
 .breadcrumbs strong {
 	color: #333 !important;
