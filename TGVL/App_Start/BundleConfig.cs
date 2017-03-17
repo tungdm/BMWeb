@@ -29,7 +29,10 @@ namespace TGVL
                       "~/Content/site.css",
                       "~/Content/jquery-ui.css",
                       "~/Content/font-awesome.min.css",
-                      "~/Content/wysiwyg.css"));
+                      "~/Content/wysiwyg.css",
+                      "~/Content/storelocator.css",
+                      "~/Content/Search-form.css"
+                      ));
 
             bundles.Add(new StyleBundle("~/Content/notification").Include(
                       "~/Content/notification.css"));
