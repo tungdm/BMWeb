@@ -7,7 +7,7 @@
             </div>
         </div>
         <div class="col-md-7 col-sm-12 col-xs-12">
-            <form id="searchForm">
+            @*<form id="searchForm">
                 <div class="input-group input-group-lg">
                     <div class="input-group-btn">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -22,14 +22,27 @@
                             <li><a href="#">Deal</a></li>
                         </ul>
                     </div>
-                    <input type="text" class="form-control input-sm" placeholder="Nhập vào đây để tìm kiếm">
+                    <input type="text" class="form-control input-lg" placeholder="Nhập vào đây để tìm kiếm">
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-danger btn-flat">
                             <span class="fa fa-search"></span>
                         </button>
                     </span>
                 </div>
+            </form>*@
+            <form id="header_search" name="header_search" action="/Home/SearchProduct" method="get">
+                <div class="border" id="home_search_control">
+
+                    <input type="submit" class="button" value="Tìm kiếm">
+                    <div class="keyword">
+                        <div>
+                            <input type="text" id="header_search_keyword" name="searchString" value="" placeholder="Chào Minh Tung, hôm nay bạn muốn mua gì?" maxlength="100" class="ac_input" data-otf-autocomplete="@Url.Action("ProductAutocomplete")">
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
             </form>
+            
 
         </div>
         <div class="col-md-2 col-sm-12 col-xs-12">
