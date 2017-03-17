@@ -12,6 +12,35 @@ namespace TGVL.Models
         public string Username { get; set; }
     }
 
+    public class Shop
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+
+        public string lat { get; set; }
+
+        public string lng { get; set; }
+
+        public string address { get; set; }
+
+        public string address2 { get; set; }
+        public string state { get; set; }
+
+        public string city { get; set; }
+
+        public string phone { get; set; }
+
+        public string web { get; set; }
+
+        public string hours1 { get; set; }
+        public string hours2 { get; set; }
+        public string hours3 { get; set; }
+
+        public string rating { get; set; }
+
+    }
+
+
     public class AssignedWarehouseData
     {
         public int WarehouseId { get; set; }
