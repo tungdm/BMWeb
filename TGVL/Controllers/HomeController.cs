@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TGVL.Models;
+using System.Web.Script.Serialization;
 
 namespace TGVL.Controllers
 {
@@ -317,10 +318,68 @@ namespace TGVL.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page. Nguyen - Cho";
+            ViewBag.Message = "Your application description page";
+            string _Json = string.Empty;
+            string _path = string.Empty;
+
+            var query = "SELECT [dbo].[Warehouses].[Id] AS id, [dbo].[Users].[Fullname] AS name, [dbo].[Warehouses].[Lat] AS lat, [dbo].[Warehouses].[Lng] as lng, "
+                + "[dbo].[Warehouses].[Address] AS address, [dbo].[Warehouses].[Administrative_area_level_1] AS city, [dbo].[Users].[PhoneNumber] AS phone, [dbo].[Users].[Email] as rating "
+                + "FROM[dbo].[Users], [dbo].[Warehouses] "
+                + "WHERE[dbo].[Users].[Id] = [dbo].[Warehouses].[SupplierId]";
+
+            IList<Shop> data = db.Database.SqlQuery<Shop>(query).ToList();
+
+            _Json = new JavaScriptSerializer().Serialize(data);
+
+            _path = Server.MapPath("~/Store/");
+
+            string filename = (string)Session["FilenameJson"];
+
+
+            if (filename == null)
+            {
+                Guid g = Guid.NewGuid();
+               
+                filename = Convert.ToBase64String(g.ToByteArray());
+                filename = filename.Replace("=", "");
+                filename = filename.Replace("+", "");
+                filename = filename.Replace("/", "");
+                filename = filename.Replace("\\", "");
+
+                Session["FilenameJson"] = filename;
+            }
+
+            
+
+            System.IO.File.WriteAllText(_path + filename + "_.json", _Json);
+
+
 
             return View();
         }
+
+        public ActionResult ProductAutocomplete(string term)
+        {
+            if (term != null)
+            {
+                var model = db.SysProducts
+                .Where(p => p.Name.StartsWith(term))
+                .Take(10)
+                .Select(p => new
+                {
+                    label = p.Name
+                });
+                return Json(model, JsonRequestBehavior.AllowGet);
+            }
+            return RedirectToAction("AddProduct");
+        }
+
+
+        public ActionResult SearchProduct(string searchString)
+        {
+            return View();
+        }
+
         [Authorize]
         public ActionResult Contact()
         {
