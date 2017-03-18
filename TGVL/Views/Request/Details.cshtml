@@ -99,7 +99,65 @@
                                 </header>
                                 <!--blog_entry-header clearfix-->
                                 <div class="entry-content">
+                                    <h4><strong>Sản phẩm yêu cầu</strong></h4>
+                                    <div class="table-responsive">
+                                        <form>
+                                            <table class="data-table" id="my-orders-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Sản phẩm</th>
+                                                        @*<th>Giá</th>*@
+                                                        <th>Ảnh minh họa</th>
+                                                        <th>Nhà sản xuất</th>
+                                                        <th>Số lượng</th>
+                                                        <th>Đơn vị tính</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in Model.RequestProducts)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                <strong>@Html.ActionLink((item.SysProduct.Name), "Details", "Products", new { id = item.SysProductId }, null)</strong>
+                                                            </td>
 
+                                                            <td>
+                                                                <img src="~/Images/Product/SysProduct/@item.SysProduct.Image" style="max-height:100px; max-width:100px" />
+                                                            </td>
+
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.SysProduct.Manufacturer.Name)
+                                                            </td>
+
+                                                            <td>
+                                                                @if (item.Quantity == 0)
+                                                                {
+                                                                    <strong>Thỏa thuận</strong>
+                                                                }
+                                                                else
+                                                                {
+                                                                    @Html.DisplayFor(modelItem => item.Quantity)
+                                                                }
+                                                            </td>
+
+                                                            @*<td>
+                                    @Html.DisplayFor(modelItem => item.UnitPrice)
+                                </td>*@
+
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.SysProduct.UnitType.Type)
+                                                            </td>
+
+
+                                                        </tr>
+                                                    }
+
+
+                                                </tbody>
+                                            </table>
+                                        </form>
+                                    </div>
+                                    <br />
                                     <h4><strong>Thông tin chi tiết</strong></h4>
                                     <div class="table-responsive">
                                         <form>
@@ -138,65 +196,7 @@
                                 </div>
                                 <br />
                                 <div class="entry-content">
-                                    <h4><strong>Sản phẩm yêu cầu</strong></h4>
-                                    <div class="table-responsive">
-                                        <form>
-                                            <table class="data-table" id="my-orders-table">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Sản phẩm</th>
-                                                        @*<th>Giá</th>*@
-                                                        <th>Ảnh minh họa</th>
-                                                        <th>Nhà sản xuất</th>
-                                                        <th>Số lượng</th>
-                                                        <th>Đơn vị tính</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach (var item in Model.RequestProducts)
-                                                    {
-                                                    <tr>
-                                                        <td>
-                                                            <strong>@Html.ActionLink((item.SysProduct.Name), "Details", "Products", new { id = item.SysProductId }, null)</strong>
-                                                        </td>
 
-                                                        <td>
-                                                            <img src="~/Images/Product/SysProduct/@item.SysProduct.Image" style="max-height:100px; max-width:100px" />
-                                                        </td>
-
-                                                        <td>
-                                                            @Html.DisplayFor(modelItem => item.SysProduct.Manufacturer.Name)
-                                                        </td>
-
-                                                        <td>
-                                                            @if (item.Quantity == 0)
-                                                            {
-                                                                <strong>Thỏa thuận</strong>
-                                                            }
-                                                            else
-                                                            {
-                                                                @Html.DisplayFor(modelItem => item.Quantity)
-                                                            }
-                                                        </td>
-
-                                                        @*<td>
-                                                                @Html.DisplayFor(modelItem => item.UnitPrice)
-                                                            </td>*@
-
-                                                        <td>
-                                                            @Html.DisplayFor(modelItem => item.SysProduct.UnitType.Type)
-                                                        </td>
-
-
-                                                    </tr>
-                                                    }
-
-
-                                                </tbody>
-                                            </table>
-                                        </form>
-                                    </div>
-                                    <br />
                                     <h4><strong>Thông tin liên hệ</strong></h4>
                                     <div class="table-responsive">
                                         <form>
