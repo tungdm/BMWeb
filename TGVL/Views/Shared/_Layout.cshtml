@@ -6,8 +6,8 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/notification")
-    @Scripts.Render("~/bundles/modernizr")
 
+   
 </head>
 @using Microsoft.AspNet.Identity
 
@@ -41,13 +41,13 @@
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/otf2")
+    @*@Scripts.Render("~/bundles/otf2")
     @Scripts.Render("~/bundles/signalR")
-    @Scripts.Render("~/signalr/hubs")
+    @Scripts.Render("~/signalr/hubs")*@
 
 
 
-    <script>
+    @*<script>
         $(document).ready(function () {
             // signalr js code for start hub and send receive notification
             var notificationHub = $.connection.notificationHub;
@@ -76,7 +76,7 @@
         });
 
 
-    </script>
+    </script>*@
 
     @RenderSection("scripts", required: false)
 </body>
