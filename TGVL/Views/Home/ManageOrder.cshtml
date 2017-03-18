@@ -1,0 +1,141 @@
+﻿
+@{
+    ViewBag.Title = "ManageOrder";
+    Layout = "~/Views/Shared/_HomePageViewLayout.cshtml";
+}
+@Styles.Render("~/Content/searchproductcss")
+
+<div class="main-container col2-left-layout">
+    <div class="main container">
+        <div class="row">
+            <aside class="col-left sidebar col-sm-3">
+                <div class="block block-account">
+                    <div class="block-title">
+                        <div class="profile">
+                            <div class="profile_avatar">
+                                <img src="~/Content/images/gachbong.jpg" style="width:60px;height:60px;max-height:60px;max-width:60px" />
+                            </div>
+                            <div class="profile_info">
+                                <div style="padding:5px; font-size:15px">Cao Minh Thúy Vy</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="block-content">
+                        <ul>
+                            <li><a href="#">Thông tin cá nhân</a></li>
+                            <li><a href="#">Thông tin yêu cầu</a></li>
+                            <li>
+                                <a href="#">Thông tin đơn hàng</a>
+                            </li>
+                            <li>
+                                <a href="#">Đăng xuất</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </aside>
+            <section class="col-main col-sm-9">
+                <div class="popular-posts widget widget__sidebar">
+                    <h3 class="widget-title">TÌM KIẾM ĐƠN HÀNG</h3>
+                    <div class="widget-content">
+
+                    </div>
+                </div>
+                <br />
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                
+                                <th>Ngày giao hàng</th>
+                                <th>Số lượng sản phẩm</th>
+                                <th>Tổng cộng</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                
+                                <td>08/03/2017</td>
+                                <td>2</td>
+                                <td>89.000 </td>
+                                <td>
+                                    <button type="button" class="button btn-primary" data-toggle="modal" data-target="#detail">
+                                        Xem chi tiết
+                                    </button>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                
+                                <td>08/03/2017</td>
+                                <td>1</td>
+                                <td>89.000 </td>
+                                <td>
+                                    <button type="button" class="button btn-primary" data-toggle="modal" data-target="#detail">
+                                        Xem chi tiết
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </div>
+    </div>
+</div>
+
+<div id="detail" class="modal fade" role="dialog">
+    <div clas="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Chi tiết đơn hàng</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Sản phẩm</label>
+                        <div class="col-md-8">
+                            Xi măng Hà Tiên 1   Xi măng Hà Tiên 2
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Số lượng</label>
+                        <div class="col-md-8">
+                            <input type="text" value="4" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Đơn giá</label>
+                        <div class="col-md-8">
+                            <input type="text" value="80.000 VNĐ" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Tổng cộng</label>
+                        <div class="col-md-8">
+                            <input type="text" value="320.000VNĐ" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Ngày giao hàng</label>
+                        <div class="col-md-8">
+                            <input type="text" value="08/03/2017" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-success" data-dismiss="modal">Hoàn tất</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
