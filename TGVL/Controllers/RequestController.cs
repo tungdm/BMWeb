@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Net;
 using Microsoft.AspNet.SignalR;
 using TGVL.Hubs;
+using PagedList.Mvc;
+using PagedList;
 
 namespace TGVL.Controllers
 {
@@ -639,8 +641,10 @@ namespace TGVL.Controllers
             return View();
         }
 
-        public ActionResult Bid()
+        public ActionResult Bid(int? page)
         {
+            var pageSize = 5;
+            var pageNumber = (page??1);
             var userId = User.Identity.GetUserId<int>();
             var query = "SELECT[dbo].[Requests].[Id], [dbo].[Requests].[Title],[dbo].[Requests].[DeliveryAddress],[dbo].[Requests].[DueDate],[dbo].[Requests].[ReceivingDate],[dbo].[Requests].[Descriptions],[dbo].[Users].[UserName], [dbo].[Users].[Avatar] "
             + "FROM[dbo].[Requests], [dbo].[Users] "
@@ -648,11 +652,13 @@ namespace TGVL.Controllers
             IList<RequestFloorModel> data = db.Database.SqlQuery<RequestFloorModel>(query).ToList();
 
             ViewBag.ListBidRequest = data;
-            return View();
+            return View(data.ToPagedList(pageNumber,pageSize));
         }
 
-        public ActionResult Normal()
+        public ActionResult Normal(int? page)
         {
+            var pageSize = 5;
+            var pageNumber = (page ?? 1);
             var userId = User.Identity.GetUserId<int>();
             var query = "SELECT[dbo].[Requests].[Id], [dbo].[Requests].[Title],[dbo].[Requests].[DeliveryAddress],[dbo].[Requests].[ReceivingDate],[dbo].[Requests].[Descriptions],[dbo].[Users].[UserName] "
             + "FROM[dbo].[Requests], [dbo].[Users] "
@@ -672,7 +678,7 @@ namespace TGVL.Controllers
             //    };
             //    db.RequestProducts.Add(requestProduct);
             //}
-            return View();
+            return View(data.ToPagedList(pageNumber,pageSize));
         }
 
         public ActionResult PlaceBidRequest()
