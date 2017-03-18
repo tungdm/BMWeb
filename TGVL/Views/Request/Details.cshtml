@@ -415,6 +415,11 @@
                 </div>
             </div>
 
+            <div id="countdown-3" class="col-md-3">
+
+                
+            </div>
+
             @*<div class="col-right sidebar col-sm-3 wow bounceInUp animated">
                 <div role="complementary" class="widget_wrapper13" id="secondary">
                     <div class="popular-posts widget widget__sidebar" id="recent-posts-4">
@@ -489,8 +494,33 @@
     </div>
 </div>
 
+@Scripts.Render("~/bundles/clockjquery")
+<script>
+    //var date = getRelativeDate(02, 01, 10);
+    //console.log(date);
 
 
+    var date = getRelativeDate(7, 9);
+
+    $('#countdown-3').timeTo({
+        timeTo: date,
+        displayDays: 2,
+        theme: "black",
+        displayCaptions: true,
+        fontSize: 28,
+        captionSize: 14
+    });
+
+    function getRelativeDate(days, hours, minutes) {
+        var date = new Date((new Date()).getTime() + 60000 /* milisec */ * 60 /* minutes */ * 24 /* hours */ * days /* days */);
+
+        date.setHours(hours || 0);
+        date.setMinutes(minutes || 0);
+        date.setSeconds(0);
+
+        return date;
+    }
+</script>
 
 
 
