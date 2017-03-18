@@ -27,17 +27,17 @@
                                 <div class="product-image">
                                     <div>
                                         @*<img alt="product-image" src="~/Content/images/Xi măng Hạ Long PCB 40.jpg" width="100" height="100">*@
-                                        <img src="~/Images/Product/Warehouse/@Model.ProductImage"  width="100" height="100" />
+                                        <img src="~/Images/Product/Warehouse/@Model.ProductImage" width="100" height="100" />
                                     </div>
                                     @*<div class="flexslider flexslider-thumb">
-                                        <ul class="previews-list slides">
-                                            <li><a href="~/Content/images/gachbong.jpg" class="cloud-zoom-gallery" rel="useZoom: 'zoom1', smallImage: '~/Content/images/gachbong.jpg' "><img src="~/Content/images/gachbong.jpg" alt="Thumbnail 1" /></a></li>
-                                            <li><a href='~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' "><img src="~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg" alt="Thumbnail 2" /></a></li>
-                                            <li><a href='~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' "><img src="~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg" alt="Thumbnail 1" /></a></li>
-                                            <li><a href='~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' "><img src="~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg" alt="Thumbnail 2" /></a></li>
-                                            <li><a href='~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' "><img src="~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg" alt="Thumbnail 2" /></a></li>
-                                        </ul>
-                                    </div>*@
+                                            <ul class="previews-list slides">
+                                                <li><a href="~/Content/images/gachbong.jpg" class="cloud-zoom-gallery" rel="useZoom: 'zoom1', smallImage: '~/Content/images/gachbong.jpg' "><img src="~/Content/images/gachbong.jpg" alt="Thumbnail 1" /></a></li>
+                                                <li><a href='~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' "><img src="~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg" alt="Thumbnail 2" /></a></li>
+                                                <li><a href='~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' "><img src="~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg" alt="Thumbnail 1" /></a></li>
+                                                <li><a href='~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' "><img src="~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg" alt="Thumbnail 2" /></a></li>
+                                                <li><a href='~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' "><img src="~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg" alt="Thumbnail 2" /></a></li>
+                                            </ul>
+                                        </div>*@
                                 </div>
 
                                 <div class="clear"></div>
@@ -65,12 +65,12 @@
                                 <hr />
                                 <div class="add-to-box">
                                     @using (Ajax.BeginForm("AddToCart",
-                                        new AjaxOptions
-                                        {
-                                            HttpMethod = "POST",
-                                            OnSuccess = "updateCart(data, status, xhr)"
-                                        }
-                                    ))
+new AjaxOptions
+{
+    HttpMethod = "POST",
+    OnSuccess = "updateCart(data, status, xhr)"
+}
+))
                                     {
                                         @Html.AntiForgeryToken()
                                         @Html.HiddenFor(model => model.Id)
@@ -79,9 +79,10 @@
                                             <label>Số lượng :</label>
                                             @Html.EditorFor(model => model.CustomerQuantity)
                                         </div>
-                                        <button type="submit" class="button btn-cart"><span>Thêm vào giỏ hàng</span></button>
+                                        <button type="submit" class="btn btn-cart" style="font-size:20px"><span>MUA NGAY</span></button>
+                                        <br />
                                         @Html.ValidationMessageFor(model => Model.CustomerQuantity, "", new { @class = "text-danger" })
-                                        
+
                                     }
                                 </div>
                                 <br />
@@ -92,9 +93,9 @@
                                             <i class="fa fa-user"></i> <strong style="font-size:18px">2222 người đã mua</strong>
                                         </div>
                                         <div id="time" class="col-md-8">
-                                            
+
                                             <span id="countdown-2">
-                                                
+
                                             </span>
                                         </div>
                                     </div>
@@ -105,10 +106,33 @@
                 </div>
             </div>
             <br />
-            <div class="popular-posts widget widget__sidebar">
-                <h3 class="widget-title">THÔNG TIN CHI TIẾT</h3>
-                <div class="widget-content">
-                    @Html.Raw(Model.ProductDetails)
+            <br />
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#tab_1" data-toggle="tab">THÔNG TIN CHI TIẾT</a></li>
+                            <li><a href="#tab_2" data-toggle="tab">ĐÁNH GIÁ</a></li>
+                            <li><a href="#tab_3" data-toggle="tab">BẢN ĐỒ</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab_1">
+                                
+
+                            </div>
+                          
+                            <div class="tab-pane" id="tab_2">
+                                
+                            </div>
+                           
+                            <div class="tab-pane" id="tab_3">
+                               
+                            </div>
+                           
+                        </div>
+                        
+                    </div>
+                   
                 </div>
             </div>
             <br />
@@ -116,9 +140,16 @@
                 <h3 class="widget-title">DEAL TƯƠNG TỰ</h3>
                 <div class="widget-content">
 
-
                 </div>
             </div>
+            @*<div class="popular-posts widget widget__sidebar">
+                <h3 class="widget-title">THÔNG TIN CHI TIẾT</h3>
+                <div class="widget-content">
+                    @Html.Raw(Model.ProductDetails)
+                </div>
+            </div>*@
+            <br />
+
         </div>
     </div>
 </section>
