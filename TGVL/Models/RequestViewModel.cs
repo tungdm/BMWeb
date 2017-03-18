@@ -10,23 +10,27 @@ namespace TGVL.Models
     }
     public class RequestFloorModel
     {
-        [Display(Name = "Tiêu đề")]
         public string Title { get; set; }
 
+        public int Id { get; set; }
+
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Ngày nhận hàng")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         [DateRange]
         public DateTime? ReceivingDate { get; set; }
 
-        [Display(Name = "Miêu tả chi tiết")]
-        public string Description { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+        [DateRange]
+        public DateTime? DueDate { get; set; }
+
+        public string Descriptions { get; set; }
 
         public string DeliveryAddress { get; set; }
 
         public string UserName { get; set; }
 
- 
+        public string Avatar {get;set;}
 
     }
 
