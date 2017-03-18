@@ -3554,8 +3554,8 @@ color: #000;
 	border-radius: 2px;
 }
 .sidebar a, .sidebar .block-layered-nav .price .sub {
-	color: #666;
-	font-size: 12px;
+	color: #333;
+	font-size: 16px;
 }
 .sidebar .block-layered-nav .price {
 	color: #666;
@@ -3593,14 +3593,29 @@ color: #000;
 	/* Block: Account */
 
 .block-account .block-title {
+    margin-right:0;
+    margin-bottom:0;
+}
+.block-account .block-title .profile{
+    padding: 25px 15px;
+}
+.block-account .block-title .profile .profile_avatar{
+    float:left;
+    margin-right: 15px;
+    /*border: 1px solid #eaeaea;*/
+}
+.block-account .block-title .profile .profile_info{
+    overflow: hidden
 }
 .block-account {
+    border: 1px solid #e7e7e7;
+    padding: 10px;  
 }
 .block-account .block-content {
 	padding: 8px 0 !important;
 }
 .block-account .block-content li {
-	border-bottom: 1px solid #eee;
+	/*border-bottom: 1px solid #eee;*/
 	padding: 10px 0;
 }
 .block-account .block-content li {
