@@ -637,13 +637,39 @@ namespace TGVL.Controllers
             return View();
         }
 
-        public ActionResult ViewBidFloor()
+        public ActionResult Bid()
         {
+            var userId = User.Identity.GetUserId<int>();
+            var query = "SELECT[dbo].[Requests].[Id], [dbo].[Requests].[Title],[dbo].[Requests].[DeliveryAddress],[dbo].[Requests].[ReceivingDate],[dbo].[Requests].[Descriptions],[dbo].[Users].[UserName] "
+            + "FROM[dbo].[Requests], [dbo].[Users] "
+            + "WHERE[dbo].[Requests].[Flag] = 1 AND [dbo].[Requests].[CustomerId] = [dbo].[Users].[Id] ";
+            IList<RequestFloorModel> data = db.Database.SqlQuery<RequestFloorModel>(query).ToList();
+
+            ViewBag.ListBidRequest = data;
             return View();
         }
 
-        public ActionResult ViewNormalFloor()
+        public ActionResult Normal()
         {
+            var userId = User.Identity.GetUserId<int>();
+            var query = "SELECT[dbo].[Requests].[Id], [dbo].[Requests].[Title],[dbo].[Requests].[DeliveryAddress],[dbo].[Requests].[ReceivingDate],[dbo].[Requests].[Descriptions],[dbo].[Users].[UserName] "
+            + "FROM[dbo].[Requests], [dbo].[Users] "
+            + "WHERE[dbo].[Requests].[Flag] = 0 AND [dbo].[Requests].[CustomerId] = [dbo].[Users].[Id] ";
+            IList<RequestFloorModel> data = db.Database.SqlQuery<RequestFloorModel>(query).ToList();
+
+            ViewBag.ListNormalRequest = data;
+            //var request = new Request();
+            //model.Title = model.Title;
+            //foreach (var p in model.RequestProducts)
+            //{
+            //    var requestProduct = new RequestProduct
+            //    {
+            //        RequestId = request.Id,
+            //        SysProductId = p.RequestedProduct.Id,
+
+            //    };
+            //    db.RequestProducts.Add(requestProduct);
+            //}
             return View();
         }
 
