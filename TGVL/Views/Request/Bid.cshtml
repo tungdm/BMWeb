@@ -1,4 +1,7 @@
-﻿@model TGVL.Models.RequestFloorModel
+﻿@using PagedList.Mvc
+@using PagedList
+@model  PagedList.IPagedList<TGVL.Models.RequestFloorModel>
+
 @{
     ViewBag.Title = "Sàn đấu thầu";
     Layout = "~/Views/Shared/_HomePageViewLayout.cshtml";
@@ -14,24 +17,24 @@
     }
 </style>
 
-<br/>
+<br />
 <br />
 <div class="col-md-12">
     <div class="page-title">
         <h1><strong>CÁC YÊU CẦU ĐẤU THẦU</strong></h1>
     </div>
-<br />
-<br />
+    <br />
+    <br />
 
     <div class="blog-wrapper" id="main">
         <div class="site-content" id="primary">
             <div role="main" id="content">
                 <div class="comment-content wow bounceInUp animated">
                     <div class="comments-wrapper">
-                        @{
-                            List<TGVL.Models.RequestFloorModel> list = ViewBag.ListBidRequest;
-                        }
-                        @foreach (var item in list)
+                        @*@{
+                                PagedList.IPagedList<TGVL.Models.RequestFloorModel> list = ViewBag.ListBidRequest;
+                            }*@
+                        @foreach (var item in Model)
                         {
                             <a href="/Request/Details/@item.Id">
                                 <ul class="commentlist">
@@ -48,7 +51,7 @@
                                                         <strong>Vào ngày</strong> @Convert.ToDateTime(@item.ReceivingDate).ToString("dd/MM/yyyy")
                                                         <br />
                                                     </p>
-                                                    <div class="col-md-5"><p><strong>Mô tả ngắn</strong><br/> @item.Descriptions</p></div>
+                                                    <div class="col-md-5"><p><strong>Mô tả ngắn</strong><br /> @item.Descriptions</p></div>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <p style="color:red"><strong>Hạn tin đến ngày @Convert.ToDateTime(@item.DueDate).ToString("dd/MM/yyyy")</strong></p>
@@ -63,31 +66,40 @@
                             </a>
                         }
 
-                        <ul class="pagination" style="text-align:center">
-                            <li><a href="#">&laquo;</a></li>
-                            <li class="active"><a href="#">1</a></li>
-                            <li class="disabled"><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li><a href="#">&raquo;</a></li>
-                        </ul>
+                        @*<ul class="pagination" style="text-align:center">
+                                <li><a href="#">&laquo;</a></li>
+                                <li class="active"><a href="#">1</a></li>
+                                <li class="disabled"><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li><a href="#">&raquo;</a></li>
+                            </ul>*@
 
                     </div>
 
                 </div>
+                <br />
+                <div style="text-align:center">
+                    @Html.PagedListPager(Model, page => Url.Action("Bid", new { page }), PagedListRenderOptions.ClassicPlusFirstAndLast)
+                </div>
             </div>
         </div>
-    </div>    
+    </div>
 </div>
 
+
+@*Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount*@
+
+
+
 @*@section Scripts {
-<script>
-    $(document).ready(function () {
-        alert("Hello world");
-        $('.commentlist').click(function () {
-            alert('ho ho ho');
+    <script>
+        $(document).ready(function () {
+            alert("Hello world");
+            $('.commentlist').click(function () {
+                alert('ho ho ho');
+            });
         });
-    });
-</script>
-}*@
+    </script>
+    }*@
