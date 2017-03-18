@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using System;
 using System.Collections.ObjectModel;
+using System.Web.Mvc;
 
 namespace TGVL.Models
 {
@@ -36,7 +37,7 @@ namespace TGVL.Models
         public string hours2 { get; set; }
         public string hours3 { get; set; }
 
-        public string rating { get; set; }
+        public double rating { get; set; }
 
     }
 
@@ -79,5 +80,14 @@ namespace TGVL.Models
         public string Message { get; set; }
         public int WarehouseProductId { get; set; }
         public string Mode { get; set; }
+    }
+
+
+    public class UpdateDescription
+    {
+        public int Id { get; set; }
+
+        [AllowHtml]
+        public string Description { get; set; }
     }
 }
