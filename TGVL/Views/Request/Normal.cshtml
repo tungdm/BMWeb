@@ -1,6 +1,6 @@
-﻿
+﻿@model TGVL.Models.RequestFloorModel
 @{
-    ViewBag.Title = "ViewNormalFloor";
+    ViewBag.Title = "Sàn yêu cầu";
     Layout = "~/Views/Shared/_HomePageViewLayout.cshtml";
 }
 
@@ -20,34 +20,42 @@
                 <div role="main" id="content">
                     <div class="comment-content wow bounceInUp animated">
                         <div class="comments-wrapper">
-                            <ul class="commentlist">
-                                <li class="comment">
-                                    <div class="comment-wrapper">
-                                        <div class="row">
-                                            <div class="col-md-9">
-                                                <h2><strong>Tiêu đề ở đây</strong></h2>
-                                                <table class="col-md-3">
-                                                    <thead>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td><strong>Yêu cầu </strong></td>
-                                                            <td> Sản phẩm 1 </td>
-                                                            <td> Sản phẩm 2</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                                </br>
-                                                <div><p><strong>Mô tả ngắn: ở đây</strong></p></div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <p style="color:red"><strong>Ngày kết thúc tin: Hiện ở đây</strong></p>
-                                            </div>
+                            @{
+                                List<TGVL.Models.RequestFloorModel> list = ViewBag.ListNormalRequest;
+                            }
+                            @foreach (var item in list)
+                            {
+                                <ul class="commentlist">
+                                    <li class="comment">
+                                        <div class="comment-wrapper">
+                                            <div class="row">
+                                                <div class="col-md-9">
+                                                    <h2><strong>@item.Title</strong></h2>
+                                                    <table class="col-md-3">
+                                                        <thead>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td><strong>Yêu cầu </strong></td>
+                                                                <td> Sản phẩm 1 </td>
+                                                                <td> Sản phẩm 2</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <br />
+                                                    <div><p><strong>Mô tả: @item.Description</strong></p></div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <p style="color:red"><strong>@item.ReceivingDate</strong></p>
+                                                    <p style="color:red"><strong>@item.UserName</strong></p>
+                                                </div>
 
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
-                            </ul>
+                                    </li>
+                                </ul>
+                            }
+                            
                             <ul class="commentlist">
                                 <li class="comment">
                                     <div class="comment-wrapper">
@@ -69,7 +77,7 @@
                                                 <div><p><strong>Mô tả ngắn: ở đây</strong></p></div>
                                             </div>
                                             <div class="col-md-3">
-                                                <p style="color:red"><strong>Ngày kết thúc tin: Hiện ở đây</strong></p>
+                                                <p style="color:red"><strong>Ngày nhận hàng: Hiện ở đây</strong></p>
                                             </div>
 
                                         </div>
