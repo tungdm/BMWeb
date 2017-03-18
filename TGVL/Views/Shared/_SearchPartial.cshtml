@@ -24,13 +24,23 @@
             
 
         </div>
-        <div class="col-md-2 col-sm-12 col-xs-12">
-            <div class="top-cart-contain">
+        <div class="col-md-2 header-cart-wrapper">
+            <ul class="header-cart">
+                @{
+                    var cartViewModel = (TGVL.Models.CartViewModel)Session["Cart"];
+                    var count = cartViewModel == null ? 0 : cartViewModel.CartDetails.Count();
+                }
+                <li class="nav-cart">
+                    <a href="/Home/ShoppingCart" aria-expanded="false">
+                        <i class="hd hd-cart"></i><span id="cartCount" class="circle">@count</span> <span class="hidden-xs hidden-sm">Giỏ hàng</span>
+                    </a>
+
+                </li>
+            </ul>
+
+            @*<div class="top-cart-contain">
                 <div class="mini-cart">
-                    @{
-                        var cartViewModel = (TGVL.Models.CartViewModel)Session["Cart"];
-                        var count = cartViewModel == null ? 0 : cartViewModel.CartDetails.Count();
-                    }
+                    
                     <div class="basket"> <a href="/Home/ShoppingCart"><span>Giỏ hàng (<span id="cartCount" style="color:red;font-size:20px">@count</span>)</span></a></div>
                 </div>
                 <div id="ajaxconfig_info" style="display:none">
@@ -40,7 +50,7 @@
                     <input class="effect_to_cart" value="1" type="hidden">
                     <input class="title_shopping_cart" value="Go to shopping cart" type="hidden">
                 </div>
-            </div>
+            </div>*@
         </div>
     </div>
 </div>
