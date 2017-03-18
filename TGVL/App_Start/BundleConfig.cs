@@ -31,7 +31,8 @@ namespace TGVL
                       "~/Content/font-awesome.min.css",
                       "~/Content/wysiwyg.css",
                       "~/Content/storelocator.css",
-                      "~/Content/Search-form.css"
+                      "~/Content/Search-form.css",
+                      "~/Content/header-cart.css"
                       ));
 
             bundles.Add(new StyleBundle("~/Content/notification").Include(
