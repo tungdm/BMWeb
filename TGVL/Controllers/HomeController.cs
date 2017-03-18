@@ -385,7 +385,7 @@ namespace TGVL.Controllers
 
             
 
-            return RedirectToAction("About");
+            return RedirectToAction("ViewDetail");
         }
 
         [Authorize]
@@ -408,6 +408,7 @@ namespace TGVL.Controllers
 
         public ActionResult ViewDetail()
         {
+
             return View();
         }
 

@@ -293,7 +293,8 @@ namespace TGVL.Controllers
                     db.SaveChanges();
                     Session.Clear();
                     //return RedirectToAction("Index");
-                    return JavaScript("window.location = '" + Url.Action("Index", "Request") + "'");
+  
+                    return JavaScript("window.location = '" + Url.Action("Details", "Request", new { id = request.Id }) + "'");
                 }
 
             }
@@ -308,6 +309,7 @@ namespace TGVL.Controllers
             ViewBag.PaymentType = new SelectList(db.Payments, "Id", "Type");
             ViewBag.TypeOfHouse = new SelectList(db.Houses, "Id", "Type");
             return View(model);
+
         }
 
         //TungDM
@@ -640,7 +642,7 @@ namespace TGVL.Controllers
         public ActionResult Bid()
         {
             var userId = User.Identity.GetUserId<int>();
-            var query = "SELECT[dbo].[Requests].[Id], [dbo].[Requests].[Title],[dbo].[Requests].[DeliveryAddress],[dbo].[Requests].[ReceivingDate],[dbo].[Requests].[Descriptions],[dbo].[Users].[UserName] "
+            var query = "SELECT[dbo].[Requests].[Id], [dbo].[Requests].[Title],[dbo].[Requests].[DeliveryAddress],[dbo].[Requests].[DueDate],[dbo].[Requests].[ReceivingDate],[dbo].[Requests].[Descriptions],[dbo].[Users].[UserName], [dbo].[Users].[Avatar] "
             + "FROM[dbo].[Requests], [dbo].[Users] "
             + "WHERE[dbo].[Requests].[Flag] = 1 AND [dbo].[Requests].[CustomerId] = [dbo].[Users].[Id] ";
             IList<RequestFloorModel> data = db.Database.SqlQuery<RequestFloorModel>(query).ToList();
