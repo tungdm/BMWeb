@@ -8,6 +8,27 @@ namespace TGVL.Models
     {
         
     }
+    public class RequestFloorModel
+    {
+        [Display(Name = "Tiêu đề")]
+        public string Title { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Ngày nhận hàng")]
+        [DateRange]
+        public DateTime? ReceivingDate { get; set; }
+
+        [Display(Name = "Miêu tả chi tiết")]
+        public string Description { get; set; }
+
+        public string DeliveryAddress { get; set; }
+
+        public string UserName { get; set; }
+
+ 
+
+    }
 
     public class CreateRequestViewModel
     {
@@ -45,7 +66,7 @@ namespace TGVL.Models
         public string Description { get; set; }
 
         [Required]
-        [Range(1, 30)]
+        [Range(1, 30, ErrorMessage = "Hee")]
         [Display(Name = "Thời hạn yêu cầu")]
         public int TimeRange { get; set; }
 
