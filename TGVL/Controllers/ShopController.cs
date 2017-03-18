@@ -280,6 +280,30 @@ namespace TGVL.Controllers
             return View(model);
         }
 
+        public ActionResult EditDescription (int? id)
+        {
+            var product = db.Products.Find(id);
+
+            var model = new UpdateDescription
+            {
+                Id = product.Id,
+                Description = product.Description
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditDescription(UpdateDescription model)
+        {
+            var product = db.Products.Find(model.Id);
+            product.Description = model.Description;
+            db.Entry(product).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return View();
+        }
         public ActionResult ViewProduct()
         {
             return View();
