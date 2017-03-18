@@ -1,12 +1,12 @@
 ﻿#header_search {
     font-size: 13px;
-    margin: 20px auto;
-    width: 70%;
+    margin: 20px 8px;
+    width: 85%;
     overflow: hidden;
 }
 
 #header_search .border {
-    border: 2px solid #365DB5;
+    border: 2px solid #d3d3d3;
     border-right: none;
 }
 
@@ -19,7 +19,7 @@
 }
 
 #header_search #header_search_text, #header_search .button {
-    background: #365DB5;
+    background: #ed1c24;
     color: #FFF;
     height: 38px;
     line-height: 34px;
