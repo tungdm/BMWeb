@@ -50,11 +50,12 @@
                                                             <a href="#" class="product-image"><img width="60" height="60" src="~/Images/Product/Warehouse/@Model.ShoppingCartProducts[i].Image"></a>
                                                         </td>
                                                         <td>
-                                                            @Model.ShoppingCartProducts[i].ProductName
+                                                            <a href="/Deal/Details/@Model.ShoppingCartProducts[i].DealId">@Model.ShoppingCartProducts[i].ProductName</a>
+                                                            
                                                             @Html.HiddenFor(modelItem => Model.ShoppingCartProducts[i].ProductName)
                                                         </td>
 
-                                                        <td class="a-center hidden-table"><span class="price" style="font-size:15px"><strong>@Html.DisplayFor(modelItem => Model.ShoppingCartProducts[i].UnitPrice)</strong></span></td>
+                                                        <td class="a-center hidden-table"><span class="cart-price"> <span class="price">@Html.DisplayFor(modelItem => Model.ShoppingCartProducts[i].UnitPrice)</span> </span></td>
                                                         <td>
                                                             @Html.EditorFor(model => Model.ShoppingCartProducts[i].Quantity, new { htmlAttributes = new { @class = "qty form-control" } })
                                                             @Html.ValidationMessageFor(model => Model.ShoppingCartProducts[i].Quantity, "", new { @class = "text-danger" })
