@@ -67,7 +67,7 @@ namespace TGVL.Models
         public WarehouseProductViewModel Product { get; set; }
 
         [Required]
-        [Range(1, int.MaxValue, ErrorMessage = "Xin hãy nhập số lượng lớn hơn 0")]
+        [Range(1, int.MaxValue)]
         public int? Quantity { get; set; }
     }
 

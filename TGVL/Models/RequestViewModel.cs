@@ -37,11 +37,11 @@ namespace TGVL.Models
     public class CreateRequestViewModel
     {
         //TODO: validate data
-        [Required(ErrorMessage ="Thông tin bắt buộc")]
+        [Required(ErrorMessage ="Tiêu đề không được để trống")]
         [Display(Name = "Tiêu đề")]
         public string Title { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Loại nhà không được để trống")]
         [Display(Name = "Loại nhà")]
         public int TypeOfHouse { get; set; }
 
@@ -50,17 +50,17 @@ namespace TGVL.Models
         public string Administrative_area_level_1 { get; set; } //tỉnh, thành phố
         public string Formatted_address { get; set; } //địa chỉ đầy đủ (delivery address)
 
-        [Required(ErrorMessage = "Thông tin bắt buộc")]
+        [Required(ErrorMessage = "Ngày nhận hàng không được để trống")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Ngày nhận hàng")]
         [DateRange]
         public DateTime? ReceivingDate { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Địa chỉ nhận hàng không được để trống")]
         public string ReceivingAddress { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Hình thức thanh toán không được để trống")]
         [Display(Name = "Hình thức thanh toán")]
         public int PaymentType { get; set; }
 
@@ -70,7 +70,7 @@ namespace TGVL.Models
         public string Description { get; set; }
 
         [Required]
-        [Range(1, 30, ErrorMessage = "Hee")]
+        [Range(1, 30, ErrorMessage = "Thời hạn yêu cầu từ 1 đến 30 ngày")]
         [Display(Name = "Thời hạn yêu cầu")]
         public int TimeRange { get; set; }
 
@@ -116,7 +116,7 @@ namespace TGVL.Models
     {
         public RequestedProduct RequestedProduct { get; set; }
 
-       
+        [Range(1, int.MaxValue)]
         public int Quantity { get; set; }
     }
 
