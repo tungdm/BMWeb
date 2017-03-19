@@ -118,8 +118,8 @@
                     required: true,
                     range: [1, Infinity],
                     messages: {
-                        required: "Required input",
-                        range: "Greater than 0"
+                        required: "Số lượng không được để trống",
+                        range: "Số lượng lớn hơn 0"
                     }
                 });
             });
@@ -129,8 +129,8 @@
                     required: true,
                     range: [1, Infinity],
                     messages: {
-                        required: "Required input",
-                        range: "Greater than 0"
+                        required: "Số lượng không được để trống",
+                        range: "Số lượng phải lớn hơn 0"
                     }
                 });
             });
@@ -184,7 +184,7 @@
                 $('#errorTotal').empty();
             } else {
                 var message = "Total > " + addDot(min) + " &#x20AB;)";
-                var message = "Must greater than " + addDot(min) + " &#x20AB; (Now: " + addDot(sum) + " &#x20AB;)"
+                var message = "Giá thầu phải lớn hơn " + addDot(min) + " &#x20AB; (Giá hiện tại: " + addDot(sum) + " &#x20AB;)"
                 $('#errorTotal').html(message);
             }
         }
