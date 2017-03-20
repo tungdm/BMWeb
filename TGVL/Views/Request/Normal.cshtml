@@ -9,6 +9,11 @@
 
 @Styles.Render("~/Content/searchproductcss")
 
+<style>
+    .commentlist:hover {
+        background: linear-gradient(to right, #FFDDB0, #FFFFFF);
+    }
+</style>
 
 
 <div class="col-md-12">
@@ -27,65 +32,37 @@
                             }*@
                         @foreach (var item in Model)
                         {
-                            <ul class="commentlist">
-                                <li class="comment">
-                                    <div class="comment-wrapper">
-                                        <div class="row">
-                                            <div class="col-md-9">
-                                                <h2><strong>@item.Title</strong></h2>
-                                                <table class="col-md-3">
-                                                    <thead>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td><strong>Yêu cầu </strong></td>
-                                                            <td> Sản phẩm 1 </td>
-                                                            <td> Sản phẩm 2</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                                <br />
-                                                <div><p><strong>Mô tả: @item.Descriptions</strong></p></div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <p style="color:red"><strong>@item.ReceivingDate</strong></p>
-                                                <p style="color:red"><strong>@item.UserName</strong></p>
-                                            </div>
+                            <a href="/Request/Details/@item.Id">
+                                <ul class="commentlist">
+                                    <li class="comment">
+                                        <div class="comment-wrapper">
+                                            <div class="row">
+                                                <div class="col-md-9">
+                                                    <h2><strong>@item.Title</strong></h2>
+                                                    <p class="col-md-6">
+                                                        <strong>Thông tin thêm </strong>
+                                                        <br />
+                                                        <strong>Nhận hàng tại</strong> @item.DeliveryAddress
+                                                        <br />
+                                                        <strong>Vào ngày</strong> @Convert.ToDateTime(@item.ReceivingDate).ToString("dd/MM/yyyy")
+                                                        <br />
+                                                    </p>
+                                                    <div class="col-md-5"><p><strong>Mô tả ngắn</strong><br /> @item.Descriptions</p></div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <p style="color:red"><strong>Hạn tin đến ngày @Convert.ToDateTime(@item.DueDate).ToString("dd/MM/yyyy")</strong></p>
+                                                    <div><img src="~/Images/UserAvatar/@item.Avatar" width="100" height="100" alt="avatar" /></div>
+                                                    <p style="color:red"><strong>@item.UserName</strong></p>
+                                                </div>
 
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
-                            </ul>
+                                    </li>
+                                </ul>
+                            </a>
                         }
 
-                        <ul class="commentlist">
-                            <li class="comment">
-                                <div class="comment-wrapper">
-                                    <div class="row">
-                                        <div class="col-md-9">
-                                            <h2><strong>Tiêu đề ở đây</strong></h2>
-                                            <table class="col-md-3">
-                                                <thead>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td><strong>Yêu cầu </strong></td>
-                                                        <td> Sản phẩm 1 </td>
-                                                        <td> Sản phẩm 2</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                            </br>
-                                            <div><p><strong>Mô tả ngắn: ở đây</strong></p></div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <p style="color:red"><strong>Ngày nhận hàng: Hiện ở đây</strong></p>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
+                        s
                         @*<ul class="pagination" style="text-align:center">
                                 <li><a href="#">&laquo;</a></li>
                                 <li class="active"><a href="#">1</a></li>

@@ -1,4 +1,5 @@
-﻿
+﻿@model TGVL.Models.SearchResultViewModel
+
 @{
     ViewBag.Title = "ViewDetail";
     Layout = "~/Views/Shared/_HomePageViewLayout.cshtml";
@@ -40,8 +41,8 @@
                 <div class="row">
                     <ul>
                         <li class="home"><strong> Trang chủ </strong><span>&raquo;</span></li>
-                        <li class=""> <strong>Xi măng </strong><span>&raquo;</span></li>
-                        <li class="category13"><strong> Xi măng FICO PCB40 </strong></li>
+                        <li class=""> <strong>@Model.SysProduct.SysCategory.Name</strong><span>&raquo;</span></li>
+                        <li class="category13"><strong> @Model.SysProduct.Name </strong></li>
                     </ul>
                 </div>
             </div>
@@ -56,128 +57,53 @@
                                 <div class="product-image">
                                     <div>
                                         @*<div class="large-image"><img alt="product-image" src="~/Content/images/cement-fico-pcb-40.jpg"></div>*@
-                                        <img src="~/Content/images/xi-mang-ha-tien-1-pcb40.jpg" width="100" height="100" />
+                                        <img src="~/Images/Product/SysProduct/@Model.SysProduct.Image" width="100" height="100" />
                                     </div>
                                 </div>
                                 <div class="clear"></div>
                             </div>
                             <div class="product-shop col-sm-8 col-xs-12">
                                 <div class="product-name">
-                                    <h1>Xi măng FICO PCB40</h1>
+                                    <h1>@Model.SysProduct.Name</h1>
                                 </div>
-                                <div class="short-description">
-                                    <p>Sản phẩm đến từ nhà cung cấp uy tín. Chất lượng đảm bảo</p>
-                                </div>
-                                <div class="ratings">
-                                    <div class="rating-box">
-                                        <div style="width:90%" class="rating"></div>
+                                <div class="short-description">                                   
+                                    <table class="table col-md-4">
+                                        <thead>
+                                            <tr>THÔNG SỐ SẢN PHẨM</tr>
+                                        </thead>
+                                        @foreach (var item in Model.SysProduct.ProductAttributes)
+                                        {                                
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Attribute)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Value)
+                                                </td>
+                                            </tr>
+                                        }
+                                    </table>
+
+              
+                                    <div class="price-block col-md-6">
+                                        <div class="price-box">
+                                            Có <span class="price"> @Model.NumOfShops </span> cửa hàng bán với giá từ: <p class="special-price"> <span class="price-label"> Special Price</span> <span class="price">@Model.SysProduct.UnitPrice</span> </p>
+                                            <button type="button" class="button btn-default" data-toggle="modal" data-target="#selectSupplier">
+                                                Cửa hàng để xuất
+                                            </button>
+                                        </div>
                                     </div>
-                                    <p class="rating-links"> <a href="#">2 Đánh giá </a></p>
                                 </div>
                                 <hr />
-                                <div class="price-block">
-                                    <div class="price-box">
-                                        @*<p>3 cửa hàng bán với giá từ: <b>80.000 VNĐ</b></p>*@
-                                        6 Cửa hàng bán với giá từ: <p class="special-price"> <span class="price-label"> Special Price</span> <span class="price"> 80.000 VNĐ </span> </p>
-                                        <button type="button" class="button btn-default" data-toggle="modal" data-target="#selectSupplier">
-                                            Cửa hàng để xuất
-                                        </button>
-                                    </div>
+                                <br/>
+
+                                
                                 </div>
                                 <hr />
-                                <div class="add-to-box">
-                                    
-                                    
-                                    
-                                </div>
                                 <br />
-                                <br />
-                                @*<div class="toggle-content">
-                                    <div class="toggle toggle-white">
-                                        <h4 class="trigger"><a href="#">Mô tả</a></h4>
-                                        <div style="display: none;" class="toggle_container ">
-                                            <form>
-                                                <table class="table-bordered" width="500">
-                                                    <tr>
-                                                        <td>Nhà sản xuất</td>
-                                                        <td>Xi măng Hocim</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Khối lượng</td>
-                                                        <td>50kg</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Đơn vị tính</td>
-                                                        <td>bao</td>
-                                                    </tr>
-
-                                                </table>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <div class="toggle toggle-white">
-                                        <h4 class="trigger"><a href="#">Thông số kỹ thuật</a></h4>
-                                        <div style="display: none;" class="toggle_container ">
-                                            <form>
-                                                <table class="table-bordered" width="500">
-                                                    <tr>
-                                                        <td>Thời gian đông kết</td>
-                                                        <td>45 phút</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Độ ổn định thể tích</td>
-                                                        <td>10m</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Hàm lượng SO3</td>
-                                                        <td>3.5%</td>
-                                                    </tr>
-
-                                                </table>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>*@
-                            </div>
-
-                            @*<div class="col-right sidebar col-sm-3 wow bounceInUp animated">
-                                    <div role="complementary" class="widget_wrapper13" id="secondary">
-                                        <div class="popular-posts widget widget__sidebar" id="recent-posts-4">
-                                            <h4 class="widget-title"><strong>CỬA HÀNG CÓ BÁN</strong></h4>
-                                            <div class="widget-content">
-                                                <ul class="posts-list unstyled clearfix">
-                                                    <li>
-                                                        <figure class="featured-thumb"> <a href="#pellentesque-posuere"> <img width="80" height="53" alt="blog image" src="~/Content/images/logo1.jpg"> </a> </figure>
-                                                        <!--featured-thumb-->
-                                                        <h4><a href="#pellentesque-posuere">Cửa hàng VLXD Sỹ Mạnh</a></h4>
-                                                        <p class="post-meta">
-                                                            36 Nguyễn Trãi Q1 TPHCM
-                                                        </p>
-                                                        <h4 class="post-meta" style="color:#ff1341">
-                                                            Giá: <strong>81.000 VNĐ</strong>
-                                                        </h4>
-                                                        <br />
-                                                    </li>
-
-                                                    <li>
-                                                        <figure class="featured-thumb"> <a href="#pellentesque-posuere"> <img width="80" height="53" alt="blog image" src="~/Content/images/logo2.jpg"> </a> </figure>
-                                                        <!--featured-thumb-->
-                                                        <h4><a href="#pellentesque-posuere">Cửa hàng VLXD M&C</a></h4>
-                                                        <p class="post-meta">
-                                                            36 Nguyễn Văn Trỗi Phú Nhuận TPHCM
-                                                        </p>
-                                                        <h4 class="post-meta" style="color:#ff1341">
-                                                            Giá: <strong>82.000 VNĐ</strong>
-                                                        </h4>
-                                                        <br />
-                                                    </li>
-
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>*@   
+                                <br /> 
+                          
+                           
                         </div>
                     </div>
                 </div>
@@ -211,229 +137,7 @@
                 </div>
             </div>
             <br />
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="nav-tabs-custom">
-                        <ul class="nav nav-tabs">
-                            <li class="active"><a href="#tab_1" data-toggle="tab">THÔNG TIN CHI TIẾT</a></li>
-                            <li><a href="#tab_2" data-toggle="tab">ĐÁNH GIÁ</a></li>
-                            
-                        </ul>
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="tab_1">
-                                THÔNG TIN CHI TIẾT
-                                <p>Loại sản phẩm</p>
-
-                            </div>
-
-                            <div class="tab-pane" id="tab_2">
-                                <div class="ratings">
-                                    <h2>Đánh giá trung bình</h2>
-                                    <div class="rating-box">
-                                        <div style="width:90%" class="rating"></div>
-                                    </div>
-                                   
-                                </div>
-                                @*<div class="rating_box">
-                                    <div class="box_summary">
-                                        <div>
-                                            Đánh giá trung bình
-                                        </div>
-                                        <div style="font-size:14px">
-                                            Có ... lượt đánh giá
-                                        </div>
-                                        <div class="rating">
-                                            <div class="rating-box">
-                                                <div style="width:80%" class="rating"></div>
-                                            </div>
-                                        </div>
-                                        <div>4</div>
-                                    </div>
-                                    <div class="rating-box__details">
-                                        <div class="rating__row rrow rrow--5">
-                                            <div class="rrow__label">
-                                                <span class="hidden-xs hidden-sm">Rất tốt</span><span class="visible-xs visible-sm">5 sao</span>
-                                            </div>
-                                            <div class="rrow__percent">
-                                                <div class="progress-bar progress-bar--5" data-percent="93.877551020408">
-                                                    <div class="progress-bar__inner" style="width: 93.877551020408%;"></div>
-                                                </div>
-                                            </div>
-                                            <div class="rrow__counting">
-                                                46
-                                            </div>
-                                            <div class="rrow__descr">
-                                                đánh giá
-                                            </div>
-                                        </div>
-                                        <div class="rating__row rrow rrow--4">
-                                            <div class="rrow__label">
-                                                <span class="hidden-xs hidden-sm">Tốt</span><span class="visible-xs visible-sm">4 sao</span>
-                                            </div>
-                                            <div class="rrow__percent">
-                                                <div class="progress-bar progress-bar--5" data-percent="2.0408163265306">
-                                                    <div class="progress-bar__inner" style="width: 2.0408163265306%;"></div>
-                                                </div>
-                                            </div>
-                                            <div class="rrow__counting">
-                                                1
-                                            </div>
-                                            <div class="rrow__descr">
-                                                đánh giá
-                                            </div>
-                                        </div>
-                                        <div class="rating__row rrow rrow--3">
-                                            <div class="rrow__label">
-                                                <span class="hidden-xs hidden-sm">Trung bình</span><span class="visible-xs visible-sm">3 sao</span>
-                                            </div>
-                                            <div class="rrow__percent">
-                                                <div class="progress-bar progress-bar--5" data-percent="0">
-                                                    <div class="progress-bar__inner" style="width: 0%;"></div>
-                                                </div>
-                                            </div>
-                                            <div class="rrow__counting">
-                                                0
-                                            </div>
-                                            <div class="rrow__descr">
-                                                đánh giá
-                                            </div>
-                                        </div>
-                                        <div class="rating__row rrow rrow--2">
-                                            <div class="rrow__label">
-                                                <span class="hidden-xs hidden-sm">Không tốt</span><span class="visible-xs visible-sm">2 sao</span>
-                                            </div>
-                                            <div class="rrow__percent">
-                                                <div class="progress-bar progress-bar--5" data-percent="2.0408163265306">
-                                                    <div class="progress-bar__inner" style="width: 2.0408163265306%;"></div>
-                                                </div>
-                                            </div>
-                                            <div class="rrow__counting">
-                                                1
-                                            </div>
-                                            <div class="rrow__descr">
-                                                đánh giá
-                                            </div>
-                                        </div>
-                                        <div class="rating__row rrow rrow--1">
-                                            <div class="rrow__label">
-                                                <span class="hidden-xs hidden-sm">Rất tệ</span><span class="visible-xs visible-sm">1 sao</span>
-                                            </div>
-                                            <div class="rrow__percent">
-                                                <div class="progress-bar progress-bar--5" data-percent="2.0408163265306">
-                                                    <div class="progress-bar__inner" style="width: 2.0408163265306%;"></div>
-                                                </div>
-                                            </div>
-                                            <div class="rrow__counting">
-                                                1
-                                            </div>
-                                            <div class="rrow__descr">
-                                                đánh giá
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>*@
-                                
-                                <div class="box-reviews2">
-                                    <h3 style="font-size:16px"><strong>ĐÁNH GIÁ</strong></h3>
-                                    <div class="box visible">
-                                        <ul>
-                                            <li>
-                                                @*<table class="ratings-table">
-                                                    <colgroup>
-                                                        <col>
-                                                        <col>
-                                                    </colgroup>
-                                                    <tbody>
-                                                        <tr>
-                                                            <th>Value</th>
-                                                            <td>
-                                                                <div class="rating-box">
-                                                                    <div class="rating" style="width:100%;"></div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Quality</th>
-                                                            <td>
-                                                                <div class="rating-box">
-                                                                    <div class="rating" style="width:100%;"></div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Price</th>
-                                                            <td>
-                                                                <div class="rating-box">
-                                                                    <div class="rating" style="width:100%;"></div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>*@
-                                                <div class="review">
-                                                    <h3><a href="#">Tuyệt vời</a></h3>
-                                                    <small>Đánh giá bởi <span>VyCMT </span>vào 19/03/2017 </small>
-                                                    <div class="review-txt"> Sản phẩm trên cả tuyệt vời</div>
-                                                    <div class="ratings">
-                                                        <div class="rating-box">
-                                                            <div style="width:100%" class="rating"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-
-                                            <li>
-                                                @*<table class="ratings-table">
-                                                    <colgroup>
-                                                        <col>
-                                                        <col>
-                                                    </colgroup>
-                                                    <tbody>
-                                                        <tr>
-                                                            <th>Value</th>
-                                                            <td>
-                                                                <div class="rating-box">
-                                                                    <div class="rating" style="width:100%;"></div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Quality</th>
-                                                            <td>
-                                                                <div class="rating-box">
-                                                                    <div class="rating" style="width:100%;"></div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Price</th>
-                                                            <td>
-                                                                <div class="rating-box">
-                                                                    <div class="rating" style="width:80%;"></div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>*@
-                                                <div class="review">
-                                                    <h3><a href="#">Tốt</a></h3>
-                                                    <small>Đánh giá bởi <span>ABC</span>vào 08/03/2017 </small>
-                                                    <div class="review-txt"> Chất lượng tốt </div>
-                                                    <div class="ratings">
-                                                        <div class="rating-box">
-                                                            <div style="width:90%" class="rating"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    @*<div class="actions"> <a class="button view-all" id="revies-button"><span><span>View all</span></span></a> </div>*@
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
+            
 
                 </div>
             </div>
@@ -445,8 +149,6 @@
 
                 </div>
             </div>
-        </div>
-    </div>
 </section>
 
 <div id="selectSupplier" class="modal fade" role="dialog">
