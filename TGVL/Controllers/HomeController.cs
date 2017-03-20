@@ -359,6 +359,7 @@ namespace TGVL.Controllers
                     + "AND [dbo].[Warehouses].[SupplierId] = [dbo].[Users].[Id] "
                     + "AND [dbo].[SysProducts].[Id] = {0} ";
 
+                
                 List<Shop> data = db.Database.SqlQuery<Shop>(query, productId).ToList();
 
                 _Json = new JavaScriptSerializer().Serialize(data);
@@ -381,6 +382,10 @@ namespace TGVL.Controllers
                     Session["FilenameJson"] = filename;
                 }
                 System.IO.File.WriteAllText(_path + filename + "_.json", _Json);
+
+               
+
+                return RedirectToAction("ViewDetail", new { id = productId });
             }
 
             
@@ -406,10 +411,25 @@ namespace TGVL.Controllers
             return View();
         }
 
-        public ActionResult ViewDetail()
+        public ActionResult ViewDetail(int id)
         {
+            var product = db.SysProducts.Find(id);
+            var productId = product.Id;
 
-            return View();
+            //NguyenTA Calculating NumOfShops
+            var query = "SELECT count([dbo].[Users].[Fullname]) as NumOfShops "
+                          + "FROM [dbo].[Products],[dbo].[Users], [dbo].[SysProducts] "
+                          + "WHERE [dbo].[Products].[SupplierId] = [dbo].[Users].[Id] "
+                          + "AND[dbo].[Products].[SysProductId] = [dbo].[SysProducts].[Id] "
+                          + "AND[dbo].[SysProducts].[Id] = {0} ";
+            
+            var num = db.Database.SqlQuery<int>(query, productId).FirstOrDefault();
+            var model = new SearchResultViewModel
+            {
+                SysProduct = product,
+                NumOfShops = num,
+            };
+            return View(model);
         }
 
         public ActionResult SearchRequestResult()
