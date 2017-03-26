@@ -39,6 +39,9 @@ namespace TGVL.Models
 
         public double rating { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:C0}", ApplyFormatInEditMode = true)]
+        public decimal price { get; set; }
+
     }
 
 

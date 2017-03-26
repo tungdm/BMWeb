@@ -36,4 +36,38 @@ namespace TGVL.Models
 
         public int ReplyId { get; set; }
     }
+
+    public class MyOrder
+    {
+        public int Id { get; set; }
+
+        public string SupplierName { get; set;}
+
+        public DateTime DeliveryDate { get; set; }
+
+        public string Status { get; set; }
+
+    }
+
+    public class ReviewViewModel
+    {
+        public int OrderId { get; set; }
+
+        [Required]
+        public int PriceGrade { get; set; }
+        public IEnumerable<Grade> PriceGrades { get; set; }
+
+        [Required]
+        public int QualityGrade { get; set; }
+        public IEnumerable<Grade> QualityGrades { get; set; }
+
+        [Required]
+        public int ServiceGrade { get; set; }
+        public IEnumerable<Grade> ServiceGrades { get; set; }
+
+        public string Comment { get; set; }
+
+    }
+
+    
 }

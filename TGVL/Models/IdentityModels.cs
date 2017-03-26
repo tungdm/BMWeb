@@ -19,7 +19,7 @@ namespace TGVL.Models
         public string Administrative_area_level_1 { get; set; }
         public string Avatar { get; set; }
         public bool IsSubscribed { get; set; }
-        public float? AverageGrade { get; set; }
+        public double AverageGrade { get; set; }
         public string Fullname { get; set; }
 
         [DataType(DataType.Date)]
