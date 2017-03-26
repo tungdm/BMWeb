@@ -32,6 +32,17 @@
         height: auto;
         padding: 5px;
     }
+
+    span.stars, span.stars span {
+        display: block;
+        background: url("/Images/stars.png") 0 -16px repeat-x;
+        width: 80px;
+        height: 16px;
+    }
+
+    span.stars span {
+        background-position: 0 0;
+    }
 </style>
 
 <section class="main-container">
@@ -66,6 +77,7 @@
                                 <div class="product-name">
                                     <h1>@Model.SysProduct.Name</h1>
                                 </div>
+                              
                                 <div class="short-description">                                   
                                     <table class="table col-md-4">
                                         <thead>
@@ -87,10 +99,11 @@
               
                                     <div class="price-block col-md-6">
                                         <div class="price-box">
-                                            Có <span class="price"> @Model.NumOfShops </span> cửa hàng bán với giá từ: <p class="special-price"> <span class="price-label"> Special Price</span> <span class="price">@Model.SysProduct.UnitPrice</span> </p>
-                                            <button type="button" class="button btn-default" data-toggle="modal" data-target="#selectSupplier">
+                                            Có <span class="total"> @Model.NumOfShops </span> cửa hàng bán với giá từ: <p class="special-price"> <span class="price-label"> Special Price</span> <span class="price">@Model.SysProduct.UnitPrice</span> </p>
+                                            @*<button type="button" class="button btn-default" data-toggle="modal" data-target="#selectSupplier">
                                                 Cửa hàng để xuất
-                                            </button>
+                                            </button>*@
+                                            <button id="recommend-btn" class="btn btn-primary" type="button">Cửa hàng để xuất</button>
                                         </div>
                                     </div>
                                 </div>
@@ -128,10 +141,11 @@
                 <div id="bh-sl-map-container" class="bh-sl-map-container">
                     <div class="row">
                         <div id="map-results-container" class="container">
-                            <div id="bh-sl-map" class="bh-sl-map col-md-9"></div>
+                            
                             <div class="bh-sl-loc-list col-md-3">
                                 <ul class="list list-unstyled"></ul>
                             </div>
+                            <div id="bh-sl-map" class="bh-sl-map col-md-9"></div>
                         </div>
                     </div>
                 </div>
@@ -223,25 +237,47 @@
 
     <script>
         $(document).ready(function () {
+            
+            $("#recommend-btn").click(function (event) {
+                console.log("abc");
 
+                $('#bh-sl-map-container').storeLocator({
+                    'mapSettings': {
+                        zoom: 12,
+                        mapTypeId: google.maps.MapTypeId.ROADMAP,
+                        //disableDoubleClickZoom: true,
+                        scrollwheel: false,
+                        navigationControl: false,
+                        draggable: true
+                    },
+                    'dataType': 'json',
+                    'dataLocation': '/Store/@Session["FilenameJson"]_.json',
+                    'lengthUnit': 'km',
+                    'autoGeocode': true,
+                    'originMarker' : true,
+                    'originMarkerImg': '/Images/marker-home.png'
+                });
 
-            $('#bh-sl-map-container').storeLocator({
-                'mapSettings' : {
-                    zoom : 12,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP,
-                    disableDoubleClickZoom: true,
-                    scrollwheel: false,
-                    navigationControl: false,
-                    draggable: true
-                },
-                'dataType': 'json',
-                'dataLocation': '/Store/@Session["FilenameJson"]_.json',
-                'lengthUnit': 'km',
-                'autoGeocode': true,
+                Handlebars.registerHelper("printPrice", function (price) {
+                    return addDot(price);
+                });
+
+                Handlebars.registerHelper("printStart", function (rating) {
+
+                    var val = parseFloat(rating);
+                    var size = Math.max(0, (Math.min(5, val))) * 16;
+
+                    var result = "<span style='width:" + size + "px;'/> ";
+
+                    return new Handlebars.SafeString(result);
+                });
             });
+            
 
+            
         });
 
+        
     </script>
 
 }
