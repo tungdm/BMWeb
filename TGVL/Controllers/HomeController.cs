@@ -7,6 +7,8 @@ using System.Web;
 using System.Web.Mvc;
 using TGVL.Models;
 using System.Web.Script.Serialization;
+using System.IO;
+using TGVL.LucenceSearch;
 
 namespace TGVL.Controllers
 {
@@ -16,6 +18,7 @@ namespace TGVL.Controllers
         private BMWEntities db = new BMWEntities();
         private ApplicationUserManager _userManager;
 
+        
         public HomeController()
         {
         }
@@ -47,11 +50,120 @@ namespace TGVL.Controllers
                 _signInManager = value;
             }
         }
+
         public ActionResult Index()
         {
             return View();
         }
 
+        public ActionResult ProductAutocomplete(string term)
+        {
+            if (term != null)
+            {
+                var model = db.SysProducts
+                .Where(p => p.Name.Contains(term))
+                .Take(10)
+                .Select(p => new
+                {
+                    label = p.Name
+                });
+                return Json(model, JsonRequestBehavior.AllowGet);
+            }
+            return RedirectToAction("AddProduct");
+        }
+
+        public ActionResult Search(string searchString)
+        {
+            //TODO: validate client-side
+            if (!String.IsNullOrWhiteSpace(searchString))
+            {
+                return RedirectToAction("SearchResult", new { searchString });
+            }
+
+            return new EmptyResult();
+        }
+
+        public ActionResult SearchResult(string searchString)
+        {
+            var searchResult = new LuceneResult();
+
+            searchResult = GoLucene.SearchDefault(searchString);
+
+            var model = new LuceneSearch {
+                LuceneResult = searchResult,
+                SearchString = searchString
+            };
+
+            return View(model);
+        }
+
+        public ActionResult SearchProduct(string searchString)
+        {
+            if (!String.IsNullOrWhiteSpace(searchString))
+            {
+                string _Json = string.Empty;
+                string _path = string.Empty;
+                var product = db.SysProducts.Where(p => p.Name == searchString).FirstOrDefault();
+                var productId = product.Id;
+                //TODO: SETTING table -> top number
+                //Vd: 5
+                var query = "SELECT TOP 5 [dbo].[Warehouses].[Id] AS id, [dbo].[Users].[Fullname] AS name, [dbo].[Warehouses].[Lat] AS lat, "
+                    + "[dbo].[Warehouses].[Lng] as lng, [dbo].[Warehouses].[Address] AS address, [dbo].[Warehouses].[Administrative_area_level_1] AS city, "
+                    + "[dbo].[Users].[PhoneNumber] AS phone, [dbo].[Users].[AverageGrade] as rating, [dbo].[Products].[UnitPrice] as price "
+                    + "FROM [dbo].[SysProducts], [dbo].[Products], [dbo].[WarehouseProducts], [dbo].[Warehouses], [dbo].[Users] "
+                    + "WHERE [dbo].[Products].[SysProductId] = [dbo].[SysProducts].[Id] "
+                    + "AND [dbo].[Products].[Id] =  [dbo].[WarehouseProducts].[ProductId] "
+                    + "AND [dbo].[WarehouseProducts].[WarehouseId] = [dbo].[Warehouses].[Id] "
+                    + "AND [dbo].[Warehouses].[SupplierId] = [dbo].[Users].[Id] "
+                    + "AND [dbo].[SysProducts].[Id] = {0} "
+                    + "ORDER BY rating DESC";
+
+
+                List<Shop> data = db.Database.SqlQuery<Shop>(query, productId).ToList();
+
+                _Json = new JavaScriptSerializer().Serialize(data);
+
+                _path = Server.MapPath("~/Store/");
+
+                string filename = (string)Session["FilenameJson"];
+
+
+                if (filename == null)
+                {
+                    Guid g = Guid.NewGuid();
+
+                    filename = Convert.ToBase64String(g.ToByteArray());
+                    filename = filename.Replace("=", "");
+                    filename = filename.Replace("+", "");
+                    filename = filename.Replace("/", "");
+                    filename = filename.Replace("\\", "");
+
+                    Session["FilenameJson"] = filename;
+                }
+                System.IO.File.WriteAllText(_path + filename + "_.json", _Json);
+
+
+
+                return RedirectToAction("ViewDetail", new { id = productId });
+            }
+
+
+
+            return RedirectToAction("ViewDetail");
+        }
+
+       
+
+        public ActionResult CreateIndex()
+        {
+            var query = "SELECT [dbo].[SysProducts].[Id], [dbo].[SysProducts].[Name], [dbo].[SysProducts].[Image] "
+                          + "FROM[dbo].[SysProducts]";
+            List<ProductSearchResult> allData = db.Database.SqlQuery<ProductSearchResult>(query).ToList();
+
+            GoLucene.AddUpdateLuceneIndex(allData);
+            TempData["Result"] = "Search index was created successfully!";
+            return RedirectToAction("Index");
+        }
         [Authorize]
         public JsonResult GetNotificationReplies()
         {
@@ -323,75 +435,7 @@ namespace TGVL.Controllers
             return View();
         }
 
-        public ActionResult ProductAutocomplete(string term)
-        {
-            if (term != null)
-            {
-                var model = db.SysProducts
-                .Where(p => p.Name.StartsWith(term))
-                .Take(10)
-                .Select(p => new
-                {
-                    label = p.Name
-                });
-                return Json(model, JsonRequestBehavior.AllowGet);
-            }
-            return RedirectToAction("AddProduct");
-        }
-
-
-        public ActionResult SearchProduct(string searchString)
-        {
-            if (!String.IsNullOrWhiteSpace(searchString))
-            {
-                string _Json = string.Empty;
-                string _path = string.Empty;
-                var product = db.SysProducts.Where(p => p.Name == searchString).FirstOrDefault();
-                var productId = product.Id;
-
-                var query = "SELECT [dbo].[Warehouses].[Id] AS id, [dbo].[Users].[Fullname] AS name, [dbo].[Warehouses].[Lat] AS lat, "
-                    + "[dbo].[Warehouses].[Lng] as lng, [dbo].[Warehouses].[Address] AS address, [dbo].[Warehouses].[Administrative_area_level_1] AS city, "
-                    + "[dbo].[Users].[PhoneNumber] AS phone, [dbo].[Users].[AverageGrade] as rating "
-                    + "FROM [dbo].[SysProducts], [dbo].[Products], [dbo].[WarehouseProducts], [dbo].[Warehouses], [dbo].[Users] "
-                    + "WHERE [dbo].[Products].[SysProductId] = [dbo].[SysProducts].[Id] "
-                    + "AND [dbo].[Products].[Id] =  [dbo].[WarehouseProducts].[ProductId] "
-                    + "AND [dbo].[WarehouseProducts].[WarehouseId] = [dbo].[Warehouses].[Id] "
-                    + "AND [dbo].[Warehouses].[SupplierId] = [dbo].[Users].[Id] "
-                    + "AND [dbo].[SysProducts].[Id] = {0} ";
-
-                
-                List<Shop> data = db.Database.SqlQuery<Shop>(query, productId).ToList();
-
-                _Json = new JavaScriptSerializer().Serialize(data);
-
-                _path = Server.MapPath("~/Store/");
-
-                string filename = (string)Session["FilenameJson"];
-
-
-                if (filename == null)
-                {
-                    Guid g = Guid.NewGuid();
-
-                    filename = Convert.ToBase64String(g.ToByteArray());
-                    filename = filename.Replace("=", "");
-                    filename = filename.Replace("+", "");
-                    filename = filename.Replace("/", "");
-                    filename = filename.Replace("\\", "");
-
-                    Session["FilenameJson"] = filename;
-                }
-                System.IO.File.WriteAllText(_path + filename + "_.json", _Json);
-
-               
-
-                return RedirectToAction("ViewDetail", new { id = productId });
-            }
-
-            
-
-            return RedirectToAction("ViewDetail");
-        }
+        
 
         [Authorize]
         public ActionResult Contact()
@@ -406,10 +450,7 @@ namespace TGVL.Controllers
             return View();
         }
 
-        public ActionResult SearchResult()
-        {
-            return View();
-        }
+ 
 
         public ActionResult ViewDetail(int id)
         {

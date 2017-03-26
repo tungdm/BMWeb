@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TGVL.Models;
@@ -39,6 +40,10 @@ namespace TGVL.Controllers
         // GET: Order
         public ActionResult Index()
         {
+            var userId = User.Identity.GetUserId<int>();
+            IEnumerable<Order> listOrders = db.Orders.Where(o => o.CustomerId == userId).ToList();
+            ViewBag.ListOrders = listOrders;
+            
             return View();
         }
 
@@ -122,5 +127,83 @@ namespace TGVL.Controllers
             //await UserManager.SendEmailAsync(user.Id, "Đặt hàng thành công", "Xem chi tiết tại <a href=\"" + callbackUrl + "\">đây nè :)</a>");
             return RedirectToAction("Index","Home");
         }
+
+        // GET: Order
+        public ActionResult Details(int? id)
+        {
+            var userId = User.Identity.GetUserId<int>();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Order order = db.Orders.Find(id);
+            if (order == null)
+            {
+                return HttpNotFound();
+            }
+            IEnumerable<OrderStatus> listStatuses = db.OrderStatuses.ToList();
+            ViewBag.ListStatus = listStatuses;
+            return View(order);
+        }
+
+        // GET: Order
+        public ActionResult Review(int id)
+        {
+            var model = new ReviewViewModel
+            {
+                PriceGrades = db.Grades,
+                QualityGrades = db.Grades,
+                ServiceGrades = db.Grades,
+                OrderId = id
+            };
+
+            return PartialView("_Review", model);
+        }
+
+        //POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async System.Threading.Tasks.Task<ActionResult> Review(ReviewViewModel model)
+        {
+            Review newReview = new Review
+            {
+                OrderId = model.OrderId,
+                PriceGradeId = model.PriceGrade,
+                QualityGradeId = model.QualityGrade,
+                ServiceGradeId = model.ServiceGrade,
+                Comment = model.Comment,
+                CreatedDate = DateTime.Now,
+                CustomerId = User.Identity.GetUserId<int>()
+            };
+            var order = db.Orders.Find(model.OrderId);
+            order.StatusId = 5; //Đã review
+
+            newReview.SupplierId = order.SupplierId;
+
+            db.Reviews.Add(newReview);
+
+            var count = db.Reviews.Where(r => r.SupplierId == order.SupplierId).Count();
+            var supplier = await UserManager.FindByIdAsync(order.SupplierId);
+            var oldAvg = supplier.AverageGrade;
+
+            var priceGrade = db.Grades.Where(g => g.Id == model.PriceGrade).FirstOrDefault().Grade1;
+            var qualityGrade = db.Grades.Where(g => g.Id == model.QualityGrade).FirstOrDefault().Grade1;
+            var serviceGrade = db.Grades.Where(g => g.Id == model.ServiceGrade).FirstOrDefault().Grade1;
+            
+            var newCusAvg = (priceGrade + qualityGrade + serviceGrade) / 3.0;
+            var newAvg =  ( (oldAvg * count) + newCusAvg) / (count + 1);
+            newAvg = Math.Round(newAvg, 1);
+
+            supplier.AverageGrade = newAvg;
+
+            await UserManager.UpdateAsync(supplier);
+
+            db.SaveChanges();
+            
+            return new JsonResult { Data = new { Message = "Success" }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
     }
+
+    
 }
