@@ -237,6 +237,34 @@ function gotToCheckOut() {
 
     window.location.href = url;
 }
+
+function review(orderId) {
+    console.log("review");
+    var options = {
+        url: '/Order/Review',
+        data: { id: orderId },
+        type: 'GET',
+    };
+
+    $.ajax(options).done(function (data) {
+        var $target = $('#reviewForm');
+        $target.html(data);
+
+        var form = $("#form0");
+        $.validator.unobtrusive.parse(form);
+
+        $('#review').modal('show');
+    });
+}
+
+function updateReview(data, status, xhr) {
+    if (data.Message == "Success") {
+        $("#review-btn").remove();
+        $('#review').modal('toggle');
+    }
+    
+}
+
 function addDot(nStr) {
     nStr += '';
     x = nStr.split('.');

@@ -2413,7 +2413,7 @@
 
 			// Sort the multi-dimensional array by distance
 			if (typeof origin !== 'undefined') {
-				_this.sortNumerically(locationset);
+				//_this.sortNumerically(locationset);
 			}
 
 			// Featured locations filtering

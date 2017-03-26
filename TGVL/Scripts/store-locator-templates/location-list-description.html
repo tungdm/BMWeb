@@ -4,7 +4,11 @@
 	<div class="list-details">
 		<div class="list-content">
 			<div class="loc-name">{{name}}</div>
-            <div class="loc-rating">{{rating}}</div>
+            <div class="loc-rating">
+                <span class="stars" style="float: left;">{{printStart rating}}</span>
+                {{rating}}
+            </div>
+            <div class="loc-price">Price: <span class="shopPrice">{{printPrice price}} &#x20AB;</span></div>
 			<div class="loc-addr">{{address}}</div> 
 			<div class="loc-addr2">{{address2}}</div> 
 			<div class="loc-addr3">{{city}}{{#if city}},{{/if}} {{state}} {{postal}}</div>
@@ -18,3 +22,4 @@
 	</div>
 </li>
 {{/location}}
+
