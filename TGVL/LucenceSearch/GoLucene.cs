@@ -36,7 +36,7 @@ namespace TGVL.LucenceSearch
         }
 
         // search methods
-        public static IEnumerable<ProductSearchResult> GetAllIndexRecords()
+        public static ICollection<ProductSearchResult> GetAllIndexRecords()
         {
             // validate search index
             if (!System.IO.Directory.EnumerateFiles(_luceneDir).Any()) return new List<ProductSearchResult>();
@@ -116,15 +116,15 @@ namespace TGVL.LucenceSearch
                 // search by multiple fields (ordered by RELEVANCE)
                 else
                 {
-                    //var parser = new MultiFieldQueryParser
-                    //    (Version.LUCENE_30, new[] { "Id", "Name", "Image" }, analyzer);
-                    
-                    
-                    var parser = new QueryParser(Version.LUCENE_30, "Name", analyzer);
+                    MultiFieldQueryParser parser = new MultiFieldQueryParser(Version.LUCENE_30, new[] { "Name", "Description", "ManufactureName" }, analyzer);
+                    parser.DefaultOperator = QueryParser.Operator.AND;
+
+                    //var parser = new QueryParser(Version.LUCENE_30, "Name", analyzer);
+                    //parser.DefaultOperator = QueryParser.Operator.AND;
+
                     var query = parseQuery(searchQuery, parser);
 
                    
-
                     var hits = searcher.Search(query, null, hits_limit).ScoreDocs;
                 
                     var results = _mapLuceneToDataList(hits, searcher);
@@ -149,6 +149,7 @@ namespace TGVL.LucenceSearch
             var spellChecker = new SpellChecker.Net.Search.Spell.SpellChecker(_directory);
 
             var similarWords = spellChecker.SuggestSimilar(searchQuery, 3);
+            string[] substring = searchQuery.Split(null);
 
             return similarWords;
         }
@@ -159,8 +160,6 @@ namespace TGVL.LucenceSearch
             try
             {
                 query = parser.Parse(searchQuery.Trim());
-
-
             }
             catch (ParseException)
             {
@@ -170,11 +169,11 @@ namespace TGVL.LucenceSearch
         }
 
         // map Lucene search index to data
-        private static IEnumerable<ProductSearchResult> _mapLuceneToDataList(IEnumerable<Document> hits)
+        private static ICollection<ProductSearchResult> _mapLuceneToDataList(IEnumerable<Document> hits)
         {
             return hits.Select(_mapLuceneDocumentToData).ToList();
         }
-        private static IEnumerable<ProductSearchResult> _mapLuceneToDataList(IEnumerable<ScoreDoc> hits, IndexSearcher searcher)
+        private static ICollection<ProductSearchResult> _mapLuceneToDataList(IEnumerable<ScoreDoc> hits, IndexSearcher searcher)
         {
             // v 2.9.4: use 'hit.doc'
             // v 3.0.3: use 'hit.Doc'
@@ -186,7 +185,10 @@ namespace TGVL.LucenceSearch
             {
                 Id = Convert.ToInt32(doc.Get("Id")),
                 Name = doc.Get("Name"),
-                //Description = doc.Get("Description")
+                Description = doc.Get("Description"),
+                UnitPrice = Convert.ToDecimal(doc.Get("UnitPrice")),
+                UnitType = doc.Get("UnitType"),
+                ManufactureName = doc.Get("ManufactureName"),
                 Image = doc.Get("Image")
             };
         }
@@ -196,7 +198,7 @@ namespace TGVL.LucenceSearch
         {
             AddUpdateLuceneIndex(new List<ProductSearchResult> { data });
         }
-        public static void AddUpdateLuceneIndex(IEnumerable<ProductSearchResult> datas)
+        public static void AddUpdateLuceneIndex(ICollection<ProductSearchResult> datas)
         {
             // init lucene
             //var analyzer = new StandardAnalyzer(Version.LUCENE_30);
@@ -283,7 +285,10 @@ namespace TGVL.LucenceSearch
             // add lucene fields mapped to db fields
             doc.Add(new Field("Id", data.Id.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
             doc.Add(new Field("Name", data.Name, Field.Store.YES, Field.Index.ANALYZED));
-            //doc.Add(new Field("Description", data.Description, Field.Store.YES, Field.Index.ANALYZED));
+            doc.Add(new Field("Description", data.Description, Field.Store.YES, Field.Index.ANALYZED));
+            doc.Add(new Field("UnitPrice", data.UnitPrice.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
+            doc.Add(new Field("ManufactureName", data.ManufactureName, Field.Store.YES, Field.Index.ANALYZED));
+            doc.Add(new Field("UnitType", data.UnitType, Field.Store.YES, Field.Index.NOT_ANALYZED));
             doc.Add(new Field("Image", data.Image, Field.Store.YES, Field.Index.NOT_ANALYZED));
 
             // add entry to index
