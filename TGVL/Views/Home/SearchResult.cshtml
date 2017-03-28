@@ -93,6 +93,8 @@
                                         <th>No.</th>
                                         <th>Name</th>
                                         <th>Image</th>
+                                        <th>UnitPrice</th>
+                                        <th>ManufactureName</th>
                                     </tr>
                                     @{ int count = 0;}
                                     @foreach (var item in Model.LuceneResult.SearchResult)
@@ -106,7 +108,12 @@
                                             <td>
                                                 <img src="~/Images/Product/SysProduct/@item.Image" style="max-height:100px; max-width:100px" />
                                             </td>
-
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.UnitPrice)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ManufactureName)
+                                            </td>
                                         </tr>
                                     }
 
