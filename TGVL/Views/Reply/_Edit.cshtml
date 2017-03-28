@@ -1,20 +1,92 @@
 ﻿@model TGVL.Models.ReplyDetails
 
 @using (Ajax.BeginForm(
-    "Edit",
-    "Reply",
-                new AjaxOptions
-                {
-                    HttpMethod = "POST",
-                    InsertionMode = InsertionMode.Replace,
-                    UpdateTargetId = "",
-                    OnSuccess = "updateExistReplies(data, status, xhr)"
-                }
-            ))
+                "Edit",
+                "Reply",
+                            new AjaxOptions
+                            {
+                                HttpMethod = "POST",
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "",
+                                OnSuccess = "updateExistReplies(data, status, xhr)"
+                            }
+                        ))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.Id)
+    <div class="popular-posts widget widget__sidebar">
+        <h3 class="widget-title"><strong>THÔNG TIN THÊM</strong></h3>
+        <div class="widget-content">
+            <div class="form-horizontal">
+                @if (Model.Flag == 0)
+                {
+                    <div class="form-group">
+                        <labael class="control-label col-md-3">Chi phí vận chuyển</labael>
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.ShippingFee, new { htmlAttributes = new { @class = "fee form-control" } })
+                            @Html.ValidationMessageFor(model => model.ShippingFee, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <labael class="control-label col-md-3">Giảm giá</labael>
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @class = "discount form-control" } })
+                            @Html.ValidationMessageFor(model => model.Discount, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <labael class="control-label col-md-3">Ngày giao hàng</labael>
+                        @*@Html.LabelFor(model => model.DeliveryDate, htmlAttributes: new { @class = "control-label col-md-3" })*@
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.DeliveryDate, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="form-group">
+                        <label class="control-label col-md-3">Giá thầu</label>
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.Total, "", new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <labael class="control-label col-md-3">Ngày giao hàng</labael>
+                        @*@Html.LabelFor(model => model.DeliveryDate, htmlAttributes: new { @class = "control-label col-md-3" })*@
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.DeliveryDate, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                }
+
+                <div class="form-group">
+                    <labael class="control-label col-md-3 col-sm-3 col-xs-12">Tổng cộng</labael>
+                    @*@Html.LabelFor(model => model.Total, htmlAttributes: new { @class = "control-label col-md-3" })*@
+                    <div class="col-md-9">
+                        <span class="total"></span> &#x20AB;
+                        <div id="errorTotal" class="text-danger"></div>
+                        <div id="oldTotal" style="display:none"></div>
+
+                        <div style="visibility: hidden">
+                            @Html.EditorFor(model => model.Total, new { htmlAttributes = new { @class = "total2" } })
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+    <br />
     <div class="table-responsive">
         <table class="data-table" id="myTable">
             <thead>
@@ -50,7 +122,7 @@
 
                 @for (int i = 0; i < Model.ReplyProducts.Count(); i++)
                 {
-                    
+
                     count++;
                     <tr>
                         <td>
@@ -68,18 +140,8 @@
                         </td>
                         <td>@Html.DisplayFor(model => Model.ReplyProducts[i].Type)</td>
                         <td>
-                            @if (Model.Flag == 1)
-                            {
-                                //bid, k thể edit quantity
-                                <div class="qtyBid">@Html.DisplayFor(model => Model.ReplyProducts[i].Quantity)</div>
-                                @Html.HiddenFor(model => Model.ReplyProducts[i].Quantity)
-                            }
-                            else
-                            {
-                                //normal
-                                @Html.EditorFor(model => Model.ReplyProducts[i].Quantity, new { htmlAttributes = new { @class = "qty form-control" } })
-                                @Html.ValidationMessageFor(model => Model.ReplyProducts[i].Quantity, "", new { @class = "text-danger" })
-                            } 
+                            <div class="qtyBid">@Html.DisplayFor(model => Model.ReplyProducts[i].Quantity)</div>
+                            @Html.HiddenFor(model => Model.ReplyProducts[i].Quantity)
                         </td>
                     </tr>
                 }
@@ -88,72 +150,16 @@
     </div>
     <br />
 
-    <div class="popular-posts widget widget__sidebar">
-        <h3 class="widget-title"><strong>THÔNG TIN THÊM</strong></h3>
-        <div class="widget-content">
-            <div class="form-horizontal">
 
-                <div class="form-group">
-                    <labael class="control-label col-md-3">Shipping Fee</labael>
-                    <div class="col-md-9">
-                        @Html.EditorFor(model => model.ShippingFee, new { htmlAttributes = new { @class = "fee form-control" } })
-                        @Html.ValidationMessageFor(model => model.ShippingFee, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <labael class="control-label col-md-3">Discount</labael>
-                    <div class="col-md-9">
-                        @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @class = "discount form-control" } })
-                        @Html.ValidationMessageFor(model => model.Discount, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <labael class="control-label col-md-3 col-sm-3 col-xs-12">Tổng cộng</labael>
-                    @*@Html.LabelFor(model => model.Total, htmlAttributes: new { @class = "control-label col-md-3" })*@
-                    <div class="col-md-9">
-                        <span class="total"></span> &#x20AB;
-                        <div id="errorTotal" class="text-danger"></div>
-                        <div id="oldTotal" style="display:none"></div>
-                        
-                        <div style="visibility: hidden">
-                            @Html.EditorFor(model => model.Total, new { htmlAttributes = new { @class = "total2" } })
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <labael class="control-label col-md-3">Ngày giao hàng</labael>
-                    @*@Html.LabelFor(model => model.DeliveryDate, htmlAttributes: new { @class = "control-label col-md-3" })*@
-                    <div class="col-md-9">
-                        @Html.EditorFor(model => model.DeliveryDate, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <labael class="control-label col-md-3">Mô tả</labael>
-                    @*@Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-3" })*@
-                    <div class="col-md-9">
-                        @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @row = "5", @column = "5" } })
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-
-}
+                    }
 
 <script>
 
 
     $(document).ready(function () {
-        
+
         update_amounts();
-        
+
         $('.qty').on('input', function () {
             update_amounts();
         });
@@ -203,7 +209,7 @@
         });
     });
 
-    
+
 
     function update_amounts() {
         var sum = 0.0;
@@ -233,15 +239,15 @@
             if (total <= oldTotal) {
                 $('#errorTotal').empty();
             } else {
-                var message = "Giá bid mới phải bằng hoặc nhỏ hơn giá cũ (" + addDot(oldTotal) + " &#x20AB;)";
+                var message = "Giá thầu mới phải bằng hoặc nhỏ hơn giá cũ (" + addDot(oldTotal) + " &#x20AB;)";
                 $('#errorTotal').html(message);
             }
-            
+
         }
         total = Math.round(total);
 
         //console.log(total);
-        
+
         var sumCur = addDot(total);
         //console.log(sumCur);
 
