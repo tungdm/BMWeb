@@ -155,13 +155,16 @@ namespace TGVL.Models
 
         public ICollection<SysProduct> Products { get; set; }
 
-        public ICollection<SysProduct> SelectedProduct { get; set; }
+        public ICollection<ProductSearchResult> SelectedProduct { get; set; }
 
         public IEnumerable<ProductAttribute> ProductAttributes { get; set; }
 
         public string Message { get; set; }
 
         public string Flag { get; set; }
+
+        public ICollection<ProductSearchResult> SearchResult { get; set; }
+        public string[] SuggestWords { get; set; }
     }
 
 }
