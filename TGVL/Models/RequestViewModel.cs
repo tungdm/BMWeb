@@ -69,7 +69,7 @@ namespace TGVL.Models
         [Display(Name = "Miêu tả chi tiết")]
         public string Description { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Thời hạn yêu cầu không được để trống")]
         [Range(1, 30, ErrorMessage = "Thời hạn yêu cầu từ 1 đến 30 ngày")]
         [Display(Name = "Thời hạn yêu cầu")]
         public int TimeRange { get; set; }
