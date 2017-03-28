@@ -173,6 +173,7 @@ namespace TGVL.Controllers
        
                         model.ReplyProductsTest = test2;
                         model.DeliveryDate = request.ReceivingDate;
+                        model.Flag = (int) request.Flag;
                         model.Total = (decimal)total;
                         
                         return PartialView("_Response", model);
