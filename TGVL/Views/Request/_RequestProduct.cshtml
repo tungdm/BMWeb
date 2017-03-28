@@ -67,6 +67,15 @@
 @if (Model.Message != null)
 {
     <p>@Html.Raw(@Model.Message)</p>
+    if (Model.SuggestWords != null && Model.SuggestWords.Count() != 0)
+    {
+        <p>Did you mean...</p>
+
+        foreach (var suggest in Model.SuggestWords)
+        {
+            <p><a href="javascript:searchSuggest('@suggest')">@suggest</a></p>
+        }
+    }
 }
 else
 {
@@ -99,7 +108,7 @@ else
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.Products)
+                @foreach (var item in Model.SearchResult)
                 {
                     <tr>
                         <td>
@@ -111,14 +120,14 @@ else
                             </span>
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.UnitType.Type)
+                            @Html.DisplayFor(modelItem => item.UnitType)
                         </td>
                         <td>
                             @*@Html.DisplayFor(modelItem => item.Image)*@
                             <img src="~/Images/Product/SysProduct/@item.Image" style="max-height:100px; max-width:100px" />
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Manufacturer.Name)
+                            @Html.DisplayFor(modelItem => item.ManufactureName)
                         </td>
 
                         <td>
@@ -164,10 +173,10 @@ if (Model.SelectedProduct != null)
                     @Html.DisplayFor(modelItem => item.Image)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Manufacturer.Name)
+                    @Html.DisplayFor(modelItem => item.ManufactureName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.UnitPrice) / @Html.DisplayFor(modelItem => item.UnitType.Type)
+                    @Html.DisplayFor(modelItem => item.UnitPrice) / @Html.DisplayFor(modelItem => item.UnitType)
                 </td>
                 <td>
                     <input type="checkbox"
@@ -181,9 +190,4 @@ if (Model.SelectedProduct != null)
     }
 
 }
-
-
-
-
-
 

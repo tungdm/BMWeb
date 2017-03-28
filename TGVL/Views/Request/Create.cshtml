@@ -323,7 +323,7 @@ new AjaxOptions
             <div class="modal-footer">
                 <input id="select" type="button" value="Xác nhận" class="btn btn-warning" style="display:none" />
 
-                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="deleteSearchForm">Hủy</button>
             </div>
         </div>
 
@@ -336,6 +336,10 @@ new AjaxOptions
     @Scripts.Render("~/bundles/textareasjquery")
     <script>
         $(document).ready(function () {
+            $('.searchSuggest').click(function () {
+                alert("hello");
+            });
+
             $('#hoantat').click(function () {
                 if ($('#productList').contents().length == 0) {
                     $('#mydiv').show();
