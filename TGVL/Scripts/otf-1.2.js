@@ -64,7 +64,7 @@ function checkValidate(data, status, xhr) {
             $("#productList").html(message);
             $('#error').focus();
         } else if (data.ErrorType == "GreaterThanMin") {
-            message = "<span class='text-danger field-validation-error'><span>Must greater than " + addDot(data.Min) + " &#x20AB; (Now: " + addDot(data.Sum) + " &#x20AB;)</span></span>";
+            message = "<span class='text-danger field-validation-error'><span>Giá thầu phải lớn hơn " + addDot(data.Min) + " &#x20AB; (Giá hiện tại: " + addDot(data.Sum) + " &#x20AB;)</span></span>";
             console.log(message);
             $("#errorTotal").html(message);
             $("#min").html(data.Min);
