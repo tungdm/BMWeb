@@ -31,12 +31,12 @@ namespace TGVL.Models
         [DateRange(ErrorMessage = "Ngày giao hàng phải từ ngày hôm nay về sau")]
         public DateTime? DeliveryDate { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Phí vận chuyển không được để trống")]
         [Display(Name = "Phí vận chuyển")]
         [Range(0, int.MaxValue, ErrorMessage = "Xin hãy nhập giá trị lớn hơn 0")]
         public int ShippingFee { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Giảm giá không được để trống")]
         [Display(Name = "Giảm giá(%)")]
         [Range(0, 100, ErrorMessage = "Xin hãy nhập trong khoảng từ 1 đến 100")]
         public int Discount { get; set; }
@@ -135,12 +135,12 @@ namespace TGVL.Models
         //public decimal NewTotal { get; set; }
         public string Description { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Phí vận chuyển không được để trống")]
         [DisplayFormat(DataFormatString = "{0:C0}")]
         [Range(0, int.MaxValue, ErrorMessage = "Phí vận chuyển phải lớn hơn hoặc bằng 0")]
         public int ShippingFee { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Giảm giá không được để trống")]
         [Range(0, 100, ErrorMessage = "Xin hãy nhập trong khoảng từ 1 đến 100")]
         public int Discount { get; set; }
 
