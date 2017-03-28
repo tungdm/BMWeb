@@ -147,17 +147,19 @@ namespace TGVL.Controllers
                 return RedirectToAction("ViewDetail", new { id = productId });
             }
 
-
-
             return RedirectToAction("ViewDetail");
         }
 
        
-
         public ActionResult CreateIndex()
         {
-            var query = "SELECT [dbo].[SysProducts].[Id], [dbo].[SysProducts].[Name], [dbo].[SysProducts].[Image] "
-                          + "FROM[dbo].[SysProducts]";
+            var query = "SELECT [dbo].[SysProducts].[Id], [dbo].[SysProducts].[Name], [dbo].[SysProducts].[Image], "
+                + "[dbo].[SysProducts].[Description], [dbo].[SysProducts].[UnitPrice], [dbo].[Manufacturers].[Name] AS ManufactureName, "
+                + "[dbo].[UnitTypes].[Type] AS UnitType "
+                + "FROM[dbo].[SysProducts], [dbo].[Manufacturers], [dbo].[UnitTypes] "
+                + "WHERE[dbo].[Manufacturers].[Id] = [dbo].[SysProducts].[ManufacturerId] "
+                + "AND[dbo].[UnitTypes].[Id] = [dbo].[SysProducts].[UnitTypeId]";
+
             List<ProductSearchResult> allData = db.Database.SqlQuery<ProductSearchResult>(query).ToList();
 
             GoLucene.AddUpdateLuceneIndex(allData);

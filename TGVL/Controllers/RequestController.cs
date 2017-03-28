@@ -12,6 +12,7 @@ using Microsoft.AspNet.SignalR;
 using TGVL.Hubs;
 using PagedList.Mvc;
 using PagedList;
+using TGVL.LucenceSearch;
 
 namespace TGVL.Controllers
 {
@@ -79,19 +80,24 @@ namespace TGVL.Controllers
             {
                 if (!String.IsNullOrWhiteSpace(searchString))
                 {
-                    var productList = db.SysProducts
-                        .Where(p => p.Name.Contains(searchString));
+                    //var productList = db.SysProducts
+                    //    .Where(p => p.Name.Contains(searchString));
 
-                    if (productList == null || !productList.Any())
+                    var searchResult = new LuceneResult();
+
+                    searchResult = GoLucene.SearchDefault(searchString);
+                    model.SearchResult = searchResult.SearchResult;
+
+                    if (model.SearchResult == null || !model.SearchResult.Any())
                     {
                         //Sản phẩm hiện k có trong hệ thống
                         model.Message = "Sản phẩm hiện k có trong hệ thống";
-
+                        model.SuggestWords = searchResult.SuggestWords;
                         //return Json(null, JsonRequestBehavior.AllowGet);
                     }
                     else
                     {
-                        model.Products = productList.ToList();
+                       // model.Products = productList.ToList();
 
                         if (selectedProduct != null)
                         {
@@ -101,22 +107,40 @@ namespace TGVL.Controllers
                                 Session[key] = quantity[i];
                             }
 
-                            model.SelectedProduct = new List<SysProduct>();
+                            model.SelectedProduct = new List<ProductSearchResult>();
+                            var modifiedSearchResult = new List<ProductSearchResult>();
+
                             foreach (var productId in selectedProduct)
                             {
-                                var productToAdd = db.SysProducts.Find(int.Parse(productId));
+                                //var productToAdd = db.SysProducts.Find(int.Parse(productId));
+                                var query = "SELECT [dbo].[SysProducts].[Id], [dbo].[SysProducts].[Name], [dbo].[SysProducts].[Image], "
+                                        +" [dbo].[SysProducts].[Description], [dbo].[SysProducts].[UnitPrice], "
+                                        + "[dbo].[Manufacturers].[Name] AS ManufactureName, [dbo].[UnitTypes].[Type] AS UnitType "
+                                        + "FROM[dbo].[SysProducts], [dbo].[Manufacturers], [dbo].[UnitTypes] "
+                                        + "WHERE[dbo].[Manufacturers].[Id] = [dbo].[SysProducts].[ManufacturerId] "
+                                        + "AND[dbo].[UnitTypes].[Id] = [dbo].[SysProducts].[UnitTypeId] "
+                                        + "AND[dbo].[SysProducts].[Id] = {0}";
+                                ProductSearchResult data = db.Database.SqlQuery<ProductSearchResult>(query, productId).FirstOrDefault();
 
-                                if (model.Products.Contains(productToAdd))
+                                //if (model.Products.Contains(productToAdd))
+                                //{
+                                //    model.Products.Remove(productToAdd);
+                                //}
+
+                                var index = model.SearchResult.ToList().FindIndex(item => item.Id == int.Parse(productId));
+                                var removeObj = model.SearchResult.FirstOrDefault(x => x.Id == int.Parse(productId));
+                                if (removeObj !=null)
                                 {
-                                    model.Products.Remove(productToAdd);
+                                    model.SearchResult.Remove(removeObj);
                                 }
+                                
 
-                                model.SelectedProduct.Add(productToAdd);
+                                model.SelectedProduct.Add(data);
                             }
 
                             model.ListQuantity = quantity;
 
-                            if (model.Products.Count == 0)
+                            if (model.SearchResult.Count == 0)
                             {
                                 model.Message = "Mua gì lắm thế???";
                             }
