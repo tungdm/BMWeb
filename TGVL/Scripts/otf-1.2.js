@@ -265,6 +265,19 @@ function updateReview(data, status, xhr) {
     
 }
 
+function searchSuggest(searchString) {
+    $("#searchString").val(searchString);
+    var options = {
+        url: '/Request/Create',
+        data: { searchString: searchString },
+        type: 'GET',
+    };
+    $.ajax(options).done(function (data) {
+        var $target = $('#listProduct');
+        $target.html(data);
+    });
+}
+
 function addDot(nStr) {
     nStr += '';
     x = nStr.split('.');
