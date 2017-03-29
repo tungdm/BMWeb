@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System;
+using System.Web.Mvc;
 
 namespace TGVL.Models
 {
@@ -67,11 +68,13 @@ namespace TGVL.Models
         public IEnumerable<Payment> AllTypeOfPayments { get; set; }
 
         [Display(Name = "Miêu tả chi tiết")]
+        [AllowHtml]
         public string Description { get; set; }
 
         [Required(ErrorMessage = "Thời hạn yêu cầu không được để trống")]
-        [Range(1, 30, ErrorMessage = "Thời hạn yêu cầu từ 1 đến 30 ngày")]
+        //[Range(1, 30, ErrorMessage = "Thời hạn yêu cầu từ 1 đến 30 ngày")]
         [Display(Name = "Thời hạn yêu cầu")]
+        //[MaxLength(20, ErrorMessage = "ABC")]
         public int TimeRange { get; set; }
 
         [Display(Name = "Người yêu cầu")]
@@ -92,6 +95,17 @@ namespace TGVL.Models
 
         public string Flag { get; set; }
 
+        //Validate
+        public int MinNumSeletedProduct { get; set; }
+        public int MaxLengthInputNumberBig { get; set; }
+        public int MaxLengthInputNumberSmall { get; set; }
+        public int MinBidPrice { get; set; }
+        public int MinLengthInputText { get; set; }
+        public int MaxLengthInputTextSmall { get; set; }
+        public int MinTimeRange { get; set; }
+        public int MaxTimeRange { get; set; }
+
+        public int MinDateDeliveryRange { get; set; }
     }
 
     public class RequestedProduct
@@ -116,7 +130,6 @@ namespace TGVL.Models
     {
         public RequestedProduct RequestedProduct { get; set; }
 
-        
         public int Quantity { get; set; }
     }
 
@@ -165,6 +178,8 @@ namespace TGVL.Models
 
         public ICollection<ProductSearchResult> SearchResult { get; set; }
         public string[] SuggestWords { get; set; }
+
+        
     }
 
 }
