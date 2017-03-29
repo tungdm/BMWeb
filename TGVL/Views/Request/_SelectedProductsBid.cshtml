@@ -2,7 +2,7 @@
 @if (Model.RequestProducts != null)
 {
     <div class="table-responsive">
-        <table id="shopping-cart-table" class="data-table cart-table">
+        <table class="data-table removable" id="my-orders-table">
             <thead>
                 <tr>
                     <th>STT</th>
@@ -61,7 +61,7 @@
                                 var productSessionKey = "product" + @Model.RequestProducts[i].RequestedProduct.Id;
                             }
 
-                            @Html.EditorFor(model => Model.RequestProducts[i].Quantity, new { htmlAttributes = new { @class = @Model.RequestProducts[i].RequestedProduct.Id + " qty form-control", @Value = Session[productSessionKey] == null ? 1 : Session[productSessionKey] } })
+                            @Html.EditorFor(model => Model.RequestProducts[i].Quantity, new { htmlAttributes = new { onfocus ="if(this.value=='0') this.value=''", @class = @Model.RequestProducts[i].RequestedProduct.Id + " qty form-control", @Value = Session[productSessionKey] == null ? 1 : Session[productSessionKey] } })
                             @Html.ValidationMessageFor(model => Model.RequestProducts[i].Quantity, "", new { @class = "text-danger" })
                         </td>
                         <td>
@@ -69,8 +69,7 @@
                                    name="selectedProduct"
                                    value="@Model.RequestProducts[i].RequestedProduct.Id"
                                    checked="checked"
-                                   style="display:none"
-                                   />
+                                   style="display:none" />
 
                             <a href="javascript:;" name="delete" id="@Model.RequestProducts[i].RequestedProduct.Id"  title="Xóa sản phẩm" class="button remove-item"><span><span>Xóa</span></span></a>
                         </td>
@@ -90,6 +89,22 @@
 
 <script>
     $(document).ready(function () {
+        //update_amounts();
+        var MaxLengthInputNumberSmall = @Model.MaxLengthInputNumberSmall;
+        var MinNumSeletedProduct = @Model.MinNumSeletedProduct;
+        var NumRequestedProduct = @Model.RequestProducts.Count();
+
+        if (NumRequestedProduct < MinNumSeletedProduct) {
+            $('#mydiv').show();
+            message = "<span id='error' class='text-danger field-validation-error'><span>Hãy chọn ít nhất " + MinNumSeletedProduct + " sản phẩm</span></span>";
+            console.log(message);
+            $("#errorTotal").html(message);
+            $('#error').focus();
+        } else {
+            $("#errorTotal").empty();
+        }
+
+
         $('.qty').on('input', function () {
             update_amounts();
         });
@@ -129,9 +144,11 @@
                 $(this).rules("add", {
                     required: true,
                     range: [1, Infinity],
+
                     messages: {
                         required: "Số lượng không được để trống",
-                        range: "Số lượng phải lớn hơn 0"
+                        range: "Số lượng phải lớn hơn 0",
+
                     }
                 });
             });
@@ -152,9 +169,16 @@
                 return false;
         });
 
+        $('.qty').keypress(function (e) {
+
+            if (this.value.length == MaxLengthInputNumberSmall) {
+                e.preventDefault();
+            }
+        });
+
         $(".qty").bind('keyup mouseup', function () {
+
             var myClass = $(this).attr("class").split(" ")[0];
-            //alert(myClass);
 
             var test = "." + myClass;
             $(test).on('keyup mouseup', function () {
@@ -165,13 +189,13 @@
 
     function update_amounts() {
         var sum = 0.0;
-        var min = $('#min').text();  //set config 
-      
+        var min = @Model.MinBidPrice;  //set config
+
         $('#my-orders-table > tbody  > tr').each(function () {
             var qty = $(this).find('.qty').val();
-            
+
             var price = $(this).find('.price').text();
-           
+
             var price2 = Number(price.replace(/[^0-9]+/g, ""));
 
             console.log("qty:" + qty + ", price:" + price + ", price2:" + price2);
@@ -180,7 +204,8 @@
             sum += amount;
         });
         console.log(sum);
-        if (min != 0) {
+     
+        if (min != 0 && $('#Flag').val() == "bid") {
             if (sum >= min) {
                 $('#errorTotal').empty();
             } else {
