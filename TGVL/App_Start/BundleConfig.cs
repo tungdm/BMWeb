@@ -40,6 +40,16 @@ namespace TGVL
 
 
             //TungDM
+
+            bundles.Add(new StyleBundle("~/bundles/SummernoteCSS").Include(
+                "~/Scripts/summernote/summernote.css"
+                 
+                ));
+
+            bundles.Add(new ScriptBundle("~/bundles/SummernoteJS").Include(
+               "~/Scripts/summernote/summernote.js"
+               ));
+
             //ajax
             bundles.Add(new ScriptBundle("~/bundles/otf").Include(
                 "~/Scripts/jquery-{version}.js",
@@ -232,7 +242,7 @@ namespace TGVL
                                     ));
 
             bundles.Add(new ScriptBundle("~/bundles/clockjquery").Include(
-                                    "~/Scripts/jquery-2.2.3.min.js",
+                                   
                                     "~/Scripts/jquery.time-to.js"
                                     ));
 
