@@ -69,7 +69,7 @@
     <p>@Html.Raw(@Model.Message)</p>
     if (Model.SuggestWords != null && Model.SuggestWords.Count() != 0)
     {
-        <p>Did you mean...</p>
+        <h3>Có phải bạn muốn tìm</h3>
 
         foreach (var suggest in Model.SuggestWords)
         {
