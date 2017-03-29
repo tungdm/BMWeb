@@ -5,9 +5,9 @@
     Layout = "~/Views/Shared/_HomePageViewLayout.cshtml";
 }
 
-@*@Styles.Render("~/Content/textareascss")*@
 @Styles.Render("~/Content/searchproductcss")
-
+@Styles.Render("~/bundles/SummernoteCSS")
+@Scripts.Render("~/bundles/SummernoteJS")
 <style>
     #border_layout {
         float: left;
@@ -70,13 +70,10 @@
                             </div>
                             <h3 class="widget-title"><strong>YÊU CẦU</strong></h3>
                             <div class="widget-content">
-
                                 <div class="form-group">
-
-                                    @*@Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
                                     <label class="control-label col-md-3 col-xs-12">Tiêu đề<span style="color:#ff0000"> *</span></label>
                                     <div class="col-md-9 col-xs-12">
-                                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", @style="float:left"  } })
+                                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control MaxLengthInputTextSmall", @style="float:left" } })
                                         @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -99,7 +96,7 @@
                                     @*@Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
                                     <label class="control-label col-md-3 col-xs-12">Địa chỉ nhận hàng<span style="color:#ff0000"> *</span></label>
                                     <div class="col-md-9 col-xs-12" style="margin-top: 6px;">
-                                        @Html.EditorFor(model => model.ReceivingAddress, new { htmlAttributes = new { @class = "form-control", @style = "float:left" } })
+                                        @Html.EditorFor(model => model.ReceivingAddress, new { htmlAttributes = new { @class = "form-control MaxLengthInputTextSmall", @style = "float:left" } })
                                         @Html.ValidationMessageFor(model => model.ReceivingAddress, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -116,16 +113,11 @@
                                     @*@Html.LabelFor(model => model.TimeRange, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
                                     <label class="control-label col-md-3 col-xs-12">Thời hạn yêu cầu (ngày)<span style="color:#ff0000"> *</span></label>
                                     <div class="col-md-9 col-xs-12">
-                                        @Html.EditorFor(model => model.TimeRange, new { htmlAttributes = new { @class = "form-control", @style = "float:left" } })
+                                        @Html.EditorFor(model => model.TimeRange, new { htmlAttributes = new { @class = "form-control", onfocus = "if(this.value=='0') this.value=''", @style = "float:left" } })
                                         @Html.ValidationMessageFor(model => model.TimeRange, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                                @*<div class="form-group">
-                                    <label class="control-label col-md-3">Giá test</label>
-                                    <div class="col-md-9">
-                                        <input type="text" id="pricesell" name="pricesell"/>
-                                    </div>
-                                </div>*@
+             
                                 <div class="form-group">
                                     @*@Html.LabelFor(model => model.PaymentType, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
                                     <label class="control-label col-md-3 col-xs-12">Hình thức thanh toán<span style="color:#ff0000"> *</span></label>
@@ -140,74 +132,12 @@
                                     </div>
                                 </div>
 
+                                
+
                                 <div class="form-group">
-                                    @*@Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
                                     <label class="control-label col-md-3 col-xs-12">Miêu tả chi tiết</label>
                                     <div class="col-md-9">
-                                        @*@Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", style = "max-width:80%" } })
-                                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })*@
-
-                                        <div id="alerts"></div>
-                                        <div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
-                                            <div class="btn-group">
-                                                <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font"><i class="fa fa-font"></i><b class="caret"></b></a>
-                                                <ul class="dropdown-menu"></ul>
-                                            </div>
-                                            <div class="btn-group">
-                                                <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font Size"><i class="fa fa-text-height"></i>&nbsp;<b class="caret"></b></a>
-                                                <ul class="dropdown-menu">
-                                                    <li><a data-edit="fontSize 5"><font size="5">Huge</font></a></li>
-                                                    <li><a data-edit="fontSize 3"><font size="3">Normal</font></a></li>
-                                                    <li><a data-edit="fontSize 1"><font size="1">Small</font></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="btn-group">
-                                                <a class="btn" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><i class="fa fa-bold"></i></a>
-                                                <a class="btn" data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i class="fa fa-italic"></i></a>
-                                                <a class="btn" data-edit="strikethrough" title="Strikethrough"><i class="fa fa-strikethrough"></i></a>
-                                                <a class="btn" data-edit="underline" title="Underline (Ctrl/Cmd+U)"><i class="fa fa-underline"></i></a>
-                                            </div>
-                                            <div class="btn-group">
-                                                <a class="btn" data-edit="insertunorderedlist" title="Bullet list"><i class="fa fa-list-ul"></i></a>
-                                                <a class="btn" data-edit="insertorderedlist" title="Number list"><i class="fa fa-list-ol"></i></a>
-                                                <a class="btn" data-edit="indent" title="Indent (Tab)"><i class="fa fa-indent"></i></a>
-                                            </div>
-                                            <div class="btn-group">
-                                                <a class="btn" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)"><i class="fa fa-align-left"></i></a>
-                                                <a class="btn" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)"><i class="fa fa-align-center"></i></a>
-                                                <a class="btn" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)"><i class="fa fa-align-right"></i></a>
-                                                <a class="btn" data-edit="justifyfull" title="Justify (Ctrl/Cmd+J)"><i class="fa fa-align-justify"></i></a>
-                                            </div>
-                                            <div class="btn-group">
-                                                <a class="btn dropdown-toggle" data-toggle="dropdown" title="Hyperlink"><i class="fa fa-link"></i></a>
-                                                <div class="dropdown-menu input-append">
-                                                    <input class="span2" placeholder="URL" type="text" data-edit="createLink" />
-                                                    <button class="btn" type="button">Add</button>
-                                                </div>
-                                                <a class="btn" data-edit="unlink" title="Remove Hyperlink"><i class="fa fa-cut"></i></a>
-
-                                            </div>
-
-                                            <div class="btn-group">
-                                                <a class="btn" title="Insert picture (or just drag & drop)" id="pictureBtn"><i class="fa fa-picture-o"></i></a>
-                                                <input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage" />
-                                            </div>
-                                            <div class="btn-group">
-                                                <a class="btn" data-edit="undo" title="Undo (Ctrl/Cmd+Z)"><i class="fa fa-undo"></i></a>
-                                                <a class="btn" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i class="fa fa-repeat"></i></a>
-                                            </div>
-                                            <input type="text" data-edit="inserttext" id="voiceBtn" x-webkit-speech="">
-                                        </div>
-
-                                        <div id="editor">
-
-                                        </div>
-                                        <br />
-                                        <p style="color:#ff0000; font-size:14px;"><strong>* Thông tin bắt buộc</strong></p>
-
-                                        @Html.HiddenFor(model => model.Description)
-
-
+                                        @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @rows = 5 })
                                     </div>
                                 </div>
                             </div>
@@ -221,7 +151,7 @@
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Tên người đăng</label>
                                     <div class="col-md-6 col-sm-6 col-xs-12" style="margin-top: 6px;">
                                         @Html.DisplayFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control" } })
-                                        @*@Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })*@
+                                       
                                     </div>
                                 </div>
 
@@ -230,7 +160,7 @@
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Email</label>
                                     <div class="col-md-6 col-sm-6 col-xs-12" style="margin-top: 6px;">
                                         @Html.DisplayFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                                        @*@Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })*@
+                                        
                                     </div>
                                 </div>
 
@@ -239,7 +169,7 @@
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Điện thoại</label>
                                     <div class="col-md-6 col-sm-6 col-xs-12" style="margin-top: 6px;">
                                         @Html.DisplayFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                        
                                     </div>
                                 </div>
 
@@ -248,7 +178,7 @@
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Địa chỉ</label>
                                     <div class="col-md-6 col-sm-6 col-xs-12" style="margin-top: 6px;">
                                         @Html.DisplayFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                  
                                     </div>
                                 </div>
                                 <hr />
@@ -336,18 +266,40 @@ new AjaxOptions
     @Scripts.Render("~/bundles/textareasjquery")
     <script>
         $(document).ready(function () {
-            $('.searchSuggest').click(function () {
-                alert("hello");
+            var MaxLengthInputTextSmall = @Model.MaxLengthInputTextSmall;
+            var MaxLengthInputNumberSmall = @Model.MaxLengthInputNumberSmall;
+            var MinNumSeletedProduct = @Model.MinNumSeletedProduct;
+
+            $('input').bind("cut copy paste", function(e) {
+                e.preventDefault();
+            });
+
+            $("#TimeRange").rules("add", {
+                range: [@Model.MinTimeRange, @Model.MaxTimeRange],
+                messages: {
+                    range: "Thời hạn yêu cầu phải từ @Model.MinTimeRange đến @Model.MaxTimeRange ngày"
+                }
+            });
+
+            $('.MaxLengthInputTextSmall').keypress(function (e) {
+                if (this.value.length == MaxLengthInputTextSmall) {
+                    e.preventDefault();
+                }
             });
 
             $('#hoantat').click(function () {
-                if ($('#productList').contents().length == 0) {
+                update_amounts();
+                var numOfSelectedProduct = $("#my-orders-table > tbody > tr").length;
+                console.log("numOfSelectedProduct=" + numOfSelectedProduct);
+                if (numOfSelectedProduct < MinNumSeletedProduct) {
                     $('#mydiv').show();
-                    message = "<span id='error' tabindex='1' style='float:left' class='text-danger field-validation-error'><span>Hãy chọn ít nhất 1 sản phẩm</span></span>";
+                    message = "<span id='error' class='text-danger field-validation-error'><span>Hãy chọn ít nhất " + MinNumSeletedProduct + " sản phẩm</span></span>";
                     console.log(message);
-                    $("#productList").html(message);
+                    $("#errorTotal").html(message);
                     $('#error').focus();
                 }
+                //var sum = $("#total").val();
+                //console.log(sum);
             });
 
             $('input[type="number"]').bind('keypress', function (e) {
@@ -365,28 +317,71 @@ new AjaxOptions
                     return false;
             });
 
+            var MinDateDeliveryRange = @Model.MinDateDeliveryRange;
+            var now = moment().format('YYYY-MM-DD');
+            var minDate = moment(now).add(MinDateDeliveryRange, 'days').format('YYYY-MM-DD');
 
             $.validator.addMethod("daterange", function (value, element) {
                 var receivingDate = $("#ReceivingDate").val();
 
-                var now = moment().format('YYYY-MM-DD');
 
-                console.log("now:" + now + ", receivingDate:" + receivingDate);
-                if (now > receivingDate) {
-                    console.log('Date is past');
-                } else {
-                    console.log('Date is future');
-                }
 
-                return receivingDate >= now;
+
+                console.log("now:" + now + ", receivingDate:" + receivingDate + ", minDate:" +minDate);
+
+                return receivingDate >= minDate;
 
                 //return someDate >= today;
-            }, "Ngày nhận hàng phải từ hôm nay về sau");
+            }, "Ngày nhận hàng phải từ ngày " + moment(minDate).format('DD/MM/YYYY') + " về sau");
 
             $('input[name="ReceivingDate"]').rules("add", {
                 daterange: true
             });
+
+            function update_amounts() {
+                var sum = 0.0;
+                var min = @Model.MinBidPrice;  //set config
+
+                $('#my-orders-table > tbody  > tr').each(function () {
+                    var qty = $(this).find('.qty').val();
+
+                    var price = $(this).find('.price').text();
+
+                    var price2 = Number(price.replace(/[^0-9]+/g, ""));
+
+                    console.log("qty:" + qty + ", price:" + price + ", price2:" + price2);
+
+                    var amount = (qty * price2)
+                    sum += amount;
+                });
+                console.log(sum);
+
+                if (min != 0 && $('#Flag').val() == "bid") {
+                    if (sum >= min) {
+                        $('#errorTotal').empty();
+                    } else {
+                        var message = "Total > " + addDot(min) + " &#x20AB;)";
+                        var message = "Giá thầu phải lớn hơn " + addDot(min) + " &#x20AB; (Giá hiện tại: " + addDot(sum) + " &#x20AB;)"
+                        console.log(message);
+                        $('#errorTotal').html(message);
+                    }
+                }
+
+                $('#total').val(sum);
+            }
         });
+
+        $("#Description").summernote({
+            height: 300, // set editor height
+            width: 700,
+            minHeight: null, // set minimum height of editor
+            maxHeight: null, // set maximum height of editor
+            focus: false, // set focus to editable area after initializing summernote
+            lang: "vi-VN"
+        });
+
+
+
         //$('#pricesell').priceFormat({
         //    prefix: '',
         //    centsSeparator: ',',
@@ -397,9 +392,4 @@ new AjaxOptions
     </script>
 }
 
-<script>
-    //document.querySelector('.sweet-3').onclick = function () {
-    //    swal("Thành công", "Yêu cầu mới đã được tạo", "success");
-    //};
-    
-</script>
+
