@@ -73,6 +73,9 @@ namespace TGVL.Controllers
         [System.Web.Mvc.Authorize(Roles = "Customer")]
         public async Task<ActionResult> Create(string mode, string searchString, string[] selectedProduct, int[] quantity)
         {
+            //Setting config
+            var configs = db.Settings.Where(s => s.SettingTypeId == 1).ToList(); //1 <=> Create Request
+
             var model = new RequestProductViewModel();
             model.Flag = mode;
 
@@ -166,6 +169,18 @@ namespace TGVL.Controllers
             model2.AllTypeOfPayments = db.Payments;
             model2.ReceivingAddress = user.Address;
 
+            
+            model2.MinNumSeletedProduct = configs.Select(c => new { SettingValue = c.SettingValue, SettingName = c.SettingName }).Where(c => c.SettingName == "MinNumSeletedProduct").SingleOrDefault().SettingValue;
+            model2.MaxLengthInputNumberBig = configs.Select(c => new { SettingValue = c.SettingValue, SettingName = c.SettingName }).Where(c => c.SettingName == "MaxLengthInputNumberBig").SingleOrDefault().SettingValue;
+            model2.MaxLengthInputNumberSmall = configs.Select(c => new { SettingValue = c.SettingValue, SettingName = c.SettingName }).Where(c => c.SettingName == "MaxLengthInputNumberSmall").SingleOrDefault().SettingValue;
+            model2.MinBidPrice = configs.Select(c => new { SettingValue = c.SettingValue, SettingName = c.SettingName }).Where(c => c.SettingName == "MinBidPrice").SingleOrDefault().SettingValue;
+            model2.MinLengthInputText = configs.Select(c => new { SettingValue = c.SettingValue, SettingName = c.SettingName }).Where(c => c.SettingName == "MinLengthInputText").SingleOrDefault().SettingValue;
+            model2.MaxLengthInputTextSmall = configs.Select(c => new { SettingValue = c.SettingValue, SettingName = c.SettingName }).Where(c => c.SettingName == "MaxLengthInputTextSmall").SingleOrDefault().SettingValue;
+            model2.MinTimeRange = configs.Select(c => new { SettingValue = c.SettingValue, SettingName = c.SettingName }).Where(c => c.SettingName == "MinTimeRange").SingleOrDefault().SettingValue;
+            model2.MaxTimeRange = configs.Select(c => new { SettingValue = c.SettingValue, SettingName = c.SettingName }).Where(c => c.SettingName == "MaxTimeRange").SingleOrDefault().SettingValue;
+            model2.MinDateDeliveryRange = configs.Select(c => new { SettingValue = c.SettingValue, SettingName = c.SettingName }).Where(c => c.SettingName == "MinDateDeliveryRange").SingleOrDefault().SettingValue;
+
+
             //ViewBag.PaymentType = new SelectList(db.Payments, "Id", "Type");
             //ViewBag.TypeOfHouse = new SelectList(db.Houses, "Id", "Type");
             return View(model2);
@@ -203,6 +218,11 @@ namespace TGVL.Controllers
                         };
                         test.Add(requestedProductWithQuantity);
                     }
+                    //Setting config
+                    var configs = db.Settings.Where(s => s.SettingTypeId == 1).ToList(); //1 <=> Create Request
+                    model2.MaxLengthInputNumberSmall = configs.Select(c => new { SettingValue = c.SettingValue, SettingName = c.SettingName }).Where(c => c.SettingName == "MaxLengthInputNumberSmall").SingleOrDefault().SettingValue;
+                    model2.MinNumSeletedProduct = configs.Select(c => new { SettingValue = c.SettingValue, SettingName = c.SettingName }).Where(c => c.SettingName == "MinNumSeletedProduct").SingleOrDefault().SettingValue;
+                    model2.MinBidPrice = configs.Select(c => new { SettingValue = c.SettingValue, SettingName = c.SettingName }).Where(c => c.SettingName == "MinBidPrice").SingleOrDefault().SettingValue;
 
                     model2.RequestProducts = test;
                     return PartialView("_SelectedProductsBid", model2);
@@ -253,7 +273,9 @@ namespace TGVL.Controllers
                 } else
                 {
                     //TODO: lấy liệu minTotal trong db
-                    var minTotal = 10000000;
+
+                    var minTotal = db.Settings.Where(s => s.SettingTypeId == 1 && s.SettingName == "MinBidPrice").FirstOrDefault().SettingValue;
+
                     if (mode == "bid" && sum < minTotal)
                     {
                         return new JsonResult
