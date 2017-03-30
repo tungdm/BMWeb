@@ -4,16 +4,11 @@
 }
 @Styles.Render("~/Content/slidercss")
 
-@*<link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />*@
-<link href="~/Content/css/slider.css" rel="stylesheet" />
-<link href="~/Content/css/owl.carousel.css" rel="stylesheet" />
-<link href="~/Content/css/owl.theme.css" rel="stylesheet" />
-@*<link href="~/Content/font-awesome.min.css" rel="stylesheet" />*@
-<link href="~/Content/css/style.css" rel="stylesheet" />
 <style>
     .item-img-info {
         width: 300px;
         height: 200px;
+        background-image: none;
         background-repeat: no-repeat;
         background-position: center center;
         background-size: cover;
@@ -23,16 +18,14 @@
         width: 300px;
         height: 300px;
         display: inline-block;
-        /*padding: 5px;*/
-        /*margin-left: 10px;*/
         vertical-align: top;
     }
 
     .col-item {
         width: 100%;
         height: auto;
-        /*padding: 5px;*/
     }
+
 
     /*#border1 {
         border-top: 2px solid #e5e5e5;
@@ -82,7 +75,7 @@
                 <div id="border1" class="best-pro col-md-12">
                     <div class="slider-items-products">
                         <div class="new_title center">
-                            <h2>DEAL NỔI BẬT</h2>
+                            <h2>DEAL MỚI</h2>
                         </div>
                         <div id="best-seller-slider" class="product-flexslider hidden-buttons">
                             <div class="slider-items slider-width-col4">
@@ -98,15 +91,12 @@
                                                 <div class="info-inner">
                                                     <div class="item-title"> <a href="product_detail.html" title="Thép cây vằn Pomina D12"> Thép cây vằn Pomina D12 </a> </div>
                                                     <div class="item-content">
-                                                        <div class="item-price">
+                                                        <div class="price-block">
                                                             <div class="price-box">
-                                                                <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" id="old-price-2"> 87.000 VNĐ </span> </p>
-                                                                <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" id="product-price-2"> 67.000 VNĐ </span> </p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="rating">
-                                                            <div>
-                                                                <i class="fa fa-user">123</i>
+                                                                <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" style="font-size:18px"> 67.000 VNĐ</span> Giảm <strong style="color:#ff1341; font-size:18px">5%</strong> </p>
+                                                                <br />
+                                                                <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" style="font-size:18px"> 87.000 VNĐ </span> &nbsp; <span style="text-align:justify"> <i class="fa fa-user"> 123 </i></span></p>
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -130,17 +120,11 @@
                                                 <div class="info-inner">
                                                     <div class="item-title"> <a href="grid.html" title="Xi măng Hà Tiên 1"> Xi măng Hà Tiên 1 </a> </div>
                                                     <div class="item-content">
-                                                        <div class="rating">
-                                                            <div class="ratings">
-                                                                <div class="rating-box">
-                                                                    <div class="rating" style="width:80%"></div>
-                                                                </div>
-                                                                <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="item-price">
+                                                        <div class="price-block">
                                                             <div class="price-box">
-                                                                <span class="regular-price"> <span class="price">89.000 VNĐ</span> </span>
+                                                                <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" style="font-size:18px"> 67.000 VNĐ</span> Giảm <strong style="color:#ff1341; font-size:18px">5%</strong> </p>
+                                                                <br />
+                                                                <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" style="font-size:18px"> 87.000 VNĐ </span> &nbsp; <span style="text-align:justify"> <i class="fa fa-user"> 123 </i></span></p>
 
                                                             </div>
                                                         </div>
@@ -154,11 +138,11 @@
 
                                 <div class="item">
                                     <div class="col-item">
-                                        <div class="sale-label sale-top-right">HOT</div>
+
                                         <div class="item-inner">
                                             <div class="item-img">
                                                 <div class="item-img-info">
-                                                    <a href="product_detail.html" title="Gạch bông" class="product-image"> <img src="~/Content/images/gachbong.jpg" alt="Sample Product"></a>
+                                                    <a href="product_detail.html" title="Gạch bông" class="product-image"> <img src="~/Images/Product/SysProduct/dongtam.jpg" alt="Sample Product"></a>
 
                                                 </div>
                                             </div>
@@ -166,17 +150,11 @@
                                                 <div class="info-inner">
                                                     <div class="item-title"> <a href="grid.html" title="Gạch bông"> Gạch bông </a> </div>
                                                     <div class="item-content">
-                                                        <div class="rating">
-                                                            <div class="ratings">
-                                                                <div class="rating-box">
-                                                                    <div class="rating" style="width:80%"></div>
-                                                                </div>
-                                                                <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="item-price">
+                                                        <div class="price-block">
                                                             <div class="price-box">
-                                                                <span class="regular-price"> <span class="price">90.000 VNĐ</span> </span>
+                                                                <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" style="font-size:18px"> 67.000 VNĐ</span> Giảm <strong style="color:#ff1341; font-size:18px">5%</strong> </p>
+                                                                <br />
+                                                                <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" style="font-size:18px"> 87.000 VNĐ </span> &nbsp; <span style="text-align:justify"> <i class="fa fa-user"> 123 </i></span></p>
 
                                                             </div>
                                                         </div>
@@ -202,17 +180,11 @@
                                                 <div class="info-inner">
                                                     <div class="item-title"> <a href="grid.html" title="Xi măng Hà Tiên 1"> Xi măng Hà Tiên 1 </a> </div>
                                                     <div class="item-content">
-                                                        <div class="rating">
-                                                            <div class="ratings">
-                                                                <div class="rating-box">
-                                                                    <div class="rating" style="width:80%"></div>
-                                                                </div>
-                                                                <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="item-price">
+                                                        <div class="price-block">
                                                             <div class="price-box">
-                                                                <span class="regular-price"> <span class="price">89.000 VNĐ</span> </span>
+                                                                <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" style="font-size:18px"> 67.000 VNĐ</span> Giảm <strong style="color:#ff1341; font-size:18px">5%</strong> </p>
+                                                                <br />
+                                                                <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" style="font-size:18px"> 87.000 VNĐ </span> &nbsp; <span style="text-align:justify"> <i class="fa fa-user"> 123 </i></span></p>
 
                                                             </div>
                                                         </div>
@@ -237,17 +209,11 @@
                                                 <div class="info-inner">
                                                     <div class="item-title"> <a href="grid.html" title="Xi măng Hà Tiên 1"> Xi măng Hà Tiên 1 </a> </div>
                                                     <div class="item-content">
-                                                        <div class="rating">
-                                                            <div class="ratings">
-                                                                <div class="rating-box">
-                                                                    <div class="rating" style="width:80%"></div>
-                                                                </div>
-                                                                <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="item-price">
+                                                        <div class="price-block">
                                                             <div class="price-box">
-                                                                <span class="regular-price"> <span class="price">89.000 VNĐ</span> </span>
+                                                                <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" style="font-size:18px"> 67.000 VNĐ</span> Giảm <strong style="color:#ff1341; font-size:18px">5%</strong> </p>
+                                                                <br />
+                                                                <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" style="font-size:18px"> 87.000 VNĐ </span> &nbsp; <span style="text-align:justify"> <i class="fa fa-user"> 123 </i></span></p>
 
                                                             </div>
                                                         </div>
@@ -278,7 +244,7 @@
                 <div id="border1" class="best-pro col-md-12">
                     <div class="slider-items-products">
                         <div class="new_title center">
-                            <h2>DEAL MỚI</h2>
+                            <h2>DEAL NỔI BẬT</h2>
                         </div>
                         <div id="best-seller-slider" class="product-flexslider hidden-buttons">
                             <div class="slider-items slider-width-col4">
@@ -294,22 +260,14 @@
                                                 <div class="info-inner">
                                                     <div class="item-title"> <a href="product_detail.html" title="Thép cây vằn Pomina D12"> Thép cây vằn Pomina D12 </a> </div>
                                                     <div class="item-content">
-                                                        <div class="rating">
-                                                            <div class="ratings">
-                                                                <div class="rating-box">
-                                                                    <div class="rating" style="width:80%"></div>
-                                                                </div>
-                                                                <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="item-price">
+                                                        <div class="price-block">
                                                             <div class="price-box">
-
-                                                                <span class="regular-price"> <span class="price">145.000 VNĐ</span> </span>
+                                                                <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" style="font-size:18px"> 67.000 VNĐ</span> Giảm <strong style="color:#ff1341; font-size:18px">5%</strong> </p>
+                                                                <br />
+                                                                <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" style="font-size:18px"> 87.000 VNĐ </span> &nbsp; <span style="text-align:justify"> <i class="fa fa-user"> 123 </i></span></p>
 
                                                             </div>
                                                         </div>
-
                                                     </div>
                                                 </div>
 
@@ -331,17 +289,11 @@
                                                 <div class="info-inner">
                                                     <div class="item-title"> <a href="grid.html" title="Xi măng Hà Tiên 1"> Xi măng Hà Tiên 1 </a> </div>
                                                     <div class="item-content">
-                                                        <div class="rating">
-                                                            <div class="ratings">
-                                                                <div class="rating-box">
-                                                                    <div class="rating" style="width:80%"></div>
-                                                                </div>
-                                                                <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="item-price">
+                                                        <div class="price-block">
                                                             <div class="price-box">
-                                                                <span class="regular-price"> <span class="price">89.000 VNĐ</span> </span>
+                                                                <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" style="font-size:18px"> 67.000 VNĐ</span> Giảm <strong style="color:#ff1341; font-size:18px">5%</strong> </p>
+                                                                <br />
+                                                                <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" style="font-size:18px"> 87.000 VNĐ </span> &nbsp; <span style="text-align:justify"> <i class="fa fa-user"> 123 </i></span></p>
 
                                                             </div>
                                                         </div>
@@ -355,7 +307,7 @@
 
                                 <div class="item">
                                     <div class="col-item">
-                                        <div class="sale-label sale-top-right">HOT</div>
+
                                         <div class="item-inner">
                                             <div class="item-img">
                                                 <div class="item-img-info">
@@ -367,17 +319,11 @@
                                                 <div class="info-inner">
                                                     <div class="item-title"> <a href="grid.html" title="Gạch bông"> Gạch bông </a> </div>
                                                     <div class="item-content">
-                                                        <div class="rating">
-                                                            <div class="ratings">
-                                                                <div class="rating-box">
-                                                                    <div class="rating" style="width:80%"></div>
-                                                                </div>
-                                                                <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="item-price">
+                                                        <div class="price-block">
                                                             <div class="price-box">
-                                                                <span class="regular-price"> <span class="price">90.000 VNĐ</span> </span>
+                                                                <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" style="font-size:18px"> 67.000 VNĐ</span> Giảm <strong style="color:#ff1341; font-size:18px">5%</strong> </p>
+                                                                <br />
+                                                                <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" style="font-size:18px"> 87.000 VNĐ </span> &nbsp; <span style="text-align:justify"> <i class="fa fa-user"> 123 </i></span></p>
 
                                                             </div>
                                                         </div>
@@ -403,17 +349,11 @@
                                                 <div class="info-inner">
                                                     <div class="item-title"> <a href="grid.html" title="Xi măng Hà Tiên 1"> Xi măng Hà Tiên 1 </a> </div>
                                                     <div class="item-content">
-                                                        <div class="rating">
-                                                            <div class="ratings">
-                                                                <div class="rating-box">
-                                                                    <div class="rating" style="width:80%"></div>
-                                                                </div>
-                                                                <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="item-price">
+                                                        <div class="price-block">
                                                             <div class="price-box">
-                                                                <span class="regular-price"> <span class="price">89.000 VNĐ</span> </span>
+                                                                <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" style="font-size:18px"> 67.000 VNĐ</span> Giảm <strong style="color:#ff1341; font-size:18px">5%</strong> </p>
+                                                                <br />
+                                                                <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" style="font-size:18px"> 87.000 VNĐ </span> &nbsp; <span style="text-align:justify"> <i class="fa fa-user"> 123 </i></span></p>
 
                                                             </div>
                                                         </div>
@@ -438,17 +378,11 @@
                                                 <div class="info-inner">
                                                     <div class="item-title"> <a href="grid.html" title="Xi măng Hà Tiên 1"> Xi măng Hà Tiên 1 </a> </div>
                                                     <div class="item-content">
-                                                        <div class="rating">
-                                                            <div class="ratings">
-                                                                <div class="rating-box">
-                                                                    <div class="rating" style="width:80%"></div>
-                                                                </div>
-                                                                <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="item-price">
+                                                        <div class="price-block">
                                                             <div class="price-box">
-                                                                <span class="regular-price"> <span class="price">89.000 VNĐ</span> </span>
+                                                                <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" style="font-size:18px"> 67.000 VNĐ</span> Giảm <strong style="color:#ff1341; font-size:18px">5%</strong> </p>
+                                                                <br />
+                                                                <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" style="font-size:18px"> 87.000 VNĐ </span> &nbsp; <span style="text-align:justify"> <i class="fa fa-user"> 123 </i></span></p>
 
                                                             </div>
                                                         </div>
@@ -469,6 +403,10 @@
         </div>
     </div>
 </section>
+
+<br />
+
+
 
 <section class="main-container col1-layout home-content-container">
     <div class="container">
@@ -491,24 +429,18 @@
                                             </div>
                                             <div class="item-info">
                                                 <div class="info-inner">
-                                                    <div class="item-title"> <a href="product_detail.html" title="Thép cây vằn Pomina D12"> Thép cây vằn Pomina D12 </a> </div>
+                                                    <div class="item-title"> <a href="product_detail.html" title="Cửa hàng VLXD ABC"> Cửa hàng VLXD ABC </a> </div>
                                                     <div class="item-content">
                                                         <div class="rating">
                                                             <div class="ratings">
                                                                 <div class="rating-box">
                                                                     <div class="rating" style="width:80%"></div>
                                                                 </div>
-                                                                <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
                                                             </div>
                                                         </div>
-                                                        <div class="item-price">
-                                                            <div class="price-box">
-
-                                                                <span class="regular-price"> <span class="price">145.000 VNĐ</span> </span>
-
-                                                            </div>
+                                                        <div class="short-description">
+                                                            42/39 Nguyễn Trãi Q1, TPHCM
                                                         </div>
-
                                                     </div>
                                                 </div>
 
@@ -535,14 +467,10 @@
                                                                 <div class="rating-box">
                                                                     <div class="rating" style="width:80%"></div>
                                                                 </div>
-                                                                <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
                                                             </div>
                                                         </div>
-                                                        <div class="item-price">
-                                                            <div class="price-box">
-                                                                <span class="regular-price"> <span class="price">89.000 VNĐ</span> </span>
-
-                                                            </div>
+                                                        <div class="short-description">
+                                                            42/39 Nguyễn Trãi Q1, TPHCM
                                                         </div>
                                                     </div>
                                                 </div>
@@ -554,7 +482,7 @@
 
                                 <div class="item">
                                     <div class="col-item">
-                                        <div class="sale-label sale-top-right">HOT</div>
+
                                         <div class="item-inner">
                                             <div class="item-img">
                                                 <div class="item-img-info">
@@ -571,14 +499,10 @@
                                                                 <div class="rating-box">
                                                                     <div class="rating" style="width:80%"></div>
                                                                 </div>
-                                                                <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
                                                             </div>
                                                         </div>
-                                                        <div class="item-price">
-                                                            <div class="price-box">
-                                                                <span class="regular-price"> <span class="price">90.000 VNĐ</span> </span>
-
-                                                            </div>
+                                                        <div class="short-description">
+                                                            42/39 Nguyễn Trãi Q1, TPHCM
                                                         </div>
                                                     </div>
                                                 </div>
@@ -607,14 +531,10 @@
                                                                 <div class="rating-box">
                                                                     <div class="rating" style="width:80%"></div>
                                                                 </div>
-                                                                <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
                                                             </div>
                                                         </div>
-                                                        <div class="item-price">
-                                                            <div class="price-box">
-                                                                <span class="regular-price"> <span class="price">89.000 VNĐ</span> </span>
-
-                                                            </div>
+                                                        <div class="short-description">
+                                                            42/39 Nguyễn Trãi Q1, TPHCM
                                                         </div>
                                                     </div>
                                                 </div>
@@ -642,14 +562,10 @@
                                                                 <div class="rating-box">
                                                                     <div class="rating" style="width:80%"></div>
                                                                 </div>
-                                                                <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
                                                             </div>
                                                         </div>
-                                                        <div class="item-price">
-                                                            <div class="price-box">
-                                                                <span class="regular-price"> <span class="price">89.000 VNĐ</span> </span>
-
-                                                            </div>
+                                                        <div class="short-description">
+                                                            42/39 Nguyễn Trãi Q1, TPHCM
                                                         </div>
                                                     </div>
                                                 </div>
