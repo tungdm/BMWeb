@@ -3073,6 +3073,13 @@ small {
 .item .item-inner .item-img .item-img-info a.product-image {
 	display: inline-block;
 	width: 100%;
+
+    /*display: block;
+    position: relative;
+    padding-bottom: 100%;
+    overflow: hidden;
+    height: auto;
+    width: 100%;*/
 }
 .item .item-inner .item-img .item-img-info a.product-image img {
 	/*width: 80%;
@@ -4810,9 +4817,10 @@ input.radio {
 .toolbar {
 	clear: both;
 	margin-top: 0px;
-	padding: 5px 0 0px 0px;
+	padding: 5px 5px 5px 5px;
 	display: inline-block;
 	width: 100%;
+    border: 1px solid #333;
 }
 .toolbar .sorter {
 	float: left;
@@ -4847,7 +4855,7 @@ input.radio {
 	float: right;
 }
 #sort-by {
-	float: right;
+	float: left;
 	font-size: 14px;
 }
 #sort-by ul {
@@ -4867,8 +4875,8 @@ input.radio {
 	outline: medium none;
 	padding: 3px 10px;
 	position: relative;
-	width: 90px;
-	border-color: #f3f3f3;
+	width: 120px;
+	border-color: #e7e7e7;
 	border-width: 1px;
 	border-style: solid;
 	float: left;
@@ -5180,7 +5188,8 @@ input.radio {
 ol.products-list {
 	padding: 0;
 	margin: 0;
-	float: left
+	float: left;
+    width: 100%;
 }
 .products-list .last {
 }
@@ -5192,7 +5201,9 @@ li .list {
 	display: inline-block;
 }
 .products-list .product-image img {
-	width: 100%;
+	/*width: 100%;*/
+    width:150px;
+    height: 200px;
 }
 .products-list .product-shop {
 	width: 70%;
@@ -5213,6 +5224,7 @@ li .list {
 	font-family: Arial, Helvetica, sans-serif;
 	color: #666;
 	line-height: 1.5em;
+    padding-right:10px;
 }
 .products-list .product-shop p.old-price {
 	margin-right: 4px;
