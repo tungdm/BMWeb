@@ -194,6 +194,7 @@ namespace TGVL
                 "~/Content/css/flexslider.css",
                 "~/Content/css/fancybox.css",
                 "~/Content/css/blogmate.css",
+                "~/Content/timeTo.css",
                 "~/Content/AdminLTE.min.css"
              //"~/Content/css/style.css"
 
