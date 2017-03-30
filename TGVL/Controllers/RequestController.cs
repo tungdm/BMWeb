@@ -89,7 +89,15 @@ namespace TGVL.Controllers
 
                     var searchResult = new LuceneResult();
 
-                    searchResult = GoLucene.Search(searchString);
+                    if (searchString.Length == 1)
+                    {
+                        searchResult = GoLucene.Search(searchString);
+                    }
+                    else
+                    {
+                        searchResult = GoLucene.SearchDefault(searchString);
+                    }
+                   
                     model.SearchResult = searchResult.SearchResult;
 
                     if (model.SearchResult == null || !model.SearchResult.Any())

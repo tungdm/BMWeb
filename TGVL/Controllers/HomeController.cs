@@ -86,8 +86,14 @@ namespace TGVL.Controllers
         public ActionResult SearchResult(string searchString)
         {
             var searchResult = new LuceneResult();
-
-            searchResult = GoLucene.Search(searchString);
+            if (searchString.Length == 1)
+            {
+                searchResult = GoLucene.Search(searchString);
+            } else
+            {
+                searchResult = GoLucene.SearchDefault(searchString);
+            }
+            
             if (searchResult.SearchResult.Count() == 1)
             {
                 var sysProductId = searchResult.SearchResult.FirstOrDefault().Id;
