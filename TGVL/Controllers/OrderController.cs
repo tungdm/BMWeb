@@ -50,7 +50,7 @@ namespace TGVL.Controllers
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async System.Threading.Tasks.Task<ActionResult> Create(OrderViewModel model)
+        public async System.Threading.Tasks.Task<ActionResult> Create(OrderViewModel model, int replyId)
         {
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
             var orderSh = (OrderViewModel)Session["Order"];
@@ -115,18 +115,19 @@ namespace TGVL.Controllers
 
             } else //normal request hoặc bid request
             {
-                var reply = db.Replies.Find(model.Reply.Id);
+                var reply = db.Replies.Find(replyId);
+
                 var newOrder = new Order
                 {
                     CustomerId = user.Id,
                     SupplierId = reply.SupplierId,
-                    PaymentId = model.PaymentType,
+                    PaymentId = reply.Request.PaymentId,
                     Total = reply.Total,
                     DeliveryDate = reply.DeliveryDate,
                     DeliveryAddress = user.Address,
                     CreateDate = DateTime.Now,
                     Flag = reply.Flag, // 0 <=> normal request, 1 <=> bid request
-                    Description = model.Description,
+                    Description = reply.Request.Descriptions,
                     Discount = reply.Discount,
                     StatusId = 1 //mới đặt
                 };
