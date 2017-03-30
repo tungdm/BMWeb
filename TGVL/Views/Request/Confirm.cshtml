@@ -121,9 +121,17 @@
                     </div>
                 </div>
             </div>
-            <div style="text-align:center">
-                @Html.ActionLink("Xác nhận", "CheckOut", "Home", new { replyId = Model.Id }, new { @class = "btn btn-success" })
-            </div>
+            
+                @using (Html.BeginForm("Create", "Order", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="number" name="replyId" value="@Model.Id" style="visibility:hidden"/>
+                    <div style="text-align:center">
+                        <button class="btn btn-success" style="font-size:18px" type="submit">HOÀN TẤT</button>
+                    </div>
+                }
+                
+            
         </div>
     </div>
 </section>
