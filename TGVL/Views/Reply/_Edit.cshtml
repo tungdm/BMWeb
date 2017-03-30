@@ -191,7 +191,7 @@
                     var test = Number(oldBidPrice.replace(/[^0-9]+/g, ""));
                     console.log("newBidPrice=" + newBidPrice + ", test=" + test);
 
-                    if (newBidPrice < test) {
+                    if (newBidPrice <= test) {
                         $("form[id='form0']").submit();
                     }
                 } else {
@@ -223,8 +223,8 @@
             var test = Number(oldBidPrice.replace(/[^0-9]+/g, ""));
 
             console.log("newBidPrice=" + newBidPrice + ",oldBidPrice=" + test);
-            if (newBidPrice >= test) {
-                var message = "Giá thầu mới phải nhỏ hơn giá cũ (@Model.BidPrice &#x20AB;)";
+            if (newBidPrice > test) {
+                var message = "Giá thầu mới phải nhỏ hơn hoặc bằng giá cũ (@Model.BidPrice &#x20AB;)";
                 console.log(message);
                 $('#errorTotal').html(message);
                 $('#errorTotal').show();

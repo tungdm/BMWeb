@@ -403,6 +403,14 @@
 
 <script>
     $(document).ready(function () {
+
+        $(document).ajaxStart(function () {
+            NProgress.start();
+        });
+        $(document).ajaxStop(function () {
+            NProgress.done();
+        });
+
         if (window.location.hash != null && window.location.hash != '') {
 
             $('html, body').animate({
