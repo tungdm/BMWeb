@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace TGVL.Models
@@ -9,14 +10,18 @@ namespace TGVL.Models
     internal class DateRange : ValidationAttribute, IClientValidatable
     {
         private const string DefaultErrorMessage = "Receiving date must be on or after today";
-
+        private BMWEntities db = new BMWEntities();
         public DateRange() : base(DefaultErrorMessage) {  }
 
         public override string FormatErrorMessage(string name)
         {
             if (ErrorMessage == null)
             {
-                return string.Format(DefaultErrorMessage, name);
+                var MinDateDeliveryRange = db.Settings.Where(s => s.SettingTypeId == 1 && s.SettingName == "MinDateDeliveryRange").FirstOrDefault().SettingValue;
+                var now = DateTime.Now.AddDays(MinDateDeliveryRange);
+
+                string ErrorMessage = "Ngày giao hàng phải từ ngày " + now.ToString("dd-MM-yyyy") + " về sau";
+                return string.Format(ErrorMessage, name);
             }
             return string.Format(ErrorMessage, name);
         }

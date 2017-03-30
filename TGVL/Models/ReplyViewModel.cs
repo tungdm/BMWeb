@@ -14,6 +14,9 @@ namespace TGVL.Models
         [DisplayFormat(DataFormatString = "{0:C0}", ApplyFormatInEditMode = true)]
         public decimal Total { get; set; }
 
+        [Required]
+        public string BidPrice { get; set; }
+
         public string Description { get; set; }
 
         public string Message { get; set; }
@@ -28,7 +31,7 @@ namespace TGVL.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Ngày giao hàng")]
-        [DateRange(ErrorMessage = "Ngày giao hàng phải từ ngày hôm nay về sau")]
+        [DateRange]
         public DateTime? DeliveryDate { get; set; }
 
         [Required(ErrorMessage ="Phí vận chuyển không được để trống")]
@@ -46,6 +49,8 @@ namespace TGVL.Models
         public IList<ReplyProductViewModel> ReplyProductsTest { get; set; }
 
         public int Flag { get; set; }
+
+        public int MinDateDeliveryRange { get; set; }
     }
 
     public class WarehouseProductViewModel
@@ -96,6 +101,8 @@ namespace TGVL.Models
     {
         public int Rank { get; set; }
 
+        
+
         public string Fullname { get; set; }
 
         public string Avatar { get; set; }
@@ -130,6 +137,9 @@ namespace TGVL.Models
         [DisplayFormat(DataFormatString = "{0:C0}")]
         public decimal Total { get; set; }
 
+        [Required]
+        public string BidPrice { get; set; }
+
         //[DisplayFormat(DataFormatString = "{0:C0}")]
         //[LessThanOrEqualTo("Total", ErrorMessage="Giá mới phải bằng hoặc nhỏ hơn giá cũ")]
         //public decimal NewTotal { get; set; }
@@ -148,7 +158,7 @@ namespace TGVL.Models
 
         [Required]
         [DataType(DataType.Date)]
-        [DateRange(ErrorMessage = "Ngày giao hàng phải từ ngày hôm nay trở về sau")]
+        [DateRange]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? DeliveryDate { get; set; }
 

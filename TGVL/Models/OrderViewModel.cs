@@ -30,11 +30,10 @@ namespace TGVL.Models
 
         public string Description { get; set; }
 
-        public string OrderType { get; set; }
+        public bool IsRequestOrder { get; set; }
 
-        public int RequestId { get; set; }
+        public Reply Reply { get; set; }
 
-        public int ReplyId { get; set; }
     }
 
     public class MyOrder

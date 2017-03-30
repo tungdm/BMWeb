@@ -42,6 +42,8 @@ namespace TGVL.Models
         [DisplayFormat(DataFormatString = "{0:C0}", ApplyFormatInEditMode = true)]
         public decimal price { get; set; }
 
+        public int productId { get; set; }
+
     }
 
 

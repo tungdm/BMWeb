@@ -40,7 +40,7 @@ namespace TGVL.Models
 
         public int SupplierId { get; set; }
 
-        public string Type { get; set; } //Type=normal/deal
+        public string Type { get; set; } //Type = normal/deal
 
         public string Image { get; set; }
 
@@ -56,5 +56,21 @@ namespace TGVL.Models
 
         [DisplayFormat(DataFormatString = "{0:C0}")]
         public decimal MiniTotal { get; set; } //UnitPrice * Quantity
+    }
+
+    public class MuaNgayViewModel
+    {
+        public int Id { get; set; }
+
+
+        [DisplayFormat(DataFormatString = "{0:C0}")]
+        public decimal UnitPrice { get; set; } 
+
+        public string UnitType { get; set; }
+
+        public string ProductName { get; set; }
+
+        [Required]
+        public int Quantity { get; set; }
     }
 }
