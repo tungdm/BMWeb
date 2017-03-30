@@ -401,127 +401,122 @@ namespace TGVL.Controllers
                 var reply = db.Replies.FirstOrDefault(r => r.Id == model.Id);
                 if (reply != null)
                 {
-                    var test1 = (int)reply.Total;
-        
-                    bool changed = reply.Total != model.Total
-                        || reply.ShippingFee != model.ShippingFee
-                        || reply.Discount != model.Discount; 
-                    if (changed)
-                    {                                           
-                        reply.ShippingFee = model.ShippingFee;
-                        reply.Discount = model.Discount;
-                        reply.Description = model.Description;
-                        reply.DeliveryDate = model.DeliveryDate;
+                    var oldTotal = (int)reply.Total;
+                                         
+                    reply.ShippingFee = model.ShippingFee;
+                    reply.Discount = model.Discount;
+                    reply.Description = model.Description;
+                    reply.DeliveryDate = model.DeliveryDate;
 
-                        foreach (var rp in model.ReplyProducts)
+                    foreach (var rp in model.ReplyProducts)
+                    {
+                        var replyProduct = db.ReplyProducts.FirstOrDefault(r => r.Id == rp.ReplyProductId);
+                        if (replyProduct != null)
                         {
-                            var replyProduct = db.ReplyProducts.FirstOrDefault(r => r.Id == rp.ReplyProductId);
-                            if (replyProduct != null)
-                            {
-                                replyProduct.Quantity = rp.Quantity;
-                            }
-                        }
-
-                        if (reply.Flag == 0)
-                        {
-                            //normal
-                            reply.Total = model.Total;
-                            db.SaveChanges();
-
-                            //SignalR - Call all Client update table reply
-                            var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
-
-                            notificationHub.Clients.All.broadcastMessage("updatereplytable2", reply.RequestId, reply.Id);   //noti all client
-
-                            return new JsonResult
-                            {
-                                Data = new
-                                {
-                                    Success = "Success",
-                                    NewTotal = model.Total,
-                                    ReplyId = model.Id
-                                },
-                                JsonRequestBehavior = JsonRequestBehavior.AllowGet
-                            };
-                        }
-                        else if (reply.Flag == 1 && test1 > decimal.Parse(model.BidPrice))
-                        {
-                            //bid            
-                            reply.Total = decimal.Parse(model.BidPrice); //new total
-
-                            //Update rank
-                            reply.BidReply.OldRank = reply.BidReply.Rank;
-                            db.SaveChanges();
-
-                            var requestId = reply.RequestId;
-                            var query = "Update BidReplies "
-                                        + "SET [Rank] = t2.[Rank], [OldRank] = t1.[Rank] "
-                                        + "FROM BidReplies t1 "
-                                        + "LEFT OUTER JOIN "
-                                        + "("
-                                        + "SELECT BidReplies.ReplyId, Replies.RequestId, Rank() OVER (PARTITION BY RequestId ORDER BY Total asc) as [Rank] "
-                                        + "FROM BidReplies, Replies "
-                                        + "WHERE BidReplies.ReplyId = Replies.Id "
-                                        + ") as t2 "
-                                        + "ON t1.ReplyId = t2.ReplyId "
-                                        + "AND t2.RequestId = {0} ";
-
-                            var result = db.Database.ExecuteSqlCommand(query, requestId);
-                            
-                            var supplierId = User.Identity.GetUserId<int>();
-
-                            query = "SELECT[dbo].[Users].[UserName] "
-                                    + "FROM[dbo].[Replies], [dbo].[Requests], [dbo].[Users] "
-                                    + "WHERE[dbo].[Replies].[SupplierId] = [dbo].[Users].[Id] "
-                                    + "AND[dbo].[Replies].[RequestId] = [dbo].[Requests].[Id] "
-                                    + "AND[dbo].[Requests].[Id] = {0} "
-                                    + "AND[dbo].[Replies].[SupplierId] != {1} ";
-
-
-                            List<string> listUser = db.Database.SqlQuery<string>(query, requestId, supplierId).ToList();
-                            if (listUser.Count() != 0)
-                            {
-                                var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
-
-                                notificationHub.Clients.User(reply.Request.User.UserName).notify("updatebidtable"); //noti customer
-
-                                foreach (var userId in listUser)
-                                {
-                                    notificationHub.Clients.User(userId).notify("update"); //noti supplier
-                                }
-                            } else
-                            {
-                                var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
-
-                                notificationHub.Clients.User(reply.Request.User.UserName).notify("updatebidtable"); //noti customer
-                            }
-                            
-                            //update bid info
-                            return new JsonResult
-                            {
-                                Data = new
-                                {
-                                    Success = "Success",
-                                    ReplyType = "Bid",
-                                    ReplyId = reply.Id,
-                                },
-                                JsonRequestBehavior = JsonRequestBehavior.AllowGet
-                            };
-                        } else
-                        {
-                            return new JsonResult
-                            {
-                                Data = new
-                                {
-                                    Success = "Fail",
-                                    ReplyType = "Bid",
-                                    Message = "Giá bid mới phải bằng hoặc nhỏ hơn giá cũ",
-                                    OldTotal = (int)reply.Total
-                                },
-                                JsonRequestBehavior = JsonRequestBehavior.AllowGet
-                            };
+                            replyProduct.Quantity = rp.Quantity;
                         }
                     }
+
+                    if (reply.Flag == 0)
+                    {
+                        //normal
+                        reply.Total = model.Total;
+                        db.SaveChanges();
+
+                        //SignalR - Call all Client update table reply
+                        var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+
+                        notificationHub.Clients.All.broadcastMessage("updatereplytable2", reply.RequestId, reply.Id);   //noti all client
+
+                        return new JsonResult
+                        {
+                            Data = new
+                            {
+                                Success = "Success",
+                                NewTotal = model.Total,
+                                ReplyId = model.Id
+                            },
+                            JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                        };
+                    }
+                    else if (reply.Flag == 1 && oldTotal > decimal.Parse(model.BidPrice))
+                    {
+                        //bid            
+                        reply.Total = decimal.Parse(model.BidPrice); //new total
+
+                        //Update rank
+                        reply.BidReply.OldRank = reply.BidReply.Rank;
+                        db.SaveChanges();
+
+                        var requestId = reply.RequestId;
+                        var query = "Update BidReplies "
+                                    + "SET [Rank] = t2.[Rank], [OldRank] = t1.[Rank] "
+                                    + "FROM BidReplies t1 "
+                                    + "LEFT OUTER JOIN "
+                                    + "("
+                                    + "SELECT BidReplies.ReplyId, Replies.RequestId, Rank() OVER (PARTITION BY RequestId ORDER BY Total asc) as [Rank] "
+                                    + "FROM BidReplies, Replies "
+                                    + "WHERE BidReplies.ReplyId = Replies.Id "
+                                    + ") as t2 "
+                                    + "ON t1.ReplyId = t2.ReplyId "
+                                    + "AND t2.RequestId = {0} ";
+
+                        var result = db.Database.ExecuteSqlCommand(query, requestId);
+                            
+                        var supplierId = User.Identity.GetUserId<int>();
+
+                        query = "SELECT[dbo].[Users].[UserName] "
+                                + "FROM[dbo].[Replies], [dbo].[Requests], [dbo].[Users] "
+                                + "WHERE[dbo].[Replies].[SupplierId] = [dbo].[Users].[Id] "
+                                + "AND[dbo].[Replies].[RequestId] = [dbo].[Requests].[Id] "
+                                + "AND[dbo].[Requests].[Id] = {0} "
+                                + "AND[dbo].[Replies].[SupplierId] != {1} ";
+
+
+                        List<string> listUser = db.Database.SqlQuery<string>(query, requestId, supplierId).ToList();
+                        if (listUser.Count() != 0)
+                        {
+                            var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+
+                            notificationHub.Clients.User(reply.Request.User.UserName).notify("updatebidtable"); //noti customer
+
+                            foreach (var userId in listUser)
+                            {
+                                notificationHub.Clients.User(userId).notify("update"); //noti supplier
+                            }
+                        } else
+                        {
+                            var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+
+                            notificationHub.Clients.User(reply.Request.User.UserName).notify("updatebidtable"); //noti customer
+                        }
+                            
+                        //update bid info
+                        return new JsonResult
+                        {
+                            Data = new
+                            {
+                                Success = "Success",
+                                ReplyType = "Bid",
+                                ReplyId = reply.Id,
+                            },
+                            JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                        };
+                    } else
+                    {
+                        return new JsonResult
+                        {
+                            Data = new
+                            {
+                                Success = "Fail",
+                                ReplyType = "Bid",
+                                Message = "Giá bid mới phải bằng hoặc nhỏ hơn giá cũ",
+                                OldTotal = (int)reply.Total
+                            },
+                            JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                        };
+                    }
+                    
                 }
             }
 

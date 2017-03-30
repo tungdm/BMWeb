@@ -9,6 +9,7 @@ using TGVL.Models;
 using System.Web.Script.Serialization;
 using System.IO;
 using TGVL.LucenceSearch;
+using System.Data.Entity;
 
 namespace TGVL.Controllers
 {
@@ -523,5 +524,30 @@ namespace TGVL.Controllers
             return View();
         }
 
+        public ActionResult EditDescription(int? id)
+        {
+            var product = db.SysProducts.Find(id);
+
+            var model = new UpdateDescription
+            {
+                Id = product.Id,
+                Description = product.Description
+            };
+
+            return View(model);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditDescription(UpdateDescription model)
+        {
+            var product = db.SysProducts.Find(model.Id);
+            product.Description = model.Description;
+            db.Entry(product).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return View();
+        }
     }
 }
