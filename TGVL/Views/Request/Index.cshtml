@@ -1,4 +1,4 @@
-﻿
+﻿@using Microsoft.AspNet.Identity
 @{
     ViewBag.Title = "View";
     Layout = "~/Views/Shared/_HomePageViewLayout.cshtml";
@@ -6,345 +6,76 @@
 
 @Styles.Render("~/Content/searchproductcss")
 
-<div class="main container">
-    <div class="row">
-        @*<div class="col-md-6">
-                <div class="page-title">
-                    <h4>MUA NHANH</h4>
-                </div>
-                <div class="blog-wrapper" id="main">
-                    <div class="site-content" id="primary">
-                        <div role="main" id="content">
-                            <div class="comment-content wow bounceInUp animated">
-                                <div class="comments-wrapper">
-                                    <ul class="commentlist">
-                                        <li class="comment">
-                                            <div class="comment-wrapper">
-                                                <div class="row">
-                                                    <div class="col-md-9">
-                                                        <p>
-                                                            Cần mua xi măng với giá cả phù hợp từ nhà cung cấp uy tín
-                                                        </p>
-
-                                                        <p><strong>Xi măng Hà Tiên 1</strong></p>
-                                                        <p><strong>08/03/2017</strong></p>
-                                                    </div>
-                                                    <div id="btnBorder" class="col-md-3 text-right">
-                                                        <button type="button" class="btn btn-info">Xem chi tiết</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-
-                                        <li class="comment">
-                                            <div class="comment-wrapper">
-                                                <div class="row">
-                                                    <div class="col-md-9">
-                                                        <p>
-                                                            Cần mua xi măng với giá cả phù hợp từ nhà cung cấp uy tín
-                                                        </p>
-
-                                                        <p><strong>Xi măng Hà Tiên 1</strong></p>
-                                                        <p><strong>08/03/2017</strong></p>
-                                                    </div>
-                                                    <div class="col-md-3 text-right">
-                                                        <button type="button" class="btn btn-info">Xem chi tiết</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-
-                                        <li class="comment">
-                                            <div class="comment-wrapper">
-                                                <div class="row">
-                                                    <div class="col-md-9">
-                                                        <p>
-                                                            Cần mua xi măng với giá cả phù hợp từ nhà cung cấp uy tín
-                                                        </p>
-
-                                                        <p><strong>Xi măng Hà Tiên 1</strong></p>
-                                                        <p><strong>08/03/2017</strong></p>
-                                                    </div>
-                                                    <div class="col-md-3 text-right">
-                                                        <button type="button" class="btn btn-info">Xem chi tiết</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-
+<div class="main-container col2-left-layout">
+    <div class="main container">
+        <div class="row">
+            <aside class="col-left sidebar col-sm-3">
+                <div class="block block-account">
+                    <div class="block-title">
+                        <div class="profile">
+                            <div class="profile_avatar">
+                                <img src="~/Content/images/gachbong.jpg" style="width:60px;height:60px;max-height:60px;max-width:60px" />
+                            </div>
+                            <div class="profile_info">
+                                <div style="padding:5px; font-size:15px">@User.Identity.Name</div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>*@
-        <div class="col-md-12">
-            <div class="page-title">
-                <h4>ĐẤU THẦU</h4>
-            </div>
-            <div class="blog-wrapper" id="main">
-                <div class="site-content" id="primary">
-                    <div role="main" id="content">
-                        <div class="comment-content wow bounceInUp animated">
-                            <div class="comments-wrapper">
-                                <ul class="commentlist">
-                                    <li class="comment">
-                                        <div class="comment-wrapper">
-                                            <div class="row">
-                                                <div class="col-md-9">
-                                                    <p>
-                                                        Cần mua xi măng với giá cả phù hợp từ nhà cung cấp uy tín
-                                                    </p>
-
-                                                    <p><strong>Xi măng Hà Tiên 1</strong></p>
-                                                    <p><strong>08/03/2017</strong></p>
-                                                </div>
-                                                <div class="col-md-3 text-right">
-                                                    <button type="button" class="btn btn-info">Xem chi tiết</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                    <li class="comment">
-                                        <div class="comment-wrapper">
-                                            <div class="row">
-                                                <div class="col-md-9">
-                                                    <p>
-                                                        Cần mua xi măng với giá cả phù hợp từ nhà cung cấp uy tín
-                                                    </p>
-
-                                                    <p><strong>Xi măng Hà Tiên 1</strong></p>
-                                                    <p><strong>08/03/2017</strong></p>
-                                                </div>
-                                                <div class="col-md-3 text-right">
-                                                    <button type="button" class="btn btn-info">Xem chi tiết</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                    <li class="comment">
-                                        <div class="comment-wrapper">
-                                            <div class="row">
-                                                <div class="col-md-9">
-                                                    <p>
-                                                        Cần mua xi măng với giá cả phù hợp từ nhà cung cấp uy tín
-                                                    </p>
-
-                                                    <p><strong>Xi măng Hà Tiên 1</strong></p>
-                                                    <p><strong>08/03/2017</strong></p>
-                                                </div>
-                                                <div class="col-md-3 text-right">
-                                                    <button type="button" class="btn btn-info">Xem chi tiết</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                </ul>
-                                <ul class="pagination">
-                                    <li><a href="#">&laquo;</a></li>
-                                    <li class="active"><a href="#">1</a></li>
-                                    <li class="disabled"><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">5</a></li>
-                                    <li><a href="#">&raquo;</a></li>
-                                </ul>
-                            </div>
-
-                        </div>
+                    <div class="block-content">
+                        <ul>
+                            <li><a href="#">Thông tin cá nhân</a></li>
+                            <li><a href="#">Thông tin yêu cầu</a></li>
+                            <li>
+                                <a href="#">Thông tin đơn hàng</a>
+                            </li>
+                            <li>
+                                <a href="#">Đăng xuất</a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-            </div>
+
+            </aside>
+            <section class="col-main col-sm-9">
+
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Tiêu đề</th>
+                                <th>Ngày đặt</th>
+                                <th>Loại</th>
+                                <th>Trạng thái</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Tôi mua xi măng </td>
+                                <td>19/03/2017</td>
+                                <td>Mua nhanh</td>
+                                <td>Đã kết thúc</td>
+                                <td>
+                                    <button type="button" class="button btn-primary">Xem chi tiết</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Đấu thầu</td>
+                                <td>29/03/2017</td>
+                                <td>Đấu thầu</td>
+                                <td>Đã kết thúc</td>
+                                <td>
+                                    <button type="button" class="button btn-primary">Xem chi tiết</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
         </div>
     </div>
 </div>
-
-<div class="main container">
-    <div class="row">
-        @*<div class="col-md-6">
-                <div class="page-title">
-                    <h4>MUA NHANH</h4>
-                </div>
-                <div class="blog-wrapper" id="main">
-                    <div class="site-content" id="primary">
-                        <div role="main" id="content">
-                            <div class="comment-content wow bounceInUp animated">
-                                <div class="comments-wrapper">
-                                    <ul class="commentlist">
-                                        <li class="comment">
-                                            <div class="comment-wrapper">
-                                                <div class="row">
-                                                    <div class="col-md-9">
-                                                        <p>
-                                                            Cần mua xi măng với giá cả phù hợp từ nhà cung cấp uy tín
-                                                        </p>
-
-                                                        <p><strong>Xi măng Hà Tiên 1</strong></p>
-                                                        <p><strong>08/03/2017</strong></p>
-                                                    </div>
-                                                    <div id="btnBorder" class="col-md-3 text-right">
-                                                        <button type="button" class="btn btn-info">Xem chi tiết</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-
-                                        <li class="comment">
-                                            <div class="comment-wrapper">
-                                                <div class="row">
-                                                    <div class="col-md-9">
-                                                        <p>
-                                                            Cần mua xi măng với giá cả phù hợp từ nhà cung cấp uy tín
-                                                        </p>
-
-                                                        <p><strong>Xi măng Hà Tiên 1</strong></p>
-                                                        <p><strong>08/03/2017</strong></p>
-                                                    </div>
-                                                    <div class="col-md-3 text-right">
-                                                        <button type="button" class="btn btn-info">Xem chi tiết</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-
-                                        <li class="comment">
-                                            <div class="comment-wrapper">
-                                                <div class="row">
-                                                    <div class="col-md-9">
-                                                        <p>
-                                                            Cần mua xi măng với giá cả phù hợp từ nhà cung cấp uy tín
-                                                        </p>
-
-                                                        <p><strong>Xi măng Hà Tiên 1</strong></p>
-                                                        <p><strong>08/03/2017</strong></p>
-                                                    </div>
-                                                    <div class="col-md-3 text-right">
-                                                        <button type="button" class="btn btn-info">Xem chi tiết</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>*@
-        <div class="col-md-12">
-            <div class="page-title">
-                <h4>MUA NHANH</h4>
-            </div>
-            <div class="blog-wrapper" id="main">
-                <div class="site-content" id="primary">
-                    <div role="main" id="content">
-                        <div class="comment-content wow bounceInUp animated">
-                            <div class="comments-wrapper">
-                                <ul class="commentlist">
-                                    <li class="comment">
-                                        <div class="comment-wrapper">
-                                            <div class="row">
-                                                <div class="col-md-9">
-                                                    <p>
-                                                        Cần mua xi măng với giá cả phù hợp từ nhà cung cấp uy tín
-                                                    </p>
-
-                                                    <p><strong>Xi măng Hà Tiên 1</strong></p>
-                                                    <p><strong>08/03/2017</strong></p>
-                                                </div>
-                                                <div class="col-md-3 text-right">
-                                                    <button type="button" class="btn btn-info">Xem chi tiết</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                    <li class="comment">
-                                        <div class="comment-wrapper">
-                                            <div class="row">
-                                                <div class="col-md-9">
-                                                    <p>
-                                                        Cần mua xi măng với giá cả phù hợp từ nhà cung cấp uy tín
-                                                    </p>
-
-                                                    <p><strong>Xi măng Hà Tiên 1</strong></p>
-                                                    <p><strong>08/03/2017</strong></p>
-                                                </div>
-                                                <div class="col-md-3 text-right">
-                                                    <button type="button" class="btn btn-info">Xem chi tiết</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                    <li class="comment">
-                                        <div class="comment-wrapper">
-                                            <div class="row">
-                                                <div class="col-md-9">
-                                                    <p>
-                                                        Cần mua xi măng với giá cả phù hợp từ nhà cung cấp uy tín
-                                                    </p>
-
-                                                    <p><strong>Xi măng Hà Tiên 1</strong></p>
-                                                    <p><strong>08/03/2017</strong></p>
-                                                </div>
-                                                <div class="col-md-3 text-right">
-                                                    <button type="button" class="btn btn-info">Xem chi tiết</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                </ul>
-                                <ul class="pagination" style="text-align:center">
-                                    <li><a href="#">&laquo;</a></li>
-                                    <li class="active"><a href="#">1</a></li>
-                                    <li class="disabled"><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">5</a></li>
-                                    <li><a href="#">&raquo;</a></li>
-                                </ul>
-
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-@*<div class="jumbotron">
-        <h1>TGVL</h1>
-        <p class="lead">Thế giới vật liệu - Nơi tình yêu bắt đầu.</p>
-
-        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#request">Đăng yêu cầu</button>
-    </div>*@
-
-<!-- Modal -->
-@*<div id="request" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Modal Header</h4>
-                </div>
-                <div class="modal-body">
-                    <p>@Html.ActionLink("Normal Request", "Create", new { mode = "normal" }, new { @class = "btn btn-primary btn-lg" })</p>
-                    <p>@Html.ActionLink("Bid Request", "Create", new { mode = "bid" }, new { @class = "btn btn-primary btn-lg" })</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-
-        </div>
-    </div>*@
