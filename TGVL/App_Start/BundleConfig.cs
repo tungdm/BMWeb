@@ -156,14 +156,22 @@ namespace TGVL
               ));
 
             bundles.Add(new StyleBundle("~/Content/mainpagecss").Include(
-                "~/Content/css/bootstrap.min.css",
+                //"~/Content/css/bootstrap.min.css",
                 "~/Content/css/slider.css",
                 "~/Content/css/owl.carousel.css",
                 "~/Content/css/owl.theme.css",
                 //"~/Content/font-awesome.min.css",
                 //"~/Content/bootstrap.css",
-                "~/Content/AdminLTE.min.css",
+                //"~/Content/AdminLTE.min.css",
                 "~/Content/css/style.css"
+             ));
+
+            bundles.Add(new StyleBundle("~/Content/slidercss").Include(
+                //"~/Content/test/bootstrap.min.css",
+                //"~/Content/test/font-awesome.min.css",
+                //"~/Content/test/owl.carousel.css",
+                "~/Content/test/responsive.css",
+                "~/Content/test/style.css"
              ));
 
             bundles.Add(new StyleBundle("~/Content/viewdetailcss").Include(
@@ -184,8 +192,8 @@ namespace TGVL
                 "~/Content/css/flexslider.css",
                 "~/Content/css/fancybox.css",
                 "~/Content/css/blogmate.css",
-                "~/Content/timeTo.css"
-                //"~/Content/css/style.css"
+                "~/Content/AdminLTE.min.css"
+             //"~/Content/css/style.css"
 
              ));
 
@@ -254,6 +262,16 @@ namespace TGVL
                                     "~/Scripts/js/slider.js"
                                     //"~/Scripts/js/owl.carousel.min.js",
                                     //"~/Scripts/js/flipclock.js"
+                                    ));
+
+            bundles.Add(new ScriptBundle("~/bundles/sliderjquery").Include(
+                                    "~/Scripts/js/jquery.min.js",
+                                    "~/Scripts/js/bootstrap.min.js",
+                                    "~/Scripts/test/bxslider.min.js",
+                                    "~/Scripts/test/jquery.easing.1.3.min.js",
+                                    //"~/Scripts/test/main.js",
+                                    "~/Scripts/test/owl.carousel.min.js",
+                                    "~/Scripts/test/script.slider.js"
                                     ));
 
             bundles.Add(new ScriptBundle("~/bundles/viewdetailjquery").Include(
