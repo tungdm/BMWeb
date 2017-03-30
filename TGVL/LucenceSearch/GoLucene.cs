@@ -159,7 +159,8 @@ namespace TGVL.LucenceSearch
             
             try
             {
-                query = parser.Parse(searchQuery.Trim());
+                searchQuery = searchQuery.Trim();
+                query = parser.Parse(searchQuery);
             }
             catch (ParseException)
             {
