@@ -439,7 +439,7 @@ namespace TGVL.Controllers
                             JsonRequestBehavior = JsonRequestBehavior.AllowGet
                         };
                     }
-                    else if (reply.Flag == 1 && oldTotal > decimal.Parse(model.BidPrice))
+                    else if (reply.Flag == 1 && oldTotal >= decimal.Parse(model.BidPrice))
                     {
                         //bid            
                         reply.Total = decimal.Parse(model.BidPrice); //new total
