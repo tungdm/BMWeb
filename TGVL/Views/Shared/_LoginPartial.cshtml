@@ -167,9 +167,7 @@
                 <a style="font-size:16px"><span class="fa fa-user"> </span> @User.Identity.GetUserName() </a>
                 @*@Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
                 <div class="dropdown-content">
-                    <p>@Html.ActionLink("Thông tin cá nhân", "", "")</p>
-                    <p>@Html.ActionLink("Thông tin yêu cầu", "", "")</p>
-                    <p>@Html.ActionLink("Thông tin đơn hàng", "", "")</p>
+                    <p>@Html.ActionLink("Quản lý chung", "", "")</p>
                     <p><a href="javascript:document.getElementById('logoutForm').submit()">Đăng xuất</a></p>
                 </div>
             </li>
