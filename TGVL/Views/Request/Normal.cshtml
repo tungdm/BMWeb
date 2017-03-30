@@ -6,10 +6,93 @@
     Layout = "~/Views/Shared/_HomePageViewLayout.cshtml";
 }
 
-
 @Styles.Render("~/Content/searchproductcss")
 
-<style>
+<div class="main-container">
+    <div class="main container">
+        <div class="row">
+            <section class="col-main col-sm-12">
+                <div class="category-title">
+                    <h2><strong>YÊU CẦU MUA THƯỜNG</strong></h2>
+                </div>
+                <div class="category-products">
+                    <div class="toolbar">
+                        <div id="sort-by">
+                            <label style="font-size:14px">Lọc theo: </label>
+                            <ul>
+                                <li>
+                                    <a>Mới nhất <i class="fa fa-arrow-down"></i></a>
+                                    <ul>
+                                        <li><a href="#">Tất cả</a></li>
+                                        <li><a href="#">Price</a></li>
+                                        <li><a href="#">Position</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a>Mới nhất <i class="fa fa-arrow-down"></i></a>
+                                    <ul>
+                                        <li><a href="#">Tất cả</a></li>
+                                        <li><a href="#">Price</a></li>
+                                        <li><a href="#">Position</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a>Mới nhất  <i class="fa fa-arrow-down"></i></a>
+                                    <ul>
+                                        <li><a href="#">Tất cả</a></li>
+                                        <li><a href="#">Price</a></li>
+                                        <li><a href="#">Position</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                        </div>
+
+                    </div>
+                    <br />
+                    <h4> Có tổng cộng 214 yêu cầu mua thường</h4>
+
+                    <ol id="products-list" class="products-list">
+                        @foreach (var item in Model)
+                        {
+                            <li class="item">
+                                <div class="col-item">
+                                    <div class="product-image"> <a href="product_detail.html" title="Sample Product"> <img class="small-image" src="~/Images/UserAvatar/@item.Avatar"> </a> </div>
+                                    <div class="product-shop">
+                                        <p class="pull-right" style="color:red; font-size:14px"><strong>Thời hạn yêu cầu</strong>: @Convert.ToDateTime(@item.DueDate).ToString("dd/MM/yyyy")</p>
+                                        <br />
+                                        <h2 class="product-name" style="font-size:14px"><a title="TIÊU ĐỀ" href=""><strong> @item.Title </strong></a></h2>
+
+                                        <div class="desc std">
+                                            <p>
+                                                @*CAO MINH THÚY VY CAO MINH THÚY VY CAO MINH THÚY VY CAO MINH THÚY VY CAO MINH THÚY VY CAO MINH THÚY VY....*@
+                                                @item.Descriptions
+                                                <a class="link-learn" title="" href="#">Xem chi tiết</a>
+                                            </p>
+
+                                        </div>
+                                        <div>
+                                            <p><strong>Nhận hàng tại</strong>: @item.DeliveryAddress</p>
+                                        </div>
+                                        <div>
+                                            <p><strong>Người đăng</strong>: @item.UserName
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    </ol>
+                </div>
+                <div style="text-align:center">
+                    @Html.PagedListPager(Model, page => Url.Action("Normal", new { page }), PagedListRenderOptions.ClassicPlusFirstAndLast)
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+
+@*<style>
     .commentlist:hover {
         background: linear-gradient(to right, #FFDDB0, #FFFFFF);
     }
@@ -27,9 +110,7 @@
             <div role="main" id="content">
                 <div class="comment-content wow bounceInUp animated">
                     <div class="comments-wrapper">
-                        @*@{
-                                List<TGVL.Models.RequestFloorModel> list = ViewBag.ListNormalRequest;
-                            }*@
+                        
                         @foreach (var item in Model)
                         {
                             <a href="/Request/Details/@item.Id">
@@ -63,16 +144,7 @@
                         }
 
                         s
-                        @*<ul class="pagination" style="text-align:center">
-                                <li><a href="#">&laquo;</a></li>
-                                <li class="active"><a href="#">1</a></li>
-                                <li class="disabled"><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">&raquo;</a></li>
-                            </ul>*@
-
+                        
                     </div>
 
                 </div>
@@ -83,6 +155,6 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 
 
