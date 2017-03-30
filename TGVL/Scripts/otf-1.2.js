@@ -61,8 +61,8 @@ function checkValidate(data, status, xhr) {
         if (data.ErrorType == "RequireProduct") {
             message = "<span id='error' tabindex='1' class='text-danger field-validation-error'><span>" + data.Message + "</span></span>";
             console.log(message);
-            $("#productList").html(message);
-            $('#error').focus();
+            //$("#productList").html(message);
+            $('#errorTotal').focus();
         } else if (data.ErrorType == "GreaterThanMin") {
             message = "<span class='text-danger field-validation-error'><span>Giá thầu phải lớn hơn " + addDot(data.Min) + " &#x20AB; (Giá hiện tại: " + addDot(data.Sum) + " &#x20AB;)</span></span>";
             console.log(message);
