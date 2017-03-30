@@ -32,7 +32,8 @@ namespace TGVL
                       "~/Content/wysiwyg.css",
                       "~/Content/storelocator.css",
                       "~/Content/Search-form.css",
-                      "~/Content/header-cart.css"
+                      "~/Content/header-cart.css",
+                      "~/Content/nprogress.css"
                       ));
 
             bundles.Add(new StyleBundle("~/Content/notification").Include(
@@ -72,7 +73,8 @@ namespace TGVL
                 "~/Scripts/otf-1.2.js",
                 //"~/Scripts/custom.min.js",
                 "~/Scripts/dateformat.js",
-                "~/Scripts/moment.js"
+                "~/Scripts/moment.js",
+                "~/Scripts/nprogress.js"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/signalR").Include(
