@@ -13,6 +13,7 @@ using TGVL.Hubs;
 using PagedList.Mvc;
 using PagedList;
 using TGVL.LucenceSearch;
+using System.Globalization;
 
 namespace TGVL.Controllers
 {
@@ -272,8 +273,6 @@ namespace TGVL.Controllers
                     };
                 } else
                 {
-                    //TODO: lấy liệu minTotal trong db
-
                     var minTotal = db.Settings.Where(s => s.SettingTypeId == 1 && s.SettingName == "MinBidPrice").FirstOrDefault().SettingValue;
 
                     if (mode == "bid" && sum < minTotal)
@@ -401,6 +400,7 @@ namespace TGVL.Controllers
             else if (request.Flag == 1)
             {
                 //Bid request
+                ViewBag.DueDateCountdown = request.DueDate.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
 
                 if (User.Identity.IsAuthenticated)
                 {

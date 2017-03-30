@@ -87,8 +87,14 @@ namespace TGVL.Controllers
         {
             var searchResult = new LuceneResult();
 
-            searchResult = GoLucene.SearchDefault(searchString);
+            searchResult = GoLucene.Search(searchString);
+            if (searchResult.SearchResult.Count() == 1)
+            {
+                var sysProductId = searchResult.SearchResult.FirstOrDefault().Id;
+                CreateMap(sysProductId); //create recomendation map shop
 
+                return RedirectToAction("ViewDetail", new { id = sysProductId });
+            } 
             var model = new LuceneSearch {
                 LuceneResult = searchResult,
                 SearchString = searchString
@@ -97,57 +103,61 @@ namespace TGVL.Controllers
             return View(model);
         }
 
-        public ActionResult SearchProduct(string searchString)
+        public JsonResult CreateMapFromAjax(int sysProductId)
         {
-            if (!String.IsNullOrWhiteSpace(searchString))
+            CreateMap(sysProductId);
+            return new JsonResult
             {
-                string _Json = string.Empty;
-                string _path = string.Empty;
-                var product = db.SysProducts.Where(p => p.Name == searchString).FirstOrDefault();
-                var productId = product.Id;
-                //TODO: SETTING table -> top number
-                //Vd: 5
-                var query = "SELECT TOP 5 [dbo].[Warehouses].[Id] AS id, [dbo].[Users].[Fullname] AS name, [dbo].[Warehouses].[Lat] AS lat, "
-                    + "[dbo].[Warehouses].[Lng] as lng, [dbo].[Warehouses].[Address] AS address, [dbo].[Warehouses].[Administrative_area_level_1] AS city, "
-                    + "[dbo].[Users].[PhoneNumber] AS phone, [dbo].[Users].[AverageGrade] as rating, [dbo].[Products].[UnitPrice] as price "
-                    + "FROM [dbo].[SysProducts], [dbo].[Products], [dbo].[WarehouseProducts], [dbo].[Warehouses], [dbo].[Users] "
-                    + "WHERE [dbo].[Products].[SysProductId] = [dbo].[SysProducts].[Id] "
-                    + "AND [dbo].[Products].[Id] =  [dbo].[WarehouseProducts].[ProductId] "
-                    + "AND [dbo].[WarehouseProducts].[WarehouseId] = [dbo].[Warehouses].[Id] "
-                    + "AND [dbo].[Warehouses].[SupplierId] = [dbo].[Users].[Id] "
-                    + "AND [dbo].[SysProducts].[Id] = {0} "
-                    + "ORDER BY rating DESC";
-
-
-                List<Shop> data = db.Database.SqlQuery<Shop>(query, productId).ToList();
-
-                _Json = new JavaScriptSerializer().Serialize(data);
-
-                _path = Server.MapPath("~/Store/");
-
-                string filename = (string)Session["FilenameJson"];
-
-
-                if (filename == null)
+                Data = new
                 {
-                    Guid g = Guid.NewGuid();
+                    Message = "Success",
+                    SysProductId = sysProductId
+                },
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+        public void CreateMap(int sysProductId)
+        {
+            string _Json = string.Empty;
+            string _path = string.Empty;
 
-                    filename = Convert.ToBase64String(g.ToByteArray());
-                    filename = filename.Replace("=", "");
-                    filename = filename.Replace("+", "");
-                    filename = filename.Replace("/", "");
-                    filename = filename.Replace("\\", "");
+            var TopRecShop = db.Settings.Where(s => s.SettingName == "TopRecShop").FirstOrDefault().SettingValue;
 
-                    Session["FilenameJson"] = filename;
-                }
-                System.IO.File.WriteAllText(_path + filename + "_.json", _Json);
+            var query = "SELECT TOP ({0}) [dbo].[Warehouses].[Id] AS id, [dbo].[Users].[Fullname] AS name, [dbo].[Warehouses].[Lat] AS lat, "
+                + "[dbo].[Warehouses].[Lng] as lng, [dbo].[Warehouses].[Address] AS address, [dbo].[Warehouses].[Administrative_area_level_1] AS city, "
+                + "[dbo].[Users].[PhoneNumber] AS phone, [dbo].[Users].[AverageGrade] as rating, [dbo].[Products].[UnitPrice] as price, "
+                + "[dbo].[Products].[Id] AS productId "
+                + "FROM [dbo].[SysProducts], [dbo].[Products], [dbo].[WarehouseProducts], [dbo].[Warehouses], [dbo].[Users] "
+                + "WHERE [dbo].[Products].[SysProductId] = [dbo].[SysProducts].[Id] "
+                + "AND [dbo].[Products].[Id] =  [dbo].[WarehouseProducts].[ProductId] "
+                + "AND [dbo].[WarehouseProducts].[WarehouseId] = [dbo].[Warehouses].[Id] "
+                + "AND [dbo].[Warehouses].[SupplierId] = [dbo].[Users].[Id] "
+                + "AND [dbo].[SysProducts].[Id] = {1} "
+                + "ORDER BY rating DESC";
+
+            List<Shop> data = db.Database.SqlQuery<Shop>(query, TopRecShop, sysProductId).ToList();
+
+            _Json = new JavaScriptSerializer().Serialize(data);
+
+            _path = Server.MapPath("~/Store/");
+
+            string filename = (string)Session["FilenameJson"];
 
 
+            if (filename == null)
+            {
+                Guid g = Guid.NewGuid();
 
-                return RedirectToAction("ViewDetail", new { id = productId });
+                filename = Convert.ToBase64String(g.ToByteArray());
+                filename = filename.Replace("=", "");
+                filename = filename.Replace("+", "");
+                filename = filename.Replace("/", "");
+                filename = filename.Replace("\\", "");
+
+                Session["FilenameJson"] = filename;
             }
-
-            return RedirectToAction("ViewDetail");
+            System.IO.File.WriteAllText(_path + filename + "_.json", _Json);
+   
         }
 
        
@@ -248,6 +258,19 @@ namespace TGVL.Controllers
             };
             Session["Order"] = order;
             return View(order);
+        }
+
+        public ActionResult Muangay(int productId)
+        {
+            var product = db.Products.Find(productId);
+            var model = new MuaNgayViewModel
+            {
+                Id = productId,
+                UnitPrice = (decimal) product.UnitPrice,
+                UnitType = product.SysProduct.UnitType.Type,
+                ProductName = product.SysProduct.Name
+            };
+            return PartialView("_Muangay", model);
         }
 
         public ActionResult ShoppingCart()
@@ -419,10 +442,20 @@ namespace TGVL.Controllers
         }
 
         [Authorize]
-        public async System.Threading.Tasks.Task<ActionResult> CheckOut()
+        public async System.Threading.Tasks.Task<ActionResult> CheckOut(int? replyId)
         {
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
-            var order = (OrderViewModel)Session["Order"];
+            var order = new OrderViewModel();
+
+            if (replyId != null)
+            {
+                order.Reply = db.Replies.Find(replyId);
+                order.IsRequestOrder = true;
+            } else
+            {
+                order = (OrderViewModel)Session["Order"];
+            }
+
             order.CustomerFullName = user.Fullname;
             order.Address = user.Address;
             order.PhoneNumber = user.PhoneNumber;
@@ -458,8 +491,7 @@ namespace TGVL.Controllers
         {
             var product = db.SysProducts.Find(id);
             var productId = product.Id;
-
-            //NguyenTA Calculating NumOfShops
+            
             var query = "SELECT count([dbo].[Users].[Fullname]) as NumOfShops "
                           + "FROM [dbo].[Products],[dbo].[Users], [dbo].[SysProducts] "
                           + "WHERE [dbo].[Products].[SupplierId] = [dbo].[Users].[Id] "

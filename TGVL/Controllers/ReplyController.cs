@@ -56,7 +56,8 @@ namespace TGVL.Controllers
                 ShippingFee = (int) reply.ShippingFee,
                 Discount = (int) reply.Discount,
                 Rank = reply.Flag == 1 ? reply.BidReply.Rank : 0,
-                Flag = (int) reply.Flag
+                Flag = (int) reply.Flag,
+                BidPrice = string.Format("{0:N0}", reply.Total),
             };
 
             var query = "SELECT [dbo].[ReplyProducts].[Id] AS [ReplyProductId], [dbo].[Products].[Id], [dbo].[Products].[UnitPrice], [dbo].[Products].[Image], [dbo].[SysProducts].[Name], [dbo].[UnitTypes].[Type], [dbo].[ReplyProducts].[Quantity] "
@@ -175,7 +176,10 @@ namespace TGVL.Controllers
                         model.DeliveryDate = request.ReceivingDate;
                         model.Flag = (int) request.Flag;
                         model.Total = (decimal)total;
-                        
+                        model.BidPrice = string.Format("{0:N0}", total);
+                        model.MinDateDeliveryRange = db.Settings.Where(s => s.SettingTypeId == 1 && s.SettingName == "MinDateDeliveryRange").FirstOrDefault().SettingValue;
+
+
                         return PartialView("_Response", model);
                     }
                     else
@@ -207,14 +211,14 @@ namespace TGVL.Controllers
                 var request = db.Requests.Find(requestId);
                 var message = "";
                 var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
-
+                var total = decimal.Parse(model.BidPrice);
                 //Create normal reply
                 var reply = new Reply
                 {
                     RequestId = requestId,
                     SupplierId = User.Identity.GetUserId<int>(),
                     Description = model.Description,
-                    Total = model.Total,
+                    Total = total,
                     ShippingFee = model.ShippingFee,
                     Discount = model.Discount,
                     DeliveryDate = model.DeliveryDate,
@@ -440,10 +444,10 @@ namespace TGVL.Controllers
                                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
                             };
                         }
-                        else if (reply.Flag == 1 && test1 > model.Total)
+                        else if (reply.Flag == 1 && test1 > decimal.Parse(model.BidPrice))
                         {
                             //bid            
-                            reply.Total = model.Total;
+                            reply.Total = decimal.Parse(model.BidPrice); //new total
 
                             //Update rank
                             reply.BidReply.OldRank = reply.BidReply.Rank;

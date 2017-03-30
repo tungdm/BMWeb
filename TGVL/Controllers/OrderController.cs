@@ -79,12 +79,10 @@ namespace TGVL.Controllers
                     newOrder.DeliveryAddress = user.Address;
                     newOrder.CreateDate = DateTime.Now;
                     newOrder.Description = model.Description;
-                    newOrder.Flag = 0;
+                    newOrder.Flag = 3;  //order detail cho deal
                     newOrder.StatusId = 1; //mới đặt
 
                     db.Orders.Add(newOrder);
-
-                    
 
                     //Create order detail
                     foreach (var o in orderSh.ShoppingCart.ShoppingCartProducts.Where(scp => scp.SupplierId == newOrder.SupplierId))
@@ -101,7 +99,7 @@ namespace TGVL.Controllers
                             oderDetails.DealId = o.DealId;
                             oderDetails.Quantity = o.Quantity;
                             oderDetails.UnitPrice = o.UnitPrice;
-                            oderDetails.Flag = 3; //order deatail cho deal
+                            oderDetails.Flag = 3; //order detail cho deal
                         }
                         db.OrderDetails.Add(oderDetails);
                         //else if (o.Type == "normal") //mua lẻ
@@ -110,16 +108,46 @@ namespace TGVL.Controllers
                         //}
 
                     }
-                    db.SaveChanges();
+                    
                 }
 
                 
 
             } else //normal request hoặc bid request
             {
+                var reply = db.Replies.Find(model.Reply.Id);
+                var newOrder = new Order
+                {
+                    CustomerId = user.Id,
+                    SupplierId = reply.SupplierId,
+                    PaymentId = model.PaymentType,
+                    Total = reply.Total,
+                    DeliveryDate = reply.DeliveryDate,
+                    DeliveryAddress = user.Address,
+                    CreateDate = DateTime.Now,
+                    Flag = reply.Flag, // 0 <=> normal request, 1 <=> bid request
+                    Description = model.Description,
+                    Discount = reply.Discount,
+                    StatusId = 1 //mới đặt
+                };
+                db.Orders.Add(newOrder);
 
+                //Create order detail
+
+                foreach (var repProduct in reply.ReplyProducts)
+                {
+                    var oderDetails = new OrderDetail {
+                        OrderId = newOrder.Id,
+                        ProductId = repProduct.ProductId,
+                        Quantity = repProduct.Quantity,
+                        UnitPrice = repProduct.UnitPrice,
+                        Flag = reply.Flag
+                    };
+                    db.OrderDetails.Add(oderDetails);
+                }
+                
             }
-
+            db.SaveChanges();
 
             Session.Clear();
 
