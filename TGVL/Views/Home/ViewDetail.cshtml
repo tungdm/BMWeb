@@ -2,10 +2,16 @@
 
 @{
     ViewBag.Title = "ViewDetail";
-    Layout = "~/Views/Shared/_HomePageViewLayout.cshtml";
+    Layout = "~/Views/Shared/TestLayout.cshtml";
 }
 
 @Styles.Render("~/Content/searchproductcss")
+
+<link href="~/Content/css/slider.css" rel="stylesheet" />
+<link href="~/Content/css/owl.carousel.css" rel="stylesheet" />
+<link href="~/Content/css/owl.theme.css" rel="stylesheet" />
+<link href="~/Content/css/style.css" rel="stylesheet" />
+
 @*@Scripts.Render("~/bundles/viewdetailjquery")*@
 
 <style>
@@ -22,15 +28,15 @@
         width: 300px;
         height: 300px;
         display: inline-block;
-        padding: 5px;
-        margin-left: 10px;
+        /*padding: 5px;
+        margin-left: 10px;*/
         vertical-align: top;
     }
 
     .col-item {
         width: 100%;
         height: auto;
-        padding: 5px;
+        /*padding: 5px;*/
     }
 
     span.stars, span.stars span {
@@ -40,9 +46,9 @@
         height: 16px;
     }
 
-    span.stars span {
-        background-position: 0 0;
-    }
+        span.stars span {
+            background-position: 0 0;
+        }
 </style>
 
 <section class="main-container">
@@ -64,7 +70,7 @@
                 <div class="col-md-12">
                     <div class="product-view">
                         <div class="product-essential">
-                            <div class="product-img-box col-sm-4 col-xs-12">
+                            <div class="product-img-box col-sm-3 col-xs-12">
                                 <div class="product-image">
                                     <div>
                                         @*<div class="large-image"><img alt="product-image" src="~/Content/images/cement-fico-pcb-40.jpg"></div>*@
@@ -73,96 +79,344 @@
                                 </div>
                                 <div class="clear"></div>
                             </div>
-                            <div class="product-shop col-sm-8 col-xs-12">
+                            <div class="product-shop col-sm-9 col-xs-12">
                                 <div class="product-name">
                                     <h1>@Model.SysProduct.Name</h1>
                                 </div>
-                              
-                                <div class="short-description">                                   
-                                    <table class="table col-md-4">
-                                        <thead>
-                                            <tr>THÔNG SỐ SẢN PHẨM</tr>
-                                        </thead>
-                                        @foreach (var item in Model.SysProduct.ProductAttributes)
-                                        {                                
-                                            <tr>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Attribute)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Value)
-                                                </td>
-                                            </tr>
-                                        }
-                                    </table>
 
-              
-                                    <div class="price-block col-md-6">
-                                        <div class="price-box">
-                                            Có <span class="total"> @Model.NumOfShops </span> cửa hàng bán với giá từ: <p class="special-price"> <span class="price-label"> Special Price</span> <span class="price">@Model.SysProduct.UnitPrice</span> </p>
-                                            @*<button type="button" class="button btn-default" data-toggle="modal" data-target="#selectSupplier">
+                                <div class="short-description">
+                                    Gạch với chất lượng tốt nhất Việt Nam
+                                    
+                                </div>
+                                <hr />
+                                <div class="price-block">
+                                    <div class="price-box">
+                                        Có <span class="total"> @Model.NumOfShops </span> cửa hàng bán với giá từ: <p class="special-price"> <span class="price-label"> Special Price</span> <span class="price">@Model.SysProduct.UnitPrice</span> </p>
+                                        @*<button type="button" class="button btn-default" data-toggle="modal" data-target="#selectSupplier">
                                                 Cửa hàng để xuất
                                             </button>*@
-                                            <button id="recommend-btn" class="btn btn-primary" type="button">Cửa hàng để xuất</button>
-                                        </div>
+                                        @*<button id="recommend-btn" class="btn btn-primary" type="button">Cửa hàng để xuất</button>*@
                                     </div>
                                 </div>
-                                <hr />
-                                <br/>
-
-                                
+                                <div class="toggle-content">
+                                    <div class="table-responsive">
+                                        <table class="data-table col-md-4">
+                                            <thead>
+                                                <tr>THÔNG SỐ SẢN PHẨM</tr>
+                                            </thead>
+                                            @foreach (var item in Model.SysProduct.ProductAttributes)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Attribute)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Value)
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </table>
+                                    </div>
                                 </div>
-                                <hr />
-                                <br />
-                                <br /> 
-                          
-                           
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="bh-sl-container container-fluid">
-                <div class="jumbotron">
-                    <div class="container">
-
-                        <div class="bh-sl-form-container" style="display:none">
-                            <form id="bh-sl-user-location" class="form-inline" method="post" action="#" role="form">
-                                <div class="form-input form-group">
-                                    <label for="bh-sl-address">Enter Address or Zip Code:</label>
-                                    <input class="form-control" type="text" id="bh-sl-address" name="bh-sl-address" />
-                                </div>
-
-                                <button id="bh-sl-submit" class="btn btn-primary" type="submit">Submit</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="bh-sl-map-container" class="bh-sl-map-container">
-                    <div class="row">
-                        <div id="map-results-container" class="container">
-                            
-                            <div class="bh-sl-loc-list col-md-3">
-                                <ul class="list list-unstyled"></ul>
                             </div>
-                            <div id="bh-sl-map" class="bh-sl-map col-md-9"></div>
+                            
                         </div>
                     </div>
                 </div>
             </div>
             <br />
-            
+            @*<div class="bh-sl-container container-fluid">
+                    <div id="bh-sl-map-container" class="bh-sl-map-container">
+                        <div class="row">
+                            <div id="map-results-container" class="container">
+
+                                <div class="bh-sl-loc-list col-md-3">
+                                    <ul class="list list-unstyled"></ul>
+                                </div>
+                                <div id="bh-sl-map" class="bh-sl-map col-md-9"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#tab_1" data-toggle="tab">THÔNG TIN CHI TIẾT</a></li>
+                            <li><a href="#tab_2" data-toggle="tab">CỬA HÀNG ĐỀ XUẤT</a></li>
+                            <li><a href="#tab_3" data-toggle="tab">BẢN ĐỒ</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab_1">
+                                THÔNG TIN CHI TIẾT
+                                <p>MÔ TẢ CHI TIẾT: Đây chắc chắc là sản phẩm tốt nhất VN</p>
+                                <p style="text-align:center"><img src="~/Images/Product/SysProduct/1x2.jpg"/></p>
+                                <p style="text-align:center"><img src="~/Images/Product/SysProduct/1x2.jpg" /></p>
+                                <p style="text-align:center"><img src="~/Images/Product/SysProduct/1x2.jpg" /></p>
+                                <p style="text-align:center"><img src="~/Images/Product/SysProduct/1x2.jpg" /></p>
+                                <p>THÔNG SỐ KỸ THUẬT</p>
+                            </div>
+
+                            <div class="tab-pane" id="tab_2">
+                                <div class="table-responsive">
+                                    <table class="data-table">
+                                        <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th>Cửa hàng</th>
+                                                <th>Giá</th>
+                                                <th>Đánh giá</th>
+                                                <th>Địa chỉ</th>
+                                                <th>&nbsp;</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>Cửa hàng Minh Minh</td>
+                                                <td>89.000 VNĐ</td>
+                                                <td>
+                                                    <div class="rating">
+                                                        <div class="ratings">
+                                                            <div class="rating-box">
+                                                                <div class="rating" style="width:80%"></div>
+                                                            </div>
+                                                            <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>123 Cao Thắng P2, Q3, TPHCM</td>
+                                                <td>
+                                                    <button type="submit" class="btn btn-primary">Xem bản đồ</button>
+                                                    <button type="submit" class="btn btn-success">Thêm vào giỏ hàng</button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>Cửa hàng AB</td>
+                                                <td>99.000 VNĐ</td>
+                                                <td>
+                                                    <div class="rating">
+                                                        <div class="ratings">
+                                                            <div class="rating-box">
+                                                                <div class="rating" style="width:70%"></div>
+                                                            </div>
+                                                            <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>123 Nguyễn Trãi P2, Q5, TPHCM</td>
+                                                <td>
+                                                    <button type="submit" class="btn btn-primary">Xem bản đồ</button>
+                                                    <button type="submit" class="btn btn-success">Thêm vào giỏ hàng</button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>3</td>
+                                                <td>Cửa hàng DEF</td>
+                                                <td>199.000 VNĐ</td>
+                                                <td>
+                                                    <div class="rating">
+                                                        <div class="ratings">
+                                                            <div class="rating-box">
+                                                                <div class="rating" style="width:60%"></div>
+                                                            </div>
+                                                            <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>123 Nguyễn Oanh P2, Q.Gò Vấp, TPHCM</td>
+                                                <td>
+                                                    <button type="submit" class="btn btn-primary">Xem bản đồ</button>
+                                                    <button type="submit" class="btn btn-success">Thêm vào giỏ hàng</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" id="tab_3">
+
+                            </div>
+                        </div>
+
+                    </div>
 
                 </div>
             </div>
             <br />
-            <div class="popular-posts widget widget__sidebar">
-                <h3 class="widget-title">SẢN PHẨM TƯƠNG TỰ</h3>
-                <div class="widget-content">
+            <section class="main-container col1-layout home-content-container">
+                <div class="container">
+                    <div class="row">
+                        <div class="std">
+                            <div id="border1" class="best-pro col-md-12">
+                                <div class="slider-items-products">
+                                    <div class="new_title center">
+                                        <h2>SẢN PHẨM TƯƠNG TỰ</h2>
+                                    </div>
+                                    <div id="best-seller-slider" class="product-flexslider hidden-buttons">
+                                        <div class="slider-items slider-width-col4">
+                                            <div class="item">
+                                                <div class="col-item">
+                                                    <div class="item-inner">
+                                                        <div class="item-img">
+                                                            <div class="item-img-info">
+                                                                <a href="product_detail.html" class="product-image"> <img src="~/Content/images/xi-mang-fico-pcb40.jpg"> </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="item-info">
+                                                            <div class="info-inner">
+                                                                <div class="item-title"> <a href="product_detail.html" title="Thép cây vằn Pomina D12"> Thép cây vằn Pomina D12 </a> </div>
+                                                                <div class="item-content">
 
+                                                                    <div class="item-price">
+                                                                        <div class="price-box">
 
+                                                                            <span class="regular-price"> <span class="price">145.000 VNĐ</span> </span>
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="item">
+                                                <div class="col-item">
+                                                    <div class="item-inner">
+                                                        <div class="item-img">
+                                                            <div class="item-img-info">
+                                                                <a href="product_detail.html" title="Xi măng Hà Tiên 1" class="product-image"> <img src="~/Content/images/xi-mang-ha-tien-1-pcb-30.jpg"></a>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="item-info">
+                                                            <div class="info-inner">
+                                                                <div class="item-title"> <a href="grid.html" title="Xi măng Hà Tiên 1"> Xi măng Hà Tiên 1 </a> </div>
+                                                                <div class="item-content">
+
+                                                                    <div class="item-price">
+                                                                        <div class="price-box">
+                                                                            <span class="regular-price"> <span class="price">89.000 VNĐ</span> </span>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="item">
+                                                <div class="col-item">
+                                                    <div class="sale-label sale-top-right">HOT</div>
+                                                    <div class="item-inner">
+                                                        <div class="item-img">
+                                                            <div class="item-img-info">
+                                                                <a href="product_detail.html" title="Gạch bông" class="product-image"> <img src="~/Content/images/gachbong.jpg" alt="Sample Product"></a>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="item-info">
+                                                            <div class="info-inner">
+                                                                <div class="item-title"> <a href="grid.html" title="Gạch bông"> Gạch bông </a> </div>
+                                                                <div class="item-content">
+
+                                                                    <div class="item-price">
+                                                                        <div class="price-box">
+                                                                            <span class="regular-price"> <span class="price">90.000 VNĐ</span> </span>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <strong></strong>
+                                                </div>
+                                            </div>
+
+                                            <div class="item">
+                                                <div class="col-item">
+                                                    <div class="item-inner">
+                                                        <div class="item-img">
+                                                            <div class="item-img-info">
+                                                                <a href="product_detail.html" title="Xi măng Hà Tiên 1" class="product-image"> <img src="~/Content/images/xi-mang-ha-tien-1-pcb-30.jpg"></a>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="item-info">
+                                                            <div class="info-inner">
+                                                                <div class="item-title"> <a href="grid.html" title="Xi măng Hà Tiên 1"> Xi măng Hà Tiên 1 </a> </div>
+                                                                <div class="item-content">
+
+                                                                    <div class="item-price">
+                                                                        <div class="price-box">
+                                                                            <span class="regular-price"> <span class="price">89.000 VNĐ</span> </span>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="item">
+                                                <div class="col-item">
+                                                    <div class="item-inner">
+                                                        <div class="item-img">
+                                                            <div class="item-img-info">
+                                                                <a href="product_detail.html" title="Xi măng Hà Tiên 1" class="product-image"> <img src="~/Content/images/xi-mang-ha-tien-1-pcb-30.jpg"></a>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="item-info">
+                                                            <div class="info-inner">
+                                                                <div class="item-title"> <a href="grid.html" title="Xi măng Hà Tiên 1"> Xi măng Hà Tiên 1 </a> </div>
+                                                                <div class="item-content">
+                                                                    <div class="rating">
+
+                                                                    </div>
+                                                                    <div class="item-price">
+                                                                        <div class="price-box">
+                                                                            <span class="regular-price"> <span class="price">89.000 VNĐ</span> </span>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </section>
+
+        </div>
+    </div>
+    <br />
+
 </section>
 
 <div id="mua_ngay" class="modal fade" role="dialog">
@@ -184,55 +438,61 @@
     </div>
 </div>
 
-@section Scripts {
-    <script src="~/Scripts/handlebars.min.js"></script>
-    <script src="https://maps.google.com/maps/api/js?key=AIzaSyBO_d9y7dn40gSnQs0ZQRhClFpFDQKqzjM&region=VN"></script>
 
-    <script src="~/Scripts/jquery.storelocator.js"></script>
+<script src="~/Scripts/js/jquery.min.js"></script>
+<script src="~/Scripts/js/bootstrap.min.js"></script>
+<script src="~/Scripts/js/parallax.js"></script>
+<script src="~/Scripts/js/common.js"></script>
+<script src="~/Scripts/js/slider.js"></script>
+<script src="~/Scripts/js/owl.carousel.min.js"></script>
+<script src="~/Scripts/handlebars.min.js"></script>
+<script src="https://maps.google.com/maps/api/js?key=AIzaSyBO_d9y7dn40gSnQs0ZQRhClFpFDQKqzjM&region=VN"></script>
 
-    <script>
-        $(document).ready(function () {
-            
-            $("#recommend-btn").click(function (event) {
-                console.log("abc");
+<script src="~/Scripts/jquery.storelocator.js"></script>
 
-                $('#bh-sl-map-container').storeLocator({
-                    'mapSettings': {
-                        zoom: 12,
-                        mapTypeId: google.maps.MapTypeId.ROADMAP,
-                        //disableDoubleClickZoom: true,
-                        scrollwheel: false,
-                        navigationControl: false,
-                        draggable: true
-                    },
-                    'dataType': 'json',
-                    'dataLocation': '/Store/@Session["FilenameJson"]_.json',
-                    'lengthUnit': 'km',
-                    'autoGeocode': true,
-                    'originMarker' : true,
-                    'originMarkerImg': '/Images/marker-home.png'
-                });
+<script>
+    $(document).ready(function () {
 
-                Handlebars.registerHelper("printPrice", function (price) {
-                    return addDot(price);
-                });
+        $("#recommend-btn").click(function (event) {
+            console.log("abc");
 
-                Handlebars.registerHelper("printStart", function (rating) {
-
-                    var val = parseFloat(rating);
-                    var size = Math.max(0, (Math.min(5, val))) * 16;
-
-                    var result = "<span style='width:" + size + "px;'/> ";
-
-                    return new Handlebars.SafeString(result);
-                });
+            $('#bh-sl-map-container').storeLocator({
+                'mapSettings': {
+                    zoom: 12,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP,
+                    //disableDoubleClickZoom: true,
+                    scrollwheel: false,
+                    navigationControl: false,
+                    draggable: true
+                },
+                'dataType': 'json',
+                'dataLocation': '/Store/@Session["FilenameJson"]_.json',
+                'lengthUnit': 'km',
+                'autoGeocode': true,
+                'originMarker': true,
+                'originMarkerImg': '/Images/marker-home.png'
             });
-            
 
-            
+            Handlebars.registerHelper("printPrice", function (price) {
+                return addDot(price);
+            });
+
+            Handlebars.registerHelper("printStart", function (rating) {
+
+                var val = parseFloat(rating);
+                var size = Math.max(0, (Math.min(5, val))) * 16;
+
+                var result = "<span style='width:" + size + "px;'/> ";
+
+                return new Handlebars.SafeString(result);
+            });
         });
 
-        
-    </script>
 
-}
+
+    });
+
+
+</script>
+
+
