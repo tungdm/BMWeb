@@ -119,20 +119,51 @@
                             <h3 style="font-size:15px"><strong>TÓM TẮT</strong></h3>
                             <br />
                             <dl class="dl-horizontal">
-                                @*<dt>
-                                    Ngày đặt hàng
-                                </dt>
-
-                                <dd>
-                                    @Html.DisplayFor(modelItem => Model.CreateDate)
-                                </dd>*@
-
+                               
                                 <dt>
                                     Hình thức thanh toán
                                 </dt>
 
                                 <dd>
                                     @Html.DisplayFor(modelItem => Model.Payment.Type)
+                                </dd>
+
+
+                                @if (Model.Discount != 0)
+                                {
+                                    decimal mini = 0;
+
+                                    foreach (var item in Model.OrderDetails)
+                                    {
+                                        mini += item.UnitPrice * item.Quantity;
+                                    }
+                                    <dt>
+                                        Thành tiền
+                                    </dt>
+
+                                    <dd>
+                                        @string.Format("{0:C0}", mini)
+                                    </dd>
+                                    
+
+                                }
+                                else
+                                {
+                                    <dt>
+                                        Thành tiền
+                                    </dt>
+
+                                    <dd>
+                                        @string.Format("{0:C0}", Model.Total)
+                                    </dd>
+                                }
+
+                                <dt>
+                                    Giảm giá
+                                </dt>
+
+                                <dd>
+                                    @Model.Discount %
                                 </dd>
 
                                 <dt>
@@ -203,8 +234,7 @@
                                             <th>Sản phẩm</th>
                                             <th>Giá bán</th>
                                             <th>Số lượng</th>
-                                            <th>Tổng cộng</th>
-
+                                            <th>Thành tiền</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -215,6 +245,19 @@
                                             {
                                                 <tr>
                                                     <td>@item.Deal.Product.SysProduct.Name</td>
+                                                    <td>
+                                                        @string.Format("{0:C0}", item.UnitPrice)
+                                                    </td>
+                                                    <td>@item.Quantity</td>
+                                                    <td>
+                                                        @string.Format("{0:C0}", mini)
+                                                    </td>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td>@item.Product.SysProduct.Name</td>
                                                     <td>
                                                         @string.Format("{0:C0}", item.UnitPrice)
                                                     </td>

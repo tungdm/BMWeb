@@ -324,14 +324,10 @@ new AjaxOptions
             $.validator.addMethod("daterange", function (value, element) {
                 var receivingDate = $("#ReceivingDate").val();
 
-
-
-
                 console.log("now:" + now + ", receivingDate:" + receivingDate + ", minDate:" +minDate);
 
                 return receivingDate >= minDate;
 
-                //return someDate >= today;
             }, "Ngày nhận hàng phải từ ngày " + moment(minDate).format('DD/MM/YYYY') + " về sau");
 
             $('input[name="ReceivingDate"]').rules("add", {

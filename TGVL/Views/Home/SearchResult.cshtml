@@ -95,6 +95,7 @@
                                         <th>Image</th>
                                         <th>UnitPrice</th>
                                         <th>ManufactureName</th>
+                                        <th>Action</th>
                                     </tr>
                                     @{ int count = 0;}
                                     @foreach (var item in Model.LuceneResult.SearchResult)
@@ -109,11 +110,12 @@
                                                 <img src="~/Images/Product/SysProduct/@item.Image" style="max-height:100px; max-width:100px" />
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.UnitPrice)
+                                                @Html.DisplayFor(modelItem => item.UnitPrice) /  @Html.DisplayFor(modelItem => item.UnitType)
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.ManufactureName)
                                             </td>
+                                            <td><button id="viewProductDetails" class="btn btn-primary" onclick="viewProductDetails(@item.Id)">Xem chi tiết</button></td>
                                         </tr>
                                     }
 

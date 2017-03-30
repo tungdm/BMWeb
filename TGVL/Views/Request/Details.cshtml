@@ -351,7 +351,8 @@
 
                                                                                     <td>
                                                                                         @*@reply.DeliveryDate.Date.ToString("dd/MM/yyyy")*@
-                                                                                        @Html.DisplayFor(modelreply => reply.DeliveryDate)
+                                                                                        @*@Html.DisplayFor(modelreply => reply.DeliveryDate)*@
+                                                                                        @Convert.ToDateTime(reply.DeliveryDate).ToString("dd/MM/yyyy")
                                                                                     </td>
 
                                                                                     <td>
@@ -414,7 +415,7 @@
 
                     @message
                 </strong>*@
-            <div id="countdown-3" class="col-md-3", style="position:fixed;right:0%">
+            <div id="countdown-2" class="col-md-3", style="position:fixed;right:0%">
             </div>
             }
            
@@ -496,30 +497,19 @@
 @Scripts.Render("~/bundles/clockjquery")
 
 <script>
-    //var date = getRelativeDate(02, 01, 10);
-    //console.log(date);
 
+    var date = new Date("@ViewBag.DueDateCountdown");
+    console.log(date);
    
-        var date = getRelativeDate(7, 9);
+    $('#countdown-2').timeTo({
+        timeTo: date,
+        displayDays: 2,
+        theme: "black",
+        displayCaptions: true,
+        fontSize: 28,
+        captionSize: 14,
+    });
 
-        $('#countdown-3').timeTo({
-            timeTo: date,
-            displayDays: 2,
-            theme: "black",
-            displayCaptions: true,
-            fontSize: 28,
-            captionSize: 14
-        });
-
-        function getRelativeDate(days, hours, minutes) {
-            var date = new Date((new Date()).getTime() + 60000 /* milisec */ * 60 /* minutes */ * 24 /* hours */ * days /* days */);
-
-            date.setHours(hours || 0);
-            date.setMinutes(minutes || 0);
-            date.setSeconds(0);
-
-            return date;
-    }  
     
 </script>
 

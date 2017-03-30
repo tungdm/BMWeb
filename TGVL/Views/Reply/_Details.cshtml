@@ -44,7 +44,7 @@
                     </td>
 
                     <td>
-                        <img src="~/Images/Product/Warehouse/@item.Image" style="max-height:100px; max-width:100px" />
+                        <img src="~/Images/Product/SysProduct/@item.Image" style="max-height:100px; max-width:100px" />
                     </td>
 
                     <td>
@@ -87,30 +87,15 @@
             </div>
 
             <div class="form-group">
-                <labael class="control-label col-md-3 col-sm-3 col-xs-12">Shipping Fee</labael>
-                <div class="col-md-9">
-                    @Html.DisplayFor(model => model.ShippingFee, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <labael class="control-label col-md-3 col-sm-3 col-xs-12">Discount</labael>
-                <div class="col-md-9">
-                    @Html.DisplayFor(model => model.Discount, new { htmlAttributes = new { @class = "form-control" } }) <span>%</span>
-                </div>
-            </div>
-
-            <div class="form-group">
                 <labael class="control-label col-md-3">Ngày giao hàng</labael>
-                @*@Html.LabelFor(model => model.DeliveryDate, htmlAttributes: new { @class = "control-label col-md-3" })*@
+               
                 <div class="col-md-9">
-                    @Html.DisplayFor(model => model.DeliveryDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Convert.ToDateTime(Model.DeliveryDate).ToString("dd/MM/yyyy")
                 </div>
             </div>
 
             <div class="form-group">
                 <labael class="control-label col-md-3">Mô tả</labael>
-                @*@Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-3" })*@
                 <div class="col-md-9">
                     @Html.DisplayFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @row = "5", @column = "5" } })
                 </div>

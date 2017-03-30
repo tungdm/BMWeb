@@ -25,10 +25,7 @@
                             <th colspan="5" class="text-right">Tổng cộng đơn hàng</th>
                             <th>1.788.999 VNĐ</th>
                         </tr>*@
-                        <tr>
-                            <th colspan="5" class="text-right">Phí vận chuyển</th>
-                            <th>@Html.DisplayFor(model => model.ShippingFee)</th>
-                        </tr>
+                        
                         <tr>
                             <th colspan="5" class="text-right">Giảm giá</th>
                             <th>@Html.DisplayFor(model => model.Discount) <span>%</span></th>
@@ -50,7 +47,7 @@
                         {
                             <tr>
                                 <td class="image">
-                                    <img src="~/Images/Product/Warehouse/@item.Image" style="max-height:60px; max-width:60px" />
+                                    <img src="~/Images/Product/SysProduct/@item.Image" style="max-height:60px; max-width:60px" />
                                 </td>
                                 <td>@Html.DisplayFor(modelItem => item.Name)</td>
                                 <td colspan="2">@Html.DisplayFor(modelItem => item.UnitPrice)</td>
@@ -125,7 +122,7 @@
                 </div>
             </div>
             <div style="text-align:center">
-                <button type="submit" class="btn btn-success">Xác nhận</button>
+                @Html.ActionLink("Xác nhận", "CheckOut", "Home", new { replyId = Model.Id }, new { @class = "btn btn-success" })
             </div>
         </div>
     </div>

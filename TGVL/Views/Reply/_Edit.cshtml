@@ -21,16 +21,9 @@
             <div class="form-horizontal">
                 @if (Model.Flag == 0)
                 {
+                    @Html.HiddenFor(model => model.BidPrice, new { htmlAttributes = new { @Value = "0" } })
                     <div class="form-group">
-                        <labael class="control-label col-md-3">Chi phí vận chuyển</labael>
-                        <div class="col-md-9">
-                            @Html.EditorFor(model => model.ShippingFee, new { htmlAttributes = new { @class = "fee form-control" } })
-                            @Html.ValidationMessageFor(model => model.ShippingFee, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <labael class="control-label col-md-3">Giảm giá</labael>
+                        <labael class="control-label col-md-3">Giảm giá (%)</labael>
                         <div class="col-md-9">
                             @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @class = "discount form-control" } })
                             @Html.ValidationMessageFor(model => model.Discount, "", new { @class = "text-danger" })
@@ -48,15 +41,19 @@
                 }
                 else
                 {
+                    var bidPrice = string.Format("{0:C0}", Model.BidPrice);
+
                     <div class="form-group">
-                        <label class="control-label col-md-3">Giá thầu</label>
+                        <label class="control-label col-md-3" style="font-size:14px">Giá thầu (&#x20AB;) <span style="color:#ff0000"> *</span></label>
                         <div class="col-md-9">
-                            @Html.EditorFor(model => model.Total, "", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.BidPrice, "", new { htmlAttributes = new { @class = "form-control", @Value = bidPrice } })
+                            @Html.ValidationMessageFor(model => model.BidPrice, "", new { @class = "text-danger" })
+                            <span class="text-danger field-validation-valid" id= "errorTotal" style="display:none"></span>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <labael class="control-label col-md-3">Ngày giao hàng</labael>
+                        <labael class="control-label col-md-3">Ngày giao hàng <span style="color:#ff0000"> *</span></labael>
                         @*@Html.LabelFor(model => model.DeliveryDate, htmlAttributes: new { @class = "control-label col-md-3" })*@
                         <div class="col-md-9">
                             @Html.EditorFor(model => model.DeliveryDate, new { htmlAttributes = new { @class = "form-control" } })
@@ -67,11 +64,11 @@
                 }
 
                 <div class="form-group">
-                    <labael class="control-label col-md-3 col-sm-3 col-xs-12">Tổng cộng</labael>
+                    <labael class="control-label col-md-3 col-sm-3 col-xs-12">Giá đề xuất từ cửa hàng</labael>
                     @*@Html.LabelFor(model => model.Total, htmlAttributes: new { @class = "control-label col-md-3" })*@
                     <div class="col-md-9">
                         <span class="total"></span> &#x20AB;
-                        <div id="errorTotal" class="text-danger"></div>
+                        
                         <div id="oldTotal" style="display:none"></div>
 
                         <div style="visibility: hidden">
@@ -87,7 +84,7 @@
         </div>
     </div>
     <br />
-    <div class="table-responsive">
+    <div class="table-responsive" style="display:none">
         <table class="data-table" id="myTable">
             <thead>
                 <tr>
@@ -134,7 +131,7 @@
                             @Html.EditorFor(model => Model.ReplyProducts[i].UnitPrice)
                         </td>
                         <td>@Html.DisplayFor(model => Model.ReplyProducts[i].Name)</td>
-                        <td><img src="~/Images/Product/Warehouse/@Model.ReplyProducts[i].Image" style="max-height:100px; max-width:100px" /></td>
+                        <td></td>
                         <td class="price">
                             @Html.DisplayFor(model => Model.ReplyProducts[i].UnitPrice)
                         </td>
@@ -157,6 +154,7 @@
 
 
     $(document).ready(function () {
+        var oldBidPrice = "@Model.BidPrice";
 
         update_amounts();
 
@@ -188,7 +186,14 @@
             var result = $('#form0').valid();
             console.log(result);
             if (result) {
-                $("form[id='form0']").submit();
+                var newBidPrice = Number($("#BidPrice").val().replace(/[^0-9]+/g, ""));
+                var test = Number(oldBidPrice.replace(/[^0-9]+/g, ""));
+                console.log("newBidPrice=" + newBidPrice + ", test=" + test);
+
+                if (newBidPrice < test) {
+                    $("form[id='form0']").submit();
+                }
+                
             }
 
         });
@@ -207,14 +212,49 @@
             if (code < 48 || code > 57)
                 return false;
         });
+
+        $('#BidPrice').keyup(function (event) {
+            if (event.which >= 37 && event.which <= 40) return;
+            var newBidPrice = Number($(this).val().replace(/[^0-9]+/g, ""));
+            var test = Number(oldBidPrice.replace(/[^0-9]+/g, ""));
+
+            console.log("newBidPrice=" + newBidPrice + ",oldBidPrice=" + test);
+            if (newBidPrice >= test) {
+                var message = "Giá thầu mới phải nhỏ hơn giá cũ (@Model.BidPrice &#x20AB;)";
+                console.log(message);
+                $('#errorTotal').html(message);
+                $('#errorTotal').show();
+            } else {
+                $('#errorTotal').empty();
+                $('#errorTotal').hide();
+            }
+
+            $(this).val(function (index, value) {
+
+                return value
+                .replace(/\D/g, "")
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+                ;
+            });
+
+
+        });
     });
 
+
+
+
+    
 
 
     function update_amounts() {
         var sum = 0.0;
         var oldTotal = $('#oldTotal').text();
+
         console.log("oldTotal:" + oldTotal);
+
+
+
 
         $('#myTable > tbody  > tr').each(function () {
             var qty = $(this).find('.qty').val();
@@ -244,6 +284,8 @@
             }
 
         }
+
+
         total = Math.round(total);
 
         //console.log(total);
