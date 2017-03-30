@@ -1,0 +1,55 @@
+﻿@model TGVL.Models.UpdateDescription
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/notification")
+    @Scripts.Render("~/bundles/otf2")
+    <link href="~/Scripts/summernote/summernote.css" rel="stylesheet" />
+    <script src="/Scripts/summernote/summernote.js"></script>
+</head>
+<body>
+    @using (Html.BeginForm("EditDescription", "Home", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            <h4>Desciption</h4>
+            <hr />
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, "SysCategoryId", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @rows = 5 })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Update" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+
+    }
+</body>
+</html>
+<script>
+$("#Description").summernote({
+    height: 300, // set editor height
+    width: 1000,
+    minHeight: null, // set minimum height of editor
+    maxHeight: null, // set maximum height of editor
+    focus: true, // set focus to editable area after initializing summernote
+    lang: "vi-VN"
+});
+
+</script>

@@ -264,7 +264,7 @@
                                                                     <div> 
                                                                         @if (User.Identity.GetUserId<int>() == reply.SupplierId)
                                                                         {
-                                                                            <button id="edit" type="button" class="btn btn-primary btn-sm" onclick="edit(@reply.Id)">Chỉnh sửa</button>
+                                                                            <button id="edit" type="button" class="btn btn-warning btn-sm" onclick="edit(@reply.Id)">Chỉnh sửa</button>
                                                                         }
                                                                         else if (User.Identity.GetUserId<int>() == reply.CustomerId)
                                                                         {

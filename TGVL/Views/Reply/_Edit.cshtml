@@ -186,14 +186,18 @@
             var result = $('#form0').valid();
             console.log(result);
             if (result) {
-                var newBidPrice = Number($("#BidPrice").val().replace(/[^0-9]+/g, ""));
-                var test = Number(oldBidPrice.replace(/[^0-9]+/g, ""));
-                console.log("newBidPrice=" + newBidPrice + ", test=" + test);
+                if (@Model.Flag == 1) {
+                    var newBidPrice = Number($("#BidPrice").val().replace(/[^0-9]+/g, ""));
+                    var test = Number(oldBidPrice.replace(/[^0-9]+/g, ""));
+                    console.log("newBidPrice=" + newBidPrice + ", test=" + test);
 
-                if (newBidPrice < test) {
+                    if (newBidPrice < test) {
+                        $("form[id='form0']").submit();
+                    }
+                } else {
                     $("form[id='form0']").submit();
                 }
-                
+
             }
 
         });
@@ -244,7 +248,7 @@
 
 
 
-    
+
 
 
     function update_amounts() {
