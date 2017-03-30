@@ -240,7 +240,7 @@ function updateReplies(data) {
                 +                   '<p style="color:#b6b6b6">' + data.Address + '</p>'
                 +               '</div>'
                 +               '<div>'                
-                +                    '<button id="edit" type="button" class="btn btn-primary btn-sm" onclick="edit(' + data.ReplyId + ')">Chỉnh sửa</button>'                                                   
+                +                    '<button id="edit" type="button" class="btn btn-warning btn-sm" onclick="edit(' + data.ReplyId + ')">Chỉnh sửa</button>'                                                   
                 +               '</div>'
                 +           '</div>'
                 +       '</li>';
@@ -270,7 +270,7 @@ function updateBid(data) {
 
 	+ '<td>' + new Date(parseInt(data.DeliveryDate.substr(6))).format("dd/mm/yyyy") + '</td>'
 
-	+ '<td><button id="viewDetails" type="button" class="btn btn-primary btn-sm" onclick="edit(' + data.Id + ')">Chỉnh sửa</button>'
+	+ '<td><button id="viewDetails" type="button" class="btn btn-warning btn-sm" onclick="edit(' + data.Id + ')">Chỉnh sửa</button>'
 
 			
 	+'</td></tr></tbody></table>';
@@ -320,7 +320,7 @@ function updateClientReply(requestId, userName, newreplyId) {
                     + '<div>';
                     
                     if (replyId === value.Id) {
-                        reply += '<button id="viewDetails" type="button" class="btn btn-primary btn-sm" onclick="edit(' + value.Id + ')">Chỉnh sửa</button>';
+                        reply += '<button id="viewDetails" type="button" class="btn btn-warning btn-sm" onclick="edit(' + value.Id + ')">Chỉnh sửa</button>';
                     } else {
                         reply += '<button id="viewDetails" type="button" class="btn btn-primary btn-sm" onclick="viewDetails(' + value.Id + ')">Chi tiết</button> ';
                     }
@@ -387,7 +387,7 @@ function updateClientReply2(requestId, userName, newreplyId) {
                         reply += '<button id="viewDetails" type="button" class="btn btn-success btn-sm" onclick="select(' + value.Id + ')">Lựa chọn</button> ';
                     }
                     else if (replyId === value.Id) {
-                        reply += '<button id="viewDetails" type="button" class="btn btn-primary btn-sm" onclick="edit(' + value.Id + ')">Chỉnh sửa</button>';
+                        reply += '<button id="viewDetails" type="button" class="btn btn-warning btn-sm" onclick="edit(' + value.Id + ')">Chỉnh sửa</button>';
                     } else {
                         reply += '<button id="viewDetails" type="button" class="btn btn-primary btn-sm" onclick="viewDetails(' + value.Id + ')">Chi tiết</button> ';
                     } 
