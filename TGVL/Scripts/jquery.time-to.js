@@ -88,7 +88,7 @@
     /* eslint-disable no-multi-spaces */
 
     var dictionary = {
-        en: { days: 'days',   hours: 'hours',  min: 'minutes',  sec: 'seconds' },
+        en: { days: 'ngày',   hours: 'giờ',  min: 'phút',  sec: 'giây' },
         ru: { days: 'дней',   hours: 'часов',  min: 'минут',    sec: 'секунд' },
         ua: { days: 'днiв',   hours: 'годин',  min: 'хвилин',   sec: 'секунд' },
         de: { days: 'Tag',    hours: 'Uhr',    min: 'Minuten',  sec: 'Secunden' },
@@ -98,7 +98,8 @@
         nl: { days: 'dagen',  hours: 'uren',   min: 'minuten',  sec: 'seconden' },
         no: { days: 'dager',  hours: 'timer',  min: 'minutter', sec: 'sekunder' },
         pt: { days: 'dias',   hours: 'horas',  min: 'minutos',  sec: 'segundos' },
-        tr: { days: 'gün',    hours: 'saat',   min: 'dakika',   sec: 'saniye' }
+        tr: { days: 'gün',    hours: 'saat',   min: 'dakika',   sec: 'saniye' },
+        
     };
 
     /* eslint-enable no-multi-spaces */

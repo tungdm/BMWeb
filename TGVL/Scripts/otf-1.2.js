@@ -278,6 +278,41 @@ function searchSuggest(searchString) {
     });
 }
 
+function viewProductDetails(sysProductId) {
+    var options = {
+        url: '/Home/CreateMapFromAjax',
+        data: { sysProductId: sysProductId },
+        type: 'GET',
+    };
+
+    $.ajax(options).done(function (data) {
+        if (data.Message == "Success") {
+            var url = "/Home/ViewDetail/" + data.SysProductId;
+
+            window.location.href = url;
+        }
+        
+    });
+}
+
+function datmua(productId) {
+    var options = {
+        url: '/Home/Muangay',
+        data: { productId: productId },
+        type: 'GET',
+    };
+    $.ajax(options).done(function (data) {
+        var $target = $('#bodyinfo');
+        $target.html(data);
+
+        var form = $("#form0");
+        $.validator.unobtrusive.parse(form);
+
+        $('#mua_ngay').modal('show');
+        
+    });
+}
+
 function addDot(nStr) {
     nStr += '';
     x = nStr.split('.');
