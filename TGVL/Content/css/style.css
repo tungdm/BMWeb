@@ -3617,6 +3617,7 @@ color: #000;
 .block-account {
     border: 1px solid #e7e7e7;
     padding: 10px;  
+    background:#fff;
 }
 .block-account .block-content {
 	padding: 8px 0 !important;

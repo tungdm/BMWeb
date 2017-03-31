@@ -1644,6 +1644,7 @@ a:hover,a:active,a:focus
     padding: 10px;
     border: 1px solid #e7e7e7;
 	width: 100%;
+    font-size:medium;
 }
 .box.box-primary
 {
@@ -2912,7 +2913,7 @@ a:hover,a:active,a:focus
 }
 .table-bordered
 {
-	border: 1px solid #f4f4f4;
+	border: 1px solid #ddd;
 }
 .table-bordered>thead>tr>th,.table-bordered>tbody>tr>th,.table-bordered>tfoot>tr>th,.table-bordered>thead>tr>td,.table-bordered>tbody>tr>td,.table-bordered>tfoot>tr>td
 {
