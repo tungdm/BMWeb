@@ -225,7 +225,7 @@
                                             <h4> <strong>Bình luận</strong> </h4>
                                             @if (User.IsInRole("Supplier") && ViewBag.Repliable == true && ViewBag.Expired == false)
                                             {
-                                                <button id="replyBtn" type="button" class="btn btn-info btn-lg" onclick="reply(@ViewContext.RouteData.Values["id"])">Trả lời</button>
+                                                <button id="replyBtn" type="button" class="btn btn-info btn-lg" onclick="reply(@ViewContext.RouteData.Values["id"])">Phản hồi</button>
                                             }
                                             <hr />
 
@@ -237,7 +237,7 @@
 
                                                     if (replies.Count() == 0)
                                                     {
-                                                        <li id="replyCount">Chưa có phản hồi...</li>
+                                                        <li id="replyCount">Hiện tại chưa có phản hồi</li>
                                                     }
                                                     else
                                                     {
@@ -300,7 +300,7 @@
                                                     <div id="bidtable">
                                                         @if (User.IsInRole("Customer") && Model.CustomerId == User.Identity.GetUserId<int>() && bidReplies.Count() == 0)
                                                         {
-                                                            <p>Chưa có ai bid...</p>
+                                                            <p>Hiện tại chưa có ai đặt thầu</p>
                                                             }
 
                                                             else if ((User.IsInRole("Customer") && Model.CustomerId == User.Identity.GetUserId<int>()) || User.IsInRole("Supplier"))
