@@ -137,7 +137,7 @@ namespace TGVL.Models
         [DisplayFormat(DataFormatString = "{0:C0}")]
         public decimal Total { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Giá thầu không được để trống")]
         public string BidPrice { get; set; }
 
         //[DisplayFormat(DataFormatString = "{0:C0}")]
