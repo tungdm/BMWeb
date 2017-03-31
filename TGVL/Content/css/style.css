@@ -3408,7 +3408,7 @@ color: #000;
     padding: 0;;
 }
 .category-title {
-	border-bottom: 1px solid #efefef;
+	/*border-bottom: 1px solid #efefef;*/
 	margin: 0 0 15px;
 	overflow: hidden;
 	padding: 0 0 8px;
@@ -4820,7 +4820,8 @@ input.radio {
 	padding: 5px 5px 5px 5px;
 	display: inline-block;
 	width: 100%;
-    border: 1px solid #333;
+    border: 1px solid #e7e7e7;
+    background:#fff;
 }
 .toolbar .sorter {
 	float: left;
