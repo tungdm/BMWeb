@@ -39,7 +39,6 @@ namespace TGVL.Models
         [Range(0, int.MaxValue, ErrorMessage = "Xin hãy nhập giá trị lớn hơn 0")]
         public int ShippingFee { get; set; }
 
-        [Required(ErrorMessage ="Giảm giá không được để trống")]
         [Display(Name = "Giảm giá(%)")]
         [Range(0, 100, ErrorMessage = "Xin hãy nhập trong khoảng từ 1 đến 100")]
         public int Discount { get; set; }
