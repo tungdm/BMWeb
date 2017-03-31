@@ -124,10 +124,10 @@
                             else
                             {
                                 <text>
-                                    <br />No search records found...<br />
+                                    <br /><h2>Không tìm thấy kết quả phù hợp</h2><br />
                                     @if (Model.LuceneResult.SuggestWords != null && Model.LuceneResult.SuggestWords.Count() != 0)
                                     {
-                                        <p>Did you mean...</p>
+                                        <h3>Có phải bạn muốn tìm</h3>
 
                                         foreach(var suggess in Model.LuceneResult.SuggestWords)
                                         {
