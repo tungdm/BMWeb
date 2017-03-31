@@ -93,7 +93,7 @@ namespace TGVL.Controllers
                 {
                     Data = new
                     {
-                        Message = "Request Expired."
+                        Message = "Yêu cầu đã hết hạn."
                     },
                     JsonRequestBehavior = JsonRequestBehavior.AllowGet
                 };

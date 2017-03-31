@@ -103,7 +103,7 @@ namespace TGVL.Controllers
                     if (model.SearchResult == null || !model.SearchResult.Any())
                     {
                         //Sản phẩm hiện k có trong hệ thống
-                        model.Message = "Sản phẩm hiện k có trong hệ thống";
+                        model.Message = "Sản phẩm hiện không có trong hệ thống";
                         model.SuggestWords = searchResult.SuggestWords;
                         //return Json(null, JsonRequestBehavior.AllowGet);
                     }
@@ -154,7 +154,7 @@ namespace TGVL.Controllers
 
                             if (model.SearchResult.Count == 0)
                             {
-                                model.Message = "Mua gì lắm thế???";
+                                model.Message = "Bạn đã chọn tất cả sản phẩm thuộc danh mục này. Xin hãy chọn sản phẩm khác";
                             }
                         }
                     }
