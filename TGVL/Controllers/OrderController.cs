@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNet.SignalR;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using TGVL.Hubs;
 using TGVL.Models;
 
 namespace TGVL.Controllers
@@ -79,43 +82,50 @@ namespace TGVL.Controllers
                     newOrder.DeliveryAddress = user.Address;
                     newOrder.CreateDate = DateTime.Now;
                     newOrder.Description = model.Description;
-                    newOrder.Flag = 3;  //order detail cho deal
+                    newOrder.Flag = 4;  //order detail chung cho deal va mua le
                     newOrder.StatusId = 1; //mới đặt
+                    newOrder.Discount = 0;
 
                     db.Orders.Add(newOrder);
+                    db.SaveChanges();
 
                     //Create order detail
                     foreach (var o in orderSh.ShoppingCart.ShoppingCartProducts.Where(scp => scp.SupplierId == newOrder.SupplierId))
                     {
-                        var oderDetails = new OrderDetail();
+                        var orderDetails = new OrderDetail();
                         total += o.UnitPrice * o.Quantity;
 
                         if (o.Type == "deal") //mua deal
                         {
-                            var deal = db.Deals.Find(o.DealId);
+                            //var deal = db.Deals.Find(o.DealId);
 
-                            oderDetails.OrderId = newOrder.Id;
+                            orderDetails.OrderId = newOrder.Id;
 
-                            oderDetails.DealId = o.DealId;
-                            oderDetails.Quantity = o.Quantity;
-                            oderDetails.UnitPrice = o.UnitPrice;
-                            oderDetails.Flag = 3; //order detail cho deal
+                            orderDetails.DealId = o.DealId;
+                            orderDetails.Quantity = o.Quantity;
+                            orderDetails.UnitPrice = o.UnitPrice;
+                            orderDetails.Flag = 3; //order detail cho deal
                         }
-                        db.OrderDetails.Add(oderDetails);
-                        //else if (o.Type == "normal") //mua lẻ
-                        //{
-
-                        //}
+                        else //mua lẻ
+                        {
+                            orderDetails.OrderId = newOrder.Id;
+                            orderDetails.ProductId = o.ProductId;
+                            orderDetails.Quantity = o.Quantity;
+                            orderDetails.UnitPrice = o.UnitPrice;
+                            orderDetails.Flag = 2; //order detail cho mua le
+                        }
+                        db.OrderDetails.Add(orderDetails);
 
                     }
                     
                 }
 
-                
-
             } else //normal request hoặc bid request
             {
                 var reply = db.Replies.Find(replyId);
+                var request = db.Requests.Find(reply.RequestId);
+                request.Completed = true;
+                db.Entry(request).State = EntityState.Modified;
 
                 var newOrder = new Order
                 {
@@ -146,11 +156,18 @@ namespace TGVL.Controllers
                     };
                     db.OrderDetails.Add(oderDetails);
                 }
-                
+                //SignalR
+                var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+                var supplier = UserManager.FindById(reply.SupplierId).UserName;
+
+                notificationHub.Clients.User(supplier).notify("winner");
+
             }
             db.SaveChanges();
 
             Session.Clear();
+            
+
 
             //var callbackUrl = Url.Action("Details", "MyOrders", null, protocol: Request.Url.Scheme);
             //await UserManager.SendEmailAsync(user.Id, "Đặt hàng thành công", "Xem chi tiết tại <a href=\"" + callbackUrl + "\">đây nè :)</a>");
