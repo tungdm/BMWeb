@@ -149,6 +149,9 @@ function edit(replyId) {
 function updateCart(data, status, xhr) {
     if (data.Success == "Success") {
         $('#cartCount').html(data.Count);
+        if (data.Type == "Muangay") {
+            $('#mua_ngay').modal('toggle');
+        }
     }
 }
 
@@ -172,6 +175,8 @@ function removefromcart(type, id) {
 
     $.ajax(options).done(function (data) {
         if (data.Success == "Success") {
+            $('#cartCount').html(data.Count);
+
             var removeElement = "#shopping-cart-table tr#" + data.RemoveElement;
             console.log(data.RemoveElement);
             
@@ -289,7 +294,12 @@ function viewProductDetails(sysProductId) {
         if (data.Message == "Success") {
             var url = "/Home/ViewDetail/" + data.SysProductId;
 
-            window.location.href = url;
+            var win = window.open(url, '_blank');
+            if (win) {
+                win.focus();
+            } else {
+                alert('Please allow popups for this website');
+            }
         }
         
     });
@@ -311,6 +321,18 @@ function datmua(productId) {
         $('#mua_ngay').modal('show');
         
     });
+}
+
+function viewOnMap(lat, lng) {
+    var map = "<iframe width='870' height='500' frameborder='0' scrolling='no' marginheight='0' marginwidth='0' src='https://maps.google.com/maps?q=" + lat + "," + lng + "&hl=es;z=14&amp;output=embed'></iframe>";
+    console.log(map);
+
+    var $target = $('#mapsInfo');
+    $target.html(map);
+
+    $('#maps').modal('show');
+
+    
 }
 
 function addDot(nStr) {

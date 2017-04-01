@@ -76,11 +76,11 @@ function updateNotificationCount(controllerName, actionName, requestId, userName
         .fadeIn('slow');
 
     //CALL AJAX UPDATE REPLIES
-    if (controllerName === 'Request' && actionName === 'Details') {
-        //updateReply(requestId);
+    //if (controllerName === 'Request' && actionName === 'Details') {
+    //    updateReply(requestId);
         
-        updateReply(requestId, userName);
-    }
+    //    updateReply(requestId, userName);
+    //}
 }
 
 //Update bid table khi supplier update info - customer
@@ -113,7 +113,14 @@ function supplierUpdateBidReply(requestId) {
         url: '/Request/UpdateBidRank',
         data: { requestId: requestId },
         success: function (data) {
-            $("#rank").html(data.Rank);
+            var rank = "";
+            if (data.Rank <= 3) {
+                rank = '<img src="/Images/rank_' + data.Rank + '.png" style="max-height:75px; max-width:75px" />';
+            } else {
+                rank = data.Rank;
+            }
+
+            $("#rank").html(rank);
         },
         error: function (error) {
             console.log(error);
@@ -137,14 +144,22 @@ function updateReply(requestId, userName) {
                     + '<tbody><tr>'
                     + '<th>Thứ hạng</th>'
                     + '<th>Cửa hàng</th>'
-                    + '<th>Tổng cộng</th>'
+                    + '<th>Giá thầu</th>'
                     + '<th>Ngày giao hàng</th>'
                     + '<th>Thao tác</th>'
                     + '</tr>';
 
                 $.each(data.BidReplies, function (index, value) {
+                    var rank = "";
+                    if (value.Rank <= 3) {
+                        rank = '<img src="/Images/rank_' + value.Rank + '.png" style="max-height:75px; max-width:75px" />';
+                    } else {
+                        rank = value.Rank;
+                    }
+                    console.log(rank);
+
                     table += '<tr id="reply_' + value.Id + '">'
-                + '<td>' + value.Rank + '</td>'
+                + '<td>' + rank + '</td>'
 
                 + '<td><img src="/Images/UserAvatar/' + value.Avatar + '" width="100" height="100" alt="avatar"> ' + value.Fullname + '</td>'
 
@@ -173,16 +188,16 @@ function updateReply(requestId, userName) {
                 +               '<div class="comment-author vcard">'
                 +                  '<p class="gravatar">'
                 +                      '<a href="#">'
-                +                          '<img src="/Images/UserAvatar/' + value.Avatar + '" width="100" height="100" alt="avatar" />'
+                +                          '<img src="/Images/UserAvatar/' + value.Avatar + '" width="170" height="170" alt="avatar" />'
                 +                      '</a>'
                 +                  '</p>'
-                +                  '<span class="author">' + value.Fullname + '</span>'
+                +                  '<span class="author" style="color: #337ab7; font-size: 28px"><strong>' + value.Fullname + '</strong></span>'
                 +               '</div>'
                 +               '<div class="comment-meta" id="total_' + value.Id + '">'
-                +                  '<p><strong>' +  addDot(value.Total) + ' &#x20AB;</strong></p>'
+                +                  '<p><strong>Giá đề xuất: <span style="color: #ff1341; font-size: 28px">' +  addDot(value.Total) + ' &#x20AB;</span></strong></p>'
                 +               '</div>'
                 +               '<div class="comment-body">'
-                +                   '<p style="color:#b6b6b6">' + value.Address + '</p>'
+                +                   '<p style="color:#333"><strong>Địa chỉ: </strong> <span style="color:#999">' + value.Address + '</span></p>'
                 +               '</div>'
                 +               '<div>'
                 +                    '<button type="button" class="btn btn-primary btn-sm" onclick="viewDetails(' + value.Id + ')">Chi tiết</button> '
@@ -228,16 +243,16 @@ function updateReplies(data) {
                 +               '<div class="comment-author vcard">'
                 +                  '<p class="gravatar">'
                 +                      '<a href="#">'
-                +                          '<img src="/Images/UserAvatar/' + data.Avatar + '" width="100" height="100" alt="avatar" />'
+                +                          '<img src="/Images/UserAvatar/' + data.Avatar + '" width="170" height="170" alt="avatar" />'
                 +                      '</a>'
                 +                  '</p>'
-                +                  '<span class="author">' + data.SupplierName + '</span>'
+                +                  '<span class="author" style="color: #337ab7; font-size: 28px"><strong>' + data.SupplierName + '</strong></span>'
                 +               '</div>'
                 +               '<div class="comment-meta" id="total_' + data.Id + '">'
-                +                  '<p><strong>' + addDot(data.Total) + ' &#x20AB;</strong></p>'
+                +                  '<p><strong>Giá đề xuất: <span style="color: #ff1341; font-size: 28px">' + addDot(data.Total) + ' &#x20AB;</span></strong></p>'
                 +               '</div>'
                 +               '<div class="comment-body">'
-                +                   '<p style="color:#b6b6b6">' + data.Address + '</p>'
+                +                   '<p style="color:#333"><strong>Địa chỉ: </strong> <span style="color:#999">' + data.Address + '</span></p>'
                 +               '</div>'
                 +               '<div>'                
                 +                    '<button id="edit" type="button" class="btn btn-warning btn-sm" onclick="edit(' + data.ReplyId + ')">Chỉnh sửa</button>'                                                   
@@ -253,16 +268,24 @@ function updateReplies(data) {
 }
 
 function updateBid(data) {
+    var rank = "";
+    if (data.Rank <= 3) {
+        rank = '<img src="/Images/rank_' + data.Rank + '.png" style="max-height:75px; max-width:75px" />';
+    } else {
+        rank = data.Rank;
+    }
+    console.log(rank);
+
     var reply = '<table class="table">'
 	+'<tbody><tr>'
 	+ '<th>Thứ hạng</th>'
 	+ '<th>Cửa hàng</th>'
-	+ '<th>Tổng cộng</th>'
+	+ '<th>Giá thầu</th>'
 	+ '<th>Ngày giao hàng</th>'
 	+ '<th>Thao tác</th>'
 	+'</tr>'
 	+'<tr>'
-	+ '<td id="rank">' + data.Rank + '</td>'
+	+ '<td id="rank">' + rank + '</td>'
 
 	+ '<td><img src="/Images/UserAvatar/' + data.Avatar + '" width="100" height="100" alt="avatar"> ' + data.Fullname + '</td>'
 
@@ -306,16 +329,16 @@ function updateClientReply(requestId, userName, newreplyId) {
                     + '<div class="comment-author vcard">'
                     + '<p class="gravatar">'
                     + '<a href="#">'
-                    + '<img src="/Images/UserAvatar/' + value.Avatar + '" width="100" height="100" alt="avatar" />'
+                    + '<img src="/Images/UserAvatar/' + value.Avatar + '" width="170" height="170" alt="avatar" />'
                     + '</a>'
                     + '</p>'
-                    + '<span class="author">' + value.Fullname + '</span>'
+                    + '<span class="author" style="color: #337ab7; font-size: 28px"><strong>' + value.Fullname + '</strong></span>'
                     + '</div>'
                     + '<div class="comment-meta" id="total_' + value.Id + '">'
-                    + '<p><strong>' + addDot(value.Total) + ' &#x20AB;</strong></p>'
+                    + '<p><strong>Giá đề xuất: <span style="color: #ff1341; font-size: 28px">' + addDot(value.Total) + ' &#x20AB;</span></strong></p>'
                     + '</div>'
                     + '<div class="comment-body">'
-                    + '<p style="color:#b6b6b6">' + value.Address + '</p>'
+                    + '<p style="color:#333"><strong>Địa chỉ: </strong> <span style="color:#999">' + value.Address + '</span></p>'
                     + '</div>'
                     + '<div>';
                     
@@ -370,16 +393,16 @@ function updateClientReply2(requestId, userName, newreplyId) {
                     + '<div class="comment-author vcard">'
                     + '<p class="gravatar">'
                     + '<a href="#">'
-                    + '<img src="/Images/UserAvatar/' + value.Avatar + '" width="100" height="100" alt="avatar" />'
+                    + '<img src="/Images/UserAvatar/' + value.Avatar + '" width="170" height="170" alt="avatar" />'
                     + '</a>'
                     + '</p>'
-                    + '<span class="author">' + value.Fullname + '</span>'
+                    + '<span class="author" style="color: #337ab7; font-size: 28px"><strong>' + value.Fullname + '</strong></span>'
                     + '</div>'
                     + '<div class="comment-meta" id="total_' + value.Id + '">'
-                    + '<p><strong>' + addDot(value.Total) + ' &#x20AB;</strong></p>'
+                    + '<p><strong>Giá đề xuất: <span style="color: #ff1341; font-size: 28px">' + addDot(value.Total) + ' &#x20AB;</span></strong></p>'
                     + '</div>'
                     + '<div class="comment-body">'
-                    + '<p style="color:#b6b6b6">' + value.Address + '</p>'
+                    + '<p style="color:#333"><strong>Địa chỉ: </strong> <span style="color:#999">' + value.Address + '</span></p>'
                     + '</div>'
                     + '<div>';
                     if (flag === "owner") {
@@ -426,7 +449,7 @@ function updateExistReplies(data, status, xhr) {
                 }
             });
         } else {
-            var newTotal = '<p><strong>' + addDot(data.NewTotal) + ' &#x20AB;</strong></p>';
+            var newTotal = '<p><strong>Giá đề xuất: <span style="color: #ff1341; font-size: 28px">' + addDot(data.NewTotal) + ' &#x20AB;</span></strong></p>';
             var totalId = "#total_" + data.ReplyId;
             console.log("totalId:" + totalId, ", newTotal:" + data.NewTotal);
             $(totalId).html(newTotal);
@@ -477,4 +500,47 @@ function viewRequest(requestId) {
     var url = "/Request/Details/" + requestId;
     console.log(url);
     window.location.href = url;
+}
+
+function countdownRequest(requestId) {
+    var options = {
+        url: '/Request/Expired',
+        data: { requestId: requestId },
+        type: 'GET',
+    };
+    $.ajax(options).done(function (data) {
+        if (data.Message == "Success") {
+            if (data.IsOwner) {
+                $('.select').show();
+            }
+            
+            $("#bidBtn").hide();
+            
+            $('#expiredMessage').html("(Expired)");
+        }
+
+    });
+
+}
+
+function ExpiredOutside() {
+    console.log("ExpiredOutside");
+    var options = {
+        url: '/Request/ExpiredOutside',
+        type: 'GET',
+    };
+
+    $.ajax(options).done(function (data) {
+        if (data.Message == "Success") {
+            //if (data.IsOwner) {
+            //    $('.select').show();
+            //}
+
+            //$("#bidBtn").hide();
+
+            //$('#expiredMessage').html("(Expired)");
+            console.log("ExpiredOutside functioni return");
+        }
+
+    });
 }
