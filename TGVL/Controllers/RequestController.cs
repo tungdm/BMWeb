@@ -14,6 +14,7 @@ using PagedList.Mvc;
 using PagedList;
 using TGVL.LucenceSearch;
 using System.Globalization;
+using System.Data.Entity;
 
 namespace TGVL.Controllers
 {
@@ -312,7 +313,8 @@ namespace TGVL.Controllers
                         Title = model.Title,
                         TypeOfHouse = model.TypeOfHouse,
                         Expired = false,
-                        Flag = 0
+                        Flag = 0,
+                        Completed = false
                     };
 
                     if (mode == "bid")
@@ -618,20 +620,64 @@ namespace TGVL.Controllers
             return new JsonResult { Data = new { Success = "FAIL" }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
-        //TungDM: show message bid request expired
-        public ActionResult Expired()
+        //Expired in Page
+        public ActionResult Expired(int requestId)
         {
-            var userId = User.Identity.GetUserId<int>(); //customerID 
+            var request = db.Requests.Find(requestId);
+            if (!request.Expired) //first request
+            {
+                request.Expired = true;
+                db.Entry(request).State = EntityState.Modified;
+            }
 
-           
-            var request = db.Requests.Where(r => r.Flag == 1 && r.CustomerId == userId && r.Expired == true).OrderByDescending(r => r.DueDate).FirstOrDefault();
+            var currentUserId = User.Identity.GetUserId<int>();
+
+            if (currentUserId == request.CustomerId)
+            {
+                var message = "Yêu cầu \"" + request.Title + "\" của bạn vừa mới kết thúc!";
+
+                //Create noti
+                var notify = new Notification
+                {
+                    RequestId = request.Id,
+                    UserId = currentUserId,
+                    Message = message,
+                    CreatedDate = DateTime.Now,
+                    IsSeen = false
+                };
+                db.Notifications.Add(notify);
+
+                //SignalR
+                var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+
+                //Call customer update noti count
+                var customer = UserManager.FindById(request.CustomerId).UserName;
+                notificationHub.Clients.User(customer).notify("added");
+            }
+
+            db.SaveChanges();
+
+            return new JsonResult {
+                Data = new {
+                    Message = "Success",
+                    RequestId = request.Id,
+                    IsOwner = currentUserId == request.CustomerId ? true : false
+                },
+
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        //Bid request only
+        public ActionResult ExpiredOutside()
+        {
+            var currentUserId = User.Identity.GetUserId<int>();
+            var request = db.Requests.Where(r => r.Flag == 1 && r.CustomerId == currentUserId && r.Expired == true).OrderByDescending(r => r.DueDate).FirstOrDefault();
             var message = "Yêu cầu \"" + request.Title + "\" của bạn vừa mới kết thúc!";
-
-            //Create noti
             var notify = new Notification
             {
                 RequestId = request.Id,
-                UserId = userId,
+                UserId = currentUserId,
                 Message = message,
                 CreatedDate = DateTime.Now,
                 IsSeen = false
@@ -639,7 +685,23 @@ namespace TGVL.Controllers
             db.Notifications.Add(notify);
             db.SaveChanges();
 
-            return new JsonResult { Data = new { Message = message, RequestId = request.Id }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            //SignalR
+            var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+
+            //Call customer update noti count
+            var customer = UserManager.FindById(request.CustomerId).UserName;
+            notificationHub.Clients.User(customer).notify("added");
+
+            return new JsonResult
+            {
+                Data = new
+                {
+                    Message = "Success",
+                    RequestId = request.Id
+                },
+
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
         }
 
         // GET: Request
