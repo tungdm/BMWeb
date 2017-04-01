@@ -21,6 +21,7 @@ namespace TGVL
             sqlCommand += "On [dbo].[Requests].[CustomerId] = [dbo].[Users].[Id] ";
             sqlCommand += "WHERE [dbo].[Users].[UserName] = @UserName ";
             sqlCommand += "AND [dbo].[Requests].[Flag] = 1";
+            sqlCommand += "AND [dbo].[Requests].[Expired] = 1";
 
             using (SqlConnection con = new SqlConnection(conStr))
             {
@@ -53,7 +54,7 @@ namespace TGVL
 
                 var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
 
-                notificationHub.Clients.User(UserName).notify("expired");
+                notificationHub.Clients.User(UserName).notify("expiredOutside");
                 //RegisterRequestNotification(UserName);
             }
         }
