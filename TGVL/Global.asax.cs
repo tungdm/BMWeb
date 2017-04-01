@@ -28,18 +28,17 @@ namespace TGVL
         protected void Session_Start(object sender, EventArgs e)
         {
             //NotificationComponent NC = new NotificationComponent();
-            //RequestComponent RC = new RequestComponent();
+            RequestComponent RC = new RequestComponent();
 
             //var currentTime = DateTime.Now;
             //HttpContext.Current.Session["LastUpdated"] = currentTime;
-            //if (Request.IsAuthenticated)
-            //{
-            //    string username = User.Identity.Name;
-            //    NC.RegisterNotification(currentTime, username);
+            if (Request.IsAuthenticated)
+            {
+                string username = User.Identity.Name;
+                //NC.RegisterNotification(currentTime, username);
 
-            //    RC.RegisterRequestNotification(username);
-
-            //}
+                RC.RegisterRequestNotification(username);
+            }
         }
 
 
