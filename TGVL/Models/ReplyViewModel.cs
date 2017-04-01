@@ -133,6 +133,8 @@ namespace TGVL.Models
     {
         public int Id { get; set; }
 
+        public int RequestId { get; set; }
+
         [DisplayFormat(DataFormatString = "{0:C0}")]
         public decimal Total { get; set; }
 
