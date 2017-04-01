@@ -87,12 +87,12 @@
                                 <hr />
                                 <div class="add-to-box">
                                     @using (Ajax.BeginForm("AddToCart",
-new AjaxOptions
-{
-    HttpMethod = "POST",
-    OnSuccess = "updateCart(data, status, xhr)"
-}
-))
+                                    new AjaxOptions
+                                    {
+                                        HttpMethod = "POST",
+                                        OnSuccess = "updateCart(data, status, xhr)"
+                                    }
+                                    ))
                                     {
                                         @Html.AntiForgeryToken()
                                         @Html.HiddenFor(model => model.Id)
@@ -139,22 +139,22 @@ new AjaxOptions
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="tab_1">
-
+                                
 
                             </div>
-
+                          
                             <div class="tab-pane" id="tab_2">
-
+                                
                             </div>
-
+                           
                             <div class="tab-pane" id="tab_3">
-
+                               
                             </div>
-
+                           
                         </div>
-
+                        
                     </div>
-
+                   
                 </div>
             </div>
             <br />
