@@ -127,7 +127,9 @@
                     @Html.AntiForgeryToken()
                     <input type="number" name="replyId" value="@Model.Id" style="visibility:hidden"/>
                     <div style="text-align:center">
+                        @Html.ActionLink("Quay lại", "Details", new { id = Model.RequestId }, new { @class = "btn btn-primary", style= "font-size:18px" })
                         <button class="btn btn-success" style="font-size:18px" type="submit">HOÀN TẤT</button>
+                        
                     </div>
                 }
                 
