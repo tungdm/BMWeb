@@ -230,6 +230,7 @@ body.stop-scrolling {
   z-index: 1040;
 }
 .sweet-alert {
+  font-family: Roboto, sans-serif;
   background-color: #ffffff;
   width: 478px;
   padding: 17px;
@@ -243,6 +244,7 @@ body.stop-scrolling {
   overflow: hidden;
   display: none;
   z-index: 2000;
+  
 }
 @media all and (max-width: 767px) {
   .sweet-alert {
