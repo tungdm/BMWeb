@@ -70,6 +70,27 @@ function checkValidate(data, status, xhr) {
             $("#min").html(data.Min);
             $('#errorTotal').focus();
         } 
+
+    } else
+    {
+        
+        //swal("Tạo thành công", "Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!", "success")
+        swal({
+            title: "Tạo thành công",
+            text: "Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!!",
+            type: "success",
+            showCancelButton: false,
+            confirmButtonClass: "btn-success",
+            confirmButtonText: "Đồng ý",         
+            closeOnConfirm: false,          
+        },
+        function (isConfirm) {
+            if (isConfirm) {
+                var url = "/Request/Details/" + data.RequestId;
+
+                window.location.href = url;
+            } 
+        });
     }
 }
 
