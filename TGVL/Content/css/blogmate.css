@@ -212,6 +212,7 @@
 .widget-content {
 	padding: 15px 0;
     padding-left: 10px;
+    padding-right: 5px;
 	border-top: none;
 	font-size: 14px
 }
