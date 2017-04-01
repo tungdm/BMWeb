@@ -369,12 +369,10 @@
                                                                                     </td>
 
                                                                                     <td>
-                                                                                        @Html.DisplayFor(modelreply => reply.Total)
+                                                                                        <strong><span style="color: #ff1341; font-size: 20px">@Html.DisplayFor(modelreply => reply.Total)</span></strong>
                                                                                     </td>
 
                                                                                     <td>
-                                                                                        @*@reply.DeliveryDate.Date.ToString("dd/MM/yyyy")*@
-                                                                                        @*@Html.DisplayFor(modelreply => reply.DeliveryDate)*@
                                                                                         @Convert.ToDateTime(reply.DeliveryDate).ToString("dd/MM/yyyy")
                                                                                     </td>
 
