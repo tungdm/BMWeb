@@ -55,7 +55,7 @@ namespace TGVL.Controllers
                 DeliveryDate = reply.DeliveryDate,
                 ShippingFee = (int) reply.ShippingFee,
                 Discount = (int) reply.Discount,
-                Rank = reply.Flag == 1 ? reply.BidReply.Rank : 0,
+                Rank = reply.Flag == 1 ? (int)reply.BidReply.Rank : 0,
                 Flag = (int) reply.Flag,
                 BidPrice = string.Format("{0:N0}", reply.Total),
             };
