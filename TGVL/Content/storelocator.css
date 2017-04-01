@@ -36,9 +36,11 @@
 .bh-sl-container {
   box-sizing: border-box;
   color: #555;
-  float: left;
+  /*float: left;*/
   font: normal 14px/1.4 Arial, Helvetica, sans-serif;
-  padding: 0 15px;
+  /*padding: 0 15px;*/
+  margin-left: -50px;
+
   width: 100%;
   /* Avoid issues with Google Maps and CSS frameworks */ }
   .bh-sl-container > * {

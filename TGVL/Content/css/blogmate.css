@@ -428,7 +428,7 @@
 }
 .commentlist li .comment-wrapper {
 	position: relative;
-	padding: 10px 20px 17px 100px;
+	padding: 10px 20px 17px 170px;
 	/*margin-bottom: 34px;*/
     border-top: 1px solid #eaeaea;
 	border-bottom: 1px solid #eaeaea;
@@ -449,6 +449,9 @@
 	position: absolute;
 	left: 0;
 	top: 0;
+    height: 170px;
+    width: 170px;
+    margin-top: -20px;
 }
 .commentlist li .gravatar img {
 	float: left;
