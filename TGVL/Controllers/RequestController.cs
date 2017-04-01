@@ -350,8 +350,19 @@ namespace TGVL.Controllers
                     db.SaveChanges();
                     Session.Clear();
                     //return RedirectToAction("Index");
-  
-                    return JavaScript("window.location = '" + Url.Action("Details", "Request", new { id = request.Id }) + "'");
+
+                    return new JsonResult
+                    {
+                        Data = new
+                        {
+                            Success = "Success",
+                            RequestId = request.Id,
+                            Message = "Đơn yêu cầu thành công!",
+                        },
+                        JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                    };
+
+                    //return JavaScript("window.location = '" + Url.Action("Details", "Request", new { id = request.Id }) + "'");
                 }
 
             }
