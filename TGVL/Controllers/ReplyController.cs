@@ -86,14 +86,29 @@ namespace TGVL.Controllers
             Request request = db.Requests.Find(requestId);
             model.Flag = (int) request.Flag;
 
-            if (request.Flag == 9)
+            if (request.Expired)
             {
                 //request expired
                 return new JsonResult
                 {
                     Data = new
                     {
-                        Message = "Yêu cầu đã hết hạn."
+                        Error = "Expired",
+                        Message = "Request Expired."
+                    },
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            }
+
+            if (request.Completed)
+            {
+                //request completed
+                return new JsonResult
+                {
+                    Data = new
+                    {
+                        Error = "Completed",
+                        Message = "Request Completed."
                     },
                     JsonRequestBehavior = JsonRequestBehavior.AllowGet
                 };
@@ -209,9 +224,42 @@ namespace TGVL.Controllers
             if (ModelState.IsValid)
             {
                 var request = db.Requests.Find(requestId);
+
+                if (request.Expired)
+                {
+                    //request expired
+                    return new JsonResult
+                    {
+                        Data = new
+                        {
+                            Error = "Expired",
+                            Message = "Request Expired."
+                        },
+                        JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                    };
+                }
+
+                if (request.Completed)
+                {
+                    //request completed
+                    return new JsonResult
+                    {
+                        Data = new
+                        {
+                            Error = "Completed",
+                            Message = "Request Completed."
+                        },
+                        JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                    };
+                }
+
                 var message = "";
                 var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
                 var total = decimal.Parse(model.BidPrice);
+                if (model.Discount > 0)
+                {
+                    total = Math.Ceiling(total - (total * model.Discount / 100));
+                }
                 //Create normal reply
                 var reply = new Reply
                 {
@@ -284,24 +332,8 @@ namespace TGVL.Controllers
                 {
                     var newestDate = reply.CreatedDate;
 
-                    //SignalR - Call another supplier update reply table
-                    //var query = "SELECT[dbo].[Users].[UserName] "
-                    //            + "FROM[dbo].[Replies], [dbo].[Requests], [dbo].[Users] "
-                    //            + "WHERE[dbo].[Replies].[SupplierId] = [dbo].[Users].[Id] "
-                    //            + "AND[dbo].[Replies].[RequestId] = [dbo].[Requests].[Id] "
-                    //            + "AND[dbo].[Requests].[Id] = {0} "
-                    //            + "AND[dbo].[Replies].[CreatedDate] < {1}";
-                    //List<string> listUserReply = db.Database.SqlQuery<string>(query, requestId, newestDate).ToList();
-                    //if (listUserReply.Count() != 0)
-                    //{
-                    //    var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
-                    //    foreach (var userId in listUserReply)
-                    //    {
-                    //        notificationHub.Clients.User(userId).notify("updatereplytable"); //noti supplier
-                    //    }
-                    //}
+                    notificationHub.Clients.User(customer).notify("updatereplytable");
 
-                    
                     //Call all client update reply table
                     notificationHub.Clients.All.broadcastMessage("updatereplytable", requestId, reply.Id);   //noti all client
 
@@ -313,7 +345,7 @@ namespace TGVL.Controllers
                             ReplyType = "Normal",
                             ReplyId = reply.Id,
                             SupplierName = user.Fullname,
-                            Total = model.Total,
+                            Total = total,
                             Address = user.Address,
                             Description = model.Description,
                             Avatar = user.Avatar,
@@ -351,6 +383,9 @@ namespace TGVL.Controllers
                             + "AND[dbo].[Replies].[CreatedDate] < {1}";
                             
                     List<string> listUser = db.Database.SqlQuery<string>(query, requestId, newestDate).ToList();
+
+                    notificationHub.Clients.User(reply.Request.User.UserName).notify("updatebidtable");
+
                     if (listUser.Count() != 0)
                     {
                         //var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
@@ -401,6 +436,36 @@ namespace TGVL.Controllers
                 var reply = db.Replies.FirstOrDefault(r => r.Id == model.Id);
                 if (reply != null)
                 {
+                    Request request = db.Requests.Find(reply.RequestId);
+
+                    if (request.Expired)
+                    {
+                        //request expired
+                        return new JsonResult
+                        {
+                            Data = new
+                            {
+                                Error = "Expired",
+                                Message = "Request Expired."
+                            },
+                            JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                        };
+                    }
+
+                    if (request.Completed)
+                    {
+                        //request completed
+                        return new JsonResult
+                        {
+                            Data = new
+                            {
+                                Error = "Completed",
+                                Message = "Request Completed."
+                            },
+                            JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                        };
+                    }
+
                     var oldTotal = (int)reply.Total;
                                          
                     reply.ShippingFee = model.ShippingFee;
