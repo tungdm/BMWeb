@@ -1,16 +1,16 @@
 ﻿@model TGVL.Models.ReplyDetails
 
 @using (Ajax.BeginForm(
-                "Edit",
-                "Reply",
-                            new AjaxOptions
-                            {
-                                HttpMethod = "POST",
-                                InsertionMode = InsertionMode.Replace,
-                                UpdateTargetId = "",
-                                OnSuccess = "updateExistReplies(data, status, xhr)"
-                            }
-                        ))
+    "Edit",
+    "Reply",
+    new AjaxOptions
+    {
+        HttpMethod = "POST",
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "",
+        OnSuccess = "updateExistReplies(data, status, xhr)"
+    }
+))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
