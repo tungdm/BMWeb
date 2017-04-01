@@ -466,7 +466,7 @@ namespace TGVL.Controllers
                         };
                     }
 
-                    var oldTotal = (int)reply.Total;
+                    var oldTotal = reply.Total;
                                          
                     reply.ShippingFee = model.ShippingFee;
                     reply.Discount = model.Discount;
@@ -576,7 +576,7 @@ namespace TGVL.Controllers
                                 Success = "Fail",
                                 ReplyType = "Bid",
                                 Message = "Giá bid mới phải bằng hoặc nhỏ hơn giá cũ",
-                                OldTotal = (int)reply.Total
+                                OldTotal = (decimal)reply.Total
                             },
                             JsonRequestBehavior = JsonRequestBehavior.AllowGet
                         };

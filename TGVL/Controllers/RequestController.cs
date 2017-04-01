@@ -730,7 +730,8 @@ namespace TGVL.Controllers
                 ShippingFee = (int)reply.ShippingFee,
                 Discount = (int)reply.Discount,
                 //Rank = reply.Flag == 1 ? reply.BidReply.Rank : 0,
-                Flag = (int)reply.Flag
+                Flag = (int)reply.Flag,
+                RequestId = reply.RequestId
             };
 
             var query = "SELECT [dbo].[ReplyProducts].[Id] AS [ReplyProductId], [dbo].[Products].[Id], [dbo].[Products].[UnitPrice], "
