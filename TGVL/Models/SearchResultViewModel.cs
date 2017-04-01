@@ -10,5 +10,7 @@ namespace TGVL.Models
         public SysProduct SysProduct { get; set; }
        
         public int NumOfShops { get; set; }
+
+        public ICollection<Shop> ListShops { get; set; }
     }
 }

@@ -18,7 +18,7 @@ namespace TGVL.Models
 
         public int ProductId { get; set; }
 
-        public string Type { get; set; }
+        public string Type { get; set; } //deal hoac mua ngay
         public int Quantity { get; set; }
     }
 
@@ -39,6 +39,8 @@ namespace TGVL.Models
         public int DealId { get; set; } //cho t/h mua deal
 
         public int SupplierId { get; set; }
+
+        public string SupplierName { get; set; }
 
         public string Type { get; set; } //Type = normal/deal
 
@@ -70,7 +72,8 @@ namespace TGVL.Models
 
         public string ProductName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Số lượng không được bỏ trống")]
+        
         public int Quantity { get; set; }
     }
 }
