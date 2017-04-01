@@ -429,37 +429,40 @@
                     </div>
                 </div>
             </div>
-            @if (Model.Flag == 1)
-            {
-                <div id="countdown-2" class="col-md-3", style="position:fixed;right:0%"></div>
-            }
-           
-
-            @*<div class="col-right sidebar col-sm-3 wow bounceInUp animated">
-                <div role="complementary" class="widget_wrapper13" id="secondary">
+            <div class="col-right sidebar col-sm-3 wow bounceInUp animated">
+                @if (Model.Flag == 1)
+                {
+                    <div id="countdown-2" class="col-md-3" , style="position:fixed;right:0%"></div>
+                }
+                else
+                {
                     <div class="popular-posts widget widget__sidebar" id="recent-posts-4">
-
-                        <h4 class="widget-title">YÊU CẦU TƯƠNG TỰ</h4>
+                        <h3 class="widget-title"><strong>YÊU CẦU TƯƠNG TỰ</strong></h3>
                         <div class="widget-content">
                             <ul class="posts-list unstyled clearfix">
                                 <li>
-                                    @*<figure class="featured-thumb"> <a href="#pellentesque-posuere"> <img width="80" height="80" alt="blog image" src="~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg"> </a> </figure>*@
-                                    <p><strong>Tiêu đề</strong>: Mua xi măng giá rẻ ở quận 4</p>
-                                    <p>Sản phẩm</p>
-                                    <p><strong>Người đăng</strong>: Cao Minh Thúy Vy</p>
-                                </li>
-                                <li>
-                                    <figure class="featured-thumb"> <a href="#dolor-lorem-ipsum"> <img width="60" height="60" alt="blog image" src="~/Content/images/xi-mang-fico-pcb40.jpg"> </a> </figure>
-
                                     <p><strong>Tiêu đề</strong></p>
                                     <p>Sản phẩm</p>
-                                    <p><strong>Người đăng</strong></p>
+                                    <p><strong>Người đăng:</strong>Cao Minh Thúy Vy</p>
                                 </li>
+                                <li>
+                                    <figure class="featured-thumb"> <a href="#dolor-lorem-ipsum"> <img width="50" height="50" alt="blog image" src="~/Content/images/xi-mang-fico-pcb40.jpg"> </a> </figure>
+                                    <p><strong>Tiêu đề</strong></p>
+                                    <p>Sản phẩm</p>
+                                    <p><strong>Người đăng:</strong></p>
+                                </li>
+                               
                             </ul>
+                            @*<br />
+                            <h4 style="text-align:center">
+                                <a href="#"><strong>Xem thêm</strong></a>
+                            </h4>*@
                         </div>
+                        
                     </div>
                 }
             </div>
+
         </div>
 
     </div>
