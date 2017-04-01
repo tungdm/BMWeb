@@ -163,7 +163,7 @@ function updateReply(requestId, userName) {
 
                 + '<td><img src="/Images/UserAvatar/' + value.Avatar + '" width="100" height="100" alt="avatar"> ' + value.Fullname + '</td>'
 
-                + '<td>' + addDot(value.Total) + ' &#x20AB;</td>'
+                + '<td><strong><span style="color: #ff1341; font-size: 20px">' + addDot(value.Total) + ' &#x20AB;</span></strong></td>'
 
                 + '<td>' + new Date(parseInt(value.DeliveryDate.substr(6))).format("dd/mm/yyyy") + '</td>'
 
@@ -248,7 +248,7 @@ function updateReplies(data) {
                 +                  '</p>'
                 +                  '<span class="author" style="color: #337ab7; font-size: 28px"><strong>' + data.SupplierName + '</strong></span>'
                 +               '</div>'
-                +               '<div class="comment-meta" id="total_' + data.Id + '">'
+                +               '<div class="comment-meta" id="total_' + data.ReplyId + '">'
                 +                  '<p><strong>Giá đề xuất: <span style="color: #ff1341; font-size: 28px">' + addDot(data.Total) + ' &#x20AB;</span></strong></p>'
                 +               '</div>'
                 +               '<div class="comment-body">'
@@ -289,7 +289,7 @@ function updateBid(data) {
 
 	+ '<td><img src="/Images/UserAvatar/' + data.Avatar + '" width="100" height="100" alt="avatar"> ' + data.Fullname + '</td>'
 
-	+'<td>'+  addDot(data.Total) + ' &#x20AB;</td>'
+	+ '<td><strong><span style="color: #ff1341; font-size: 20px">' + addDot(data.Total) + ' &#x20AB;</span></strong></td>'
 
 	+ '<td>' + new Date(parseInt(data.DeliveryDate.substr(6))).format("dd/mm/yyyy") + '</td>'
 
@@ -439,7 +439,11 @@ function updateExistReplies(data, status, xhr) {
             $("#oldTotal").html(data.OldTotal);
         }
     } else {
+        $('#replyModal').modal('toggle');
+        $("#replyInfo").empty();
+
         if (data.ReplyType === "Bid") {
+            console.log("get new rank");
             $.ajax({
                 type: 'GET',
                 url: '/Reply/GetRank',
@@ -454,8 +458,7 @@ function updateExistReplies(data, status, xhr) {
             console.log("totalId:" + totalId, ", newTotal:" + data.NewTotal);
             $(totalId).html(newTotal);
         }
-        $('#replyModal').modal('toggle');
-        $("#replyInfo").empty();
+        
     }
 }
 
