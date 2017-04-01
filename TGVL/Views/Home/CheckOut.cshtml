@@ -20,6 +20,10 @@
                         {
                             @Html.HiddenFor(model => model.Reply.Id)
                         }
+                        else
+                        {
+                            <input type="number" name="replyId" value="0" style="visibility:hidden" />
+                        }
 
                         <div class="form-horizontal">
                             <div class="form-group" style="margin-top:10px">

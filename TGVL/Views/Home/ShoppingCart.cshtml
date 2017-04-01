@@ -15,9 +15,7 @@
                     @if (Model.ShoppingCartProducts != null)
                     {
                         <div class="col-md-9">
-                            <div class="page-title">
-                                <h2>Giỏ hàng</h2>
-                            </div>
+                            
                             <div class="box">
                                 @using (Html.BeginForm("DeliveryAddress", "Home", FormMethod.Post, new { id = "submitFormWithButton" }))
                                 {
@@ -25,20 +23,16 @@
                                         <table id="shopping-cart-table" class="data-table cart-table">
                                             <thead>
                                                 <tr>
-                                                    <th rowspan="1">&nbsp;</th>
-                                                    <th rowspan="1">Sản phẩm</th>
+                                                    @*<th rowspan="1">&nbsp;</th>*@
+                                                    <th colspan="2">Sản phẩm trong giỏ hàng: <span class="badge">@Model.ShoppingCartProducts.Count()</span></th>
+                                                    <th rowspan="1">Cửa hàng</th>
                                                     <th colspan="1">Đơn giá</th>
                                                     <th>Số lượng</th>
                                                     <th colspan="1">Thành tiền</th>
                                                     <th rowspan="1">&nbsp;</th>
                                                 </tr>
                                             </thead>
-                                            <tfoot>
-                                                <tr>
-                                                    <th colspan="4">TỔNG CỘNG</th>
-                                                    <th colspan="2" style="color:red; font-size:20px"><strong><span class="total">@Html.DisplayFor(model => model.Total)</span></strong></th>
-                                                </tr>
-                                            </tfoot>
+                                            
                                             <tbody>
 
                                                 @for (int i = 0; i < Model.ShoppingCartProducts.Count(); i++)
@@ -54,8 +48,10 @@
                                                             
                                                             @Html.HiddenFor(modelItem => Model.ShoppingCartProducts[i].ProductName)
                                                         </td>
-
-                                                        <td class="a-center hidden-table"><span class="cart-price"> <span class="price">@Html.DisplayFor(modelItem => Model.ShoppingCartProducts[i].UnitPrice)</span> </span></td>
+                                                        <td>
+                                                            @Model.ShoppingCartProducts[i].SupplierName
+                                                        </td>
+                                                        <td class="a-center hidden-table"><span class="cart-price"> <span class="price">@Html.DisplayFor(modelItem => Model.ShoppingCartProducts[i].UnitPrice) / @Model.ShoppingCartProducts[i].UnitType</span> </span></td>
                                                         <td>
                                                             @Html.EditorFor(model => Model.ShoppingCartProducts[i].Quantity, new { htmlAttributes = new { @class = "qty form-control" } })
                                                             @Html.ValidationMessageFor(model => Model.ShoppingCartProducts[i].Quantity, "", new { @class = "text-danger" })
@@ -73,7 +69,7 @@
                                                             }
                                                             else
                                                             {
-                                                                <a href="javascript" onclick="removefromcart('@Model.ShoppingCartProducts[i].Type', @Model.ShoppingCartProducts[i].ProductId)" title="Xóa sản phẩm" class="button remove-item"><span><span>Remove item</span></span></a>
+                                                                <a href="javascript:;" onclick="removefromcart('@Model.ShoppingCartProducts[i].Type', @Model.ShoppingCartProducts[i].ProductId)" title="Xóa sản phẩm" class="button remove-item"><span><span>Remove item</span></span></a>
                                                             }
 
                                                         </td>
@@ -84,8 +80,8 @@
                                             </tbody>
                                         </table>
                                     </div>
-                            <!--End table responsive-->
-                                    <div class="box-footer">
+                            
+                                    <div class="box-footer" style="margin-bottom: -1px;">
                                         <div class="pull-left">
                                             <a href="shop-category.html" style="font-size:14px"><i class="fa fa-chevron-left"></i><strong> Tiếp tục mua hàng</strong></a>
                                         </div>

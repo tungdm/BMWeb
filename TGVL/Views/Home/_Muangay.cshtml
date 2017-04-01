@@ -1,14 +1,15 @@
 ﻿@model TGVL.Models.MuaNgayViewModel
 
-@using (Ajax.BeginForm(
+@using (Ajax.BeginForm("AddToCart", "Home",
     new AjaxOptions
     {
         HttpMethod = "POST",
-        OnSuccess = "muangay_success"
+        OnSuccess = "updateCart(data, status, xhr)"
     }
 ))
 {
     @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id)
 
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="popular-posts widget widget__sidebar">
@@ -32,8 +33,9 @@
                 <div class="form-group">
                     <label class="control-label col-md-3" style="font-size:14px">Số lượng <span style="color:#ff0000"> *</span></label>
                     <div class="col-md-9">
-                        @Html.EditorFor(model => model.Quantity, "", new { htmlAttributes = new { @class = "form-control", onfocus = "this.value=''"} })
-                        @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.Quantity, "", new { htmlAttributes = new { @class = "form-control"} })
+                        @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger error-quantity" })
+                        <span class="text-danger field-validation-valid" id="errorQuantity" style="display:none;margin-left: -30px;"></span>
                     </div>
                 </div>
             </div>
@@ -43,15 +45,54 @@
 
 <script>
     $(document).ready(function () {
-        $("#mua_ngay_btn").click(function (event) {
+        var MaxLengthInputNumberSmall = @ViewBag.MaxLengthInputNumberSmall;
+        $('#Quantity').keypress(function (e) {
 
+            if (this.value.length == MaxLengthInputNumberSmall) {
+                e.preventDefault();
+            }
+        });
+
+        $('#Quantity').bind('keyup mouseup', function (e) {
+
+            var quantity = $("#Quantity").val();
+            console.log(quantity);
+
+            if (quantity.length == MaxLengthInputNumberSmall) {
+                console.log(quantity.length);
+                $('#errorQuantity').empty();
+                $('#errorQuantity').hide();
+                e.preventDefault();
+            } else if (quantity.length > MaxLengthInputNumberSmall) {
+                var error = "<span>Xin hãy nhập ít hơn 10 số</span>";
+                $("#errorQuantity").html(error);
+                $("#errorQuantity").show();
+            }
+            else {
+                $('#errorQuantity').empty();
+                $('#errorQuantity').hide();
+
+                if (quantity <= 0 && quantity != '') {
+                    var error = "<span>Số lượng phải lớn hơn 0</span>";
+                    $("#errorQuantity").html(error);
+                    $("#errorQuantity").show();
+                } else {
+                    $('#errorQuantity').empty();
+                    $('#errorQuantity').hide();
+                }
+            }
+        });
+
+        $("#mua_ngay_btn").click(function (event) {
             event.preventDefault();
             var result = $('#form0').valid();
-            console.log(result);
-            if (result) {
-                $("form[id='form0']").submit();
-            }
 
+            if (result) {
+                var quantity = $("#Quantity").val();
+                if (quantity > 0 && quantity.length <= MaxLengthInputNumberSmall) {
+                    $("form[id='form0']").submit();
+                }
+            }
         });
     })
 </script>
