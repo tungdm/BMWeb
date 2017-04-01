@@ -25,7 +25,7 @@
                         <label class="control-label col-md-3" style="font-size:14px">Giá thầu (&#x20AB;) <span style="color:#ff0000"> *</span></label>
                         <div class="col-md-9">
                             @*@Html.EditorFor(model => model.Total, "", new { htmlAttributes = new { @class = "form-control" } })*@
-                            @Html.EditorFor(model => model.BidPrice, "", new { htmlAttributes = new { @class = "form-control", onfocus = "this.value=''" , @Value= bidPrice } })
+                            @Html.EditorFor(model => model.BidPrice, "", new { htmlAttributes = new { @class = "form-control" , @Value= bidPrice } })
                             @Html.ValidationMessageFor(model => model.BidPrice, "", new { @class = "text-danger" })
                         </div> 
                     </div>
@@ -44,6 +44,15 @@
                         <div class="col-md-9">
                             @Html.EditorFor(model => model.DeliveryDate, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3" style="font-size:14px">Ghi chú</label>
+
+                        <div class="col-md-9">
+                            
+                            @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @rows = "5", @cols = "20" })
                         </div>
                     </div>
                 }
@@ -82,6 +91,15 @@
                             @Html.ValidationMessageFor(model => model.ShippingFee, "", new { @class = "text-danger" })
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3" style="font-size:14px">Ghi chú</label>
+
+                        <div class="col-md-9">
+                            @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @rows = "5", @cols = "20" } )
+                            
+                        </div>
+                    </div>
                 }
             </div>
         </div>
@@ -94,11 +112,9 @@
                 <thead>
                     <tr>
                         <th colspan="1">
-                            Số thứ tự
+                            Sản phẩm phản hồi: <span class="badge">@Model.ReplyProductsTest.Count()</span>
                         </th>
-                        <th colspan="1">
-                            Sản phẩm
-                        </th>
+
                         <th colspan="1">
                             Hình ảnh
                         </th>
@@ -106,10 +122,10 @@
                             Đơn giá
                         </th>
                         <th colspan="1">
-                            Đơn vị tính
+                            Số lượng
                         </th>
                         <th colspan="1">
-                            Số lượng
+                            Thành tiền
                         </th>
                     </tr>
                 </thead>
@@ -123,28 +139,27 @@
                     </tr>
                 </tfoot>
                 <tbody>
-                    @{
-                        int count2 = 0;
-                    }
 
                     @for (int i = 0; i < Model.ReplyProductsTest.Count(); i++)
                     {
-                        count2++;
+
                         <tr>
-                            <td>@count2</td>
                             <td style="display:none">
                                 @Html.EditorFor(model => Model.ReplyProductsTest[i].Product.Id)
                                 @Html.EditorFor(model => Model.ReplyProductsTest[i].Product.UnitPrice)
                             </td>
                             <td>@Html.DisplayFor(model => Model.ReplyProductsTest[i].Product.Name)</td>
-                            <td><img src="~/Images/Product/SysProduct/@Model.ReplyProductsTest[i].Product.Image" style="max-height:100px; max-width:100px" /></td>
+                            <td><img src="~/Images/Product/Warehouse/@Model.ReplyProductsTest[i].Product.Image" style="max-height:100px; max-width:100px" /></td>
                             <td class="price">
-                                @Html.DisplayFor(model => Model.ReplyProductsTest[i].Product.UnitPrice)
+                                @Html.DisplayFor(model => Model.ReplyProductsTest[i].Product.UnitPrice) / @Html.DisplayFor(model => Model.ReplyProductsTest[i].Product.Type)
                             </td>
-                            <td>@Html.DisplayFor(model => Model.ReplyProductsTest[i].Product.Type)</td>
                             <td>
                                 <div class="qtyBid">@Html.DisplayFor(model => Model.ReplyProductsTest[i].Quantity)</div>
                                 @Html.HiddenFor(model => Model.ReplyProductsTest[i].Quantity)
+                            </td>
+                            <td>
+                                @{var mini = Model.ReplyProductsTest[i].Product.UnitPrice * Model.ReplyProductsTest[i].Quantity;}
+                                @string.Format("{0:C0}", mini)
                             </td>
                         </tr>
                     }

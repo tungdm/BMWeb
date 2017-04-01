@@ -5,10 +5,7 @@
         <thead>
             <tr>
                 <th>
-                    Số thứ tự
-                </th>
-                <th>
-                    Sản phẩm
+                    Sản phẩm phản hồi: <span class="badge">@Model.ReplyProducts.Count()</span>
                 </th>
 
                 <th>
@@ -20,43 +17,41 @@
                 </th>
 
                 <th>
-                    Đơn vị tính
+                    Số lượng
                 </th>
 
                 <th>
-                    Số lượng
+                    Thành tiền
                 </th>
             </tr>
         </thead>
         <tbody>
             @{
-                int count = 0;
                 List<TGVL.Models.RepliedProduct> rp = ViewBag.RepliedProduct;
             }
 
             @foreach (var item in rp)
             {
-                count++;
                 <tr>
-                    <td>@count</td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
 
                     <td>
-                        <img src="~/Images/Product/SysProduct/@item.Image" style="max-height:100px; max-width:100px" />
+                        <img src="~/Images/Product/Warehouse/@item.Image" style="max-height:100px; max-width:100px" />
                     </td>
 
                     <td>
-                        @Html.DisplayFor(modelItem => item.UnitPrice)
-                    </td>
-
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Type)
+                        @Html.DisplayFor(modelItem => item.UnitPrice) / @Html.DisplayFor(modelItem => item.Type)
                     </td>
 
                     <td>
                         @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+
+                    <td>
+                        @{var mini = item.UnitPrice * item.Quantity;}
+                        @string.Format("{0:C0}", mini)
                     </td>
                 </tr>
             }
@@ -67,40 +62,62 @@
 <div class="popular-posts widget widget__sidebar">
     <h3 class="widget-title"><strong>THÔNG TIN THÊM</strong></h3>
     <div class="widget-content">
-        <div class="form-horizontal">
+
+        <dl class="dl-horizontal">
             @if (Model.Rank != 0)
             {
-                <div class="form-group">
-                    <labael class="control-label col-md-3 col-sm-3 col-xs-12">Rank</labael>
-                    @*@Html.LabelFor(model => model.Total, htmlAttributes: new { @class = "control-label col-md-3" })*@
-                    <div class="col-md-9">
-                        @Html.DisplayFor(model => model.Rank, new { htmlAttributes = new { @class = "form-control" } })
-                    </div>
-                </div>
+                <dt>
+                    Thứ hạng
+                </dt>
+
+                <dd>
+                    @Model.Rank
+                </dd>
+
+                <dt>
+                    Giá thầu
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Total)
+                </dd>
+            }
+            else
+            {
+                <dt>
+                    Giá đề xuất từ cửa hàng
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Total)
+                </dd>
+
+                <dt>
+                    Giảm giá
+                </dt>
+
+                <dd>
+                    @Model.Discount %
+                </dd>
             }
 
-            <div class="form-group">
-                <labael class="control-label col-md-3 col-sm-3 col-xs-12">Tổng cộng</labael>
-                <div class="col-md-9">
-                    @Html.DisplayFor(model => model.Total, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-            </div>
+            <dt>
+                Ngày giao hàng
+            </dt>
 
-            <div class="form-group">
-                <labael class="control-label col-md-3">Ngày giao hàng</labael>
-               
-                <div class="col-md-9">
-                    @Convert.ToDateTime(Model.DeliveryDate).ToString("dd/MM/yyyy")
-                </div>
-            </div>
+            <dd>
+                @Convert.ToDateTime(Model.DeliveryDate).ToString("dd/MM/yyyy")
+            </dd>
 
-            <div class="form-group">
-                <labael class="control-label col-md-3">Mô tả</labael>
-                <div class="col-md-9">
-                    @Html.DisplayFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @row = "5", @column = "5" } })
-                </div>
-            </div>
+            <dt>
+                Ghi chú
+            </dt>
 
-        </div>
+            <dd>
+                @Html.Raw(Model.Description)
+            </dd>
+            
+        </dl>
+
     </div>
 </div>
