@@ -475,6 +475,11 @@
                 console.log('expired');
                 showExpired();
             }
+
+            if (message && message.toLowerCase() === "expiredoutside") {
+                console.log('expiredOutside');
+                ExpiredOutside();
+            }
         };
 
     });
