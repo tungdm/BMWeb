@@ -86,6 +86,8 @@ namespace TGVL.Controllers
         }
 
         //POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AddToCart(DealDetailsViewModel model)
         {
             var data = new CartDetails

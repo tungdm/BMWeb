@@ -128,9 +128,7 @@ namespace TGVL.Controllers
             string _Json = string.Empty;
             string _path = string.Empty;
 
-            var TopRecShop = db.Settings.Where(s => s.SettingName == "TopRecShop").FirstOrDefault().SettingValue;
-
-            var query = "SELECT TOP ({0}) [dbo].[Warehouses].[Id] AS id, [dbo].[Users].[Fullname] AS name, [dbo].[Warehouses].[Lat] AS lat, "
+            var query = "SELECT [dbo].[Warehouses].[Id] AS id, [dbo].[Users].[Fullname] AS name, [dbo].[Warehouses].[Lat] AS lat, "
                 + "[dbo].[Warehouses].[Lng] as lng, [dbo].[Warehouses].[Address] AS address, [dbo].[Warehouses].[Administrative_area_level_1] AS city, "
                 + "[dbo].[Users].[PhoneNumber] AS phone, [dbo].[Users].[AverageGrade] as rating, [dbo].[Products].[UnitPrice] as price, "
                 + "[dbo].[Products].[Id] AS productId "
@@ -139,10 +137,10 @@ namespace TGVL.Controllers
                 + "AND [dbo].[Products].[Id] =  [dbo].[WarehouseProducts].[ProductId] "
                 + "AND [dbo].[WarehouseProducts].[WarehouseId] = [dbo].[Warehouses].[Id] "
                 + "AND [dbo].[Warehouses].[SupplierId] = [dbo].[Users].[Id] "
-                + "AND [dbo].[SysProducts].[Id] = {1} "
+                + "AND [dbo].[SysProducts].[Id] = {0} "
                 + "ORDER BY rating DESC";
 
-            List<Shop> data = db.Database.SqlQuery<Shop>(query, TopRecShop, sysProductId).ToList();
+            List<Shop> data = db.Database.SqlQuery<Shop>(query, sysProductId).ToList();
 
             _Json = new JavaScriptSerializer().Serialize(data);
 
@@ -249,7 +247,24 @@ namespace TGVL.Controllers
                     }
                     else
                     {
-                        //normal
+                        //muangay
+                        var product = db.Products.Find(c.ProductId);
+
+                        var scProducts = new ShoppingCartProducts
+                        {
+                            ProductId = product.Id,
+                            Type = "muangay",
+                            SupplierId = product.SupplierId,
+                            SupplierName = product.User.Fullname,
+                            Image = product.Image,
+                            ProductName = product.SysProduct.Name,
+                            Quantity = c.Quantity,
+                            UnitPrice = (decimal)product.UnitPrice,
+                            UnitType = product.SysProduct.UnitType.Type,
+                            MiniTotal = (decimal)product.UnitPrice * c.Quantity
+                        };
+                        model.ShoppingCartProducts.Add(scProducts);
+                        total += scProducts.MiniTotal;
                     }
                 }
                 model.Total = total;
@@ -275,10 +290,14 @@ namespace TGVL.Controllers
                 Id = productId,
                 UnitPrice = (decimal) product.UnitPrice,
                 UnitType = product.SysProduct.UnitType.Type,
-                ProductName = product.SysProduct.Name
+                ProductName = product.SysProduct.Name,
+                Quantity = 1
             };
+            ViewBag.MaxLengthInputNumberSmall = db.Settings.Where(s => s.SettingName == "MaxLengthInputNumberSmall").FirstOrDefault().SettingValue;
             return PartialView("_Muangay", model);
         }
+
+       
 
         public ActionResult ShoppingCart()
         {
@@ -300,6 +319,7 @@ namespace TGVL.Controllers
                             DealId = deal.Id,
                             Type = "deal",
                             SupplierId = deal.SupplierId,
+                            SupplierName = deal.User.Fullname,
                             Image = deal.Product.Image,
                             ProductName = deal.Product.SysProduct.Name,
                             Quantity = c.Quantity,
@@ -311,7 +331,24 @@ namespace TGVL.Controllers
                         total += scProducts.MiniTotal;
                     } else
                     {
-                        //normal
+                        //muangay
+                        var product = db.Products.Find(c.ProductId);
+
+                        var scProducts = new ShoppingCartProducts
+                        {
+                            ProductId = product.Id,
+                            Type = "muangay",
+                            SupplierId = product.SupplierId,
+                            SupplierName = product.User.Fullname,
+                            Image = product.Image,
+                            ProductName = product.SysProduct.Name,
+                            Quantity = c.Quantity,
+                            UnitPrice = (decimal)product.UnitPrice,
+                            UnitType = product.SysProduct.UnitType.Type,
+                            MiniTotal = (decimal)product.UnitPrice * c.Quantity
+                        };
+                        model.ShoppingCartProducts.Add(scProducts);
+                        total += scProducts.MiniTotal;
                     }          
                 }
                 model.Total = total;
@@ -401,7 +438,8 @@ namespace TGVL.Controllers
                     Data = new
                     {
                         Success = "Success",
-                        RemoveElement = type + "_"+ id
+                        RemoveElement = type + "_"+ id,
+                        Count = cartSession.CartDetails.Count()
                     },
                     JsonRequestBehavior = JsonRequestBehavior.AllowGet
                 };
@@ -461,6 +499,7 @@ namespace TGVL.Controllers
             } else
             {
                 order = (OrderViewModel)Session["Order"];
+                order.IsRequestOrder = false;
             }
 
             order.CustomerFullName = user.Fullname;
@@ -498,18 +537,28 @@ namespace TGVL.Controllers
         {
             var product = db.SysProducts.Find(id);
             var productId = product.Id;
-            
-            var query = "SELECT count([dbo].[Users].[Fullname]) as NumOfShops "
-                          + "FROM [dbo].[Products],[dbo].[Users], [dbo].[SysProducts] "
-                          + "WHERE [dbo].[Products].[SupplierId] = [dbo].[Users].[Id] "
-                          + "AND[dbo].[Products].[SysProductId] = [dbo].[SysProducts].[Id] "
-                          + "AND[dbo].[SysProducts].[Id] = {0} ";
-            
-            var num = db.Database.SqlQuery<int>(query, productId).FirstOrDefault();
+
+            //var TopRecShop = db.Settings.Where(s => s.SettingName == "TopRecShop").FirstOrDefault().SettingValue;
+
+            var query = "SELECT [dbo].[Warehouses].[Id] AS id, [dbo].[Users].[Fullname] AS name, [dbo].[Warehouses].[Lat] AS lat, "
+                + "[dbo].[Warehouses].[Lng] as lng, [dbo].[Warehouses].[Address] AS address, [dbo].[Warehouses].[Administrative_area_level_1] AS city, "
+                + "[dbo].[Users].[PhoneNumber] AS phone, [dbo].[Users].[AverageGrade] as rating, [dbo].[Products].[UnitPrice] as price, "
+                + "[dbo].[Products].[Id] AS productId "
+                + "FROM [dbo].[SysProducts], [dbo].[Products], [dbo].[WarehouseProducts], [dbo].[Warehouses], [dbo].[Users] "
+                + "WHERE [dbo].[Products].[SysProductId] = [dbo].[SysProducts].[Id] "
+                + "AND [dbo].[Products].[Id] =  [dbo].[WarehouseProducts].[ProductId] "
+                + "AND [dbo].[WarehouseProducts].[WarehouseId] = [dbo].[Warehouses].[Id] "
+                + "AND [dbo].[Warehouses].[SupplierId] = [dbo].[Users].[Id] "
+                + "AND [dbo].[SysProducts].[Id] = {0} "
+                + "ORDER BY rating DESC";
+
+            List<Shop> data = db.Database.SqlQuery<Shop>(query, id).ToList();
+
             var model = new SearchResultViewModel
             {
                 SysProduct = product,
-                NumOfShops = num,
+                NumOfShops = data.Count(),
+                ListShops = data
             };
             return View(model);
         }
@@ -537,6 +586,59 @@ namespace TGVL.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddToCart(MuaNgayViewModel model)
+        {
+            var data = new CartDetails
+            {
+                ProductId = model.Id,
+                Type = "muangay",
+                Quantity = model.Quantity
+            };
+
+            var cartSession = (CartViewModel)Session["Cart"];
+            var count = 0;
+
+            if (cartSession != null)
+            {
+                var check = cartSession.CartDetails.Where(c => c.ProductId == model.Id).FirstOrDefault();
+                if (check != null)
+                {
+                    cartSession.CartDetails.Remove(check);
+                    check.Quantity += model.Quantity;
+                    cartSession.CartDetails.Add(check);
+                }
+                else
+                {
+                    cartSession.CartDetails.Add(data);
+                }
+                Session["Cart"] = cartSession; //save vao session
+                count = cartSession.CartDetails.Count();
+            }
+            else
+            {
+                var cartmodel = new CartViewModel();
+                cartmodel.CartDetails = new List<CartDetails>();
+
+                cartmodel.CartDetails.Add(data);
+
+                Session["Cart"] = cartmodel; //save vao session
+                count = cartmodel.CartDetails.Count();
+            }
+
+            return new JsonResult
+            {
+                Data = new
+                {
+                    Success = "Success",
+                    Type = "Muangay",
+                    Product = Session["Cart"],
+                    Count = count
+                },
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
