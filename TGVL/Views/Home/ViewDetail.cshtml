@@ -76,16 +76,12 @@
 
                                 <div class="short-description">
                                     Gạch với chất lượng tốt nhất Việt Nam
-
+                                    
                                 </div>
                                 <hr />
                                 <div class="price-block">
                                     <div class="price-box">
-                                        Có <span class="total"> @Model.NumOfShops </span> cửa hàng bán với giá từ: <p class="special-price"> <span class="price-label"> Special Price</span> <span class="price">@Model.SysProduct.UnitPrice</span> </p>
-                                        @*<button type="button" class="button btn-default" data-toggle="modal" data-target="#selectSupplier">
-                                                Cửa hàng để xuất
-                                            </button>*@
-                                        @*<button id="recommend-btn" class="btn btn-primary" type="button">Cửa hàng để xuất</button>*@
+                                        Có <span class="total"> @Model.NumOfShops </span> cửa hàng bán với giá từ: <p class="special-price"> <span class="price-label"> Special Price</span> <span class="price">@string.Format("{0:C0}", Model.SysProduct.UnitPrice)</span> </p>
                                     </div>
                                 </div>
                                 <div class="toggle-content">
@@ -109,25 +105,13 @@
                                     </div>
                                 </div>
                             </div>
-
+                            
                         </div>
                     </div>
                 </div>
             </div>
             <br />
-            @*<div class="bh-sl-container container-fluid">
-                    <div id="bh-sl-map-container" class="bh-sl-map-container">
-                        <div class="row">
-                            <div id="map-results-container" class="container">
-
-                                <div class="bh-sl-loc-list col-md-3">
-                                    <ul class="list list-unstyled"></ul>
-                                </div>
-                                <div id="bh-sl-map" class="bh-sl-map col-md-9"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>*@
+            
 
             <div class="row">
                 <div class="col-md-12">
@@ -135,17 +119,11 @@
                         <ul class="nav nav-tabs">
                             <li class="active"><a href="#tab_1" data-toggle="tab">THÔNG TIN CHI TIẾT</a></li>
                             <li><a href="#tab_2" data-toggle="tab">CỬA HÀNG ĐỀ XUẤT</a></li>
-                            <li><a href="#tab_3" data-toggle="tab">BẢN ĐỒ</a></li>
+                            <li><a href="#tab_3" id="recomendation" data-toggle="tab">BẢN ĐỒ</a></li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="tab_1">
-                                THÔNG TIN CHI TIẾT
-                                <p>MÔ TẢ CHI TIẾT: Đây chắc chắc là sản phẩm tốt nhất VN</p>
-                                <p style="text-align:center"><img src="~/Images/Product/SysProduct/1x2.jpg" /></p>
-                                <p style="text-align:center"><img src="~/Images/Product/SysProduct/1x2.jpg" /></p>
-                                <p style="text-align:center"><img src="~/Images/Product/SysProduct/1x2.jpg" /></p>
-                                <p style="text-align:center"><img src="~/Images/Product/SysProduct/1x2.jpg" /></p>
-                                <p>THÔNG SỐ KỸ THUẬT</p>
+                                @Html.Raw(Model.SysProduct.Description)
                             </div>
 
                             <div class="tab-pane" id="tab_2">
@@ -162,73 +140,45 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Cửa hàng Minh Minh</td>
-                                                <td>89.000 VNĐ</td>
-                                                <td>
-                                                    <div class="rating">
-                                                        <div class="ratings">
-                                                            <div class="rating-box">
-                                                                <div class="rating" style="width:80%"></div>
-                                                            </div>
-                                                            <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>123 Cao Thắng P2, Q3, TPHCM</td>
-                                                <td>
-                                                    <button type="submit" class="btn btn-primary">Xem bản đồ</button>
-                                                    <button type="submit" class="btn btn-success">Thêm vào giỏ hàng</button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Cửa hàng AB</td>
-                                                <td>99.000 VNĐ</td>
-                                                <td>
-                                                    <div class="rating">
-                                                        <div class="ratings">
-                                                            <div class="rating-box">
-                                                                <div class="rating" style="width:70%"></div>
-                                                            </div>
-                                                            <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>123 Nguyễn Trãi P2, Q5, TPHCM</td>
-                                                <td>
-                                                    <button type="submit" class="btn btn-primary">Xem bản đồ</button>
-                                                    <button type="submit" class="btn btn-success">Thêm vào giỏ hàng</button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>Cửa hàng DEF</td>
-                                                <td>199.000 VNĐ</td>
-                                                <td>
-                                                    <div class="rating">
-                                                        <div class="ratings">
-                                                            <div class="rating-box">
-                                                                <div class="rating" style="width:60%"></div>
-                                                            </div>
-                                                            <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>123 Nguyễn Oanh P2, Q.Gò Vấp, TPHCM</td>
-                                                <td>
-                                                    <button type="submit" class="btn btn-primary">Xem bản đồ</button>
-                                                    <button type="submit" class="btn btn-success">Thêm vào giỏ hàng</button>
-                                                </td>
-                                            </tr>
+                                            @{int count = 0; }
+                                            @foreach (var item in Model.ListShops)
+                                            {
+                                                count++;
+                                                <tr>
+                                                    <td>@count</td>
+                                                    <td>@item.name</td>
+                                                    <td>@Html.DisplayFor(modelItem => item.price)</td>
+                                                    <td>
+                                                        <span style="float: left;" class="stars">@item.rating</span> (@item.rating)
+                                                    </td>
+                                                    <td>@item.address</td>
+                                                    <td>
+                                                        <button type="submit" class="btn btn-primary" onclick="viewOnMap(@item.lat, @item.lng)">Xem bản đồ</button>
+                                                        <button type="submit" class="btn btn-success" onclick="datmua(@item.productId)">Thêm vào giỏ hàng</button>
+                                                    </td>
+                                                </tr>
+                                            }
+                                            
+                                            
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
 
                             <div class="tab-pane" id="tab_3">
+                                <div class="bh-sl-container container-fluid">
+                                    <div id="bh-sl-map-container" class="bh-sl-map-container">
+                                        <div class="row">
+                                            <div id="map-results-container" class="container">
 
+                                                <div class="bh-sl-loc-list col-md-3">
+                                                    <ul class="list list-unstyled"></ul>
+                                                </div>
+                                                <div id="bh-sl-map" class="bh-sl-map col-md-9"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -428,9 +378,25 @@
     </div>
 </div>
 
+<div id="maps" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg" style="left:0%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Title</h4>
+            </div>
+            <div class="modal-body">
+                <div id="mapsInfo">
+                    
+                </div>
+            </div>
+        </div>
 
-<script src="~/Scripts/js/jquery.min.js"></script>
+    </div>
+</div>
 
+
+@*<script src="~/Scripts/js/jquery.min.js"></script>*@
 <script src="~/Scripts/js/bootstrap.min.js"></script>
 <script src="~/Scripts/js/parallax.js"></script>
 <script src="~/Scripts/js/common.js"></script>
@@ -443,9 +409,20 @@
 
 <script>
     $(document).ready(function () {
+        $(".stars").each(function () {
+           
+            var val = parseFloat($(this).html());
+            console.log(val);
+          
+            var size = Math.max(0, (Math.min(5, val))) * 16;
+         
+            var $span = $('<span />').width(size);
+          
+            $(this).html($span);
+        });
 
-        $("#recommend-btn").click(function (event) {
-            console.log("abc");
+
+        $("#recomendation").click(function (event) {
 
             $('#bh-sl-map-container').storeLocator({
                 'mapSettings': {
