@@ -95,12 +95,23 @@ namespace TGVL.Controllers
                         var orderDetails = new OrderDetail();
                         total += o.UnitPrice * o.Quantity;
 
+                        //SignalR
+                        var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+
                         if (o.Type == "deal") //mua deal
                         {
-                            //var deal = db.Deals.Find(o.DealId);
+                            var deal = db.Deals.Find(o.DealId);
+                            deal.NumBuyer += 1;
+                            deal.Quantity -= o.Quantity;
+                            db.Entry(deal).State = EntityState.Modified;
+                            if (deal.Quantity == 0)
+                            {
+                                deal.Expired = true;
+                            }
+                            //Call all client update reply table
+                            notificationHub.Clients.All.broadcastMessageDeal("updatedealquantity", o.DealId, deal.Quantity, deal.NumBuyer);   //noti all client
 
                             orderDetails.OrderId = newOrder.Id;
-
                             orderDetails.DealId = o.DealId;
                             orderDetails.Quantity = o.Quantity;
                             orderDetails.UnitPrice = o.UnitPrice;

@@ -75,7 +75,10 @@ namespace TGVL.Controllers
                 ProductImage = deal.Product.Image,
                 ProductDetails = deal.Product.Description,
                 Description = deal.Description,
-                CustomerQuantity = 1
+                ShortDescription = deal.ShortDescription,
+                CustomerQuantity = 1,
+                NumBuyer = (int)deal.NumBuyer,
+                Expired = (bool)deal.Expired
             };
             //var test = deal.DueDate.ToString("0:yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
             if (model.ProductDetails == null)
