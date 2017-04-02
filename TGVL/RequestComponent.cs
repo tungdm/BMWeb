@@ -20,7 +20,6 @@ namespace TGVL
             sqlCommand += "Join [dbo].[Users] ";
             sqlCommand += "On [dbo].[Requests].[CustomerId] = [dbo].[Users].[Id] ";
             sqlCommand += "WHERE [dbo].[Users].[UserName] = @UserName ";
-            sqlCommand += "AND [dbo].[Requests].[Flag] = 1";
             sqlCommand += "AND [dbo].[Requests].[Expired] = 1";
 
             using (SqlConnection con = new SqlConnection(conStr))
