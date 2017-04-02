@@ -48,7 +48,6 @@
                             <div class="product-img-box col-sm-4 col-xs-12">
                                 <div class="product-image">
                                     <div>
-                                        @*<img alt="product-image" src="~/Content/images/Xi măng Hạ Long PCB 40.jpg" width="100" height="100">*@
                                         <img src="~/Images/Product/Warehouse/@Model.ProductImage" width="100" height="100" />
                                     </div>
                                     @*<div class="flexslider flexslider-thumb">
@@ -66,14 +65,18 @@
                             </div>
                             <div class="product-shop col-sm-8 col-xs-12">
                                 <div class="product-name">
-                                    <h1>@Model.Title</h1>
+                                    @{ 
+                                        var message = "";
+                                        message = Model.Expired ? "(Expired)" : "";
+                                    }
+                                    <h1>@Model.Title <span id="expired">@message</span></h1>
                                 </div>
                                 <div class="short-description">
                                     <p>
-                                        @Model.Description
+                                        @Model.ShortDescription
                                     </p>
                                     <p>
-                                        Còn lại: @Model.Quantity @Model.UnitType
+                                        Còn lại: <span id="quantity-remain">@Model.Quantity</span> @Model.UnitType
                                     </p>
                                 </div>
                                 <hr />
@@ -85,34 +88,38 @@
                                     </div>
                                 </div>
                                 <hr />
-                                <div class="add-to-box">
-                                    @using (Ajax.BeginForm("AddToCart",
-                                    new AjaxOptions
-                                    {
-                                        HttpMethod = "POST",
-                                        OnSuccess = "updateCart(data, status, xhr)"
-                                    }
-                                    ))
-                                    {
-                                        @Html.AntiForgeryToken()
-                                        @Html.HiddenFor(model => model.Id)
-                                        @Html.HiddenFor(model => model.Quantity)
-                                        <div class="add-to-cart">
-                                            <label>Số lượng :</label>
-                                            @Html.EditorFor(model => model.CustomerQuantity)
-                                        </div>
-                                        <button type="submit" class="btn btn-cart" style="font-size:20px"><span>MUA NGAY</span></button>
-                                        <br />
-                                        @Html.ValidationMessageFor(model => Model.CustomerQuantity, "", new { @class = "text-danger" })
+                                @if (!Model.Expired)
+                                {
+                                    <div class="add-to-box">
+                                        @using (Ajax.BeginForm("AddToCart",
+                                        new AjaxOptions
+                                        {
+                                            HttpMethod = "POST",
+                                            OnSuccess = "updateCart(data, status, xhr)"
+                                        }
+                                        ))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            @Html.HiddenFor(model => model.Id)
+                                            @Html.HiddenFor(model => model.Quantity)
+                                            <div class="add-to-cart">
+                                                <label>Số lượng :</label>
+                                                @Html.EditorFor(model => model.CustomerQuantity)
+                                            </div>
+                                            <button type="submit" class="btn btn-cart" style="font-size:20px"><span>MUA NGAY</span></button>
+                                            <br />
+                                            @Html.ValidationMessageFor(model => Model.CustomerQuantity, "", new { @class = "text-danger" })
 
-                                    }
-                                </div>
+                                        }
+                                    </div>
+                                }
+                                
                                 <br />
                                 <br />
                                 <div class="toggle-content">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <i class="fa fa-user"></i> <strong style="font-size:18px">2222 người đã mua</strong>
+                                            <i class="fa fa-user"></i> <strong style="font-size:18px"><span id="num-buyer">@Model.NumBuyer</span> người đã mua</strong>
                                         </div>
                                         <div id="time" class="col-md-8">
 
@@ -139,7 +146,7 @@
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="tab_1">
-                                
+                                @Html.Raw(Model.Description)
 
                             </div>
                           
@@ -335,7 +342,7 @@
     </div>
 </section>
 @Scripts.Render("~/bundles/clockjquery")
-<script src="~/Scripts/js/jquery.min.js"></script>
+
 
 <script src="~/Scripts/js/bootstrap.min.js"></script>
 <script src="~/Scripts/js/parallax.js"></script>
@@ -372,4 +379,38 @@
 
         return date;
     }
+
+    $(document).ready(function () {
+        $('input').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
+
+        $('input[type="number"]').bind('keypress', function (e) {
+            if (e.keyCode == '9' || e.keyCode == '16') {
+                return;
+            }
+            var code;
+            if (e.keyCode) code = e.keyCode;
+            else if (e.which) code = e.which;
+            if (e.which == 46)
+                return false;
+            if (code == 8 || code == 46)
+                return true;
+            if (code < 48 || code > 57)
+                return false;
+        });
+
+        var remainQuatity = Number($("#quantity-remain").text().replace(/[^0-9]+/g, ""));
+        var expired = "@Model.Expired";
+        if (!expired) {
+            $("#CustomerQuantity").rules("add", {
+                range: [1, remainQuatity],
+                messages: {
+                    range: "Số lượng phải từ 1 đến " + remainQuatity
+                }
+            });
+        }
+
+        
+    });
 </script>

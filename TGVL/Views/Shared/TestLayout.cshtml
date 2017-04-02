@@ -168,6 +168,19 @@
                 console.log('Update client reply2:' + requestId);
                 updateClientReplyTable2(controllerName, actionName, requestId, userName, newreplyId);
             }
+
+            
+        }
+
+        notificationHub.client.broadcastMessageDeal = function (message, dealId, newQuantity, newNumBuyer) {
+            if (message && message.toLowerCase() === "updatedealquantity") {
+                
+                if (controllerName === 'Deal' && actionName === 'Details' && requestId == dealId) {
+                    console.log("updateDealQuantity");
+                    $("#quantity-remain").html(newQuantity);
+                    $("#num-buyer").html(newNumBuyer);
+                }
+            }
         }
 
         //signalr method for push server message to client
@@ -201,6 +214,16 @@
             if (message && message.toLowerCase() === "expired") {
                 console.log('expired');
                 showExpired();
+            }
+
+            if (message && message.toLowerCase() === "expiredoutside") {
+                console.log('expiredOutside');
+                ExpiredOutside();
+            }
+
+            if (message && message.toLowerCase() === "winner") {
+                console.log('winner');
+                updateNotificationCount();
             }
         };
 

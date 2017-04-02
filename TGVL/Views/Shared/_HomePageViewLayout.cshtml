@@ -483,6 +483,11 @@
                 console.log('expiredOutside');
                 ExpiredOutside();
             }
+
+            if (message && message.toLowerCase() === "winner") {
+                console.log('winner');
+                updateNotificationCount();
+            }
         };
 
     });
