@@ -518,7 +518,8 @@ function countdownRequest(requestId) {
             }
             
             $("#bidBtn").hide();
-            
+            $("#replyBtn").hide();
+            $("#edit").hide();
             $('#expiredMessage').html("(Expired)");
         }
 

@@ -314,13 +314,13 @@ function viewProductDetails(sysProductId) {
     $.ajax(options).done(function (data) {
         if (data.Message == "Success") {
             var url = "/Home/ViewDetail/" + data.SysProductId;
-
-            var win = window.open(url, '_blank');
-            if (win) {
-                win.focus();
-            } else {
-                alert('Please allow popups for this website');
-            }
+            window.location.href = url;
+            //var win = window.open(url, '_blank');
+            //if (win) {
+            //    win.focus();
+            //} else {
+            //    alert('Please allow popups for this website');
+            //}
         }
         
     });
