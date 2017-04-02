@@ -78,20 +78,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    @*@Html.LabelFor(model => model.TypeOfHouse, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
-                                    <label class="control-label col-md-3 col-xs-12">Loại nhà<span style="color:#ff0000"> *</span></label>
-                                    <div class="col-md-9 col-xs-12">
-                                        @Html.DropDownListFor(
-                                        model => model.TypeOfHouse,
-                                        new SelectList(Model.AllTypeOfHouses, "Id", "Type"),
-                                        "-----[Chọn loại nhà]-----",
-                                        htmlAttributes: new { @class = "form-control", @style = "float:left" }
-                                    )
-                                        @Html.ValidationMessageFor(model => model.TypeOfHouse, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-
+                                
                                 <div class="form-group">
                                     @*@Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
                                     <label class="control-label col-md-3 col-xs-12">Địa chỉ nhận hàng<span style="color:#ff0000"> *</span></label>

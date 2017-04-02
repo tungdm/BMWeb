@@ -171,10 +171,7 @@
                                                         <td id="requestID">@Html.DisplayFor(model => model.Id)</td>
                                                         <td id="requestType">@Html.DisplayFor(model => model.Flag)</td>
                                                     </tr>
-                                                    <tr>
-                                                        <td>Loại nhà</td>
-                                                        <td>@Html.DisplayFor(model => model.House.Type)</td>
-                                                    </tr>
+                                                    
                                                     <tr>
                                                         <td>Ngày nhận hàng</td>
                                              
@@ -274,7 +271,7 @@
                                                                     </div>
 
                                                                     <div> 
-                                                                        @if (User.Identity.GetUserId<int>() == reply.SupplierId)
+                                                                        @if (User.Identity.GetUserId<int>() == reply.SupplierId && !Model.Expired)
                                                                         {
                                                                             <button id="edit" type="button" class="btn btn-warning btn-sm" onclick="edit(@reply.Id)">Chỉnh sửa</button>
                                                                         }
@@ -377,7 +374,7 @@
                                                                                     </td>
 
                                                                                     <td>
-                                                                                        @if (User.Identity.GetUserId<int>() == reply.SupplierId)
+                                                                                        @if (User.Identity.GetUserId<int>() == reply.SupplierId && !Model.Expired)
                                                                                         {
                                                                                             <button id="edit" type="button" class="btn btn-warning btn-sm" onclick="edit(@reply.Id)">Chỉnh sửa</button>
                                                                                         }
@@ -438,36 +435,41 @@
                         <h3 class="widget-title"><strong>YÊU CẦU TƯƠNG TỰ</strong></h3>
                         <div class="widget-content">
                             <ul class="posts-list unstyled clearfix">
-                                <li>
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <figure class="featured-thumb"><img width="50" height="50" alt="blog image" src="~/Content/images/xi-mang-fico-pcb40.jpg"></figure>
-                                        </div>
-                                        <div class="col-md-9">
+                                @{
+                                    TGVL.Models.LuceneRequestResult similarRequest = ViewBag.SimilarRequest;
+                                    if (similarRequest.SimilarResult != null)
+                                    {
+                                        var list = similarRequest.SimilarResult.ToList();
 
-                                            <p><strong>Tôi muốn mua xi măng chất lượng tốt ở quận 4, ai biết xin chỉ giúp</strong></p>
-                                            <p>Cao Minh Thúy Vy</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <figure class="featured-thumb"><img width="50" height="50" alt="blog image" src="~/Content/images/xi-mang-fico-pcb40.jpg"></figure>
-                                        </div>
-                                        <div class="col-md-9">
+                                        for (int i = 1; i < list.Count(); i++)
+                                        {
+                                            <li>
+                                                
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <figure class="featured-thumb"><img width="50" height="50" alt="blog image" src="~/Images/UserAvatar/@list[i].Avatar"></figure>
+                                                    </div>
+                                                    <div class="col-md-9">
 
-                                            <p><strong>Tôi muốn mua xi măng chất lượng tốt ở quận 4, ai biết xin chỉ giúp</strong></p>
-                                            <p>Cao Minh Thúy Vy</p>
-                                        </div>
-                                    </div>
-                                </li>
-                               
+                                                        <p><strong>@list[i].Title</strong></p>
+                                                        <p>@list[i].CustomerName</p>
+                                                        <p>@list[i].ListProduct</p>
+                                                        <a href="/Request/Details/@list[i].Id">Xem chi tiết</a>
+                                                    </div>
+                                                </div>
+                                                
+                                            </li>
+                                        }
+                                    }
+                                }
+ 
                             </ul>
                             @*<br />
                             <h4 style="text-align:center">
                                 <a href="#"><strong>Xem thêm</strong></a>
                             </h4>*@
+
+                           
                         </div>
                         
                     </div>

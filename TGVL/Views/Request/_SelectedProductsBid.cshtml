@@ -45,6 +45,7 @@
                         <td>
                             @count
                             @Html.HiddenFor(model => Model.RequestProducts[i].RequestedProduct.Id)
+                            @Html.HiddenFor(model => Model.RequestProducts[i].RequestedProduct.Name)
                         </td>
 
                         <td>@Html.DisplayFor(model => Model.RequestProducts[i].RequestedProduct.Name)</td>
