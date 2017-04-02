@@ -21,9 +21,7 @@ namespace TGVL.Models
 
         public int Quantity { get; set; }
 
-        [Required]
-        [Range(1, int.MaxValue, ErrorMessage = "Please enter a value bigger than 0")]
-        [LessThanOrEqualTo("Quantity", ErrorMessage = "CustomerQuantity < Quantity")]
+        [Required(ErrorMessage = "Số lượng không được để trống")]
         public int CustomerQuantity { get; set; }
 
         [DataType(DataType.DateTime)]
@@ -34,7 +32,9 @@ namespace TGVL.Models
 
         public string Description { get; set; }
 
-        public int Sold { get; set; }
+        public string ShortDescription { get; set; }
+
+        public int NumBuyer { get; set; }
 
         public SysProduct Product { get; set; }
 
@@ -42,5 +42,6 @@ namespace TGVL.Models
 
         public string ProductDetails { get; set; }
 
+        public bool Expired { get; set; }
     }
 }
