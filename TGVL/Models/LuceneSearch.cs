@@ -44,4 +44,28 @@ namespace TGVL.Models
         public string Value { get; set; }
         public string Text { get; set; }
     }
+
+    public class LuceneRequest
+    {
+        public int Id { get; set; }
+        public string ListProduct { get; set; }
+        
+        public string Avatar { get; set; }
+
+        public string Title { get; set; }
+
+        public string CustomerName { get; set; }
+    }
+
+
+    public class ReplyProducts
+    {
+        public string Name { get; set; }
+    }
+
+    public class LuceneRequestResult
+    {
+        public ICollection<LuceneRequest> SimilarResult { get; set; }
+     
+    }
 }

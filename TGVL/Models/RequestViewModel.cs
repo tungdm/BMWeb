@@ -42,12 +42,6 @@ namespace TGVL.Models
         [Display(Name = "Tiêu đề")]
         public string Title { get; set; }
 
-        [Required(ErrorMessage ="Loại nhà không được để trống")]
-        [Display(Name = "Loại nhà")]
-        public int TypeOfHouse { get; set; }
-
-        public IEnumerable<House> AllTypeOfHouses { get; set; }
-
         public string Administrative_area_level_1 { get; set; } //tỉnh, thành phố
         public string Formatted_address { get; set; } //địa chỉ đầy đủ (delivery address)
 

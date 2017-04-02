@@ -12,5 +12,18 @@ namespace TGVL.Models
         public int NumOfShops { get; set; }
 
         public ICollection<Shop> ListShops { get; set; }
+
+        public ICollection<SimiliarProduct> SimiliarProducts { get; set; }
+    }
+
+    public class SimiliarProduct
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public decimal UnitPrice { get; set; }
+
+        public string UnitType { get; set; }
+
+        public string Image { get; set; }
     }
 }
