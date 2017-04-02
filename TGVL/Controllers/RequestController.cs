@@ -397,6 +397,30 @@ namespace TGVL.Controllers
 
             if (request.Flag == 0)
             {
+                //Request tương tự
+                var test = "SELECT [dbo].[SysProducts].[Name] "
+                            + "FROM[dbo].[Requests], [dbo].[RequestProducts], [dbo].[SysProducts] "
+                            + "WHERE[dbo].[Requests].[Id] = [dbo].[RequestProducts].[RequestId] "
+                            + "AND[dbo].[RequestProducts].[SysProductId] = [dbo].[SysProducts].[Id] "
+                            + "AND[dbo].[Requests].[Id] = {0}";
+                var listProductRaw = db.Database.SqlQuery<ReplyProducts>(test, id).ToList();
+
+                string listProduct = "";
+                for (int i = 0; i < listProductRaw.Count; i++)
+                {
+                    if (i == (listProductRaw.Count - 1))
+                    {
+                        listProduct = listProduct + listProductRaw[i].Name;
+                    }
+                    else
+                    {
+                        listProduct = listProduct + listProductRaw[i].Name + ",";
+                    }
+                }
+                var searchResult = new LuceneRequestResult();
+                searchResult = LuceneSimilar.SearchDefault(listProduct);
+                ViewBag.SimilarRequest = searchResult;
+
                 //normal request
                 if (User.Identity.IsAuthenticated)
                 {
@@ -416,6 +440,7 @@ namespace TGVL.Controllers
                         + "ORDER BY CASE WHEN [dbo].[Replies].[SupplierId] = {1} THEN 0 else 1 END, [dbo].[Replies].[CreatedDate] DESC ";
                     IEnumerable<BriefReply> data = db.Database.SqlQuery<BriefReply>(query, id, userId).ToList();
                     ViewBag.Replies = data;
+
                 }
             }
             else if (request.Flag == 1)

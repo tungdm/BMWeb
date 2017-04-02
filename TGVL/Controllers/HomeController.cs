@@ -181,6 +181,47 @@ namespace TGVL.Controllers
             TempData["Result"] = "Search index was created successfully!";
             return RedirectToAction("Index");
         }
+
+        public ActionResult CreateIndexRequest()
+        {
+            var allRequest = db.Requests;
+            var list = new List<LuceneRequest>();
+
+            foreach(var request in allRequest)
+            {
+                var luceneRequest = new LuceneRequest(); 
+                var requestId = request.Id;
+                luceneRequest.Id = requestId;
+                luceneRequest.Avatar = request.User.Avatar;
+                luceneRequest.Title = request.Title;
+                luceneRequest.CustomerName = request.User.Fullname;
+
+                var query = "SELECT [dbo].[SysProducts].[Name] "
+                            + "FROM[dbo].[Requests], [dbo].[RequestProducts], [dbo].[SysProducts] "
+                            + "WHERE[dbo].[Requests].[Id] = [dbo].[RequestProducts].[RequestId] "
+                            + "AND[dbo].[RequestProducts].[SysProductId] = [dbo].[SysProducts].[Id] "
+                            + "AND[dbo].[Requests].[Id] = {0}";
+                var listProductRaw = db.Database.SqlQuery<ReplyProducts>(query, requestId).ToList();
+
+                string listProduct = "";
+                for (int i = 0; i<listProductRaw.Count; i++)
+                {
+                    if (i == (listProductRaw.Count -1))
+                    {
+                        listProduct = listProduct + listProductRaw[i].Name;
+                    } else
+                    {
+                        listProduct = listProduct + listProductRaw[i].Name + ",";
+                    }
+                }
+                luceneRequest.ListProduct = listProduct;
+                list.Add(luceneRequest);
+            }
+            LuceneSimilar.AddUpdateLuceneIndex(list);
+            TempData["Result"] = "Search index was created successfully!";
+            return RedirectToAction("Index");
+        }
+
         [Authorize]
         public JsonResult GetNotificationReplies()
         {
@@ -554,11 +595,21 @@ namespace TGVL.Controllers
 
             List<Shop> data = db.Database.SqlQuery<Shop>(query, id).ToList();
 
+            //Sản phẩm tương tự
+            var categoryId = product.SysCategoryId;
+            query = "SELECT [dbo].[SysProducts].[Id], [dbo].[SysProducts].[Name], [dbo].[SysProducts].[UnitPrice], [dbo].[UnitTypes].[Type] AS UnitType, [dbo].[SysProducts].[Image] "
+                  + "FROM[dbo].[SysProducts], [dbo].[UnitTypes] "
+                  + "WHERE[dbo].[SysProducts].[UnitTypeId] = [dbo].[UnitTypes].[Id] "
+                  + "AND[dbo].[SysProducts].[SysCategoryId] = {0} "
+                  + "AND[dbo].[SysProducts].[Id] <> {1} ";
+            List<SimiliarProduct> simiProducts = db.Database.SqlQuery<SimiliarProduct>(query, categoryId, productId).ToList();
+
             var model = new SearchResultViewModel
             {
                 SysProduct = product,
                 NumOfShops = data.Count(),
-                ListShops = data
+                ListShops = data,
+                SimiliarProducts = simiProducts
             };
             return View(model);
         }
