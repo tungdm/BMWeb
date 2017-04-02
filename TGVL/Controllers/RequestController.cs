@@ -175,7 +175,6 @@ namespace TGVL.Controllers
             model2.Address = user.Address;
             model2.Phone = user.PhoneNumber;
             model2.Flag = mode;
-            model2.AllTypeOfHouses = db.Houses;
             model2.AllTypeOfPayments = db.Payments;
             model2.ReceivingAddress = user.Address;
 
@@ -311,7 +310,6 @@ namespace TGVL.Controllers
                         DueDate = DateTime.Now.AddDays(model.TimeRange),
                         PaymentId = model.PaymentType,
                         Title = model.Title,
-                        TypeOfHouse = model.TypeOfHouse,
                         Expired = false,
                         Flag = 0,
                         Completed = false
@@ -323,18 +321,38 @@ namespace TGVL.Controllers
                     }
 
                     db.Requests.Add(request);
-
-                    foreach (var p in model.RequestProducts)
+                    db.SaveChanges();
+                    //Add doc to index
+                    string listProduct = "";
+                    var luceneRequest = new LuceneRequest
                     {
+                        Id = request.Id,
+                        Avatar = user.Avatar,
+                        CustomerName = user.Fullname,
+                        Title = model.Title
+                    };
+
+                    for (int i = 0; i < model.RequestProducts.Count; i++)
+                    {
+                        if (i == (model.RequestProducts.Count - 1))
+                        {
+                            listProduct = listProduct + model.RequestProducts[i].RequestedProduct.Name;
+                        }
+                        else
+                        {
+                            listProduct = listProduct + model.RequestProducts[i].RequestedProduct.Name + ", ";
+                        }
+
                         var requestProduct = new RequestProduct
                         {
                             RequestId = request.Id,
-                            SysProductId = p.RequestedProduct.Id,
-                            Quantity = p.Quantity,
+                            SysProductId = model.RequestProducts[i].RequestedProduct.Id,
+                            Quantity = model.RequestProducts[i].Quantity,
                         };
                         db.RequestProducts.Add(requestProduct);
                     }
-
+                    luceneRequest.ListProduct = listProduct;
+                    LuceneSimilar.AddUpdateLuceneIndex(luceneRequest);
 
                     if (mode == "bid")
                     {
@@ -375,7 +393,6 @@ namespace TGVL.Controllers
                              };
 
             ViewBag.PaymentType = new SelectList(db.Payments, "Id", "Type");
-            ViewBag.TypeOfHouse = new SelectList(db.Houses, "Id", "Type");
             return View(model);
 
         }
@@ -660,6 +677,8 @@ namespace TGVL.Controllers
         public ActionResult Expired(int requestId)
         {
             var request = db.Requests.Find(requestId);
+            LuceneSimilar.ClearLuceneIndexRecord(requestId);
+
             if (!request.Expired) //first request
             {
                 request.Expired = true;
@@ -708,7 +727,9 @@ namespace TGVL.Controllers
         public ActionResult ExpiredOutside()
         {
             var currentUserId = User.Identity.GetUserId<int>();
-            var request = db.Requests.Where(r => r.Flag == 1 && r.CustomerId == currentUserId && r.Expired == true).OrderByDescending(r => r.DueDate).FirstOrDefault();
+            var request = db.Requests.Where(r => r.CustomerId == currentUserId && r.Expired == true).OrderByDescending(r => r.DueDate).FirstOrDefault();
+            LuceneSimilar.ClearLuceneIndexRecord(request.Id);
+
             var message = "Yêu cầu \"" + request.Title + "\" của bạn vừa mới kết thúc!";
             var notify = new Notification
             {

@@ -211,7 +211,7 @@ namespace TGVL.Controllers
                         listProduct = listProduct + listProductRaw[i].Name;
                     } else
                     {
-                        listProduct = listProduct + listProductRaw[i].Name + ",";
+                        listProduct = listProduct + listProductRaw[i].Name + ", ";
                     }
                 }
                 luceneRequest.ListProduct = listProduct;
