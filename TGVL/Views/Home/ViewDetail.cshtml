@@ -3,6 +3,16 @@
 @{
     ViewBag.Title = "ViewDetail";
     Layout = "~/Views/Shared/TestLayout.cshtml";
+    ViewData["SearchString"] = Model.SearchString;
+
+    if (Session["UnSeenNoti"] != null)
+    {
+        ViewData["UnSeenNoti"] = Session["UnSeenNoti"];
+    }
+    else
+    {
+        ViewData["UnSeenNoti"] = ViewBag.NumOfUnseen;
+    }
 }
 
 @Styles.Render("~/Content/searchproductcss")
