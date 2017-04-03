@@ -1,14 +1,15 @@
-﻿
+﻿@using Microsoft.AspNet.Identity
 <div class="header container">
     <div class="row">
         <div class="col-md-3 col-sm-12 col-xs-12">
-            <div class="logo">               
-                <a href="/Home"> <img src="~/Images/lg.png" >
+            <div class="logo">
+                <a href="/Home">
+                    <img src="~/Images/lg.png">
                 </a>
-</div>
+            </div>
         </div>
         <div class="col-md-7 col-sm-12 col-xs-12">
-            
+
             <form id="header_search" name="header_search" action="/Home/Search" method="get">
                 <div class="border" id="home_search_control">
 
@@ -21,37 +22,26 @@
                     <div class="clear"></div>
                 </div>
             </form>
-            
-
         </div>
-        <div class="col-md-2 header-cart-wrapper">
-            <ul class="header-cart">
-                @{
-                    var cartViewModel = (TGVL.Models.CartViewModel)Session["Cart"];
-                    var count = cartViewModel == null ? 0 : cartViewModel.CartDetails.Count();
-                }
-                <li class="nav-cart">
-                    <a href="/Home/ShoppingCart" aria-expanded="false">
-                        <i class="hd hd-cart"></i><span id="cartCount" class="circle">@count</span> <span class="hidden-xs hidden-sm">Giỏ hàng</span>
-                    </a>
+        @if (User.IsInRole("Customer"))
+        {
+            <div class="col-md-2 header-cart-wrapper">
+                <ul class="header-cart">
+                    @{
+                        var cartViewModel = (TGVL.Models.CartViewModel)Session["Cart"];
+                        var count = cartViewModel == null ? 0 : cartViewModel.CartDetails.Count();
+                    }
+                    <li class="nav-cart">
+                        <a href="/Home/ShoppingCart" aria-expanded="false">
+                            <i class="hd hd-cart"></i><span id="cartCount" class="circle">@count</span> <span class="hidden-xs hidden-sm">Giỏ hàng</span>
+                        </a>
 
-                </li>
-            </ul>
+                    </li>
+                </ul>
 
-            @*<div class="top-cart-contain">
-                <div class="mini-cart">
-                    
-                    <div class="basket"> <a href="/Home/ShoppingCart"><span>Giỏ hàng (<span id="cartCount" style="color:red;font-size:20px">@count</span>)</span></a></div>
-                </div>
-                <div id="ajaxconfig_info" style="display:none">
-                    <a href="#/"></a>
-                    <input value="" type="hidden">
-                    <input id="enable_module" value="1" type="hidden">
-                    <input class="effect_to_cart" value="1" type="hidden">
-                    <input class="title_shopping_cart" value="Go to shopping cart" type="hidden">
-                </div>
-            </div>*@
-        </div>
+            </div>
+         }
+
     </div>
 </div>
 

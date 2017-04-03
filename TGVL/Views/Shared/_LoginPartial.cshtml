@@ -139,39 +139,80 @@
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()
-
+        
         <ul class="nav navbar-nav navbar-right">
+            @if (User.IsInRole("Customer"))
+            {
+                <li id="noti_Container">
+                    <div class="count" id="noti_Counter"></div>
 
-            <li id="noti_Container">
-                <div class="count" id="noti_Counter"></div>
+                    <div id="noti_Button"><span class="fa fa-globe fa-2x" aria-hidden="true"></span></div>
 
-                <div id="noti_Button"><span class="fa fa-globe fa-2x" aria-hidden="true"></span></div>
-
-                <!--THE NOTIFICAIONS DROPDOWN BOX.-->
-                <div id="notifications">
-                    <h3>Notifications</h3>
-                    <div style="height:300px;">
-                        <ul id="notiContent"></ul>
+                    <!--THE NOTIFICAIONS DROPDOWN BOX.-->
+                    <div id="notifications">
+                        <h3>Notifications</h3>
+                        <div style="height:300px;">
+                            <ul id="notiContent"></ul>
+                        </div>
+                        <div class="seeAll"><a href="#">See All</a></div>
                     </div>
-                    <div class="seeAll"><a href="#">See All</a></div>
-                </div>
-            </li>
-            <li class="dropdown">
-                <a href="#" class="dropbtn" style="font-size:16px"><span class="fa fa-sticky-note"></span>  Yêu cầu</a>
-                <div class="dropdown-content">
-                    <p>@Html.ActionLink("Mua thường", "Create", "Request", new { mode = "normal" }, null)</p>
-                    <p>@Html.ActionLink("Đấu thầu", "Create", "Request", new { mode = "bid" }, null)</p>
-                </div>
-            </li>
-            <li class="dropdown">
-                <a style="font-size:16px"><span class="fa fa-user"> </span> @User.Identity.GetUserName() </a>
-                @*@Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
-                <div class="dropdown-content">
-                    <p>@Html.ActionLink("Quản lý chung", "", "")</p>
-                    <p><a href="javascript:document.getElementById('logoutForm').submit()">Đăng xuất</a></p>
-                </div>
-            </li>
-            @*<li><a href="javascript:document.getElementById('logoutForm').submit()">Đăng xuất</a></li>*@
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn" style="font-size:16px"><span class="fa fa-building"></span>  Sàn</a>
+                    <div class="dropdown-content">
+                        <p>@Html.ActionLink("Mua nhanh", "", "", new { mode = "bid" }, null)</p>
+                        <p>@Html.ActionLink("Đấu thầu", "", "", new { mode = "bid" }, null)</p>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn" style="font-size:16px"><span class="fa fa-sticky-note"></span>  Yêu cầu</a>
+                    <div class="dropdown-content">
+                        <p>@Html.ActionLink("Mua thường", "Create", "Request", new { mode = "normal" }, null)</p>
+                        <p>@Html.ActionLink("Đấu thầu", "Create", "Request", new { mode = "bid" }, null)</p>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a style="font-size:16px"><span class="fa fa-user"> </span> @User.Identity.GetUserName() </a>
+                    @*@Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
+                    <div class="dropdown-content">
+                        <p>@Html.ActionLink("Quản lý chung", "", "")</p>
+                        <p><a href="javascript:document.getElementById('logoutForm').submit()">Đăng xuất</a></p>
+                    </div>
+                </li>
+            }
+            else
+            {
+                <li id="noti_Container">
+                    <div class="count" id="noti_Counter"></div>
+
+                    <div id="noti_Button"><span class="fa fa-globe fa-2x" aria-hidden="true"></span></div>
+
+                    <!--THE NOTIFICAIONS DROPDOWN BOX.-->
+                    <div id="notifications">
+                        <h3>Notifications</h3>
+                        <div style="height:300px;">
+                            <ul id="notiContent"></ul>
+                        </div>
+                        <div class="seeAll"><a href="#">See All</a></div>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn" style="font-size:16px"><span class="fa fa-building"></span>  Sàn</a>
+                    <div class="dropdown-content">
+                        <p>@Html.ActionLink("Mua nhanh", "", "", new { mode = "bid" }, null)</p>
+                        <p>@Html.ActionLink("Đấu thầu", "", "", new { mode = "bid" }, null)</p>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a style="font-size:16px"><span class="fa fa-user"> </span> @User.Identity.GetUserName() </a>
+                    @*@Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
+                    <div class="dropdown-content">
+                        <p>@Html.ActionLink("Quản lý chung", "", "")</p>
+                        <p><a href="javascript:document.getElementById('logoutForm').submit()">Đăng xuất</a></p>
+                    </div>
+                </li>
+            }
+           
         </ul>
     }
 }
