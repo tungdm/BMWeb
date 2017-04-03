@@ -2,7 +2,12 @@
 @{
     ViewBag.Title = "Search Result";
     Layout = "~/Views/Shared/_HomePageViewLayout.cshtml";
-    
+    ViewData["SearchString"] = Model.SearchString;
+
+    if (Session["UnSeenNoti"] != null)
+    {
+        ViewData["UnSeenNoti"] = Session["UnSeenNoti"];
+    } 
 }
 
 @Styles.Render("~/Content/searchproductcss")

@@ -136,7 +136,28 @@
     
 <script>
     $(document).ready(function () {
+        var MaxLengthInputNumberSmall = @Model.MaxLengthInputNumberSmall;
+        $(".qty").rules("add", {
+            maxlength: MaxLengthInputNumberSmall,
+            messages: {
+                range: "Xin hãy nhập ít hơn " + MaxLengthInputNumberSmall + " số"
+            }
+        });
 
+        $('input[type="number"]').bind('keypress', function (e) {
+            if (e.keyCode == '9' || e.keyCode == '16') {
+                return;
+            }
+            var code;
+            if (e.keyCode) code = e.keyCode;
+            else if (e.which) code = e.which;
+            if (e.which == 46)
+                return false;
+            if (code == 8 || code == 46)
+                return true;
+            if (code < 48 || code > 57)
+                return false;
+        });
         $('.qty').on('input', function () {
             update_amounts_shoppingcart();
             var newQty = $(this).val();
