@@ -171,6 +171,21 @@ namespace TGVL.Controllers
                     };
                     db.OrderDetails.Add(oderDetails);
                 }
+
+                var message = request.User.Fullname + " đã chọn bạn làm nhà cung cấp cho yêu cầu \"" + request.Title + "\" của họ.";
+                //Create noti
+                var noti = new Notification
+                {
+                    ReplyId = reply.Id,
+                    RequestId = request.Id,
+                    UserId = reply.SupplierId,
+                    CreatedDate = DateTime.Now,
+                    Message = message,
+                    IsSeen = false,
+                    IsClicked = false
+                };
+                db.Notifications.Add(noti);
+
                 //SignalR
                 var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
                 var supplier = UserManager.FindById(reply.SupplierId).UserName;
