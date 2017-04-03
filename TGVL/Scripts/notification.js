@@ -80,8 +80,7 @@ function updateNotificationCount(controllerName, actionName, requestId, userName
     };
 
     $.ajax(options).done(function (data) {
-        
-
+        console.log("Done");
     });
 
 }
