@@ -62,14 +62,14 @@
                                                             @Html.HiddenFor(modelItem => Model.ShoppingCartProducts[i].MiniTotal)
                                                         </td>
 
-                                                        <td class="a-center last">
+                                                        <td>
                                                             @if (Model.ShoppingCartProducts[i].Type == "deal")
                                                             {
-                                                                <a href="javascript:;" onclick="removefromcart('@Model.ShoppingCartProducts[i].Type' , @Model.ShoppingCartProducts[i].DealId)" title="Xóa sản phẩm" class="button remove-item"><span><span>Remove item</span></span></a>
+                                                                <a href="javascript:;" onclick="removefromcart('@Model.ShoppingCartProducts[i].Type' , @Model.ShoppingCartProducts[i].DealId)" title="Xóa sản phẩm" class="button remove-item"></a>
                                                             }
                                                             else
                                                             {
-                                                                <a href="javascript:;" onclick="removefromcart('@Model.ShoppingCartProducts[i].Type', @Model.ShoppingCartProducts[i].ProductId)" title="Xóa sản phẩm" class="button remove-item"><span><span>Remove item</span></span></a>
+                                                                <a href="javascript:;" onclick="removefromcart('@Model.ShoppingCartProducts[i].Type', @Model.ShoppingCartProducts[i].ProductId)" title="Xóa sản phẩm" class="button remove-item"></a>
                                                             }
 
                                                         </td>
@@ -83,7 +83,7 @@
                             
                                     <div class="box-footer" style="margin-bottom: -1px;">
                                         <div class="pull-left">
-                                            <a href="shop-category.html" style="font-size:14px"><i class="fa fa-chevron-left"></i><strong> Tiếp tục mua hàng</strong></a>
+                                            <a href="/Home" style="font-size:14px"><i class="fa fa-chevron-left"></i><strong> Tiếp tục mua hàng</strong></a>
                                         </div>
                                         <div class="pull-right">
                                             <button id="checkout" type="submit" class="btn btn-success" style="font-size:18px">
@@ -96,7 +96,7 @@
                         </div>
                         <div class="col-md-3">
                             <div class="popular-posts widget widget__sidebar">
-                                <h3 class="widget-title">THÔNG TIN CHUNG</h3>
+                                <h3 class="widget-title"><strong>THÔNG TIN CHUNG</strong></h3>
                                 <div class="table-responsive">
                                     <table class="data-table">
                                         <tbody>
@@ -105,7 +105,7 @@
                                                 <td>@Model.ShoppingCartProducts.Count()</td>
                                             </tr>
                                             <tr>
-                                                <td>Tổng tạm tính</td>
+                                                <td>Thành tiền</td>
                                                 <td class="total">@Html.DisplayFor(model => model.Total)</td>
                                             </tr>
                                            
