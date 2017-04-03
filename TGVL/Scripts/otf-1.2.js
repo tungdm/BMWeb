@@ -167,6 +167,37 @@ function edit(replyId) {
     });
 }
 
+function retract(replyId) {
+    swal({
+        title: "Are you sure?",
+        text: "Your will not be able to bid on this request anymore!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "Yes, retract it!",
+        closeOnConfirm: false
+    },
+    function () {
+        var options = {
+            url: '/Reply/Retract',
+            type: 'GET',
+            data: { replyId: replyId }
+        };
+
+        $.ajax(options).done(function (data) {
+            $("#bidtable").remove();
+            
+            swal("Deleted!", "Your bid has been retract.", "success");
+        });
+
+        
+    });
+
+    
+
+    
+}
+
 function updateCart(data, status, xhr) {
     if (data.Success == "Success") {
         $('#cartCount').html(data.Count);

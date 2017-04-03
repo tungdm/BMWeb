@@ -8,8 +8,6 @@ $('#noti_Button').click(function (e) {
     e.stopPropagation();
     //$('.noti-content').show();
 
-
-
     $('#notifications').fadeToggle('fast', 'linear', function () {
         $('#notiContent').empty();
         if ($('#notifications').is(':visible')) {
@@ -74,13 +72,18 @@ function updateNotificationCount(controllerName, actionName, requestId, userName
         .css({ top: '-10px' })
         .animate({ top: '10px', opacity: 1 }, 500)
         .fadeIn('slow');
+    
+    //ajax update session
+    var options = {
+        url: '/Request/UpdateNumOfUnseen',
+        type: 'GET',
+    };
 
-    //CALL AJAX UPDATE REPLIES
-    //if (controllerName === 'Request' && actionName === 'Details') {
-    //    updateReply(requestId);
+    $.ajax(options).done(function (data) {
         
-    //    updateReply(requestId, userName);
-    //}
+
+    });
+
 }
 
 //Update bid table khi supplier update info - customer
@@ -228,7 +231,7 @@ function updateReplies(data) {
         console.log("Error");
     } else {
         if (data.ReplyType === "Bid") {
-            //console.log("Bid");
+            console.log("Bid");
             $.ajax({
                 type: 'GET',
                 url: '/Reply/GetRank',
@@ -293,8 +296,8 @@ function updateBid(data) {
 
 	+ '<td>' + new Date(parseInt(data.DeliveryDate.substr(6))).format("dd/mm/yyyy") + '</td>'
 
-	+ '<td><button id="viewDetails" type="button" class="btn btn-warning btn-sm" onclick="edit(' + data.Id + ')">Chỉnh sửa</button>'
-
+	+ '<td><button id="viewDetails" type="button" class="btn btn-warning btn-sm" onclick="edit(' + data.Id + ')">Chỉnh sửa</button> '
+    + '<button id="retract" type="button" class="btn btn-danger btn-sm" onclick="retract(' + data.Id + ')">Rút thầu</button>'
 			
 	+'</td></tr></tbody></table>';
 
