@@ -83,46 +83,52 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="popular-posts widget widget__sidebar">
-                    <h2 class="widget-title"><strong>KẾT QUẢ TÌM KIẾM</strong></h2>
+                    <h4 class="widget-title"><strong>KẾT QUẢ TÌM KIẾM</strong></h4>
                     <div class="widget-content">
+                        <h4 style="font-size:20px">Có tổng cộng <strong> @Model.LuceneResult.SearchResult.Count()</strong> kết quả phù hợp</h4>
                         <div>
                             @if (Model.LuceneResult.SearchResult != null && Model.LuceneResult.SearchResult.Count() != 0)
                             {
-                                <table class="table">
-                                    <tr>
-                                        <th>No.</th>
-                                        <th>Name</th>
-                                        <th>Image</th>
-                                        <th>UnitPrice</th>
-                                        <th>ManufactureName</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    @{ int count = 0;}
-                                    @foreach (var item in Model.LuceneResult.SearchResult)
-                                    {
-                                        count++;
-                                        <tr>
-                                            <td>@count</td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Name)
-                                            </td>
-                                            <td>
-                                                <img src="~/Images/Product/SysProduct/@item.Image" style="max-height:100px; max-width:100px" />
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.UnitPrice) /  @Html.DisplayFor(modelItem => item.UnitType)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.ManufactureName)
-                                            </td>
-                                            <td><button id="viewProductDetails" class="btn btn-primary" onclick="viewProductDetails(@item.Id)">Xem chi tiết</button></td>
-                                        </tr>
-                                    }
-
-                                </table>
-                            }
-                            else
-                            {
+                                <div class="table-responsive">
+                                    <table class="data-table">
+                                        <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th>Sản phẩm</th>
+                                                <th>Hình ảnh</th>
+                                                <th>Đơn giá</th>
+                                                <th>Nhà sản xuất</th>
+                                                <th>Thao tác</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{ int count = 0;}
+                                            @foreach (var item in Model.LuceneResult.SearchResult)
+                                            {
+                                                count++;
+                                                <tr>
+                                                    <td>@count</td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Name)
+                                                    </td>
+                                                    <td>
+                                                        <img src="~/Images/Product/SysProduct/@item.Image" style="max-height:100px; max-width:100px" />
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.UnitPrice) /  @Html.DisplayFor(modelItem => item.UnitType)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.ManufactureName)
+                                                    </td>
+                                                    <td><button id="viewProductDetails" class="btn btn-primary" onclick="viewProductDetails(@item.Id)">Xem chi tiết</button></td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                            }
+                                            else
+                                            {
                                 <text>
                                     <br /><h2>Không tìm thấy kết quả phù hợp</h2><br />
                                     @if (Model.LuceneResult.SuggestWords != null && Model.LuceneResult.SuggestWords.Count() != 0)
