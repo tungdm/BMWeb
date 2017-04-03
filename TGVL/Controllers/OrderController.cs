@@ -55,7 +55,8 @@ namespace TGVL.Controllers
         [ValidateAntiForgeryToken]
         public async System.Threading.Tasks.Task<ActionResult> Create(OrderViewModel model, int replyId)
         {
-            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
+            var userId = User.Identity.GetUserId<int>();
+            var user = await UserManager.FindByIdAsync(userId);
             var orderSh = (OrderViewModel)Session["Order"];
             
 
@@ -134,6 +135,9 @@ namespace TGVL.Controllers
             } else //normal request hoặc bid request
             {
                 var reply = db.Replies.Find(replyId);
+                reply.Selected = true;
+                db.Entry(reply).State = EntityState.Modified;
+
                 var request = db.Requests.Find(reply.RequestId);
                 request.Completed = true;
                 db.Entry(request).State = EntityState.Modified;
@@ -177,7 +181,11 @@ namespace TGVL.Controllers
             db.SaveChanges();
 
             Session.Clear();
-            
+
+            var numOfUnseen = db.Notifications.Where(n => n.UserId == userId && n.IsSeen == false).Count();
+            Session["UnSeenNoti"] = numOfUnseen;
+
+
 
 
             //var callbackUrl = Url.Action("Details", "MyOrders", null, protocol: Request.Url.Scheme);

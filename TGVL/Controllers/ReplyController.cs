@@ -271,7 +271,8 @@ namespace TGVL.Controllers
                     Discount = model.Discount,
                     DeliveryDate = model.DeliveryDate,
                     CreatedDate = DateTime.Now,
-                    Flag = request.Flag == 1 ? 1 : 0 //normal reply: flag = 0; bid reply: flag = 1
+                    Flag = request.Flag == 1 ? 1 : 0, //normal reply: flag = 0; bid reply: flag = 1
+                    Selected = false
                 };
 
                 db.Replies.Add(reply);
@@ -315,7 +316,8 @@ namespace TGVL.Controllers
                     UserId = request.CustomerId,
                     CreatedDate = reply.CreatedDate,
                     Message = message,
-                    IsSeen = false
+                    IsSeen = false,
+                    IsClicked = false
                 };
                 db.Notifications.Add(notify);
 
@@ -366,6 +368,7 @@ namespace TGVL.Controllers
                                 + "SELECT BidReplies.ReplyId, Replies.RequestId, Rank() OVER (PARTITION BY RequestId ORDER BY Total asc) as [Rank] "
                                 + "FROM BidReplies, Replies "
                                 + "WHERE BidReplies.ReplyId = Replies.Id "
+                                + "AND  BidReplies.Flag <> 9 "
                                 + ") as t2 "
                                 + "ON t1.ReplyId = t2.ReplyId "
                                 + "AND t2.RequestId = {0} ";
@@ -522,6 +525,7 @@ namespace TGVL.Controllers
                                     + "SELECT BidReplies.ReplyId, Replies.RequestId, Rank() OVER (PARTITION BY RequestId ORDER BY Total asc) as [Rank] "
                                     + "FROM BidReplies, Replies "
                                     + "WHERE BidReplies.ReplyId = Replies.Id "
+                                    + "AND  BidReplies.Flag <> 9 "
                                     + ") as t2 "
                                     + "ON t1.ReplyId = t2.ReplyId "
                                     + "AND t2.RequestId = {0} ";
@@ -595,6 +599,134 @@ namespace TGVL.Controllers
             };
         }
 
+        public ActionResult Retract(int replyId)
+        {
+            var reply = db.Replies.FirstOrDefault(r => r.Id == replyId);
+
+            if (reply != null)
+            {
+                Request request = db.Requests.Find(reply.RequestId);
+
+                if (request.Expired)
+                {
+                    //request expired
+                    return new JsonResult
+                    {
+                        Data = new
+                        {
+                            Error = "Expired",
+                            Message = "Request Expired."
+                        },
+                        JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                    };
+                }
+
+                if (request.Completed)
+                {
+                    //request completed
+                    return new JsonResult
+                    {
+                        Data = new
+                        {
+                            Error = "Completed",
+                            Message = "Request Completed."
+                        },
+                        JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                    };
+                }
+
+                if (reply.Flag == 1) //bid
+                {
+                    //bid            
+                    reply.BidReply.Flag = 9; //retract
+
+                    //Update rank
+                    
+                    db.SaveChanges();
+
+                    var requestId = reply.RequestId;
+                    var query = "Update BidReplies "
+                                + "SET [Rank] = t2.[Rank], [OldRank] = t1.[Rank] "
+                                + "FROM BidReplies t1 "
+                                + "LEFT OUTER JOIN "
+                                + "("
+                                + "SELECT BidReplies.ReplyId, Replies.RequestId, Rank() OVER (PARTITION BY RequestId ORDER BY Total asc) as [Rank] "
+                                + "FROM BidReplies, Replies "
+                                + "WHERE BidReplies.ReplyId = Replies.Id "
+                                + "AND  BidReplies.Flag <> 9 "
+                                + ") as t2 "
+                                + "ON t1.ReplyId = t2.ReplyId "
+                                + "AND t2.RequestId = {0} ";
+
+                    var result = db.Database.ExecuteSqlCommand(query, requestId);
+
+                    var supplierId = User.Identity.GetUserId<int>();
+
+                    query = "SELECT[dbo].[Users].[UserName] "
+                            + "FROM[dbo].[Replies], [dbo].[Requests], [dbo].[Users] "
+                            + "WHERE[dbo].[Replies].[SupplierId] = [dbo].[Users].[Id] "
+                            + "AND[dbo].[Replies].[RequestId] = [dbo].[Requests].[Id] "
+                            + "AND[dbo].[Requests].[Id] = {0} "
+                            + "AND[dbo].[Replies].[SupplierId] != {1} ";
+
+
+                    List<string> listUser = db.Database.SqlQuery<string>(query, requestId, supplierId).ToList();
+                    if (listUser.Count() != 0)
+                    {
+                        var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+
+                        notificationHub.Clients.User(reply.Request.User.UserName).notify("updatebidtable"); //noti customer
+
+                        foreach (var userId in listUser)
+                        {
+                            notificationHub.Clients.User(userId).notify("update"); //noti supplier
+                        }
+                    }
+                    else
+                    {
+                        var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+
+                        notificationHub.Clients.User(reply.Request.User.UserName).notify("updatebidtable"); //noti customer
+                    }
+
+                    //update bid info
+                    return new JsonResult
+                    {
+                        Data = new
+                        {
+                            Success = "Success",
+                            ReplyType = "Bid",
+                            ReplyId = reply.Id,
+                        },
+                        JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                    };
+                }
+                else
+                {
+                    return new JsonResult
+                    {
+                        Data = new
+                        {
+                            Success = "Fail",
+                            ReplyType = "Bid",
+                            Message = "Giá bid mới phải bằng hoặc nhỏ hơn giá cũ",
+                            OldTotal = (decimal)reply.Total
+                        },
+                        JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                    };
+                }
+
+            }
+
+            return new JsonResult
+            {
+                Data = new
+                {
+                    Success = "Fail",
+                },
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
         // GET: 
         public ActionResult GetRank(int id)
         {

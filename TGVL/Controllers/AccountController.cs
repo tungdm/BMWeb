@@ -20,7 +20,7 @@ namespace TGVL.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        
+        private BMWEntities db = new BMWEntities();
 
         public AccountController()
         {
@@ -134,6 +134,9 @@ namespace TGVL.Controllers
                             //NC.RegisterNotification(currentTime, user.UserName);
                             RC.RegisterRequestNotification(user.UserName);
 
+                            var numOfUnseen = db.Notifications.Where(n => n.UserId == user.Id && n.IsSeen == false).Count();
+
+                            Session["UnSeenNoti"] = numOfUnseen;
 
                             if (Url.IsLocalUrl(decodedUrl))
                             {

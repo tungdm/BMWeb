@@ -23,7 +23,7 @@ namespace TGVL.Controllers
     {
         private BMWEntities db = new BMWEntities();
         private ApplicationUserManager _userManager;
-
+        
         public RequestController()
         {
         }
@@ -77,7 +77,7 @@ namespace TGVL.Controllers
         {
             //Setting config
             var configs = db.Settings.Where(s => s.SettingTypeId == 1).ToList(); //1 <=> Create Request
-
+            
             var model = new RequestProductViewModel();
             model.Flag = mode;
 
@@ -166,9 +166,11 @@ namespace TGVL.Controllers
                     return Json(null, JsonRequestBehavior.AllowGet);
                 }
             }
+
             Session.Clear();
 
-            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
+            var userId = User.Identity.GetUserId<int>();
+            var user = await UserManager.FindByIdAsync(userId);
             var model2 = new CreateRequestViewModel();
             model2.CustomerName = user.Fullname;
             model2.Email = user.Email;
@@ -189,6 +191,8 @@ namespace TGVL.Controllers
             model2.MaxTimeRange = configs.Select(c => new { SettingValue = c.SettingValue, SettingName = c.SettingName }).Where(c => c.SettingName == "MaxTimeRange").SingleOrDefault().SettingValue;
             model2.MinDateDeliveryRange = configs.Select(c => new { SettingValue = c.SettingValue, SettingName = c.SettingName }).Where(c => c.SettingName == "MinDateDeliveryRange").SingleOrDefault().SettingValue;
 
+            var numOfUnseen = db.Notifications.Where(n => n.UserId == userId && n.IsSeen == false).Count();
+            Session["UnSeenNoti"] = numOfUnseen;
 
             //ViewBag.PaymentType = new SelectList(db.Payments, "Id", "Type");
             //ViewBag.TypeOfHouse = new SelectList(db.Houses, "Id", "Type");
@@ -298,7 +302,8 @@ namespace TGVL.Controllers
                         };
                     }
 
-                    var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
+                    var userId = User.Identity.GetUserId<int>();
+                    var user = await UserManager.FindByIdAsync(userId);
 
                     var request = new Request
                     {
@@ -367,6 +372,10 @@ namespace TGVL.Controllers
 
                     db.SaveChanges();
                     Session.Clear();
+
+                    var numOfUnseen = db.Notifications.Where(n => n.UserId == userId && n.IsSeen == false).Count();
+                    Session["UnSeenNoti"] = numOfUnseen;
+
                     //return RedirectToAction("Index");
 
                     return new JsonResult
@@ -478,6 +487,7 @@ namespace TGVL.Controllers
                             + "AND [dbo].[Replies].[RequestId] = [dbo].[Requests].[Id]"
                             + "AND [dbo].[Replies].[SupplierId] = [dbo].[Users].[Id] "
                             + "AND [dbo].[Replies].[Id] = [dbo].[BidReplies].[ReplyId] "
+                            + "AND [dbo].[BidReplies].[Flag] <> 9 "
                             + "ORDER BY [dbo].[BidReplies].[Rank] ASC ";
 
                         IEnumerable<BriefBidReply> data = db.Database.SqlQuery<BriefBidReply>(query, id).ToList();
@@ -487,18 +497,34 @@ namespace TGVL.Controllers
                     {
                         var reply = db.Replies
                                         .Where(r => r.SupplierId == userId && r.RequestId == id);
-                        ViewBag.Bidable = reply.Count() == 1 ? false : true;
+                        
+                        if (reply.Count() == 1)
+                        {
+                            if (reply.FirstOrDefault().BidReply.Flag != 9) 
+                            {
+                                var query = "SELECT [dbo].[BidReplies].[Rank], [dbo].[Replies].[SupplierId], [dbo].[Requests].[CustomerId], [dbo].[Users].[Fullname], [dbo].[Users].[Avatar], [dbo].[Users].[Address], [dbo].[Replies].[Total], [dbo].[Replies].[DeliveryDate], [dbo].[Replies].[Id] "
+                                    + "FROM [dbo].[Replies], [dbo].[BidReplies], [dbo].[Users], [dbo].[Requests] "
+                                    + "WHERE [dbo].[Replies].[RequestId] = {0} "
+                                    + "AND [dbo].[Replies].[RequestId] = [dbo].[Requests].[Id]"
+                                    + "AND [dbo].[Replies].[SupplierId] = [dbo].[Users].[Id] "
+                                    + "AND [dbo].[Replies].[Id] = [dbo].[BidReplies].[ReplyId] "
+                                    + "AND [dbo].[Replies].[SupplierId] = {1} "
+                                    + "ORDER BY [dbo].[BidReplies].[Rank] ASC ";
+                                IEnumerable<BriefBidReply> data = db.Database.SqlQuery<BriefBidReply>(query, id, userId).ToList();
+                                ViewBag.BidReplies = data;
+                                ViewBag.Bidable = false;
+                                ViewBag.Retracted = false;
+                            } else
+                            {
+                                ViewBag.Bidable = false;
+                                ViewBag.Retracted = true;
+                            }
+                        } else
+                        {
+                            ViewBag.Bidable = true;
+                            ViewBag.Retracted = false;
+                        }
 
-                        var query = "SELECT [dbo].[BidReplies].[Rank], [dbo].[Replies].[SupplierId], [dbo].[Requests].[CustomerId], [dbo].[Users].[Fullname], [dbo].[Users].[Avatar], [dbo].[Users].[Address], [dbo].[Replies].[Total], [dbo].[Replies].[DeliveryDate], [dbo].[Replies].[Id] "
-                            + "FROM [dbo].[Replies], [dbo].[BidReplies], [dbo].[Users], [dbo].[Requests] "
-                            + "WHERE [dbo].[Replies].[RequestId] = {0} "
-                            + "AND [dbo].[Replies].[RequestId] = [dbo].[Requests].[Id]"
-                            + "AND [dbo].[Replies].[SupplierId] = [dbo].[Users].[Id] "
-                            + "AND [dbo].[Replies].[Id] = [dbo].[BidReplies].[ReplyId] "
-                            + "AND [dbo].[Replies].[SupplierId] = {1} "
-                            + "ORDER BY [dbo].[BidReplies].[Rank] ASC ";
-                        IEnumerable<BriefBidReply> data = db.Database.SqlQuery<BriefBidReply>(query, id, userId).ToList();
-                        ViewBag.BidReplies = data;
                     }
                 }
 
@@ -616,6 +642,7 @@ namespace TGVL.Controllers
                             + "WHERE [dbo].[Replies].[RequestId] = {0} "
                             + "AND [dbo].[Replies].[SupplierId] = [dbo].[Users].[Id] "
                             + "AND [dbo].[Replies].[Id] = [dbo].[BidReplies].[ReplyId] "
+                            + "AND [dbo].[BidReplies].[Flag] <> 9 "
                             + "ORDER BY [dbo].[BidReplies].[Rank] ASC ";
 
                 IEnumerable<BriefBidReply> list = db.Database.SqlQuery<BriefBidReply>(query, id).ToList();
@@ -698,9 +725,14 @@ namespace TGVL.Controllers
                     UserId = currentUserId,
                     Message = message,
                     CreatedDate = DateTime.Now,
-                    IsSeen = false
+                    IsSeen = false,
+                    IsClicked = false
                 };
                 db.Notifications.Add(notify);
+
+                var numOfUnseen = Session["UnSeenNoti"] == null ? 0 : (int)Session["UnSeenNoti"];
+                numOfUnseen += 1;
+                Session["UnSeenNoti"] = numOfUnseen;
 
                 //SignalR
                 var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
@@ -737,9 +769,15 @@ namespace TGVL.Controllers
                 UserId = currentUserId,
                 Message = message,
                 CreatedDate = DateTime.Now,
-                IsSeen = false
+                IsSeen = false,
+                IsClicked = false
             };
             db.Notifications.Add(notify);
+
+            var numOfUnseen = Session["UnSeenNoti"] == null ? 0 : (int)Session["UnSeenNoti"];
+            numOfUnseen += 1;
+            Session["UnSeenNoti"] = numOfUnseen;
+
             db.SaveChanges();
 
             //SignalR
@@ -855,6 +893,22 @@ namespace TGVL.Controllers
             return View(data.ToPagedList(pageNumber,pageSize));
         }
 
+
+        public ActionResult UpdateNumOfUnseen()
+        {
+            var numOfUnseen = Session["UnSeenNoti"] == null ? 0 : (int)Session["UnSeenNoti"];
+            numOfUnseen += 1;
+            Session["UnSeenNoti"] = numOfUnseen;
+            return new JsonResult
+            {
+                Data = new
+                {
+                    Message = "Success"
+                },
+
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
         public ActionResult PlaceBidRequest()
         {
             return View();

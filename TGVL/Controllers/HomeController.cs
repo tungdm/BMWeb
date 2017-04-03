@@ -99,13 +99,13 @@ namespace TGVL.Controllers
             {
                 var sysProductId = searchResult.SearchResult.FirstOrDefault().Id;
                 CreateMap(sysProductId); //create recomendation map shop
-
-                return RedirectToAction("ViewDetail", new { id = sysProductId });
+                return RedirectToAction("ViewDetail", new { id = sysProductId, searchString = searchString });
             } 
             var model = new LuceneSearch {
                 LuceneResult = searchResult,
                 SearchString = searchString
             };
+            var userId = User.Identity.GetUserId<int>();
 
             return View(model);
         }
@@ -225,30 +225,25 @@ namespace TGVL.Controllers
         [Authorize]
         public JsonResult GetNotificationReplies()
         {
-            //var notificationRegisterTime = Session["LastUpdated"] != null ? Convert.ToDateTime(Session["LastUpdated"]) : DateTime.Now;
-            //NotificationComponent NC = new NotificationComponent();
-            //var list = NC.GetReplies(notificationRegisterTime).ToList();
-            var userId = User.Identity.GetUserId<int>();
+            int userId = User.Identity.GetUserId<int>();
 
-            //Hiển thị trên top
-            var list2 = db.Notifications
-                .Where(r => r.UserId == userId)
-                .Take(10)
-                
-                .Select(r => new {
-                    ReplyId = r.ReplyId,
-                    RequestId = r.RequestId,
-                    CreatedDate = r.CreatedDate,
-                    Supplier = r.Reply.User.UserName,
-                    Message = r.Message,
-                    IsSeen = r.IsSeen
-                })
-                .OrderByDescending(r => r.CreatedDate)
-                .ToList();
+            var query = "SELECT [dbo].[Notifications].[Id], [dbo].[Notifications].[RequestId], [dbo].[Notifications].[ReplyId], [dbo].[Notifications].[CreatedDate], "
+                    + "[dbo].[Notifications].[Message], [dbo].[Notifications].[IsSeen], [dbo].[Notifications].[IsClicked], [dbo].[Users].[Fullname] "
+                    + "FROM[dbo].[Notifications], [dbo].[Users] "
+                    + "WHERE[dbo].[Notifications].[UserId] = [dbo].[Users].[Id] "
+                    + "AND[dbo].[Notifications].[UserId] = {0} "
+                    + "ORDER BY CASE WHEN[dbo].[Notifications].[IsSeen] = 'False' THEN 0 else 1 END, [dbo].[Notifications].[CreatedDate] DESC ";
 
-            //update session here for get only new added contacts (notification)
-            //Session["LastUpdate"] = DateTime.Now;
-            return new JsonResult { Data = list2, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            IEnumerable<MyNotification> data = db.Database.SqlQuery<MyNotification>(query, userId).ToList();
+
+            query = "UPDATE [dbo].[Notifications] "
+                    + "SET[dbo].[Notifications].[IsSeen] = 1 "
+                    + "WHERE[dbo].[Notifications].[UserId] = {0} ";
+            db.Database.ExecuteSqlCommand(query, userId);
+
+            Session.Clear();
+
+            return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
 
@@ -394,6 +389,7 @@ namespace TGVL.Controllers
                 }
                 model.Total = total;
                 model.ShoppingCartProducts.OrderBy(c => c.ProductName);
+                model.MaxLengthInputNumberSmall = db.Settings.Where(s => s.SettingName == "MaxLengthInputNumberSmall").FirstOrDefault().SettingValue;
                 return View(model);
             }
             return View(model);
@@ -574,7 +570,7 @@ namespace TGVL.Controllers
 
  
 
-        public ActionResult ViewDetail(int id)
+        public ActionResult ViewDetail(int id, string searchString)
         {
             var product = db.SysProducts.Find(id);
             var productId = product.Id;
@@ -603,13 +599,15 @@ namespace TGVL.Controllers
                   + "AND[dbo].[SysProducts].[SysCategoryId] = {0} "
                   + "AND[dbo].[SysProducts].[Id] <> {1} ";
             List<SimiliarProduct> simiProducts = db.Database.SqlQuery<SimiliarProduct>(query, categoryId, productId).ToList();
+            var userId = User.Identity.GetUserId<int>();
 
             var model = new SearchResultViewModel
             {
                 SysProduct = product,
                 NumOfShops = data.Count(),
                 ListShops = data,
-                SimiliarProducts = simiProducts
+                SimiliarProducts = simiProducts,
+                SearchString = searchString == null ? product.Name : searchString
             };
             return View(model);
         }
