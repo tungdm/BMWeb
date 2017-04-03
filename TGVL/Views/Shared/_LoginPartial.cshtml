@@ -187,7 +187,9 @@
                     <a style="font-size:16px"><span class="fa fa-user"> </span> @User.Identity.GetUserName() </a>
                     @*@Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
                     <div class="dropdown-content">
-                        <p>@Html.ActionLink("Quản lý chung", "", "")</p>
+                        <p>@Html.ActionLink("Thông tin cá nhân", "Index", "Manage")</p>
+                        <p>@Html.ActionLink("Thông tin đơn hàng", "Index", "Order")</p>
+                        <p>@Html.ActionLink("Thông tin yêu cầu", "Index", "Request")</p>
                         <p><a href="javascript:document.getElementById('logoutForm').submit()">Đăng xuất</a></p>
                     </div>
                 </li>
@@ -198,15 +200,17 @@
                 <li class="dropdown">
                     <a href="#" class="dropbtn" style="font-size:16px"><span class="fa fa-building"></span>  Sàn</a>
                     <div class="dropdown-content">
-                        <p>@Html.ActionLink("Mua nhanh", "", "", new { mode = "bid" }, null)</p>
-                        <p>@Html.ActionLink("Đấu thầu", "", "", new { mode = "bid" }, null)</p>
+                        <p><a href="/Request/Normal">Mua thường</a></p>
+                        <p><a href="/Request/Bid">Đấu thầu</a></p>
                     </div>
                 </li>
                 <li class="dropdown">
                     <a style="font-size:16px"><span class="fa fa-user"> </span> @User.Identity.GetUserName() </a>
                     @*@Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
                     <div class="dropdown-content">
-                        <p>@Html.ActionLink("Quản lý chung", "", "")</p>
+                        <p>@Html.ActionLink("Thông tin cá nhân", "Index", "Manage")</p>
+                        <p>@Html.ActionLink("Thông tin đơn hàng", "Index", "Order")</p>
+                        <p>@Html.ActionLink("Thông tin yêu cầu", "Index", "Request")</p>
                         <p><a href="javascript:document.getElementById('logoutForm').submit()">Đăng xuất</a></p>
                     </div>
                 </li>
