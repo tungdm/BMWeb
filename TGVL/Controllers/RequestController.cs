@@ -49,6 +49,10 @@ namespace TGVL.Controllers
         public ActionResult Index()
         {
             //Xem tất cả request
+            var userId = User.Identity.GetUserId<int>();
+            IEnumerable<Request> listRequests = db.Requests.Where(x => x.CustomerId == userId).ToList();
+            ViewBag.ListRequests = listRequests;
+
             return View();
         }
 
