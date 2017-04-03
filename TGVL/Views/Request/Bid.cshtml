@@ -9,7 +9,7 @@
 
 @Styles.Render("~/Content/searchproductcss")
 
-<div class="main-container" style="background:#f6f6f6">
+<div class="main-container" style="background:#eee">
     <div class="main container">
         <div class="row">
             <section class="col-main col-sm-12">
@@ -53,7 +53,7 @@
 
                     </div>
                     <br />
-                    <h4> Có tổng cộng<strong> 214</strong> yêu cầu đấu thầu</h4>
+                    <h4> Có tổng cộng<strong> 24</strong> yêu cầu đấu thầu</h4>
                     
                     <ol id="products-list" class="products-list">
                         @foreach (var item in Model)
@@ -70,7 +70,7 @@
                                             <p>
                                                 @*CAO MINH THÚY VY CAO MINH THÚY VY CAO MINH THÚY VY CAO MINH THÚY VY CAO MINH THÚY VY CAO MINH THÚY VY....*@
                                                 @Html.Raw(@item.Descriptions)
-                                                <a class="link-learn" title="" href="#">Xem chi tiết</a>
+                                                <a class="link-learn" title="Xem chi tiết" href="/Request/Details/@item.Id">Xem chi tiết</a>
                                             </p>
 
                                         </div>
