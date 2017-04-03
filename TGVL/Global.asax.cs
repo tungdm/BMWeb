@@ -8,13 +8,14 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using TGVL.Models;
 
 namespace TGVL
 {
     public class MvcApplication : System.Web.HttpApplication
     {
         string con = ConfigurationManager.ConnectionStrings["MyIdentityConnection"].ConnectionString;
-
+        private BMWEntities db = new BMWEntities();
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -35,9 +36,15 @@ namespace TGVL
             if (Request.IsAuthenticated)
             {
                 string username = User.Identity.Name;
+                int userId = User.Identity.GetUserId<int>();
                 //NC.RegisterNotification(currentTime, username);
 
                 RC.RegisterRequestNotification(username);
+              
+                var numOfUnseen = db.Notifications.Where(n => n.UserId == userId && n.IsSeen == false).Count();
+
+                HttpContext.Current.Session["UnSeenNoti"] = numOfUnseen;
+
             }
         }
 
