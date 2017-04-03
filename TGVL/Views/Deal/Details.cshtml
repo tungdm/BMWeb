@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "DealDetail";
-    Layout = "~/Views/Shared/TestLayout.cshtml";
+    Layout = "~/Views/Shared/_HomePageViewLayout.cshtml";
 }
 
 @Styles.Render("~/Content/searchproductcss")
@@ -106,7 +106,7 @@
                                                 <label>Số lượng :</label>
                                                 @Html.EditorFor(model => model.CustomerQuantity)
                                             </div>
-                                            <button type="submit" class="btn btn-cart" style="font-size:20px"><span>MUA NGAY</span></button>
+                                            <button type="submit" class="btn btn-cart" style="font-size:20px"><span>THÊM VÀO GIỎ HÀNG</span></button>
                                             <br />
                                             @Html.ValidationMessageFor(model => Model.CustomerQuantity, "", new { @class = "text-danger" })
 
