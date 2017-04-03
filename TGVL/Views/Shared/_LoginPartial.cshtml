@@ -141,22 +141,34 @@
         @Html.AntiForgeryToken()
         
         <ul class="nav navbar-nav navbar-right">
-            @if (User.IsInRole("Customer"))
-            {
-                <li id="noti_Container">
+            @{
+                var test = ViewData["UnSeenNoti"] == null ? 0 : (int)ViewData["UnSeenNoti"];
+            }
+            <li id="noti_Container">
+                @if (test != 0)
+                {
+                    <div class="count" id="noti_Counter">@ViewData["UnSeenNoti"]</div>
+                }
+                else
+                {
                     <div class="count" id="noti_Counter"></div>
+                }
 
-                    <div id="noti_Button"><span class="fa fa-globe fa-2x" aria-hidden="true"></span></div>
 
-                    <!--THE NOTIFICAIONS DROPDOWN BOX.-->
-                    <div id="notifications">
-                        <h3>Notifications</h3>
-                        <div style="height:300px;">
-                            <ul id="notiContent"></ul>
-                        </div>
-                        <div class="seeAll"><a href="#">See All</a></div>
+                <div id="noti_Button"><span class="fa fa-globe fa-2x" aria-hidden="true"></span></div>
+
+                <!--THE NOTIFICAIONS DROPDOWN BOX.-->
+                <div id="notifications">
+                    <h3>Notifications</h3>
+                    <div style="height:300px;">
+                        <ul id="notiContent"></ul>
                     </div>
-                </li>
+                    <div class="seeAll"><a href="#">See All</a></div>
+                </div>
+            </li>
+
+            @if (User.IsInRole("Customer"))
+            { 
                 <li class="dropdown">
                     <a href="#" class="dropbtn" style="font-size:16px"><span class="fa fa-building"></span>  Sàn</a>
                     <div class="dropdown-content">
@@ -182,20 +194,7 @@
             }
             else
             {
-                <li id="noti_Container">
-                    <div class="count" id="noti_Counter"></div>
-
-                    <div id="noti_Button"><span class="fa fa-globe fa-2x" aria-hidden="true"></span></div>
-
-                    <!--THE NOTIFICAIONS DROPDOWN BOX.-->
-                    <div id="notifications">
-                        <h3>Notifications</h3>
-                        <div style="height:300px;">
-                            <ul id="notiContent"></ul>
-                        </div>
-                        <div class="seeAll"><a href="#">See All</a></div>
-                    </div>
-                </li>
+                
                 <li class="dropdown">
                     <a href="#" class="dropbtn" style="font-size:16px"><span class="fa fa-building"></span>  Sàn</a>
                     <div class="dropdown-content">

@@ -37,7 +37,12 @@
 </head>
 @using Microsoft.AspNet.Identity
 <body class="cms-index-index">
-
+    @{ 
+        if (Session["UnSeenNoti"] != null)
+        {
+            ViewData["UnSeenNoti"] = Session["UnSeenNoti"];
+        } 
+    }
     <div class="page">
         <!-- Header -->
         <header class="header-container">
@@ -492,8 +497,26 @@
 
 @RenderSection("scripts", required: false)
 
+
 <script>
     $(document).ready(function () {
+
+        
+        var count = parseInt($('div.count').html()) || 0;
+
+
+        //$('span.count').html(count);
+
+        // ANIMATEDLY DISPLAY THE NOTIFICATION COUNTER.
+        if (count != 0) {
+            $('#noti_Counter')
+            .css({ opacity: 0 })
+            .text(count)
+            .css({ top: '-10px' })
+            .animate({ top: '10px', opacity: 1 }, 500)
+            .fadeIn('slow');
+        }
+        
 
         $(document).ajaxStart(function () {
             NProgress.start();
