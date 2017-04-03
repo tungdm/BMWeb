@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace TGVL.Models
@@ -126,5 +127,21 @@ namespace TGVL.Models
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+    }
+
+    public class MyNotification
+    {
+        public int Id { get; set; }
+        public int? RequestId { get; set; }
+        public int? ReplyId { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+        public DateTime CreatedDate { get; set; }
+
+        public string Message { get; set; }
+        public bool IsSeen { get; set; }
+        public bool IsClicked { get; set; }
+        public string Fullname { get; set; }
     }
 }

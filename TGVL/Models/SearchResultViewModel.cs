@@ -14,6 +14,8 @@ namespace TGVL.Models
         public ICollection<Shop> ListShops { get; set; }
 
         public ICollection<SimiliarProduct> SimiliarProducts { get; set; }
+
+        public string SearchString { get; set; }
     }
 
     public class SimiliarProduct

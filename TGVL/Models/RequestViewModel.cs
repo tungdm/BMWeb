@@ -100,6 +100,8 @@ namespace TGVL.Models
         public int MaxTimeRange { get; set; }
 
         public int MinDateDeliveryRange { get; set; }
+
+        public int NumOfUnseen { get; set; }
     }
 
     public class RequestedProduct

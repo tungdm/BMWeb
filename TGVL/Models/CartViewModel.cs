@@ -30,6 +30,7 @@ namespace TGVL.Models
         [DisplayFormat(DataFormatString = "{0:C0}")]
         public decimal Total { get; set; }
 
+        public int MaxLengthInputNumberSmall { get; set; }
     }
 
     public class ShoppingCartProducts
