@@ -169,12 +169,12 @@ function edit(replyId) {
 
 function retract(replyId) {
     swal({
-        title: "Are you sure?",
-        text: "Your will not be able to bid on this request anymore!",
+        title: "Bạn có chắc chắn muốn rút thầu?",
+        text: "Bạn sẽ không thể tham gia đặt thầu này nữa ",
         type: "warning",
         showCancelButton: true,
         confirmButtonClass: "btn-danger",
-        confirmButtonText: "Yes, retract it!",
+        confirmButtonText: "Đồng ý rút thầu",
         closeOnConfirm: false
     },
     function () {
@@ -187,7 +187,7 @@ function retract(replyId) {
         $.ajax(options).done(function (data) {
             $("#bidtable").remove();
             
-            swal("Deleted!", "Your bid has been retract.", "success");
+            swal("Hoàn tất!", "Rút thầu thành công", "success");
         });
 
         
