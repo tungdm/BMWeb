@@ -312,9 +312,9 @@
                                                         	<p>Hiện tại chưa có ai đặt thầu</p>
                                                             }
 
-                                                            else if ((User.IsInRole("Customer") && Model.CustomerId == User.Identity.GetUserId<int>()) || User.IsInRole("Supplier"))
+                                                            else if ((User.IsInRole("Customer") && Model.CustomerId == User.Identity.GetUserId<int>()) || (User.IsInRole("Supplier") && !ViewBag.Retracted))
                                                             {
-                                                                if (bidReplies.Count() != 0)
+                                                                if (bidReplies != null)
                                                                 {
                                                                 <div class="table-responsive">
                                                                     <table class="data-table">
@@ -377,6 +377,7 @@
                                                                                         @if (User.Identity.GetUserId<int>() == reply.SupplierId && !Model.Expired)
                                                                                         {
                                                                                             <button id="edit" type="button" class="btn btn-warning btn-sm" onclick="edit(@reply.Id)">Chỉnh sửa</button>
+                                                                                            <button id="retract" type="button" class="btn btn-danger btn-sm" onclick="retract(@reply.Id)">Rút thầu</button>
                                                                                         }
                                                                                         else if (User.Identity.GetUserId<int>() == reply.CustomerId)
                                                                                         {
