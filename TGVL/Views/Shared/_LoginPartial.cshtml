@@ -194,7 +194,7 @@
                     </div>
                 </li>
             }
-            else
+            else if (User.IsInRole("Supplier"))
             {
                 
                 <li class="dropdown">
@@ -215,7 +215,17 @@
                     </div>
                 </li>
             }
-           
+            else
+            {
+                <li class="dropdown">
+                    <a style="font-size:16px"><span class="fa fa-user"> </span> @User.Identity.GetUserName() </a>
+                    @*@Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
+                    <div class="dropdown-content">
+                        <p>@Html.ActionLink("Quản lý", "Index", "Manage")</p>
+                        <p><a href="javascript:document.getElementById('logoutForm').submit()">Đăng xuất</a></p>
+                    </div>
+                </li>
+            }
         </ul>
     }
 }
