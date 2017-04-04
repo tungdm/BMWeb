@@ -10,7 +10,7 @@
 <link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />
 
 
-<div class="main-container col2-left-layout" style="background:#f6f6f6">
+<div class="main-container col2-left-layout" style="background:#eee">
     <div class="main container">
         <div class="row">
             <aside class="col-left sidebar col-sm-3">
@@ -61,8 +61,8 @@
                                             <td>@item.SettingName</td>
                                             <td>@item.SettingValue</td>
                                             <td>
-                                                <button type="button" class="btn btn-warning">Chỉnh sửa</button>
-                                                <button type="button" class="btn btn-danger">Xóa</button>
+                                                <a href="/Home/EditConfig/@item.Id" class="button btn-warning">Chỉnh sửa</a>
+                                                <a href="/Home/DeleteConfig/@item.Id">Xóa</a>
                                             </td>
                                         </tr>
                                     }

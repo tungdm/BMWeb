@@ -1,0 +1,18 @@
+﻿@model TGVL.Setting
+
+@{
+    ViewBag.Title = "DeleteConfig";
+    Layout = "~/Views/Shared/_HomePageViewLayout.cshtml";
+}
+
+<h2>Bạn có chắc chắn muốn xóa cấu hình này?</h2>
+<div>
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Xóa" class="btn btn-default" /> 
+           
+        </div>
+    }
+</div>

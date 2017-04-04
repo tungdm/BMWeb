@@ -1,0 +1,97 @@
+﻿@model TGVL.Setting
+
+@{
+    ViewBag.Title = "AddConfig";
+    Layout = "~/Views/Shared/_HomePageViewLayout.cshtml";
+}
+
+<div class="main-container col2-left-layout" style="background:#eee">
+    <div class="main container">
+        <div class="row">
+            <aside class="col-left sidebar col-sm-3">
+                <div class="block block-account">
+                    <div class="block-title">
+                        <div class="profile">
+                            <div class="profile_avatar">
+                                <img src="~/Content/images/gachbong.jpg" style="width:60px;height:60px;max-height:60px;max-width:60px" />
+                            </div>
+                            <div class="profile_info">
+                                <div style="padding:5px; font-size:15px">@User.Identity.Name</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="block-content">
+                        <ul>
+                            <li><a href="/Home/Admin">Quản lý cấu hình</a></li>
+                            
+                            <li>
+                                <a href="javascript:document.getElementById('logoutForm').submit()">Đăng xuất</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </aside>
+            <section class="col-main col-sm-9">
+                <div class="box">
+                    <div class="box-header">
+                        <h2 class="box-title" style="font-size:28px"><strong>TẠO MỚI CẤU HÌNH</strong></h2>
+                    </div>
+                    <div class="box-body">
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-horizontal">
+                                
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Tên cấu hình</label>
+                                    @*@Html.LabelFor(model => model.SettingName, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.SettingName, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.SettingName, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Giá trị</label>
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.SettingValue, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.SettingValue, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Loại cấu hình</label>
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("SettingTypeId", null, htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.SettingTypeId, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Miêu tả</label>
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <input type="submit" value="Tạo mới" class="btn btn-info" />
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+</div>
+
+
