@@ -3980,7 +3980,7 @@ color: #000;
 	width: 96%;
 }
 .owl-theme .owl-controls .owl-buttons div {
-	background: #fff;
+	/*background: #fff;*/
 }
 .block-related .block-content {
 	padding: 0px 0 10px 0;
@@ -5277,7 +5277,8 @@ li .list {
 .product-view .product-img-box {
 	margin-bottom: 10px;
 	position: relative;
-	padding-left: 0;
+	padding-left: 5px;
+    padding-top:10px;
 }
 .product-view .product-img-box .product-image {
 	margin: 0 0 13px;
