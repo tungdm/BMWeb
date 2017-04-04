@@ -19,7 +19,7 @@ namespace TGVL.Controllers
         private BMWEntities db = new BMWEntities();
         private ApplicationUserManager _userManager;
 
-        
+
         public HomeController()
         {
         }
@@ -28,7 +28,7 @@ namespace TGVL.Controllers
             UserManager = userManager;
             SignInManager = signInManager;
         }
-        
+
         public ApplicationUserManager UserManager
         {
             get
@@ -90,18 +90,20 @@ namespace TGVL.Controllers
             if (searchString.Length == 1)
             {
                 searchResult = GoLucene.Search(searchString);
-            } else
+            }
+            else
             {
                 searchResult = GoLucene.SearchDefault(searchString);
             }
-            
+
             if (searchResult.SearchResult.Count() == 1)
             {
                 var sysProductId = searchResult.SearchResult.FirstOrDefault().Id;
                 CreateMap(sysProductId); //create recomendation map shop
                 return RedirectToAction("ViewDetail", new { id = sysProductId, searchString = searchString });
-            } 
-            var model = new LuceneSearch {
+            }
+            var model = new LuceneSearch
+            {
                 LuceneResult = searchResult,
                 SearchString = searchString
             };
@@ -162,10 +164,10 @@ namespace TGVL.Controllers
                 Session["FilenameJson"] = filename;
             }
             System.IO.File.WriteAllText(_path + filename + "_.json", _Json);
-   
+
         }
 
-       
+
         public ActionResult CreateIndex()
         {
             var query = "SELECT [dbo].[SysProducts].[Id], [dbo].[SysProducts].[Name], [dbo].[SysProducts].[Image], "
@@ -187,9 +189,9 @@ namespace TGVL.Controllers
             var allRequest = db.Requests;
             var list = new List<LuceneRequest>();
 
-            foreach(var request in allRequest)
+            foreach (var request in allRequest)
             {
-                var luceneRequest = new LuceneRequest(); 
+                var luceneRequest = new LuceneRequest();
                 var requestId = request.Id;
                 luceneRequest.Id = requestId;
                 luceneRequest.Avatar = request.User.Avatar;
@@ -204,12 +206,13 @@ namespace TGVL.Controllers
                 var listProductRaw = db.Database.SqlQuery<ReplyProducts>(query, requestId).ToList();
 
                 string listProduct = "";
-                for (int i = 0; i<listProductRaw.Count; i++)
+                for (int i = 0; i < listProductRaw.Count; i++)
                 {
-                    if (i == (listProductRaw.Count -1))
+                    if (i == (listProductRaw.Count - 1))
                     {
                         listProduct = listProduct + listProductRaw[i].Name;
-                    } else
+                    }
+                    else
                     {
                         listProduct = listProduct + listProductRaw[i].Name + ", ";
                     }
@@ -305,7 +308,7 @@ namespace TGVL.Controllers
                 }
                 model.Total = total;
             }
-                
+
             var order = new OrderViewModel
             {
                 CustomerId = user.Id,
@@ -324,7 +327,7 @@ namespace TGVL.Controllers
             var model = new MuaNgayViewModel
             {
                 Id = productId,
-                UnitPrice = (decimal) product.UnitPrice,
+                UnitPrice = (decimal)product.UnitPrice,
                 UnitType = product.SysProduct.UnitType.Type,
                 ProductName = product.SysProduct.Name,
                 Quantity = 1
@@ -333,7 +336,7 @@ namespace TGVL.Controllers
             return PartialView("_Muangay", model);
         }
 
-       
+
 
         public ActionResult ShoppingCart()
         {
@@ -365,7 +368,8 @@ namespace TGVL.Controllers
                         };
                         model.ShoppingCartProducts.Add(scProducts);
                         total += scProducts.MiniTotal;
-                    } else
+                    }
+                    else
                     {
                         //muangay
                         var product = db.Products.Find(c.ProductId);
@@ -385,7 +389,7 @@ namespace TGVL.Controllers
                         };
                         model.ShoppingCartProducts.Add(scProducts);
                         total += scProducts.MiniTotal;
-                    }          
+                    }
                 }
                 model.Total = total;
                 model.ShoppingCartProducts.OrderBy(c => c.ProductName);
@@ -458,7 +462,8 @@ namespace TGVL.Controllers
                     {
                         cartSession.CartDetails.Remove(check);
                     }
-                } else
+                }
+                else
                 {
                     var check = cartSession.CartDetails.Where(c => c.ProductId == id).FirstOrDefault();
                     if (check != null)
@@ -466,8 +471,8 @@ namespace TGVL.Controllers
                         cartSession.CartDetails.Remove(check);
                     }
                 }
-                
-               
+
+
                 Session["Cart"] = cartSession; //save vao session
 
                 return new JsonResult
@@ -475,7 +480,7 @@ namespace TGVL.Controllers
                     Data = new
                     {
                         Success = "Success",
-                        RemoveElement = type + "_"+ id,
+                        RemoveElement = type + "_" + id,
                         Count = cartSession.CartDetails.Count()
                     },
                     JsonRequestBehavior = JsonRequestBehavior.AllowGet
@@ -495,19 +500,19 @@ namespace TGVL.Controllers
         public async System.Threading.Tasks.Task<ActionResult> UpdateInfo(OrderViewModel model)
         {
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
-            
+
             if (user != null)
             {
                 user.Fullname = model.CustomerFullName;
                 user.Address = model.Address;
                 user.PhoneNumber = model.PhoneNumber;
-              
+
                 await UserManager.UpdateAsync(user);
-                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false); 
+                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
             }
-            
+
             return PartialView("_UpdateAddress", model);
-            
+
         }
 
         public async System.Threading.Tasks.Task<ActionResult> UpdateExistedAddress(string type)
@@ -520,7 +525,7 @@ namespace TGVL.Controllers
                 PhoneNumber = user.PhoneNumber
             };
             return PartialView("_AddNewAddress", model);
-            
+
         }
 
         [Authorize]
@@ -533,7 +538,8 @@ namespace TGVL.Controllers
             {
                 order.Reply = db.Replies.Find(replyId);
                 order.IsRequestOrder = true;
-            } else
+            }
+            else
             {
                 order = (OrderViewModel)Session["Order"];
                 order.IsRequestOrder = false;
@@ -549,11 +555,11 @@ namespace TGVL.Controllers
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page";
-            
+
             return View();
         }
 
-        
+
 
         [Authorize]
         public ActionResult Contact()
@@ -568,7 +574,7 @@ namespace TGVL.Controllers
             return View();
         }
 
- 
+
 
         public ActionResult ViewDetail(int id, string searchString)
         {
@@ -701,13 +707,93 @@ namespace TGVL.Controllers
             return View();
         }
 
-        [Authorize(Roles="Admin")]
+        [System.Web.Mvc.Authorize(Roles = "Admin")]
         public ActionResult Admin()
         {
             IEnumerable<Setting> listSetting = db.Settings.ToList();
             ViewBag.ListSetting = listSetting;
 
             return View();
+        }
+
+        [System.Web.Mvc.Authorize(Roles = "Admin")]
+        [HttpGet]
+        public ActionResult AddConfig()
+        {
+            ViewBag.SettingTypeId = new SelectList(db.SettingTypes, "Id", "Type");
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddConfig(Setting setting)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Settings.Add(setting);
+                db.SaveChanges();
+                return RedirectToAction("Admin");
+            }
+            ViewBag.SettingTypeId = new SelectList(db.SettingTypes, "Id", "Type");
+            return View(setting);
+        }
+
+        [System.Web.Mvc.Authorize(Roles = "Admin")]
+        public ActionResult EditConfig(int? Id)
+        {
+            
+            Setting setting = db.Settings.Find(Id);
+            if (setting == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.SettingTypeId = new SelectList(db.SettingTypes, "Id", "Type");
+            return View(setting);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditConfig(Setting setting)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(setting).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Admin");
+            }
+            ViewBag.SettingTypeId = new SelectList(db.SettingTypes, "Id", "Type");
+            return View(setting);
+        }
+
+        [System.Web.Mvc.Authorize(Roles = "Admin")]
+        public ActionResult DeleteConfig(int? Id)
+        {
+
+            Setting setting = db.Settings.Find(Id);
+            if (setting == null)
+            {
+                return HttpNotFound();
+            }
+            return View(setting);
+        }
+
+        [HttpPost, ActionName("DeleteConfig")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirm(int Id)
+        {
+            Setting setting = db.Settings.Find(Id);
+            db.Settings.Remove(setting);
+            db.SaveChanges();
+            return RedirectToAction("Admin");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }
