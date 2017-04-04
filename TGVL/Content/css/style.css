@@ -5356,6 +5356,8 @@ li .list {
 .product-view .product-shop {
 	margin-top: 0;
 	padding-right: 0;
+    padding-top:10px;
+    padding-bottom:10px;
 }
 .product-view .product-name h1 {
 	border-bottom: 1px solid #e5e5e5;
