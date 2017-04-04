@@ -50,7 +50,7 @@ namespace TGVL.Controllers
         {
             //Xem tất cả request
             var userId = User.Identity.GetUserId<int>();
-            IEnumerable<Request> listRequests = db.Requests.Where(x => x.CustomerId == userId).ToList();
+            IEnumerable<Request> listRequests = db.Requests.Where(x => x.CustomerId == userId && x.Flag == 1).ToList();
             ViewBag.ListRequests = listRequests;
 
             return View();

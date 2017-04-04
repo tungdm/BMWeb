@@ -112,7 +112,7 @@ namespace TGVL.Controllers
                     {
                         if (await UserManager.IsInRoleAsync(user.Id, "Admin"))
                         {
-                            return RedirectToAction("Index", "Admin/Home");
+                            return RedirectToAction("Admin", "Home");
                         }
                         else if ( await UserManager.IsInRoleAsync(user.Id, "Supplier") & user.Flag == 0) {
                             return RedirectToAction("CreateShop", "Manage");

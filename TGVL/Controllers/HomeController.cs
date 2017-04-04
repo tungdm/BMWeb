@@ -700,5 +700,14 @@ namespace TGVL.Controllers
 
             return View();
         }
+
+        [Authorize(Roles="Admin")]
+        public ActionResult Admin()
+        {
+            IEnumerable<Setting> listSetting = db.Settings.ToList();
+            ViewBag.ListSetting = listSetting;
+
+            return View();
+        }
     }
 }
