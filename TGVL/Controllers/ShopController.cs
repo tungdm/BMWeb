@@ -282,12 +282,12 @@ namespace TGVL.Controllers
 
         public ActionResult EditDescription (int? id)
         {
-            var product = db.Products.Find(id);
+            var deal = db.Deals.Find(id);
 
             var model = new UpdateDescription
             {
-                Id = product.Id,
-                Description = product.Description
+                Id = deal.Id,
+                Description = deal.Description
             };
 
             return View(model);
@@ -297,9 +297,9 @@ namespace TGVL.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditDescription(UpdateDescription model)
         {
-            var product = db.Products.Find(model.Id);
-            product.Description = model.Description;
-            db.Entry(product).State = EntityState.Modified;
+            var deal = db.Deals.Find(model.Id);
+            deal.Description = model.Description;
+            db.Entry(deal).State = EntityState.Modified;
             db.SaveChanges();
 
             return View();
