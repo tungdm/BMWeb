@@ -1,0 +1,90 @@
+﻿
+@{
+    ViewBag.Title = "Admin";
+    Layout = "~/Views/Shared/_HomePageViewLayout.cshtml";
+
+    List<Setting> listSetting = ViewBag.ListSetting;
+}
+
+@Styles.Render("~/Content/searchproductcss")
+<link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />
+
+
+<div class="main-container col2-left-layout" style="background:#f6f6f6">
+    <div class="main container">
+        <div class="row">
+            <aside class="col-left sidebar col-sm-3">
+                <div class="block block-account">
+                    <div class="block-title">
+                        <div class="profile">
+                            <div class="profile_avatar">
+                                <img src="~/Content/images/gachbong.jpg" style="width:60px;height:60px;max-height:60px;max-width:60px" />
+                            </div>
+                            <div class="profile_info">
+                                <div style="padding:5px; font-size:15px">@User.Identity.Name</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="block-content">
+                        <ul>
+                            <li><a href="/Home/Admin">Quản lý cấu hình</a></li>
+                            <li>
+                                <a href="javascript:document.getElementById('logoutForm').submit()">Đăng xuất</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </aside>
+            <section class="col-main col-sm-9">
+                <div class="box">
+                    <p>@Html.ActionLink("Thêm cấu hình", "AddConfig", "Home", null, new {@class="btn btn-info" })</p>
+                    <div class="box-header">
+                        <h2 class="box-title" style="font-size:28px"><strong>CẤU HÌNH</strong></h2>
+                    </div>
+                    <div class="box-body">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Tên</th>
+                                    <th>Giá trị</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{int i = 0;
+                                        foreach (var item in listSetting)
+                                        {
+                                            i++;
+                                        <tr>
+                                            <td>@i</td>
+                                            <td>@item.SettingName</td>
+                                            <td>@item.SettingValue</td>
+                                            <td>
+                                                <button type="button" class="btn btn-warning">Chỉnh sửa</button>
+                                                <button type="button" class="btn btn-danger">Xóa</button>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </section>
+
+        </div>
+    </div>
+</div>
+
+
+
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+<script>
+    $(function () {
+        $("#example1").DataTable();
+    });
+</script>
+
