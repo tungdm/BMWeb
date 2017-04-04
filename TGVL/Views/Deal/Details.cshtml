@@ -11,7 +11,7 @@
 
 <style>
     .item-img-info {
-        width: 300px;
+        width: 250px;
         height: 200px;
         background-image: none;
         background-repeat: no-repeat;
@@ -20,7 +20,7 @@
     }
 
     .item-inner {
-        width: 300px;
+        width: 250px;
         height: 300px;
         display: inline-block;
         vertical-align: top;
@@ -30,7 +30,10 @@
         width: 100%;
         height: auto;
     }
-
+    #test {
+        border: 1px solid #eaeaea;
+        background: #fff;
+    }
 
     #time {
         border-left: 1px solid #eaeaea;
@@ -38,10 +41,10 @@
     }
 </style>
 
-<section class="main-container">
+<section class="main-container" style="background:#eee">
     <div class="main container">
         <div class="col-main">
-            <div class="row">
+            <div class="row" id="test">
                 <div class="col-md-12">
                     <div class="product-view">
                         <div class="product-essential">
@@ -65,7 +68,7 @@
                             </div>
                             <div class="product-shop col-sm-8 col-xs-12">
                                 <div class="product-name">
-                                    @{ 
+                                    @{
                                         var message = "";
                                         message = Model.Expired ? "(Expired)" : "";
                                     }
@@ -76,7 +79,7 @@
                                         @Model.ShortDescription
                                     </p>
                                     <p>
-                                        Còn lại: <span id="quantity-remain">@Model.Quantity</span> @Model.UnitType
+                                        Còn lại: <span id="quantity-remain" style="font-size:24px">@Model.Quantity</span> @Model.UnitType
                                     </p>
                                 </div>
                                 <hr />
@@ -92,12 +95,12 @@
                                 {
                                     <div class="add-to-box">
                                         @using (Ajax.BeginForm("AddToCart",
-                                        new AjaxOptions
-                                        {
-                                            HttpMethod = "POST",
-                                            OnSuccess = "updateCart(data, status, xhr)"
-                                        }
-                                        ))
+                new AjaxOptions
+                {
+                    HttpMethod = "POST",
+                    OnSuccess = "updateCart(data, status, xhr)"
+                }
+                ))
                                         {
                                             @Html.AntiForgeryToken()
                                             @Html.HiddenFor(model => model.Id)
@@ -113,7 +116,7 @@
                                         }
                                     </div>
                                 }
-                                
+
                                 <br />
                                 <br />
                                 <div class="toggle-content">
@@ -141,195 +144,186 @@
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
                             <li class="active"><a href="#tab_1" data-toggle="tab">THÔNG TIN CHI TIẾT</a></li>
-                            <li><a href="#tab_2" data-toggle="tab">ĐÁNH GIÁ</a></li>
-                            <li><a href="#tab_3" data-toggle="tab">BẢN ĐỒ</a></li>
+
+                            <li><a href="#tab_2" data-toggle="tab">BẢN ĐỒ</a></li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="tab_1">
                                 @Html.Raw(Model.Description)
 
                             </div>
-                          
+
                             <div class="tab-pane" id="tab_2">
-                                
+
                             </div>
-                           
-                            <div class="tab-pane" id="tab_3">
-                               
-                            </div>
-                           
+
                         </div>
-                        
+
                     </div>
-                   
+
                 </div>
             </div>
             <br />
-            <section class="main-container col1-layout home-content-container">
-                <div class="container">
-                    <div class="row">
-                        <div class="std">
-                            <div id="border1" class="best-pro col-md-12">
-                                <div class="slider-items-products">
-                                    <div class="new_title center">
-                                        <h2>DEAL TƯƠNG TỰ</h2>
-                                    </div>
-                                    <div id="best-seller-slider" class="product-flexslider hidden-buttons">
-                                        <div class="slider-items slider-width-col4">
-                                            <div class="item">
-                                                <div class="col-item">
-                                                    <div class="item-inner">
-                                                        <div class="item-img">
-                                                            <div class="item-img-info">
-                                                                <a href="product_detail.html" class="product-image"> <img src="~/Content/images/xi-mang-fico-pcb40.jpg"> </a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="item-info">
-                                                            <div class="info-inner">
-                                                                <div class="item-title"> <a href="product_detail.html" title="Thép cây vằn Pomina D12"> Thép cây vằn Pomina D12 </a> </div>
-                                                                <div class="item-content">
 
-                                                                    <div class="item-price">
-                                                                        <div class="price-box">
-
-                                                                            <span class="regular-price"> <span class="price">145.000 VNĐ</span> </span>
-
-                                                                        </div>
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
+            <div class="row">
+                <div class="std">
+                    <div id="border1" class="best-pro col-md-12">
+                        <div class="slider-items-products">
+                            <div class="new_title center">
+                                <h2>DEAL TƯƠNG TỰ</h2>
+                            </div>
+                            <div id="best-seller-slider" class="product-flexslider hidden-buttons">
+                                <div class="slider-items slider-width-col4">
+                                    <div class="item">
+                                        <div class="col-item">
+                                            <div class="item-inner">
+                                                <div class="item-img">
+                                                    <div class="item-img-info">
+                                                        <a href="product_detail.html" class="product-image"> <img src="~/Content/images/xi-mang-fico-pcb40.jpg"> </a>
                                                     </div>
                                                 </div>
-                                            </div>
+                                                <div class="item-info">
+                                                    <div class="info-inner">
+                                                        <div class="item-title"> <a href="product_detail.html" title="Thép cây vằn Pomina D12"> Thép cây vằn Pomina D12 </a> </div>
+                                                        <div class="item-content">
+                                                            <div class="price-block">
+                                                                <div class="price-box">
+                                                                    <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" style="font-size:18px"> 67.000 VNĐ</span> Giảm <strong style="color:#ff1341; font-size:18px">5%</strong> </p>
+                                                                    <br />
+                                                                    <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" style="font-size:18px"> 87.000 VNĐ </span> &nbsp; <span style="text-align:justify"> <i class="fa fa-user"> 123 </i></span></p>
 
-                                            <div class="item">
-                                                <div class="col-item">
-                                                    <div class="item-inner">
-                                                        <div class="item-img">
-                                                            <div class="item-img-info">
-                                                                <a href="product_detail.html" title="Xi măng Hà Tiên 1" class="product-image"> <img src="~/Content/images/xi-mang-ha-tien-1-pcb-30.jpg"></a>
-
-                                                            </div>
-                                                        </div>
-                                                        <div class="item-info">
-                                                            <div class="info-inner">
-                                                                <div class="item-title"> <a href="grid.html" title="Xi măng Hà Tiên 1"> Xi măng Hà Tiên 1 </a> </div>
-                                                                <div class="item-content">
-
-                                                                    <div class="item-price">
-                                                                        <div class="price-box">
-                                                                            <span class="regular-price"> <span class="price">89.000 VNĐ</span> </span>
-
-                                                                        </div>
-                                                                    </div>
                                                                 </div>
                                                             </div>
-
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
 
-                                            <div class="item">
-                                                <div class="col-item">
-                                                    <div class="sale-label sale-top-right">HOT</div>
-                                                    <div class="item-inner">
-                                                        <div class="item-img">
-                                                            <div class="item-img-info">
-                                                                <a href="product_detail.html" title="Gạch bông" class="product-image"> <img src="~/Images/Product/SysProduct/1x2.jpg"></a>
-
-                                                            </div>
-                                                        </div>
-                                                        <div class="item-info">
-                                                            <div class="info-inner">
-                                                                <div class="item-title"> <a href="grid.html" title="Gạch bông"> Gạch bông </a> </div>
-                                                                <div class="item-content">
-
-                                                                    <div class="item-price">
-                                                                        <div class="price-box">
-                                                                            <span class="regular-price"> <span class="price">90.000 VNĐ</span> </span>
-
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                    <strong></strong>
-                                                </div>
-                                            </div>
-
-                                            <div class="item">
-                                                <div class="col-item">
-                                                    <div class="item-inner">
-                                                        <div class="item-img">
-                                                            <div class="item-img-info">
-                                                                <a href="product_detail.html" title="Xi măng Hà Tiên 1" class="product-image"> <img src="~/Content/images/xi-mang-ha-tien-1-pcb-30.jpg"></a>
-
-                                                            </div>
-                                                        </div>
-                                                        <div class="item-info">
-                                                            <div class="info-inner">
-                                                                <div class="item-title"> <a href="grid.html" title="Xi măng Hà Tiên 1"> Xi măng Hà Tiên 1 </a> </div>
-                                                                <div class="item-content">
-
-                                                                    <div class="item-price">
-                                                                        <div class="price-box">
-                                                                            <span class="regular-price"> <span class="price">89.000 VNĐ</span> </span>
-
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="item">
-                                                <div class="col-item">
-                                                    <div class="item-inner">
-                                                        <div class="item-img">
-                                                            <div class="item-img-info">
-                                                                <a href="product_detail.html" title="Xi măng Hà Tiên 1" class="product-image"> <img src="~/Content/images/xi-mang-ha-tien-1-pcb-30.jpg"></a>
-
-                                                            </div>
-                                                        </div>
-                                                        <div class="item-info">
-                                                            <div class="info-inner">
-                                                                <div class="item-title"> <a href="grid.html" title="Xi măng Hà Tiên 1"> Xi măng Hà Tiên 1 </a> </div>
-                                                                <div class="item-content">
-                                                                    <div class="rating">
-
-                                                                    </div>
-                                                                    <div class="item-price">
-                                                                        <div class="price-box">
-                                                                            <span class="regular-price"> <span class="price">89.000 VNĐ</span> </span>
-
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
 
+                                    <div class="item">
+                                        <div class="col-item">
+                                            <div class="item-inner">
+                                                <div class="item-img">
+                                                    <div class="item-img-info">
+                                                        <a href="product_detail.html" title="Xi măng Hà Tiên 1" class="product-image"> <img src="~/Content/images/xi-mang-ha-tien-1-pcb-30.jpg"></a>
+
+                                                    </div>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="info-inner">
+                                                        <div class="item-title"> <a href="grid.html" title="Xi măng Hà Tiên 1"> Xi măng Hà Tiên 1 </a> </div>
+                                                        <div class="item-content">
+                                                            <div class="price-block">
+                                                                <div class="price-box">
+                                                                    <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" style="font-size:18px"> 67.000 VNĐ</span> Giảm <strong style="color:#ff1341; font-size:18px">5%</strong> </p>
+                                                                    <br />
+                                                                    <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" style="font-size:18px"> 87.000 VNĐ </span> &nbsp; <span style="text-align:justify"> <i class="fa fa-user"> 123 </i></span></p>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="item">
+                                        <div class="col-item">
+                                            <div class="item-inner">
+                                                <div class="item-img">
+                                                    <div class="item-img-info">
+                                                        <a href="product_detail.html" title="Xi măng Hà Tiên 1" class="product-image"> <img src="~/Content/images/xi-mang-ha-tien-1-pcb-30.jpg"></a>
+
+                                                    </div>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="info-inner">
+                                                        <div class="item-title"> <a href="grid.html" title="Xi măng Hà Tiên 1"> Xi măng Hà Tiên 1 </a> </div>
+                                                        <div class="item-content">
+                                                            <div class="price-block">
+                                                                <div class="price-box">
+                                                                    <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" style="font-size:18px"> 67.000 VNĐ</span> Giảm <strong style="color:#ff1341; font-size:18px">5%</strong> </p>
+                                                                    <br />
+                                                                    <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" style="font-size:18px"> 87.000 VNĐ </span> &nbsp; <span style="text-align:justify"> <i class="fa fa-user"> 123 </i></span></p>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <div class="col-item">
+                                            <div class="item-inner">
+                                                <div class="item-img">
+                                                    <div class="item-img-info">
+                                                        <a href="product_detail.html" title="Xi măng Hà Tiên 1" class="product-image"> <img src="~/Content/images/xi-mang-ha-tien-1-pcb-30.jpg"></a>
+
+                                                    </div>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="info-inner">
+                                                        <div class="item-title"> <a href="grid.html" title="Xi măng Hà Tiên 1"> Xi măng Hà Tiên 1 </a> </div>
+                                                        <div class="item-content">
+                                                            <div class="price-block">
+                                                                <div class="price-box">
+                                                                    <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" style="font-size:18px"> 67.000 VNĐ</span> Giảm <strong style="color:#ff1341; font-size:18px">5%</strong> </p>
+                                                                    <br />
+                                                                    <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" style="font-size:18px"> 87.000 VNĐ </span> &nbsp; <span style="text-align:justify"> <i class="fa fa-user"> 123 </i></span></p>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <div class="col-item">
+                                            <div class="item-inner">
+                                                <div class="item-img">
+                                                    <div class="item-img-info">
+                                                        <a href="product_detail.html" title="Xi măng Hà Tiên 1" class="product-image"> <img src="~/Content/images/xi-mang-ha-tien-1-pcb-30.jpg"></a>
+
+                                                    </div>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="info-inner">
+                                                        <div class="item-title"> <a href="grid.html" title="Xi măng Hà Tiên 1"> Xi măng Hà Tiên 1 </a> </div>
+                                                        <div class="item-content">
+                                                            <div class="price-block">
+                                                                <div class="price-box">
+                                                                    <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" style="font-size:18px"> 67.000 VNĐ</span> Giảm <strong style="color:#ff1341; font-size:18px">5%</strong> </p>
+                                                                    <br />
+                                                                    <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" style="font-size:18px"> 87.000 VNĐ </span> &nbsp; <span style="text-align:justify"> <i class="fa fa-user"> 123 </i></span></p>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
+                            </div>
                         </div>
                     </div>
+
                 </div>
-            </section>
+            </div>
+
             @*<div class="popular-posts widget widget__sidebar">
                     <h3 class="widget-title">THÔNG TIN CHI TIẾT</h3>
                     <div class="widget-content">
@@ -411,6 +405,6 @@
             });
         }
 
-        
+
     });
 </script>
