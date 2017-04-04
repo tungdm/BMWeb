@@ -26,10 +26,8 @@
         vertical-align: top;
     }
 
-    .col-item {
-        width: 100%;
-        height: auto;
-    }
+    
+
     #test {
         border: 1px solid #eaeaea;
         background: #fff;
@@ -93,8 +91,8 @@
                                 <hr />
                                 @if (!Model.Expired)
                                 {
-                                    <div class="add-to-box">
-                                        @using (Ajax.BeginForm("AddToCart",
+                                <div class="add-to-box">
+                                    @using (Ajax.BeginForm("AddToCart",
                 new AjaxOptions
                 {
                     HttpMethod = "POST",
@@ -102,19 +100,19 @@
                 }
                 ))
                                         {
-                                            @Html.AntiForgeryToken()
-                                            @Html.HiddenFor(model => model.Id)
-                                            @Html.HiddenFor(model => model.Quantity)
-                                            <div class="add-to-cart">
-                                                <label>Số lượng :</label>
-                                                @Html.EditorFor(model => model.CustomerQuantity)
-                                            </div>
-                                            <button type="submit" class="button btn-cart" style="font-size:20px"><span>THÊM VÀO GIỎ HÀNG</span></button>
-                                            <br />
-                                            @Html.ValidationMessageFor(model => Model.CustomerQuantity, "", new { @class = "text-danger" })
+                                        @Html.AntiForgeryToken()
+                                        @Html.HiddenFor(model => model.Id)
+                                        @Html.HiddenFor(model => model.Quantity)
+                                        <div class="add-to-cart">
+                                            <label>Số lượng :</label>
+                                            @Html.EditorFor(model => model.CustomerQuantity)
+                                        </div>
+                                        <button type="submit" class="button btn-cart" style="font-size:20px"><span>THÊM VÀO GIỎ HÀNG</span></button>
+                                        <br />
+                                        @Html.ValidationMessageFor(model => Model.CustomerQuantity, "", new { @class = "text-danger" })
 
                                         }
-                                    </div>
+                                </div>
                                 }
 
                                 <br />
@@ -140,7 +138,7 @@
             <br />
             <br />
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-9">
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
                             <li class="active"><a href="#tab_1" data-toggle="tab">THÔNG TIN CHI TIẾT</a></li>
@@ -160,7 +158,77 @@
                         </div>
 
                     </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="popular-posts widget widget__sidebar" style="background:#fff">
+                        <h3 class="widget-title" style="background:#fff">ĐỊA CHỈ</h3>
+                        <div class="widget-content">
+                            <p style="font-size:medium"><i class="fa fa-map-marker"> 123 Nguyễn Văn Trỗi P1, QPhú Nhuận, TPHCM</i></p>
+                        </div>
+                    </div>
+                    <div class="slider-items-products">
+                        <div class="new_title center">
+                            <h2><strong>DEAL TƯƠNG TỰ</strong></h2>
+                        </div>
+                        <div id="best-seller-slider" class="product-flexslider hidden-buttons">
+                            <div class="item">
+                                <div class="col-item">
+                                    <div class="item-inner">
+                                        <div class="item-img">
+                                            <div class="item-img-info">
+                                                <a href="product_detail.html" title="Xi măng Hà Tiên 1" class="product-image"> <img src="~/Content/images/xi-mang-ha-tien-1-pcb-30.jpg"></a>
 
+                                            </div>
+                                        </div>
+                                        <div class="item-info">
+                                            <div class="info-inner">
+                                                <div class="item-title"> <a href="grid.html" title="Xi măng Hà Tiên 1"> Xi măng Hà Tiên 1 </a> </div>
+                                                <div class="item-content">
+                                                    <div class="price-block">
+                                                        <div class="price-box">
+                                                            <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" style="font-size:18px"> 67.000 VNĐ</span> Giảm <strong style="color:#ff1341; font-size:18px">5%</strong> </p>
+                                                            <br />
+                                                            <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" style="font-size:18px"> 87.000 VNĐ </span> &nbsp; <span style="text-align:justify"> <i class="fa fa-user"> 123 </i></span></p>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="col-item">
+                                    <div class="item-inner">
+                                        <div class="item-img">
+                                            <div class="item-img-info">
+                                                <a href="product_detail.html" title="Xi măng Hà Tiên 1" class="product-image"> <img src="~/Content/images/xi-mang-ha-tien-1-pcb-30.jpg"></a>
+
+                                            </div>
+                                        </div>
+                                        <div class="item-info">
+                                            <div class="info-inner">
+                                                <div class="item-title"> <a href="grid.html" title="Xi măng Hà Tiên 1"> Xi măng Hà Tiên 1 </a> </div>
+                                                <div class="item-content">
+                                                    <div class="price-block">
+                                                        <div class="price-box">
+                                                            <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" style="font-size:18px"> 67.000 VNĐ</span> Giảm <strong style="color:#ff1341; font-size:18px">5%</strong> </p>
+                                                            <br />
+                                                            <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" style="font-size:18px"> 87.000 VNĐ </span> &nbsp; <span style="text-align:justify"> <i class="fa fa-user"> 123 </i></span></p>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <br />
@@ -170,7 +238,7 @@
                     <div id="border1" class="best-pro col-md-12">
                         <div class="slider-items-products">
                             <div class="new_title center">
-                                <h2>DEAL TƯƠNG TỰ</h2>
+                                <h2><strong>DEAL TƯƠNG TỰ</strong></h2>
                             </div>
                             <div id="best-seller-slider" class="product-flexslider hidden-buttons">
                                 <div class="slider-items slider-width-col4">
