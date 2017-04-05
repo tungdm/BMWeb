@@ -76,10 +76,13 @@ function checkValidate(data, status, xhr) {
         
         //swal("Tạo thành công", "Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!", "success")
         swal({
-            title: 'Tạo thành công',
-            text: 'Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!!',
-            type: 'success'
-        }).then(function (isConfirm) {
+            title: "Tạo thành công",
+            text: "Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!!",
+            type: "success",
+            showCancelButton: false,
+            confirmButtonClass: "btn-success",
+            confirmButtonText: "Đồng ý",                  
+        }, then (function (isConfirm) {
             if (isConfirm) {
                 var url = "/Request/Details/" + data.RequestId;
 
@@ -87,6 +90,19 @@ function checkValidate(data, status, xhr) {
             }
         });
     }
+}
+
+function isSuccess(data, status, xhr) {
+    if (data.Success == "Success") {
+        swal({
+            title: "Đặt hàng thành công",
+            text: "Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!!",
+            type: "success",
+            showCancelButton: false,
+            confirmButtonClass: "btn-success",
+            confirmButtonText: "Đồng ý",
+        })
+    };
 }
 
 //Tạo reply - supplier
