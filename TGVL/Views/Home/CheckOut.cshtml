@@ -8,6 +8,20 @@
 
 <section class="main-container">
     <div class="main container">
+        <fieldset>
+            @using (Ajax.BeginForm(
+                    new AjaxOptions
+              HttpMethod = "POST",
+                        InsertionMode = InsertionMode.Replace,
+                        OnSuccess = "isSuccess(data,status, xhr)"
+                    }
+                ))
+            { 
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="popular-posts widget widget__sidebar">
+                        <h2 class="widget-title">Thanh toán và vận chuyển</h2>
+                        @using (Html.BeginForm("Create", "Order", FormMethod.Post))
         <div class="row">
             <div class="col-md-8">
                 <div class="popular-posts widget widget__sidebar">
@@ -151,7 +165,17 @@
                 </div>
             </div>
         </div>
+        </fieldset>
     </div>
 </section>
 
-
+<script>
+    //$("#hoan_tat_btn").click(function (event) {
+    //    swal("Thành công!", "Sản phẩm đã được thêm vào giỏ hàng", "success")
+    //});
+    //$('#hoantat').click(function () {
+    //    isSuccess();      
+    //    //var sum = $("#total").val();
+    //    //console.log(sum);
+    //});
+</script>
