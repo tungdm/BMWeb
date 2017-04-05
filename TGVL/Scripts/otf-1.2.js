@@ -88,7 +88,7 @@ function checkValidate(data, status, xhr) {
 
                 window.location.href = url;
             }
-        });
+        }));
     }
 }
 
