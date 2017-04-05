@@ -91,7 +91,7 @@ namespace TGVL.Controllers
             if (searchString.Length == 1)
             {
                 searchResult = GoLucene.Search(searchString);
-            } else
+            }
             else
             {
                 searchResult = GoLucene.SearchDefault(searchString);
