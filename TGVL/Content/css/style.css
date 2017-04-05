@@ -7675,7 +7675,7 @@ button.button.btn-proceed-checkout span {
 
 /* 29. Footer */
 footer {
-	background: none repeat scroll 0 0 #f3f3f3;
+	background: none repeat scroll 0 0 #fff;
 	color: #333;
 	overflow: hidden;
 	padding: 0;
@@ -7684,7 +7684,7 @@ footer {
 }
 footer address {
 	border: medium none;
-	color: #777;
+	/*color: #777;*/
 	display: block;
 	font-size: 12px;
 	font-style: normal;
@@ -8120,7 +8120,7 @@ button.subscribe:before {
 	margin: 0px 0 10px;
 }
 .footer a, .footer p {
-	color: #aaa;
+	/*color: #aaa;*/
 	font-size: 12px;
 	padding-bottom: 10px;
 	padding-top: 10px;
@@ -8217,16 +8217,16 @@ button.subscribe:before {
 .email-footer a {
 	font-size: 13px;
 	line-height: 35px;
-	color: #777
+	/*color: #777*/
 }
 .email-footer a:hover {
-	color: #333;
+	/*color: #333;*/
 }
 .phone-footer {
 	overflow: hidden;
 	font-size: 12px;
 	line-height: 35px;
-	color: #777;
+	/*color: #777;*/
 }
 .coppyright {
 	color: #ccc;
