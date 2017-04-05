@@ -13,6 +13,16 @@ namespace TGVL.Models
         public string Username { get; set; }
     }
 
+    public class HotShopViewModel
+    {
+        public int ShopId { get; set; }
+        public string ShopName { get; set; }
+        public float Rating { get; set; }
+        public string Address { get; set; }
+        public string Avatar { get; set; }
+    }
+
+  
     public class Shop
     {
         public int id { get; set; }

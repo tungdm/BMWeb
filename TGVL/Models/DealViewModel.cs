@@ -1,6 +1,9 @@
 ﻿using Foolproof;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 
 namespace TGVL.Models
 {
@@ -43,5 +46,33 @@ namespace TGVL.Models
         public string ProductDetails { get; set; }
 
         public bool Expired { get; set; }
+    }
+
+    public class DealBriefViewModel
+    {
+        public int Id { get; set; } //dealId
+
+        public string Title { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:C0}")]
+        public decimal UnitPrice { get; set; }
+
+        public int Discount { get; set; }
+
+        public int NumBuyer { get; set; }
+
+        public string Image { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:C0}")]
+        public decimal SavePrice { get; set; }
+
+    }
+    public class HydridViewModel
+    {
+        public ICollection<DealBriefViewModel> Hotdeal { get; set; }
+
+        public ICollection<DealBriefViewModel> Newdeal { get; set; }
+
+        public ICollection<HotShopViewModel> Hotshop { get; set; }
     }
 }
