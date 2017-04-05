@@ -82,13 +82,14 @@ function checkValidate(data, status, xhr) {
             showCancelButton: false,
             confirmButtonClass: "btn-success",
             confirmButtonText: "Đồng ý",                  
-        }, then (function (isConfirm) {
+        },
+        function (isConfirm) {
             if (isConfirm) {
                 var url = "/Request/Details/" + data.RequestId;
 
                 window.location.href = url;
             }
-        }));
+        });
     }
 }
 
