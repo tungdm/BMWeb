@@ -10,6 +10,7 @@ using System.Web.Script.Serialization;
 using System.IO;
 using TGVL.LucenceSearch;
 using System.Data.Entity;
+using System.Globalization;
 
 namespace TGVL.Controllers
 {
@@ -52,7 +53,7 @@ namespace TGVL.Controllers
             }
         }
 
-        public ActionResult Index()
+        public ActionResult HomePage()
         {
             return View();
         }
@@ -90,7 +91,7 @@ namespace TGVL.Controllers
             if (searchString.Length == 1)
             {
                 searchResult = GoLucene.Search(searchString);
-            }
+            } else
             else
             {
                 searchResult = GoLucene.SearchDefault(searchString);
@@ -538,8 +539,17 @@ namespace TGVL.Controllers
             {
                 order.Reply = db.Replies.Find(replyId);
                 order.IsRequestOrder = true;
-            }
-            else
+                return new JsonResult
+                {
+                    Data = new
+                    {
+                        Success = "Success",
+                        Message = "Đơn yêu cầu thành công!",
+                    },
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+
+            } else
             {
                 order = (OrderViewModel)Session["Order"];
                 order.IsRequestOrder = false;
@@ -569,14 +579,74 @@ namespace TGVL.Controllers
             return View();
         }
 
-        public ActionResult HomePage()
+        public ActionResult Index()
         {
-            return View();
+            var model = new HydridViewModel();
+           
+            var newListHotdeal = new List<DealBriefViewModel>();
+            var newListNewdeal = new List<DealBriefViewModel>();
+            var newListHotshop = new List<HotShopViewModel>();
+
+            var HotShop = db.Users.Where(d => d.Flag == 1).OrderByDescending(d => d.AverageGrade).ToList();
+
+            foreach (var hs in HotShop)
+            {
+                var hsmodel = new HotShopViewModel
+                {
+                    ShopId = hs.Id,
+                    Avatar = hs.Avatar,
+                    Rating = (float)hs.AverageGrade,
+                    ShopName = hs.UserName,
+                    Address = hs.Address
+                };
+                newListHotshop.Add(hsmodel);
+            }
+
+
+            var HotDeal = db.Deals.Where(d => d.Expired == false).OrderByDescending(d => d.NumBuyer).ToList();
+
+            foreach (var hd in HotDeal)
+            {
+                var hdmodel = new DealBriefViewModel
+                {
+                    Id = hd.Id,
+                    Title = hd.Title,
+                    UnitPrice = hd.UnitPrice,                   
+                    Discount = hd.Discount,
+                    SavePrice = Math.Ceiling(hd.UnitPrice - (hd.UnitPrice * hd.Discount / 100)),                  
+                    Image = hd.Product.Image,                   
+                    NumBuyer = (int)hd.NumBuyer,                  
+                    
+                };
+                newListHotdeal.Add(hdmodel);
+            }
+
+            var NewDeal = db.Deals.Where(d => d.Expired == false).OrderByDescending(d => d.CreatedDate).ToList();
+
+            foreach (var nd in HotDeal)
+            {
+                var ndmodel = new DealBriefViewModel
+                {
+                    Id = nd.Id,
+                    Title = nd.Title,
+                    UnitPrice = nd.UnitPrice,
+                    Discount = nd.Discount,
+                    SavePrice = Math.Ceiling(nd.UnitPrice - (nd.UnitPrice * nd.Discount / 100)),
+                    Image = nd.Product.Image,
+                    NumBuyer = (int)nd.NumBuyer,
+                };
+
+                newListNewdeal.Add(ndmodel);
+            }
+            model.Hotshop = newListHotshop;
+            model.Hotdeal = newListHotdeal;
+            model.Newdeal = newListNewdeal;
+            return View(model);
         }
 
+ 
 
-
-        public ActionResult ViewDetail(int id, string searchString)
+        public ActionResult ViewDetail(int id)
         {
             var product = db.SysProducts.Find(id);
             var productId = product.Id;
