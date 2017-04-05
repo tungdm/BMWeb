@@ -76,20 +76,15 @@ function checkValidate(data, status, xhr) {
         
         //swal("Tạo thành công", "Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!", "success")
         swal({
-            title: "Tạo thành công",
-            text: "Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!!",
-            type: "success",
-            showCancelButton: false,
-            confirmButtonClass: "btn-success",
-            confirmButtonText: "Đồng ý",         
-            closeOnConfirm: false,          
-        },
-        function (isConfirm) {
+            title: 'Tạo thành công',
+            text: 'Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!!',
+            type: 'success'
+        }).then(function (isConfirm) {
             if (isConfirm) {
                 var url = "/Request/Details/" + data.RequestId;
 
                 window.location.href = url;
-            } 
+            }
         });
     }
 }
@@ -173,11 +168,10 @@ function retract(replyId) {
         text: "Bạn sẽ không thể tham gia đặt thầu này nữa ",
         type: "warning",
         showCancelButton: true,
-        confirmButtonClass: "btn-danger",
-        confirmButtonText: "Đồng ý rút thầu",
-        closeOnConfirm: false
-    },
-    function () {
+        confirmButtonText: "ĐỒNG Ý",
+        cancelButtonText: 'HỦY',
+        confirmButtonColor: '#d33'
+    }).then(function () {
         var options = {
             url: '/Reply/Retract',
             type: 'GET',
@@ -186,16 +180,10 @@ function retract(replyId) {
 
         $.ajax(options).done(function (data) {
             $("#bidtable").remove();
-            
-            swal("Hoàn tất!", "Rút thầu thành công", "success");
+
+            swal("Hoàn tất", "Rút thầu thành công", "success");
         });
-
-        
-    });
-
-    
-
-    
+    })   
 }
 
 function updateCart(data, status, xhr) {
