@@ -646,7 +646,7 @@ namespace TGVL.Controllers
 
  
 
-        public ActionResult ViewDetail(int id)
+        public ActionResult ViewDetail(int id, string searchString)
         {
             var product = db.SysProducts.Find(id);
             var productId = product.Id;

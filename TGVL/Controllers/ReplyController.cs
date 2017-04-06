@@ -86,7 +86,7 @@ namespace TGVL.Controllers
             Request request = db.Requests.Find(requestId);
             model.Flag = (int) request.Flag;
 
-            if (request.Expired)
+            if (request.StatusId == 2)
             {
                 //request expired
                 return new JsonResult
@@ -100,7 +100,7 @@ namespace TGVL.Controllers
                 };
             }
 
-            if (request.Completed)
+            if (request.StatusId == 3)
             {
                 //request completed
                 return new JsonResult
@@ -225,7 +225,7 @@ namespace TGVL.Controllers
             {
                 var request = db.Requests.Find(requestId);
 
-                if (request.Expired)
+                if (request.StatusId == 2)
                 {
                     //request expired
                     return new JsonResult
@@ -239,7 +239,7 @@ namespace TGVL.Controllers
                     };
                 }
 
-                if (request.Completed)
+                if (request.StatusId == 3)
                 {
                     //request completed
                     return new JsonResult
@@ -357,7 +357,7 @@ namespace TGVL.Controllers
                     };
 
                 }
-                 else if (request.Flag == 1)
+                else if (request.Flag == 1)
                 {
                     //Update rank
                     var query = "Update BidReplies "
@@ -398,12 +398,24 @@ namespace TGVL.Controllers
                         }
                     }
 
+                    //Retractable 
+                    var MaxDateRetract = db.Settings.Where(s => s.SettingName == "MaxDateRetract").FirstOrDefault().SettingValue;
+                    DateTime repCreateDate = (DateTime)reply.CreatedDate;
+                    var max = repCreateDate.AddDays(MaxDateRetract);
+                    var retractable = false;
+
+                    if (max < request.DueDate)
+                    {
+                        retractable = true;
+                    }
+
                     return new JsonResult
                     {
                         Data = new
                         {
                             ReplyType = "Bid",
                             ReplyId = reply.Id,  
+                            Retractable = retractable
                         },
                         JsonRequestBehavior = JsonRequestBehavior.AllowGet
                     };
@@ -441,7 +453,7 @@ namespace TGVL.Controllers
                 {
                     Request request = db.Requests.Find(reply.RequestId);
 
-                    if (request.Expired)
+                    if (request.StatusId == 2)
                     {
                         //request expired
                         return new JsonResult
@@ -455,7 +467,7 @@ namespace TGVL.Controllers
                         };
                     }
 
-                    if (request.Completed)
+                    if (request.StatusId == 3)
                     {
                         //request completed
                         return new JsonResult
@@ -603,32 +615,42 @@ namespace TGVL.Controllers
         {
             var reply = db.Replies.FirstOrDefault(r => r.Id == replyId);
 
-            if (reply != null)
+            var MaxDateRetract = db.Settings.Where(s => s.SettingName == "MaxDateRetract").FirstOrDefault().SettingValue;
+            DateTime repCreateDate = (DateTime) reply.CreatedDate;
+            var max = repCreateDate.AddDays(MaxDateRetract);
+            var today = DateTime.Now;
+            var retractable = false;
+            if (today < max && max < reply.Request.DueDate)
+            {
+                retractable = true; //Có thể rút thầu
+            }
+
+            if (retractable)
             {
                 Request request = db.Requests.Find(reply.RequestId);
 
-                if (request.Expired)
+                if (request.StatusId == 2)
                 {
                     //request expired
                     return new JsonResult
                     {
                         Data = new
                         {
-                            Error = "Expired",
+                            Success = "Fail",
                             Message = "Request Expired."
                         },
                         JsonRequestBehavior = JsonRequestBehavior.AllowGet
                     };
                 }
 
-                if (request.Completed)
+                if (request.StatusId == 3)
                 {
                     //request completed
                     return new JsonResult
                     {
                         Data = new
                         {
-                            Error = "Completed",
+                            Success = "Fail",
                             Message = "Request Completed."
                         },
                         JsonRequestBehavior = JsonRequestBehavior.AllowGet
@@ -701,21 +723,7 @@ namespace TGVL.Controllers
                         JsonRequestBehavior = JsonRequestBehavior.AllowGet
                     };
                 }
-                else
-                {
-                    return new JsonResult
-                    {
-                        Data = new
-                        {
-                            Success = "Fail",
-                            ReplyType = "Bid",
-                            Message = "Giá bid mới phải bằng hoặc nhỏ hơn giá cũ",
-                            OldTotal = (decimal)reply.Total
-                        },
-                        JsonRequestBehavior = JsonRequestBehavior.AllowGet
-                    };
-                }
-
+                
             }
 
             return new JsonResult
@@ -723,6 +731,7 @@ namespace TGVL.Controllers
                 Data = new
                 {
                     Success = "Fail",
+                    Message = "Quá thời hạn rút thầu."
                 },
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };

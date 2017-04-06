@@ -139,7 +139,7 @@ namespace TGVL.Controllers
                 db.Entry(reply).State = EntityState.Modified;
 
                 var request = db.Requests.Find(reply.RequestId);
-                request.Completed = true;
+                request.StatusId = 3;
                 db.Entry(request).State = EntityState.Modified;
 
                 var newOrder = new Order

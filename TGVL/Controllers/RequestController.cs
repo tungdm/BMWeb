@@ -15,6 +15,7 @@ using PagedList;
 using TGVL.LucenceSearch;
 using System.Globalization;
 using System.Data.Entity;
+using System.Net.Mail;
 
 namespace TGVL.Controllers
 {
@@ -53,6 +54,7 @@ namespace TGVL.Controllers
             IEnumerable<Request> listRequests = db.Requests.Where(x => x.CustomerId == userId && x.Flag == 1).ToList();
             ViewBag.ListRequests = listRequests;
 
+            ViewBag.MaxDateCancelRequest = db.Settings.Where(s => s.SettingName == "MaxDateCancelRequest").FirstOrDefault().SettingValue;
             return View();
         }
 
@@ -319,9 +321,8 @@ namespace TGVL.Controllers
                         DueDate = DateTime.Now.AddDays(model.TimeRange),
                         PaymentId = model.PaymentType,
                         Title = model.Title,
-                        Expired = false,
                         Flag = 0,
-                        Completed = false
+                        StatusId = 1, //Init
                     };
 
                     if (mode == "bid")
@@ -502,7 +503,7 @@ namespace TGVL.Controllers
                         var reply = db.Replies
                                         .Where(r => r.SupplierId == userId && r.RequestId == id);
                         
-                        if (reply.Count() == 1)
+                        if (reply.Count() == 1) //current supplier đã reply
                         {
                             if (reply.FirstOrDefault().BidReply.Flag != 9) 
                             {
@@ -518,6 +519,25 @@ namespace TGVL.Controllers
                                 ViewBag.BidReplies = data;
                                 ViewBag.Bidable = false;
                                 ViewBag.Retracted = false;
+
+                                var MaxDateRetract = db.Settings.Where(s => s.SettingName == "MaxDateRetract").FirstOrDefault().SettingValue;
+                                DateTime repCreateDate = (DateTime)reply.FirstOrDefault().CreatedDate;
+                                var max = repCreateDate.AddDays(MaxDateRetract);
+                                var today = DateTime.Now;
+                                
+                                if (max >= request.DueDate)
+                                {
+                                    ViewBag.Retractable = false;
+                                } else
+                                {
+                                    if (today >= max)
+                                    {
+                                        ViewBag.Retractable = false;
+                                    } else
+                                    {
+                                        ViewBag.Retractable = true;
+                                    }
+                                }
                             } else
                             {
                                 ViewBag.Bidable = false;
@@ -533,7 +553,6 @@ namespace TGVL.Controllers
                 }
 
             }
-            ViewBag.Expired = request.Expired;
 
             return View(request);
         }
@@ -710,41 +729,40 @@ namespace TGVL.Controllers
             var request = db.Requests.Find(requestId);
             LuceneSimilar.ClearLuceneIndexRecord(requestId);
 
-            if (!request.Expired) //first request
+            if (request.StatusId == 1) //first person
             {
-                request.Expired = true;
+                request.StatusId = 2;
                 db.Entry(request).State = EntityState.Modified;
             }
 
             var currentUserId = User.Identity.GetUserId<int>();
 
-            if (currentUserId == request.CustomerId)
-            {
-                var message = "Yêu cầu \"" + request.Title + "\" của bạn vừa mới kết thúc!";
+            //if (currentUserId == request.CustomerId)
+            //{
+            //    //var message = "Yêu cầu \"" + request.Title + "\" của bạn vừa mới kết thúc!";
 
-                //Create noti
-                var notify = new Notification
-                {
-                    RequestId = request.Id,
-                    UserId = currentUserId,
-                    Message = message,
-                    CreatedDate = DateTime.Now,
-                    IsSeen = false,
-                    IsClicked = false
-                };
-                db.Notifications.Add(notify);
+            //    //var notify = new Notification
+            //    //{
+            //    //    RequestId = request.Id,
+            //    //    UserId = currentUserId,
+            //    //    Message = message,
+            //    //    CreatedDate = DateTime.Now,
+            //    //    IsSeen = false,
+            //    //    IsClicked = false
+            //    //};
+            //    //db.Notifications.Add(notify);
 
-                var numOfUnseen = Session["UnSeenNoti"] == null ? 0 : (int)Session["UnSeenNoti"];
-                numOfUnseen += 1;
-                Session["UnSeenNoti"] = numOfUnseen;
+            //    var numOfUnseen = Session["UnSeenNoti"] == null ? 0 : (int)Session["UnSeenNoti"];
+            //    numOfUnseen += 1;
+            //    Session["UnSeenNoti"] = numOfUnseen;
 
-                //SignalR
-                var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+            //    //SignalR
+            //    var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
 
-                //Call customer update noti count
-                var customer = UserManager.FindById(request.CustomerId).UserName;
-                notificationHub.Clients.User(customer).notify("added");
-            }
+            //    //Call customer update noti count
+            //    var customer = UserManager.FindById(request.CustomerId).UserName;
+            //    notificationHub.Clients.User(customer).notify("added");
+            //}
 
             db.SaveChanges();
 
@@ -763,10 +781,10 @@ namespace TGVL.Controllers
         public ActionResult ExpiredOutside()
         {
             var currentUserId = User.Identity.GetUserId<int>();
-            var request = db.Requests.Where(r => r.CustomerId == currentUserId && r.Expired == true).OrderByDescending(r => r.DueDate).FirstOrDefault();
+            var request = db.Requests.Where(r => r.CustomerId == currentUserId && r.StatusId == 2).OrderByDescending(r => r.DueDate).FirstOrDefault();
             LuceneSimilar.ClearLuceneIndexRecord(request.Id);
 
-            var message = "Yêu cầu \"" + request.Title + "\" của bạn vừa mới kết thúc!";
+            var message = "Yêu cầu \"" + request.Title + "\" của bạn vừa mới kết thúc 2!";
             var notify = new Notification
             {
                 RequestId = request.Id,
@@ -913,6 +931,59 @@ namespace TGVL.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+        
+        //GET
+        public ActionResult Cancel(int requestId)
+        {
+            var model = new CancelRequest {
+                RequestId = requestId
+            };
+            return PartialView("_CancelRequest", model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Cancel(CancelRequest model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
+
+                var body = "<p>Email From: {0} ({1})</p><p>Message:</p><p>{2}</p>";
+                var message = new MailMessage();
+                message.To.Add(new MailAddress("thegioivatlieu123@gmail.com"));
+                message.From = new MailAddress(user.Email);  
+                message.Subject = "Your email subject";
+                message.Body = string.Format(body, user.Fullname, user.Email, model.Reason);
+                message.IsBodyHtml = true;
+
+                using (var smtp = new SmtpClient())
+                {
+                    var credential = new NetworkCredential
+                    {
+                        UserName = "thegioivatlieu123@gmail.com", 
+                        Password = "capstoneproject123" 
+                    };
+                    smtp.Credentials = credential;
+                    smtp.Host = "smtp.gmail.com";
+                    smtp.Port = 587;
+                    smtp.EnableSsl = true;
+                    await smtp.SendMailAsync(message);
+                    return RedirectToAction("Index");
+                }
+            }
+
+            return new JsonResult
+            {
+                Data = new
+                {
+                    Message = "Success"
+                },
+
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
         public ActionResult PlaceBidRequest()
         {
             return View();
