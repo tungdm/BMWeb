@@ -15,12 +15,12 @@ namespace TGVL
         {
             string conStr = ConfigurationManager.ConnectionStrings["MyIdentityConnection"].ConnectionString;
 
-            string sqlCommand = @"SELECT [dbo].[Requests].[Id], [dbo].[Users].[UserName], [dbo].[Requests].[Flag], [dbo].[Requests].[Expired] ";
+            string sqlCommand = @"SELECT [dbo].[Requests].[Id], [dbo].[Users].[UserName], [dbo].[Requests].[Flag], [dbo].[Requests].[StatusId] ";
             sqlCommand += "FROM [dbo].[Requests] ";
             sqlCommand += "Join [dbo].[Users] ";
             sqlCommand += "On [dbo].[Requests].[CustomerId] = [dbo].[Users].[Id] ";
             sqlCommand += "WHERE [dbo].[Users].[UserName] = @UserName ";
-            sqlCommand += "AND [dbo].[Requests].[Expired] = 1";
+            sqlCommand += "AND [dbo].[Requests].[StatusId] = 2";
 
             using (SqlConnection con = new SqlConnection(conStr))
             {
