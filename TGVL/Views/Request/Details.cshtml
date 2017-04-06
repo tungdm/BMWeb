@@ -444,30 +444,32 @@
                         <h3 class="widget-title"><strong>YÊU CẦU TƯƠNG TỰ</strong></h3>
                         <div class="widget-content" style="padding-right:5px">
                             <ul class="posts-list unstyled clearfix">
-                                <li>
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <img src="~/Images/Product/SysProduct/22TM.jpg" width="50" height="60"/>
-                                        </div>
-                                        <div class="col-md-9">
-                                            <p><strong>Tôi muốn mua gì gì đó mà không biết phải mua cái gì</strong></p>
-                                            <p>Mô tả... <a href="#">Xem chi tiết</a></p>
-                                            <p><strong>Cao Minh Thúy Vy</strong></p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <img src="~/Images/Product/SysProduct/22TM.jpg" width="50" height="60" />
-                                        </div>
-                                        <div class="col-md-9">
-                                            <p><strong>Tôi muốn mua gì gì đó</strong></p>
-                                            <p>Mô tả... <a href="#">Xem chi tiết</a></p>
-                                            <p><strong>Cao Minh Thúy Vy</strong></p>
-                                        </div>
-                                    </div>
-                                </li>
+                                @{
+                                    TGVL.Models.LuceneRequestResult similarRequest = ViewBag.SimilarRequest;
+                                    if (similarRequest != null)
+                                    {
+                                        var list = similarRequest.SimilarResult.ToList();
+
+                                        for (int i = 1; i < list.Count(); i++)
+                                        {
+                                            <li>
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <figure class="featured-thumb"><img width="50" height="50" alt="blog image" src="~/Images/UserAvatar/@list[i].Avatar"></figure>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <p><strong>@list[i].Title</strong></p>
+                                                        <p>@list[i].CustomerName</p>
+                                                        <p>@list[i].ListProduct</p>
+                                                        <a href="/Request/Details/@list[i].Id">Xem chi tiết</a>
+                                                    </div>
+                                                </div>
+
+                                            </li>
+                                        }
+                                    }
+                                }
+                                
                             </ul>
                         </div>
                     </div>
@@ -489,7 +491,7 @@
                                         for (int i = 1; i < list.Count(); i++)
                                         {
                                             <li>
-                                                
+
                                                 <div class="row">
                                                     <div class="col-md-3">
                                                         <figure class="featured-thumb"><img width="50" height="50" alt="blog image" src="~/Images/UserAvatar/@list[i].Avatar"></figure>
@@ -502,24 +504,25 @@
                                                         <a href="/Request/Details/@list[i].Id">Xem chi tiết</a>
                                                     </div>
                                                 </div>
-                                                
+
                                             </li>
                                         }
                                     }
                                 }
- 
+
                             </ul>
                             @*<br />
-                            <h4 style="text-align:center">
-                                <a href="#"><strong>Xem thêm</strong></a>
-                            </h4>*@
+                                <h4 style="text-align:center">
+                                    <a href="#"><strong>Xem thêm</strong></a>
+                                </h4>*@
 
-                           
+
                         </div>
-                        
+
                     </div>
-                }
-            </div>
+                </div>
+                                    }
+
 
         </div>
 
