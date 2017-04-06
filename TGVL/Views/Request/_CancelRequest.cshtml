@@ -1,0 +1,42 @@
+﻿@model TGVL.Models.CancelRequest
+
+@using (Ajax.BeginForm("Cancel", "Request",
+    new AjaxOptions
+    {
+        HttpMethod = "POST",
+        OnSuccess = "showalert"
+    }
+))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.RequestId)
+    <div class="form-horizontal">
+        
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            <label class="control-label col-md-3" style="font-size:14px">Lý do hủy<span style="color:#ff0000"> *</span></label>
+
+            <div class="col-md-9">
+                @Html.TextAreaFor(model => model.Reason, new { @class = "form-control", @rows = "15", @cols = "20" })
+                @Html.ValidationMessageFor(model => model.Reason, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    
+}
+
+<script>
+    $(document).ready(function () {
+        $("#cancel-request").click(function (event) {
+
+            event.preventDefault();
+            var result = $('#form0').valid();
+            console.log(result);
+            if (result) {
+                $("form[id='form0']").submit();
+            }
+
+        });
+    });
+</script>
