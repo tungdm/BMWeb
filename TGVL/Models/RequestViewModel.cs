@@ -178,4 +178,11 @@ namespace TGVL.Models
         
     }
 
+    public class CancelRequest
+    {
+        [Required]
+        public string Reason { get; set; }
+
+        public int RequestId { get; set; }
+    }
 }
