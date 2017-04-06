@@ -1993,9 +1993,11 @@ ul#magicat li .open-close, .block-layered-nav dt .toggleBtn {
 /* 7. recommend products page */
 
 .new_title.center {
-	padding: 0 0 10px 0;
+	padding: 0 10px 10px 10px;
 	text-align: left;
-	border-bottom: 1px solid #e5e5e5;
+	/*border-bottom: 1px solid #e5e5e5;*/
+    border: 1px solid #eaeaea;
+    background:#fff;
 }
 .new_title {
 	color: #000000;
@@ -2536,6 +2538,7 @@ small {
 	font-size: 11px;
 	line-height: normal;
 	margin: 6px 0;
+    padding-left: 10px;
 }
 .ratings strong {
 	float: left;
@@ -2603,6 +2606,7 @@ small {
 	margin: 3px 0;
 	min-height: 22px;
 	font-weight: 300;
+    padding-left:10px;
 }
 	/* Regular price */
 .regular-price {
@@ -2922,7 +2926,7 @@ small {
 	position: relative;
 }
 .slider-items-products .item {
-	text-align: center;
+	/*text-align: center;*/
 }
 .owl-buttons {
 	opacity: 1;
@@ -2997,10 +3001,10 @@ small {
 }
 	/* products slider */
 .col-item {
-	text-align: center;
+	/*text-align: center;*/
 	margin-bottom: 10px;
 	width: 100%;
-	overflow: hidden;
+	/*overflow: hidden;*/
 }
 .col-item .product-wrapper a.thumb.flip .face.back img {
 	width: 100%;
@@ -3041,9 +3045,9 @@ small {
 	margin-bottom: 5px;
 	padding-top: 16px;
 	font-size: 12px;
-	white-space: nowrap;
+	/*white-space: nowrap;*/
 	overflow: hidden;
-	text-overflow: ellipsis;
+	/*text-overflow: ellipsis;*/
 }
 .col-item .item-title a {
 	color: #000;
