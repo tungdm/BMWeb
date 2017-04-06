@@ -83,15 +83,14 @@
                         <div role="main" id="content">
                             <article class="blog_entry clearfix" id="post-29">
                                 <header class="blog_entry-header clearfix">
-                                    <div class="blog_entry-header-inner">
+                                    <div class="blog_entry-header-inner">                                     
                                         <br />
-                                        @{
+                                        @{ 
                                             var message = "";
-                                            if (Model.Expired)
+                                            if (Model.StatusId == 2)
                                             {
                                                 message = "(Expired)";
-                                            }
-                                            else if (Model.Completed)
+                                            } else if (Model.StatusId == 3)
                                             {
                                                 message = "(Completed)";
                                             }
@@ -103,7 +102,7 @@
                                 </header>
                                 <!--blog_entry-header clearfix-->
                                 <div class="entry-content">
-
+                                    
                                     <div class="table-responsive">
                                         <form>
                                             <table class="data-table" id="my-orders-table">
@@ -147,8 +146,8 @@
                                                             </td>
 
                                                             @*<td>
-                                                                    @Html.DisplayFor(modelItem => item.UnitPrice)
-                                                                </td>*@
+                                    @Html.DisplayFor(modelItem => item.UnitPrice)
+                                </td>*@
 
                                                             <td>
                                                                 @Html.DisplayFor(modelItem => item.SysProduct.UnitType.Type)
@@ -173,10 +172,10 @@
                                                         <td id="requestID">@Html.DisplayFor(model => model.Id)</td>
                                                         <td id="requestType">@Html.DisplayFor(model => model.Flag)</td>
                                                     </tr>
-
+                                                    
                                                     <tr>
                                                         <td>Ngày nhận hàng</td>
-
+                                             
                                                         <td>@Convert.ToDateTime(Model.ReceivingDate).ToString("dd/MM/yyyy")</td>
                                                     </tr>
                                                     <tr>
@@ -235,7 +234,7 @@
                                     <!--Normal Replies-->
                                         <div class="comments-wrapper">
                                             <h4> <strong>Bình luận</strong> </h4>
-                                            @if (User.IsInRole("Supplier") && ViewBag.Repliable == true && ViewBag.Expired == false)
+                                            @if (User.IsInRole("Supplier") && ViewBag.Repliable == true && Model.StatusId == 1)
                                             {
                                                 <button id="replyBtn" type="button" class="btn btn-info btn-lg" onclick="reply(@ViewContext.RouteData.Values["id"])"><i class="fa fa-reply" aria-hidden="true"></i> Trả lời</button>
                                             }
@@ -249,7 +248,7 @@
 
                                                     if (replies.Count() == 0)
                                                     {
-                                                        <li id="replyCount">Hiện tại chưa có phản hồi</li>
+                                                		<li id="replyCount">Hiện tại chưa có phản hồi</li>
                                                     }
                                                     else
                                                     {
@@ -265,19 +264,19 @@
                                                                         </p>
                                                                         <span class="author" style="color: #337ab7; font-size: 28px"><strong>@reply.Fullname</strong></span>
                                                                     </div>
-                                                                    <div class="comment-meta" id="total_@reply.Id">
+                                                                    <div class="comment-meta"  id="total_@reply.Id">
                                                                         <p><strong>Giá đề xuất: <span style="color: #ff1341; font-size: 28px">@Html.DisplayFor(modelreply => reply.Total)</span></strong></p>
                                                                     </div>
                                                                     <div class="comment-body">
                                                                         <p style="color:#333"><strong>Địa chỉ: </strong> <span style="color:#999">@reply.Address</span></p>
                                                                     </div>
 
-                                                                    <div>
-                                                                        @if (User.Identity.GetUserId<int>() == reply.SupplierId && !Model.Expired)
+                                                                    <div> 
+                                                                        @if (User.Identity.GetUserId<int>() == reply.SupplierId && Model.StatusId == 1)
                                                                         {
                                                                             <button id="edit" type="button" class="btn btn-warning btn-sm" onclick="edit(@reply.Id)">Chỉnh sửa</button>
                                                                         }
-                                                                        else if (User.Identity.GetUserId<int>() == reply.CustomerId && !Model.Completed)
+                                                                        else if (User.Identity.GetUserId<int>() == reply.CustomerId && Model.StatusId != 3)
                                                                         {
                                                                             <button id="viewDetails" type="button" class="btn btn-primary btn-sm" onclick="viewDetails(@reply.Id)">Chi tiết</button>
                                                                             <button id="select" type="button" class="btn btn-success btn-sm" onclick="select(@reply.Id)">Lựa chọn</button>
@@ -296,119 +295,122 @@
                                             </ul>
                                             <!--/commentlist-->
                                         </div>
-                                                    }
-                                                    else if (Model.Flag == 1)
+                                        }
+                                        else if (Model.Flag == 1)
+                                        {
+                                            <div class="comments-wrapper">
+                                                <h4> <strong>Đấu thầu</strong> </h4>
+                                                @{
+                                                    List<TGVL.Models.BriefBidReply> bidReplies = ViewBag.BidReplies;
+                                                    if (User.IsInRole("Supplier") && ViewBag.Bidable == true && Model.StatusId == 1)
                                                     {
-                                                        <div class="comments-wrapper">
-                                                            <h4> <strong>Đấu thầu</strong> </h4>
-                                                            @{
-                                                                List<TGVL.Models.BriefBidReply> bidReplies = ViewBag.BidReplies;
-                                                                if (User.IsInRole("Supplier") && ViewBag.Bidable == true && !Model.Expired)
+                                                        <button id="bidBtn" type="button" class="btn btn-info btn-lg" onclick="reply(@ViewContext.RouteData.Values["id"])"><i class="fa fa-gavel" aria-hidden="true"></i> Đặt thầu</button>
+                                                    }
+
+                                                    <div id="bidtable">
+                                                        @if (User.IsInRole("Customer") && Model.CustomerId == User.Identity.GetUserId<int>() && bidReplies.Count() == 0)
+                                                        {
+                                                        	<p>Hiện tại chưa có ai đặt thầu</p>
+                                                            }
+
+                                                            else if ((User.IsInRole("Customer") && Model.CustomerId == User.Identity.GetUserId<int>()) || (User.IsInRole("Supplier") && !ViewBag.Retracted))
+                                                            {
+                                                                if (bidReplies != null)
                                                                 {
-                                                                    <button id="bidBtn" type="button" class="btn btn-info btn-lg" onclick="reply(@ViewContext.RouteData.Values["id"])"><i class="fa fa-gavel" aria-hidden="true"></i> Đặt thầu</button>
-                                                                }
+                                                                <div class="table-responsive">
+                                                                    <table class="data-table">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>
+                                                                                    Thứ hạng
+                                                                                </th>
 
-                                                                <div id="bidtable">
-                                                                    @if (User.IsInRole("Customer") && Model.CustomerId == User.Identity.GetUserId<int>() && bidReplies.Count() == 0)
-                                                                    {
-                                                                        <p>Hiện tại chưa có ai đặt thầu</p>
-                                                                    }
+                                                                                <th>
+                                                                                    Cửa hàng
+                                                                                </th>
 
-                                                                    else if ((User.IsInRole("Customer") && Model.CustomerId == User.Identity.GetUserId<int>()) || (User.IsInRole("Supplier") && !ViewBag.Retracted))
-                                                                    {
-                                                                        if (bidReplies != null)
-                                                                        {
-                                                                            <div class="table-responsive">
-                                                                                <table class="data-table">
-                                                                                    <thead>
-                                                                                        <tr>
-                                                                                            <th>
-                                                                                                Thứ hạng
-                                                                                            </th>
+                                                                                <th>
+                                                                                    Giá thầu
+                                                                                </th>
 
-                                                                                            <th>
-                                                                                                Cửa hàng
-                                                                                            </th>
-
-                                                                                            <th>
-                                                                                                Giá thầu
-                                                                                            </th>
-
-                                                                                            <th>
-                                                                                                Ngày giao hàng
-                                                                                            </th>
-                                                                                            <th>
-                                                                                                Thao tác
-                                                                                            </th>
-                                                                                        </tr>
-                                                                                    </thead>
-                                                                                    <tbody>
-                                                                                        @foreach (var reply in bidReplies)
+                                                                                <th>
+                                                                                    Ngày giao hàng
+                                                                                </th>
+                                                                                <th>
+                                                                                    Thao tác
+                                                                                </th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            @foreach (var reply in bidReplies)
+                                                                            {
+                                                                                <tr id="reply_@reply.Id">
+                                                                                    @*<td id="bidreplyId">@reply.Id</td>*@
+                                                                                    <td id="rank">
+                                                                                        
+                                                                                        @if (reply.Rank <= 3)
                                                                                         {
-                                                                                            <tr id="reply_@reply.Id">
-                                                                                                @*<td id="bidreplyId">@reply.Id</td>*@
-                                                                                                <td id="rank">
-
-                                                                                                    @if (reply.Rank <= 3)
-                                                                                                    {
-                                                                                                        var image = "rank_" + reply.Rank + ".png";
-                                                                                                        <img src="~/Images/@image" style="max-height:75px; max-width:75px" />
-                                                                                                    }
-                                                                                                    else
-                                                                                                    {
-                                                                                                        @reply.Rank
-                                                                                                    }
-
-
-                                                                                                </td>
-
-                                                                                                <td>
-                                                                                                    <img src="~/Images/UserAvatar/@reply.Avatar" width="100" height="100" alt="avatar" />
-                                                                                                    @reply.Fullname
-                                                                                                </td>
-
-                                                                                                <td>
-                                                                                                    <strong><span style="color: #ff1341; font-size: 20px">@Html.DisplayFor(modelreply => reply.Total)</span></strong>
-                                                                                                </td>
-
-                                                                                                <td>
-                                                                                                    @Convert.ToDateTime(reply.DeliveryDate).ToString("dd/MM/yyyy")
-                                                                                                </td>
-
-                                                                                                <td>
-                                                                                                    @if (User.Identity.GetUserId<int>() == reply.SupplierId && !Model.Expired)
-                                                                                                    {
-                                                                                                        <button id="edit" type="button" class="btn btn-warning btn-sm" onclick="edit(@reply.Id)">Chỉnh sửa</button>
-                                                                                                        <button id="retract" type="button" class="btn btn-danger btn-sm" onclick="retract(@reply.Id)">Rút thầu</button>
-                                                                                                    }
-                                                                                                    else if (User.Identity.GetUserId<int>() == reply.CustomerId)
-                                                                                                    {
-                                                                                                        <button type="button" class="btn btn-primary btn-sm" onclick="viewDetails(@reply.Id)">Chi tiết</button>
-                                                                                                        <button type="button" class="select btn btn-success btn-sm" style="display:none" onclick="select(@reply.Id)">Lựa chọn</button>
-                                                                                                        if (ViewBag.Expired && !Model.Completed)
-                                                                                                        {
-                                                                                                            <button type="button" class="select btn btn-success btn-sm" onclick="select(@reply.Id)">Lựa chọn</button>
-                                                                                                        }
-
-                                                                                                    }
-                                                                                                </td>
-                                                                                            </tr>
+                                                                                            var image = "rank_" + reply.Rank + ".png";
+                                                                                            <img src="~/Images/@image" style="max-height:75px; max-width:75px" />
                                                                                         }
-                                                                                    </tbody>
-                                                                                </table>
-                                                                            </div>
-                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            @reply.Rank
+                                                                                        }
+                                                                                        
+                                                                                    
+                                                                                    </td>
 
-                                                                    }
+                                                                                    <td>
+                                                                                        <img src="~/Images/UserAvatar/@reply.Avatar" width="100" height="100" alt="avatar" />
+                                                                                        @reply.Fullname
+                                                                                    </td>
 
+                                                                                    <td>
+                                                                                        <strong><span style="color: #ff1341; font-size: 20px">@Html.DisplayFor(modelreply => reply.Total)</span></strong>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        @Convert.ToDateTime(reply.DeliveryDate).ToString("dd/MM/yyyy")
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        @if (User.Identity.GetUserId<int>() == reply.SupplierId && Model.StatusId == 1)
+                                                                                        {
+                                                                                            <button id="edit" type="button" class="btn btn-warning btn-sm" onclick="edit(@reply.Id)">Chỉnh sửa</button>
+                                                                                            if (ViewBag.Retractable)
+                                                                                            {
+                                                                                                <button id="retract" type="button" class="btn btn-danger btn-sm" onclick="retract(@reply.Id)">Rút thầu</button>
+                                                                                            }
+                                                                                        }
+                                                                                        else if (User.Identity.GetUserId<int>() == reply.CustomerId)
+                                                                                        {
+                                                                                            <button type="button" class="btn btn-primary btn-sm" onclick="viewDetails(@reply.Id)">Chi tiết</button>
+                                                                                            <button type="button" class="select btn btn-success btn-sm" style="display:none" onclick="select(@reply.Id)">Lựa chọn</button>
+                                                                                            if (Model.StatusId == 2)
+                                                                                            {
+                                                                                                <button type="button" class="select btn btn-success btn-sm" onclick="select(@reply.Id)">Lựa chọn</button>
+                                                                                            }
+
+                                                                                        } 
+                                                                                    </td>
+                                                                                </tr>
+                                                                            }
+                                                                        </tbody>
+                                                                    </table>
                                                                 </div>
                                                             }
-                                                        </div>
-                                                                }
+
+                                                        }
+
+                                                    </div>              
+                                                }
+                                            </div>
+                                        }
                                     <!--comments-wrapper-->
 
                                 </div>
-                                                                }
+                                }
 
                             <br />
                             @*<ul id="pagination-flickr">
@@ -486,39 +488,38 @@
 
                                         for (int i = 1; i < list.Count(); i++)
                                         {
-                            <li>
+                                            <li>
+                                                
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <figure class="featured-thumb"><img width="50" height="50" alt="blog image" src="~/Images/UserAvatar/@list[i].Avatar"></figure>
+                                                    </div>
+                                                    <div class="col-md-9">
 
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <figure class="featured-thumb"><img width="50" height="50" alt="blog image" src="~/Images/UserAvatar/@list[i].Avatar"></figure>
-                                    </div>
-                                    <div class="col-md-9">
-
-                                        <p><strong>@list[i].Title</strong></p>
-                                        <p>@list[i].CustomerName</p>
-                                        <p>@list[i].ListProduct</p>
-                                        <a href="/Request/Details/@list[i].Id">Xem chi tiết</a>
-                                    </div>
-                                </div>
-
-                            </li>
+                                                        <p><strong>@list[i].Title</strong></p>
+                                                        <p>@list[i].CustomerName</p>
+                                                        <p>@list[i].ListProduct</p>
+                                                        <a href="/Request/Details/@list[i].Id">Xem chi tiết</a>
+                                                    </div>
+                                                </div>
+                                                
+                                            </li>
+                                        }
                                     }
                                 }
-                                }
-
+ 
                             </ul>
                             @*<br />
-                                <h4 style="text-align:center">
-                                    <a href="#"><strong>Xem thêm</strong></a>
-                                </h4>*@
+                            <h4 style="text-align:center">
+                                <a href="#"><strong>Xem thêm</strong></a>
+                            </h4>*@
 
-
+                           
                         </div>
-
+                        
                     </div>
-                </div>
-                                    }
-
+                }
+            </div>
 
         </div>
 
@@ -553,7 +554,7 @@
 
     var date = new Date("@ViewBag.DueDateCountdown");
     console.log(date);
-
+   
     $('#countdown-2').timeTo({
         timeTo: date,
         displayDays: 2,
@@ -565,7 +566,7 @@
         countdownRequest(@Model.Id);
     });
 
-
+    
 </script>
 
 
