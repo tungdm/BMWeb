@@ -73,23 +73,21 @@ function checkValidate(data, status, xhr) {
 
     } else
     {
-        
         //swal("Tạo thành công", "Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!", "success")
         swal({
-            title: "Tạo thành công",
-            text: "Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!!",
-            type: "success",
+            title: 'Tạo thành công',
+            text: 'Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!!',
+            type: 'success',
             showCancelButton: false,
             confirmButtonClass: "btn-success",
-            confirmButtonText: "Đồng ý",                  
-        },
-        function (isConfirm) {
+            confirmButtonText: "Đồng ý"
+        }).then(function (isConfirm) {
             if (isConfirm) {
                 var url = "/Request/Details/" + data.RequestId;
 
                 window.location.href = url;
             }
-        });
+        });        
     }
 }
 
