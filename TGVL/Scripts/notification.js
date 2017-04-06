@@ -431,6 +431,7 @@ function updateClientReply2(requestId, userName, newreplyId) {
     });
 }
 function updateExistReplies(data, status, xhr) {
+    console.log("updateExistReplies");
     if (data.Success === "Fail") {
         console.log("Fail");
         if (data.ReplyType === "Bid") {
@@ -508,6 +509,8 @@ function viewRequest(requestId) {
 }
 
 function countdownRequest(requestId) {
+    console.log("Inside");
+
     var options = {
         url: '/Request/Expired',
         data: { requestId: requestId },

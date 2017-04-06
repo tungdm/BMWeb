@@ -194,11 +194,36 @@ function retract(replyId) {
         };
 
         $.ajax(options).done(function (data) {
-            $("#bidtable").remove();
+            if (data.Success == "Success") {
+                $("#bidtable").remove();
 
-            swal("Hoàn tất", "Rút thầu thành công", "success");
+                swal("Hoàn tất", "Rút thầu thành công", "success");
+            } else {
+                swal("Lỗi", data.Message, "error");
+            }
+            
         });
     })   
+}
+
+function cancelRequest(requestId) {
+    var options = {
+        url: '/Request/Cancel',
+        type: 'GET',
+        data: { requestId: requestId }
+    };
+
+    $.ajax(options).done(function (data) {
+        console.log("cancelRequest");
+
+        var $target = $('#reasonText');
+        $target.html(data);
+
+        var form = $("#form0");
+        $.validator.unobtrusive.parse(form);
+
+        $('#cancelRequestModal').modal('show');
+    });
 }
 
 function updateCart(data, status, xhr) {
