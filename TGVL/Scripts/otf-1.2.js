@@ -232,6 +232,25 @@ function updateCart(data, status, xhr) {
         if (data.Type == "Muangay") {
             $('#mua_ngay').modal('toggle');
         }
+        swal({
+            title: 'Thêm vào giỏ hàng thành công',
+            type: 'success',
+            timer: 5000,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Xem giỏ hàng và thanh toán'
+        }).then(
+            function () {
+                var url = "/Home/ShoppingCart";
+                window.location.href = url;
+            },
+            
+            function (dismiss) {
+                if (dismiss === 'timer') {
+                    console.log('I was closed by the timer')
+                }
+            }
+        )
     }
 }
 
