@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "ViewDetail";
-    Layout = "~/Views/Shared/TestLayout.cshtml";
+    Layout = "~/Views/Shared/_HomePageViewLayout.cshtml";
     ViewData["SearchString"] = Model.SearchString;
 
     if (Session["UnSeenNoti"] != null)
@@ -19,7 +19,7 @@
 
 <style>
     .item-img-info {
-        width: 300px;
+        width: 250px;
         height: 200px;
         background-image: none;
         background-repeat: no-repeat;
@@ -28,15 +28,16 @@
     }
 
     .item-inner {
-        width: 300px;
-        height: 300px;
-        display: inline-block;
+        width: 250px;
+        height: 350px;
+        display: block;
         vertical-align: top;
     }
 
     .col-item {
         width: 100%;
         height: auto;
+        padding: 10px;
     }
 
     span.stars, span.stars span {
