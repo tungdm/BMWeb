@@ -5392,8 +5392,9 @@ li .list {
 	float: left;
 	margin: 0;
 	overflow: hidden;
-	padding: 0;
+	padding: 0px;
 	text-align: center;
+    margin-bottom: 10px;
 }
 .product-view .product-shop .add-to-box a:hover {
 	text-decoration: none;
@@ -5408,7 +5409,7 @@ li .list {
 	margin-top: 0px;
 	font-weight: normal;
 	transition: color 300ms ease-in-out 0s, background-color 300ms ease-in-out 0s, background-position 300ms ease-in-out 0s;
-	margin-left: 10px;
+	/*margin-left: 10px;*/
 	border: 3px solid #efefef;
 }
 .product-view .product-shop .add-to-box .btn-cart:hover {
@@ -6981,7 +6982,7 @@ input#coupon_code {
 }
 #shopping-cart-table input.qty {
 	background: none repeat scroll 0 0 #FFFFFF;
-	border:3px solid #efefef;
+	/*border:3px solid #efefef;*/
 	font-size: 15px;
 	font-weight: normal;
 	margin: 0;
@@ -6993,7 +6994,7 @@ input#coupon_code {
 #shopping-cart-table a.remove-item {
 	background-color: #fff;
 	background-image: none;
-	border: 3px solid #efefef;
+	/*border: 3px solid #efefef;*/
 	border-radius: 2px;
 	color: #333;
 	cursor: pointer;
