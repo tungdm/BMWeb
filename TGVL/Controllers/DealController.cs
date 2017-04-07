@@ -7,7 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using TGVL.Models;
 using System.Globalization;
-
+using System.Collections;
 
 namespace TGVL.Controllers
 {
@@ -80,7 +80,25 @@ namespace TGVL.Controllers
                 NumBuyer = deal.NumBuyer,
                 Expired = deal.Expired
             };
+            var shops = db.Warehouses.Where(w => w.SupplierId == deal.SupplierId).ToList();
             
+            var ShopAddress = new ArrayList();
+
+            var cnt = shops.Count;
+
+            var result = new string[cnt];
+            var infoWindowContent = new string[cnt];
+            for (int i = 0; i< shops.Count; i++)
+            {
+                var place = "['" + shops[i].Address + "', " + shops[i].Lat + ", " + shops[i].Lng + "]";
+                var info = "['<div class=\"info_content\"><h3>" + shops[i].Address + "</h3></div>']";
+                result[i] = place;
+                infoWindowContent[i] = info;
+            }
+
+            ViewBag.Result = result;
+            ViewBag.Info = infoWindowContent;
+
             if (model.ProductDetails == null)
             {
                 model.Product = deal.Product.SysProduct;
