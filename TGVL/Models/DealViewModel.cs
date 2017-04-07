@@ -46,6 +46,27 @@ namespace TGVL.Models
         public string ProductDetails { get; set; }
 
         public bool Expired { get; set; }
+
+        public ICollection<SimilarDeal> SimilarDeals { get; set; }
+        public ICollection<SimilarDeal> SameSuppliers { get; set; }
+    }
+
+    public class SimilarDeal
+    {
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string Image { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:C0}")]
+        public decimal UnitPrice { get; set; }
+
+        public int Discount { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:C0}")]
+        public decimal PriceSave { get; set; }
+
+        public int NumBuyer { get; set; }
+
     }
 
     public class DealBriefViewModel
