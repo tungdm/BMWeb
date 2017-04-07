@@ -144,18 +144,16 @@
                         <ul class="nav nav-tabs">
                             <li class="active"><a href="#tab_1" data-toggle="tab">THÔNG TIN CHI TIẾT</a></li>
 
-                            <li><a href="#tab_2" data-toggle="tab">BẢN ĐỒ</a></li>
+                            <li><a href="#tab_2" id="showmap" data-toggle="tab">BẢN ĐỒ</a></li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="tab_1">
                                 @Html.Raw(Model.Description)
-
                             </div>
 
-                            <div class="tab-pane" id="tab_2">
-
+                            <div class="tab-pane" id="tab_2" style="height:400px;width:815px">
+                                <div id="map_canvas" class="mapping" style="width: 100%;height:100%;"></div>
                             </div>
-
                         </div>
 
                     </div>
@@ -288,6 +286,47 @@
 <script src="~/Scripts/js/owl.carousel.min.js"></script>
 @*@RenderSection("scripts", required: false)*@
 <script>
+    function myMap() {
+        var map;
+        var bounds = new google.maps.LatLngBounds();
+        var mapOptions = {
+            mapTypeId: 'roadmap'
+        };
+
+        map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+        map.setTilt(45);
+
+        var markers = [@Html.Raw(string.Join(", ", (string[])ViewBag.Result))];
+        var infoWindowContent = [@Html.Raw(string.Join(", ", (string[])ViewBag.Info))];
+
+        var infoWindow = new google.maps.InfoWindow(), marker, i;
+
+        for (i = 0; i < markers.length; i++) {
+            var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
+            bounds.extend(position);
+            marker = new google.maps.Marker({
+                position: position,
+                map: map,
+                title: markers[i][0]
+            });
+
+            google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                return function () {
+                    infoWindow.setContent(infoWindowContent[i][0]);
+                    infoWindow.open(map, marker);
+                }
+            })(marker, i));
+
+            map.fitBounds(bounds);
+        }
+        // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
+        var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function (event) {
+            this.setZoom(12);
+            google.maps.event.removeListener(boundsListener);
+        });
+    };
+
+
     //var date = getRelativeDate(02, 01, 10);
     //console.log(date);
 
@@ -318,6 +357,12 @@
     }
 
     $(document).ready(function () {
+        $("#showmap").click(function (event) {
+            console.log("show");
+            document.getElementById("tab_2").style.display = "block";
+            myMap();
+        });
+
         $('input').bind("cut copy paste", function (e) {
             e.preventDefault();
         });
@@ -338,8 +383,10 @@
         });
 
         var remainQuatity = Number($("#quantity-remain").text().replace(/[^0-9]+/g, ""));
+        console.log("hello:" +remainQuatity);
         var expired = "@Model.Expired";
-        if (!expired) {
+        if (expired) {
+            console.log(remainQuatity);
             $("#CustomerQuantity").rules("add", {
                 range: [1, remainQuatity],
                 messages: {
@@ -350,4 +397,10 @@
 
 
     });
+
+
 </script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBO_d9y7dn40gSnQs0ZQRhClFpFDQKqzjM&callback=myMap" async defer> 
+</script>
+
