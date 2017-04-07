@@ -85,8 +85,9 @@ namespace TGVL.Controllers
             {
                 model.Product = deal.Product.SysProduct;
             }
+            //Similar deal (same category)
             var categoryId = deal.Product.SysProduct.SysCategoryId;
-            var similarDeals = db.Deals.Where(d => d.Product.SysProduct.SysCategoryId == categoryId && d.Expired).OrderByDescending(d => d.NumBuyer).ToList();
+            var similarDeals = db.Deals.Where(d => d.Product.SysProduct.SysCategoryId == categoryId && d.Id != id &&!d.Expired).OrderByDescending(d => d.NumBuyer).ToList();
             var simiDeals = new List<SimilarDeal>();
             
             foreach(var item in similarDeals)
@@ -103,6 +104,26 @@ namespace TGVL.Controllers
                 simiDeals.Add(simiDeal);
             }
             model.SimilarDeals = simiDeals;
+
+            //Similar deal (same supplier)
+            var supplierId = deal.SupplierId;
+            var sameSup = db.Deals.Where(d => d.SupplierId == supplierId && d.Id != id && !d.Expired).OrderByDescending(d => d.NumBuyer).ToList();
+            var sameSupDeals = new List<SimilarDeal>();
+            foreach (var item in sameSup)
+            {
+                var sameDeal = new SimilarDeal
+                {
+                    Id = item.Id,
+                    Title = item.Title,
+                    UnitPrice = item.UnitPrice,
+                    Discount = item.Discount,
+                    PriceSave = Math.Ceiling(item.UnitPrice - (item.UnitPrice * item.Discount / 100)),
+                    Image = item.Product.Image,
+                    NumBuyer = item.NumBuyer,
+                };
+                sameSupDeals.Add(sameDeal);
+            }
+            model.SameSuppliers = sameSupDeals;
             return View(model);
         }
 
