@@ -124,7 +124,13 @@
                 </div>
             </div>
             
-                @using (Html.BeginForm("Create", "Order", FormMethod.Post))
+                @using (Ajax.BeginForm("Create", "Order",
+                        new AjaxOptions
+                        {
+                            HttpMethod = "POST",
+                            OnSuccess = "createOrderSuccess(data)"
+                        }
+                    ))
                 {
                     @Html.AntiForgeryToken()
                     <input type="number" name="replyId" value="@Model.Id" style="visibility:hidden"/>

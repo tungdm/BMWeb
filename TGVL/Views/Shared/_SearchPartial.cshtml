@@ -23,24 +23,23 @@
                 </div>
             </form>
         </div>
-        @if (User.IsInRole("Customer"))
-        {
-            <div class="col-md-2 header-cart-wrapper">
-                <ul class="header-cart">
-                    @{
-                        var cartViewModel = (TGVL.Models.CartViewModel)Session["Cart"];
-                        var count = cartViewModel == null ? 0 : cartViewModel.CartDetails.Count();
-                    }
-                    <li class="nav-cart">
-                        <a href="/Home/ShoppingCart" aria-expanded="false">
-                            <i class="hd hd-cart"></i><span id="cartCount" class="circle">@count</span> <span class="hidden-xs hidden-sm">Giỏ hàng</span>
-                        </a>
+        
+        <div class="col-md-2 header-cart-wrapper">
+            <ul class="header-cart">
+                @{
+                    var cartViewModel = (TGVL.Models.CartViewModel)Session["Cart"];
+                    var count = cartViewModel == null ? 0 : cartViewModel.CartDetails.Count();
+                }
+                <li class="nav-cart">
+                    <a href="/Home/ShoppingCart" aria-expanded="false">
+                        <i class="hd hd-cart"></i><span id="cartCount" class="circle">@count</span> <span class="hidden-xs hidden-sm">Giỏ hàng</span>
+                    </a>
 
-                    </li>
-                </ul>
+                </li>
+            </ul>
 
-            </div>
-         }
+        </div>
+         
 
     </div>
 </div>
