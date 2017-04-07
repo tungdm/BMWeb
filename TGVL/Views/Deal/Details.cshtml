@@ -103,11 +103,14 @@
                                         @Html.HiddenFor(model => model.Quantity)
                                         <div class="add-to-cart">
                                             <label>Số lượng :</label>
-                                            @Html.EditorFor(model => model.CustomerQuantity)
+                                            @Html.EditorFor(model => model.CustomerQuantity, new { htmlAttributes = new { @style = "padding:4px 10px" } })
+                                            @Html.ValidationMessageFor(model => Model.CustomerQuantity, "", new { @class = "text-danger" })
                                         </div>
-                                        <button type="submit" class="button btn-cart" style="font-size:20px"><span>THÊM VÀO GIỎ HÀNG</span></button>
+                                        <div>
+                                            <button type="submit" class="button btn-cart" style="font-size:20px"><span>THÊM VÀO GIỎ HÀNG</span></button>
+                                        </div>
                                         <br />
-                                        @Html.ValidationMessageFor(model => Model.CustomerQuantity, "", new { @class = "text-danger" })
+                                        
 
                                         }
                                 </div>
@@ -300,8 +303,8 @@
         displayDays: 2,
         theme: "black",
         displayCaptions: true,
-        fontSize: 35,
-        captionSize: 10
+        fontSize: 24,
+        captionSize: 16
     });
 
     function getRelativeDate(days, hours, minutes) {
