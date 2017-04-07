@@ -783,43 +783,59 @@ namespace TGVL.Controllers
         {
             var currentUserId = User.Identity.GetUserId<int>();
             var request = db.Requests.Where(r => r.CustomerId == currentUserId && r.StatusId == 2).OrderByDescending(r => r.DueDate).FirstOrDefault();
-            LuceneSimilar.ClearLuceneIndexRecord(request.Id);
-
-            var message = "Yêu cầu \"" + request.Title + "\" của bạn vừa mới kết thúc 2!";
-            var notify = new Notification
+            if (request != null)
             {
-                RequestId = request.Id,
-                UserId = currentUserId,
-                Message = message,
-                CreatedDate = DateTime.Now,
-                IsSeen = false,
-                IsClicked = false
-            };
-            db.Notifications.Add(notify);
+                LuceneSimilar.ClearLuceneIndexRecord(request.Id);
 
-            var numOfUnseen = Session["UnSeenNoti"] == null ? 0 : (int)Session["UnSeenNoti"];
-            numOfUnseen += 1;
-            Session["UnSeenNoti"] = numOfUnseen;
-
-            db.SaveChanges();
-
-            //SignalR
-            var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
-
-            //Call customer update noti count
-            var customer = UserManager.FindById(request.CustomerId).UserName;
-            notificationHub.Clients.User(customer).notify("added");
-
-            return new JsonResult
-            {
-                Data = new
+                var message = "Yêu cầu \"" + request.Title + "\" của bạn vừa mới kết thúc 2!";
+                var notify = new Notification
                 {
-                    Message = "Success",
-                    RequestId = request.Id
-                },
+                    RequestId = request.Id,
+                    UserId = currentUserId,
+                    Message = message,
+                    CreatedDate = DateTime.Now,
+                    IsSeen = false,
+                    IsClicked = false
+                };
+                db.Notifications.Add(notify);
 
-                JsonRequestBehavior = JsonRequestBehavior.AllowGet
-            };
+                var numOfUnseen = Session["UnSeenNoti"] == null ? 0 : (int)Session["UnSeenNoti"];
+                numOfUnseen += 1;
+                Session["UnSeenNoti"] = numOfUnseen;
+
+                db.SaveChanges();
+
+                //SignalR
+                var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+
+                //Call customer update noti count
+                var customer = UserManager.FindById(request.CustomerId).UserName;
+                notificationHub.Clients.User(customer).notify("added");
+
+                return new JsonResult
+                {
+                    Data = new
+                    {
+                        Message = "Success",
+                        RequestId = request.Id
+                    },
+
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            } else
+            {
+                return new JsonResult
+                {
+                    Data = new
+                    {
+                        Message = "Request chuyển trạng thái khác",
+                    },
+
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            }
+                
+            
         }
 
         // GET: Request

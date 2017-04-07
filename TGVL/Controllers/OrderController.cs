@@ -58,7 +58,7 @@ namespace TGVL.Controllers
             var userId = User.Identity.GetUserId<int>();
             var user = await UserManager.FindByIdAsync(userId);
             var orderSh = (OrderViewModel)Session["Order"];
-            
+            int newOrderId = 0;
 
             if (orderSh != null) //mua lẻ hoặc mua deal
             {
@@ -89,6 +89,8 @@ namespace TGVL.Controllers
 
                     db.Orders.Add(newOrder);
                     db.SaveChanges();
+
+                    newOrderId = newOrder.Id;
 
                     //Create order detail
                     foreach (var o in orderSh.ShoppingCart.ShoppingCartProducts.Where(scp => scp.SupplierId == newOrder.SupplierId))
@@ -157,6 +159,9 @@ namespace TGVL.Controllers
                     StatusId = 1 //mới đặt
                 };
                 db.Orders.Add(newOrder);
+                db.SaveChanges();
+
+                newOrderId = newOrder.Id;
 
                 //Create order detail
 
@@ -203,9 +208,16 @@ namespace TGVL.Controllers
 
 
 
-            //var callbackUrl = Url.Action("Details", "MyOrders", null, protocol: Request.Url.Scheme);
-            //await UserManager.SendEmailAsync(user.Id, "Đặt hàng thành công", "Xem chi tiết tại <a href=\"" + callbackUrl + "\">đây nè :)</a>");
-            return RedirectToAction("Index","Home");
+            var callbackUrl = Url.Action("Details", "MyOrders", null, protocol: Request.Url.Scheme);
+            await UserManager.SendEmailAsync(user.Id, "Đặt hàng thành công", "Xem chi tiết tại <a href=\"" + callbackUrl + "\">đây nè :)</a>");
+
+            return new JsonResult {
+                Data = new {
+                    Success = "Success",
+                    OrderId = newOrderId
+                },
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
         }
 
         // GET: Order
