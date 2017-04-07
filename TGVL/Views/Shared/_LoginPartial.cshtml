@@ -222,6 +222,8 @@
                     @*@Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
                     <div class="dropdown-content">
                         <p>@Html.ActionLink("Quản lý", "Index", "Manage")</p>
+                        <p>@Html.ActionLink("Create index Request", "CreateIndexRequest", "Home")</p>
+                        <p>@Html.ActionLink("Create index", "CreateIndex", "Home")</p>
                         <p><a href="javascript:document.getElementById('logoutForm').submit()">Đăng xuất</a></p>
                     </div>
                 </li>
