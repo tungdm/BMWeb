@@ -899,7 +899,7 @@ namespace TGVL.Controllers
             var userId = User.Identity.GetUserId<int>();
             var query = "SELECT[dbo].[Requests].[Id], [dbo].[Requests].[Title],[dbo].[Requests].[DeliveryAddress],[dbo].[Requests].[DueDate],[dbo].[Requests].[ReceivingDate],[dbo].[Requests].[Descriptions],[dbo].[Users].[UserName], [dbo].[Users].[Avatar] "
             + "FROM[dbo].[Requests], [dbo].[Users] "
-            + "WHERE[dbo].[Requests].[Flag] = 1 AND [dbo].[Requests].[CustomerId] = [dbo].[Users].[Id] ";
+            + "WHERE[dbo].[Requests].[Flag] = 1 AND [dbo].[Requests].[CustomerId] = [dbo].[Users].[Id] AND [dbo].[Requests].[StatusId] = 1 ";
             IList<RequestFloorModel> data = db.Database.SqlQuery<RequestFloorModel>(query).ToList();
 
             ViewBag.ListBidRequest = data;
@@ -913,7 +913,7 @@ namespace TGVL.Controllers
             var userId = User.Identity.GetUserId<int>();
             var query = "SELECT[dbo].[Requests].[Id], [dbo].[Requests].[Title],[dbo].[Requests].[DeliveryAddress],[dbo].[Requests].[ReceivingDate],[dbo].[Requests].[Descriptions],[dbo].[Users].[UserName] "
             + "FROM[dbo].[Requests], [dbo].[Users] "
-            + "WHERE[dbo].[Requests].[Flag] = 0 AND [dbo].[Requests].[CustomerId] = [dbo].[Users].[Id] ";
+            + "WHERE[dbo].[Requests].[Flag] = 0 AND [dbo].[Requests].[CustomerId] = [dbo].[Users].[Id] AND [dbo].[Requests].[StatusId] = 1";
             IList<RequestFloorModel> data = db.Database.SqlQuery<RequestFloorModel>(query).ToList();
 
             ViewBag.ListNormalRequest = data;
