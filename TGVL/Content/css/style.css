@@ -6988,18 +6988,19 @@ input#coupon_code {
 	margin: 0;
 	outline: medium none;
 	padding: 8px;
-	width: 70px;
+	width: 50px;
+    max-height:30px;
 	text-align: center;
 }
 #shopping-cart-table a.remove-item {
 	background-color: #fff;
 	background-image: none;
-	/*border: 3px solid #efefef;*/
+	border: 3px solid #fff;
 	border-radius: 2px;
 	color: #333;
 	cursor: pointer;
-	float: left;
-	padding: 6px 11px;
+	/*float: left;*/
+	padding: 4px 10px;
 	text-decoration: none;
 	transition: all 0.3s linear 0s;
 }
@@ -7039,7 +7040,7 @@ input#coupon_code {
 	display: block;
 }
 #shopping-cart-table .cart-price .price {
-	font-size: 13px;
+	font-size: 16px;
 	font-weight: bold;
 }
 .cart-table .btn-continue {
