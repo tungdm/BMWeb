@@ -136,6 +136,14 @@ namespace TGVL
 
              ));
 
+            bundles.Add(new StyleBundle("~/Content/loginformcss").Include(
+                      "~/Content/bootstrap.min.css",
+                      "~/Content/font-awesome.min.css",
+                      "~/Content/nprogress.css",
+                      "~/Content/animate.min.css",
+                      "~/Content/custom.min.css",
+                      "~/Content/bootstrap-social.css"
+                      ));
 
             // jquery
             bundles.Add(new ScriptBundle("~/bundles/alertjquery").Include(
