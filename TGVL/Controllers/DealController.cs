@@ -77,14 +77,32 @@ namespace TGVL.Controllers
                 Description = deal.Description,
                 ShortDescription = deal.ShortDescription,
                 CustomerQuantity = 1,
-                NumBuyer = (int)deal.NumBuyer,
-                Expired = (bool)deal.Expired
+                NumBuyer = deal.NumBuyer,
+                Expired = deal.Expired
             };
-            //var test = deal.DueDate.ToString("0:yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+            
             if (model.ProductDetails == null)
             {
                 model.Product = deal.Product.SysProduct;
             }
+            var categoryId = deal.Product.SysProduct.SysCategoryId;
+            var similarDeals = db.Deals.Where(d => d.Product.SysProduct.SysCategoryId == categoryId && d.Expired).OrderByDescending(d => d.NumBuyer).ToList();
+            var simiDeals = new List<SimilarDeal>();
+            
+            foreach(var item in similarDeals)
+            {
+                var simiDeal = new SimilarDeal {
+                    Id = item.Id,
+                    Title = item.Title,
+                    UnitPrice = item.UnitPrice,
+                    Discount = item.Discount,
+                    PriceSave = Math.Ceiling(item.UnitPrice - (item.UnitPrice * item.Discount / 100)),
+                    Image = item.Product.Image,
+                    NumBuyer = item.NumBuyer,
+                };
+                simiDeals.Add(simiDeal);
+            }
+            model.SimilarDeals = simiDeals;
             return View(model);
         }
 

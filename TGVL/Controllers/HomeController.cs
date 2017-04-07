@@ -615,7 +615,7 @@ namespace TGVL.Controllers
                     Discount = hd.Discount,
                     SavePrice = Math.Ceiling(hd.UnitPrice - (hd.UnitPrice * hd.Discount / 100)),                  
                     Image = hd.Product.Image,                   
-                    NumBuyer = (int)hd.NumBuyer,                  
+                    NumBuyer = hd.NumBuyer,                  
                     
                 };
                 newListHotdeal.Add(hdmodel);
@@ -633,7 +633,7 @@ namespace TGVL.Controllers
                     Discount = nd.Discount,
                     SavePrice = Math.Ceiling(nd.UnitPrice - (nd.UnitPrice * nd.Discount / 100)),
                     Image = nd.Product.Image,
-                    NumBuyer = (int)nd.NumBuyer,
+                    NumBuyer = nd.NumBuyer,
                 };
 
                 newListNewdeal.Add(ndmodel);
