@@ -9,24 +9,17 @@
 <section class="main-container">
     <div class="main container">
         <fieldset>
-            @using (Ajax.BeginForm(
-                    new AjaxOptions
-              HttpMethod = "POST",
-                        InsertionMode = InsertionMode.Replace,
-                        OnSuccess = "isSuccess(data,status, xhr)"
-                    }
-                ))
-            { 
             <div class="row">
-                <div class="col-md-8">
-                    <div class="popular-posts widget widget__sidebar">
-                        <h2 class="widget-title">Thanh toán và vận chuyển</h2>
-                        @using (Html.BeginForm("Create", "Order", FormMethod.Post))
-        <div class="row">
             <div class="col-md-8">
                 <div class="popular-posts widget widget__sidebar">
                     <h2 class="widget-title">Thanh toán và vận chuyển</h2>
-                    @using (Html.BeginForm("Create", "Order", FormMethod.Post))
+                    @using (Ajax.BeginForm("Create", "Order",
+                            new AjaxOptions
+                            {
+                                HttpMethod = "POST",
+                                OnSuccess = "createOrderSuccess(data)"
+                            }
+                        ))
                     {
                         @Html.AntiForgeryToken()
 
@@ -54,7 +47,6 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                @*@Html.LabelFor(model => model.PaymentType, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
                                 <label class="control-label col-md-4 col-sm-3 col-xs-12">Ghi chú cho bên giao hàng</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @rows = "5", @columns = "30" })
@@ -169,13 +161,3 @@
     </div>
 </section>
 
-<script>
-    //$("#hoan_tat_btn").click(function (event) {
-    //    swal("Thành công!", "Sản phẩm đã được thêm vào giỏ hàng", "success")
-    //});
-    //$('#hoantat').click(function () {
-    //    isSuccess();      
-    //    //var sum = $("#total").val();
-    //    //console.log(sum);
-    //});
-</script>
