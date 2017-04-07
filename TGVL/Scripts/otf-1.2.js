@@ -415,6 +415,32 @@ function viewOnMap(lat, lng) {
     
 }
 
+function createOrderSuccess(data) {
+    if (data.Success == "Success") {
+        console.log("Checkout success");
+        swal({
+            title: 'Đơn hàng của bạn đã được đặt thành công',
+            text: "Cửa hàng sẽ liên hệ thông báo giao hàng với bạn",
+            type: 'success',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Xem chi tiết đơn hàng',
+
+            cancelButtonText: 'Quan lại trang chủ',
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-info',
+            buttonsStyling: false
+        }).then(function () {
+            var url = "/Order/Details/" + data.OrderId;
+            window.location.href = url;
+        }, function (dismiss) {
+            var url = "/Home/Index";
+            window.location.href = url;
+        })
+    }
+    
+}
+
 function addDot(nStr) {
     nStr += '';
     x = nStr.split('.');
