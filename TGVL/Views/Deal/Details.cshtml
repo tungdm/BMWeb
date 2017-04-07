@@ -385,7 +385,7 @@
         var remainQuatity = Number($("#quantity-remain").text().replace(/[^0-9]+/g, ""));
         console.log("hello:" +remainQuatity);
         var expired = "@Model.Expired";
-        if (expired) {
+        if (expired == "False") {
             console.log(remainQuatity);
             $("#CustomerQuantity").rules("add", {
                 range: [1, remainQuatity],
