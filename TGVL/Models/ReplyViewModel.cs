@@ -10,24 +10,24 @@ namespace TGVL.Models
     public class ReplyViewModel
     {
      
-        [Required]
+        [Required(ErrorMessage ="Tổng cộng không được để trống")]
         [DisplayFormat(DataFormatString = "{0:C0}", ApplyFormatInEditMode = true)]
         public decimal Total { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Giá thầu không được để trống")]
         public string BidPrice { get; set; }
 
         public string Description { get; set; }
 
         public string Message { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Số lượng không được để trống")]
         public int Quantity { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:C0}")]
         public decimal Price { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Ngày giao hàng không được để trống")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Ngày giao hàng")]
@@ -111,7 +111,7 @@ namespace TGVL.Models
         [DisplayFormat(DataFormatString = "{0:C0}")]
         public decimal Total { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Ngày giao hàng không được để trống")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DeliveryDate { get; set; }
@@ -157,7 +157,7 @@ namespace TGVL.Models
 
         public int Flag { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Ngày giao hàng không được để trống")]
         [DataType(DataType.Date)]
         [DateRange]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
@@ -185,7 +185,7 @@ namespace TGVL.Models
 
         public int ReplyProductId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Số lượng không được để trống")]
         [Range(1, int.MaxValue, ErrorMessage = "Xin hãy nhập giá trị lớn hơn 0")]
         public int Quantity { get; set; }
 

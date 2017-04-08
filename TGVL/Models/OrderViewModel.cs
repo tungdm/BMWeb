@@ -13,19 +13,19 @@ namespace TGVL.Models
 
         public int CustomerId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Tên khách hàng không được bỏ trống")]
         public string CustomerFullName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Địa chỉ không được bỏ trống")]
         public string Address { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Số điện thoại không được bỏ trống")]
         [RegularExpression(@"^(09.|011.|012.|013.|014.|015.|016.|017.|018.|019.|08.)\d{7}$", ErrorMessage = "Not a valid Phone number")]
         public string PhoneNumber { get; set; }
 
         public IEnumerable<Payment> AllTypeOfPayments { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Hình thức thanh toán không được bỏ trống")]
         public int PaymentType { get; set; }
 
         public string Description { get; set; }
@@ -52,15 +52,15 @@ namespace TGVL.Models
     {
         public int OrderId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Giá bán không được để trống")]
         public int PriceGrade { get; set; }
         public IEnumerable<Grade> PriceGrades { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Chất lượng sản phẩm không được để trống")]
         public int QualityGrade { get; set; }
         public IEnumerable<Grade> QualityGrades { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Mức độ phục vụ không được để trống")]
         public int ServiceGrade { get; set; }
         public IEnumerable<Grade> ServiceGrades { get; set; }
 

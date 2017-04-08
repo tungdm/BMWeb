@@ -6,11 +6,11 @@ namespace TGVL.Models
 {
     public class ExternalLoginConfirmationViewModel
     {
-        [Required]
+        [Required(ErrorMessage ="Email không được để trống")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Tên đăng nhập không được để trống")]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [Display(Name = "Username")]
         public string Username { get; set; }
@@ -60,12 +60,12 @@ namespace TGVL.Models
 
     public class LoginViewModel
     {
-        [Required]
+        [Required(ErrorMessage ="Email không được để trống")]
         [Display(Name = "Email")]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Mật khẩu không được để trống")]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
@@ -76,17 +76,17 @@ namespace TGVL.Models
 
     public class RegisterViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Email không được để trống")]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Tên đăng nhập không được để trống")]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [Display(Name = "Username")]
         public string Username { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Mật khẩu không được để trống")]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
