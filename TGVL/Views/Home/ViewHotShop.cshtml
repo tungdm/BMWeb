@@ -1,4 +1,5 @@
-﻿
+﻿@using TGVL.Models;
+@model List<HotShopViewModel>
 @{
     ViewBag.Title = "ViewHotShop";
     Layout = "~/Views/Shared/_HomePageViewLayout.cshtml";
@@ -37,29 +38,31 @@
                 </div>
                 <div class="category-products">
                     <ul class="products-grid">
+                        @foreach(var item in Model)
+                        {
                         <li class="item col-sm-3 col-md-3 col-sm-6 col-xs-12">
                             <div class="col-item">
                                 <div class="item-inner">
                                     <div class="sale-label sale-top-right">Hot</div>
                                     <div class="item-img">
                                         <div class="item-img-info">
-                                            <a href="product_detail.html" class="product-image"> <img src="~/Images/UserAvatar/AnHuyVT.jpg"> </a>
+                                            <a href="product_detail.html" class="product-image"> <img src="~/Images/UserAvatar/@item.Avatar"> </a>
                                         </div>
                                     </div>
                                     <div class="item-info">
                                         <div class="info-inner">
-                                            <div class="item-title" style="text-align:left"> <h3 style="font-size:14px"> Cửa hàng Thiên Thiên </h3></div>
+                                            <div class="item-title" style="text-align:left"> <h3 style="font-size:14px"> @item.ShopName </h3></div>
                                             <div class="item-content">
                                                 <div class="rating" style="text-align:left;padding-top:5px">
                                                     <div class="ratings">
                                                         <div class="rating-box">
-                                                            <span class="stars">4.9</span>
+                                                            <span class="stars">@item.Rating</span>
 
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="short-description" style="padding-left:10px;padding-top:10px; text-align:left">
-                                                    <p>656/68/28 Quang Trung, Phường 11, Quận Gò Vấp</p>
+                                                    <p>@item.Address</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -68,99 +71,8 @@
                                 </div>
                             </div>
                         </li>
-                        <li class="item col-sm-3 col-md-3 col-sm-6 col-xs-12">
-                            <div class="col-item">
-                                <div class="item-inner">
-                                    <div class="sale-label sale-top-right">Hot</div>
-                                    <div class="item-img">
-                                        <div class="item-img-info">
-                                            <a href="product_detail.html" class="product-image"> <img src="~/Images/UserAvatar/AnHuyVT.jpg"> </a>
-                                        </div>
-                                    </div>
-                                    <div class="item-info">
-                                        <div class="info-inner">
-                                            <div class="item-title" style="text-align:left"> <h3 style="font-size:14px"> Cửa hàng Thiên Thiên </h3></div>
-                                            <div class="item-content">
-                                                <div class="rating" style="text-align:left;padding-top:5px">
-                                                    <div class="ratings">
-                                                        <div class="rating-box">
-                                                            <span class="stars">4.9</span>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="short-description" style="padding-left:10px;padding-top:10px; text-align:left">
-                                                    <p>656/68/28 Quang Trung, Phường 11, Quận Gò Vấp</p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="item col-sm-3 col-md-3 col-sm-6 col-xs-12">
-                            <div class="col-item">
-                                <div class="item-inner">
-                                    <div class="sale-label sale-top-right">Hot</div>
-                                    <div class="item-img">
-                                        <div class="item-img-info">
-                                            <a href="product_detail.html" class="product-image"> <img src="~/Images/UserAvatar/AnHuyVT.jpg"> </a>
-                                        </div>
-                                    </div>
-                                    <div class="item-info">
-                                        <div class="info-inner">
-                                            <div class="item-title" style="text-align:left"> <h3 style="font-size:14px"> Cửa hàng Thiên Thiên </h3></div>
-                                            <div class="item-content">
-                                                <div class="rating" style="text-align:left;padding-top:5px">
-                                                    <div class="ratings">
-                                                        <div class="rating-box">
-                                                            <span class="stars">4.9</span>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="short-description" style="padding-left:10px;padding-top:10px; text-align:left">
-                                                    <p>656/68/28 Quang Trung, Phường 11, Quận Gò Vấp</p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="item col-sm-3 col-md-3 col-sm-6 col-xs-12">
-                            <div class="col-item">
-                                <div class="item-inner">
-                                    <div class="sale-label sale-top-right">Hot</div>
-                                    <div class="item-img">
-                                        <div class="item-img-info">
-                                            <a href="product_detail.html" class="product-image"> <img src="~/Images/UserAvatar/AnHuyVT.jpg"> </a>
-                                        </div>
-                                    </div>
-                                    <div class="item-info">
-                                        <div class="info-inner">
-                                            <div class="item-title" style="text-align:left"> <h3 style="font-size:14px"> Cửa hàng Thiên Thiên </h3></div>
-                                            <div class="item-content">
-                                                <div class="rating" style="text-align:left;padding-top:5px">
-                                                    <div class="ratings">
-                                                        <div class="rating-box">
-                                                            <span class="stars">4.9</span>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="short-description" style="padding-left:10px;padding-top:10px; text-align:left">
-                                                    <p>656/68/28 Quang Trung, Phường 11, Quận Gò Vấp</p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
+                        }
+                        
                     </ul>
                 </div>
             </section>

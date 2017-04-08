@@ -1,4 +1,5 @@
-﻿
+﻿@using TGVL.Models;
+@model List<DealBriefViewModel>
 @{
     ViewBag.Title = "ViewHotDeal";
     Layout = "~/Views/Shared/_HomePageViewLayout.cshtml";
@@ -37,6 +38,37 @@
                 </div>
                 <div class="category-products">
                     <ul class="products-grid">
+                        @foreach (var item in Model)
+                        {
+                            <li class="item col-sm-3 col-md-3 col-sm-6 col-xs-12">
+                                <div class="col-item">
+                                    <div class="sale-label sale-top-right">Hot</div>
+                                    <div class="item-inner">
+                                        <div class="item-img">
+                                            <div class="item-img-info">
+                                                <a href="product_detail.html" class="product-image"> <img src="~/Images/Product/SysProduct/@item.Image"> </a>
+                                            </div>
+                                        </div>
+                                        <div class="item-info">
+                                            <div class="info-inner">
+                                                <div class="item-title" style="text-align:left"> <h3 style="font-size:14px">@item.Title</h3></div>
+                                                <div class="item-content">
+                                                    <div class="price-block" style="text-align:left">
+                                                        <div class="price-box">
+                                                            <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" style="font-size:20px">@Html.DisplayFor(itemModel => item.SavePrice)</span> Giảm <strong style="color:#ff1341; font-size:20px">@item.Discount%</strong> </p>
+                                                            <br />
+                                                            <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" style="font-size:18px">@Html.DisplayFor(itemModel => item.UnitPrice)</span> &nbsp; <span class="pull-right" style="font-size:16px"> <i class="fa fa-user"> @item.NumBuyer</i></span></p>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        }
                         <li class="item col-sm-3 col-md-3 col-sm-6 col-xs-12">
                             <div class="col-item">
                                 <div class="sale-label sale-top-right">Hot</div>
