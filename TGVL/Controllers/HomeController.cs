@@ -904,19 +904,76 @@ namespace TGVL.Controllers
         // View HotDeal All
         public ActionResult ViewHotDeal()
         {
-            return View();
+            var newListHotdeal = new List<DealBriefViewModel>();
+            
+            var HotDeal = db.Deals.Where(d => d.Expired == false).OrderByDescending(d => d.NumBuyer).ToList();
+
+            foreach (var hd in HotDeal)
+            {
+                var hdmodel = new DealBriefViewModel
+                {
+                    Id = hd.Id,
+                    Title = hd.Title,
+                    UnitPrice = hd.UnitPrice,
+                    Discount = hd.Discount,
+                    SavePrice = Math.Ceiling(hd.UnitPrice - (hd.UnitPrice * hd.Discount / 100)),
+                    Image = hd.Product.Image,
+                    NumBuyer = hd.NumBuyer,
+
+                };
+                newListHotdeal.Add(hdmodel);
+            }
+     
+            return View(newListHotdeal);
         }
 
         // View NewDeal All
         public ActionResult ViewNewDeal()
         {
-            return View();
+            var newListNewdeal = new List<DealBriefViewModel>();
+            
+            var NewDeal = db.Deals.Where(d => d.Expired == false).OrderByDescending(d => d.CreatedDate).ToList();
+
+            foreach (var nd in NewDeal)
+            {
+                var ndmodel = new DealBriefViewModel
+                {
+                    Id = nd.Id,
+                    Title = nd.Title,
+                    UnitPrice = nd.UnitPrice,
+                    Discount = nd.Discount,
+                    SavePrice = Math.Ceiling(nd.UnitPrice - (nd.UnitPrice * nd.Discount / 100)),
+                    Image = nd.Product.Image,
+                    NumBuyer = nd.NumBuyer,
+                };
+
+                newListNewdeal.Add(ndmodel);
+            }
+           
+            return View(newListNewdeal);
         }
 
         // View HotShop All
         public ActionResult ViewHotShop()
         {
-            return View();
+            var newListHotshop = new List<HotShopViewModel>();
+
+            var HotShop = db.Users.Where(d => d.Flag == 1).OrderByDescending(d => d.AverageGrade).ToList();
+
+            foreach (var hs in HotShop)
+            {
+                var hsmodel = new HotShopViewModel
+                {
+                    ShopId = hs.Id,
+                    Avatar = hs.Avatar,
+                    Rating = (float)hs.AverageGrade,
+                    ShopName = hs.Fullname,
+                    Address = hs.Address
+                };
+                newListHotshop.Add(hsmodel);
+            }
+            
+            return View(newListHotshop);
         }
     }
 }
