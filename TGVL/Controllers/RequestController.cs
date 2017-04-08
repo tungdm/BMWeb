@@ -339,7 +339,9 @@ namespace TGVL.Controllers
                         Id = request.Id,
                         Avatar = user.Avatar,
                         CustomerName = user.Fullname,
-                        Title = model.Title
+                        Title = model.Title,
+                        StartDate = request.StartDate,
+                        Flag = (int)request.Flag
                     };
 
                     for (int i = 0; i < model.RequestProducts.Count; i++)
@@ -450,6 +452,12 @@ namespace TGVL.Controllers
             }
             var searchResult = new LuceneRequestResult();
             searchResult = LuceneSimilar.SearchDefault(listProduct);
+            foreach (var item in searchResult.SimilarResult)
+            {
+                var requestId = item.Id;
+                item.Slug = new HomeController().GenerateSlug(item.Title, item.Id);
+                item.NumReplies = db.Replies.Where(r => r.RequestId == requestId).Count();
+            }
             ViewBag.SimilarRequest = searchResult;
 
             if (request.Flag == 0)
@@ -903,6 +911,10 @@ namespace TGVL.Controllers
             + "FROM[dbo].[Requests], [dbo].[Users] "
             + "WHERE[dbo].[Requests].[Flag] = 1 AND [dbo].[Requests].[CustomerId] = [dbo].[Users].[Id] AND [dbo].[Requests].[StatusId] = 1 ";
             IList<RequestFloorModel> data = db.Database.SqlQuery<RequestFloorModel>(query).ToList();
+            foreach (var request in data)
+            {
+                request.Slug = new HomeController().GenerateSlug(request.Title, request.Id);
+            }
 
             ViewBag.ListBidRequest = data;
             return View(data.ToPagedList(pageNumber,pageSize));
