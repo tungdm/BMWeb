@@ -584,7 +584,7 @@ namespace TGVL.Controllers
         public ActionResult Index()
         {
             var model = new HydridViewModel();
-           
+
             var newListHotdeal = new List<DealBriefViewModel>();
             var newListNewdeal = new List<DealBriefViewModel>();
             var newListHotshop = new List<HotShopViewModel>();
@@ -598,7 +598,7 @@ namespace TGVL.Controllers
                     ShopId = hs.Id,
                     Avatar = hs.Avatar,
                     Rating = (float)hs.AverageGrade,
-                    ShopName = hs.UserName,
+                    ShopName = hs.Fullname,
                     Address = hs.Address
                 };
                 newListHotshop.Add(hsmodel);
@@ -613,12 +613,12 @@ namespace TGVL.Controllers
                 {
                     Id = hd.Id,
                     Title = hd.Title,
-                    UnitPrice = hd.UnitPrice,                   
+                    UnitPrice = hd.UnitPrice,
                     Discount = hd.Discount,
-                    SavePrice = Math.Ceiling(hd.UnitPrice - (hd.UnitPrice * hd.Discount / 100)),                  
-                    Image = hd.Product.Image,                   
-                    NumBuyer = hd.NumBuyer,                  
-                    
+                    SavePrice = Math.Ceiling(hd.UnitPrice - (hd.UnitPrice * hd.Discount / 100)),
+                    Image = hd.Product.Image,
+                    NumBuyer = hd.NumBuyer,
+
                 };
                 newListHotdeal.Add(hdmodel);
             }
@@ -646,7 +646,7 @@ namespace TGVL.Controllers
             return View(model);
         }
 
- 
+
 
         public ActionResult ViewDetail(int id, string searchString)
         {
@@ -846,7 +846,7 @@ namespace TGVL.Controllers
         [System.Web.Mvc.Authorize(Roles = "Admin")]
         public ActionResult EditConfig(int? Id)
         {
-            
+
             Setting setting = db.Settings.Find(Id);
             if (setting == null)
             {
@@ -901,5 +901,22 @@ namespace TGVL.Controllers
             base.Dispose(disposing);
         }
 
+        // View HotDeal All
+        public ActionResult ViewHotDeal()
+        {
+            return View();
+        }
+
+        // View NewDeal All
+        public ActionResult ViewNewDeal()
+        {
+            return View();
+        }
+
+        // View HotShop All
+        public ActionResult ViewHotShop()
+        {
+            return View();
+        }
     }
 }
