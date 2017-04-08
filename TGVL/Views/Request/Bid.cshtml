@@ -8,6 +8,27 @@
 }
 
 @Styles.Render("~/Content/searchproductcss")
+<style>
+.products-list .product-image {
+    width: 200px;
+    display: inline-block;
+}
+.products-list .product-image img {
+    width: 200px;
+    height: 200px;
+}
+.products-list .product-image img {
+    height: 200px;
+    margin-left: 10px;
+}
+.products-list .product-shop {
+    width: 80%;
+    text-align: left;
+    margin-left: 15px;
+    display: inline-block;
+    float: right;
+}
+</style>
 
 <div class="main-container" style="background:#eee">
     <div class="main container">
@@ -53,7 +74,7 @@
 
                     </div>
                     <br />
-                    <h4> Có tổng cộng<strong> 24</strong> yêu cầu đấu thầu</h4>
+                    <h4> Có tổng cộng<strong> @Model.Count</strong> yêu cầu đấu thầu</h4>
                     
                     <ol id="products-list" class="products-list">
                         @foreach (var item in Model)
@@ -68,9 +89,8 @@
 
                                         <div class="desc std">
                                             <p>
-                                                @*CAO MINH THÚY VY CAO MINH THÚY VY CAO MINH THÚY VY CAO MINH THÚY VY CAO MINH THÚY VY CAO MINH THÚY VY....*@
                                                 @Html.Raw(@item.Descriptions)
-                                                <a class="link-learn" title="Xem chi tiết" href="/Request/Details/@item.Id">Xem chi tiết</a>
+                                                <a class="link-learn" title="Xem chi tiết" href="@Url.Action("Details", "Request", new { id = @item.GenerateSlug()})">Xem chi tiết</a>
                                             </p>
 
                                         </div>
