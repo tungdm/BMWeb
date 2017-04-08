@@ -16,7 +16,7 @@
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.Id)
     <div class="popular-posts widget widget__sidebar">
-        <h3 class="widget-title"><strong>THÔNG TIN THÊM</strong></h3>
+        <h3 class="widget-title"><strong>THÔNG TIN</strong></h3>
         <div class="widget-content">
             <div class="form-horizontal">
                 @if (Model.Flag == 0)
@@ -46,7 +46,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-3" style="font-size:14px">Giá thầu (&#x20AB;) <span style="color:#ff0000"> *</span></label>
                         <div class="col-md-9">
-                            @Html.EditorFor(model => model.BidPrice, "", new { htmlAttributes = new { @class = "form-control", @Value = bidPrice } })
+                            @Html.EditorFor(model => model.BidPrice, "", new { htmlAttributes = new { @class = "form-control", @Value = bidPrice , @style="font-size:medium"} })
                             @Html.ValidationMessageFor(model => model.BidPrice, "", new { @class = "text-danger" })
                             <span class="text-danger field-validation-valid" id= "errorTotal" style="display:none"></span>
                         </div>
@@ -56,7 +56,7 @@
                         <labael class="control-label col-md-3">Ngày giao hàng <span style="color:#ff0000"> *</span></labael>
                         @*@Html.LabelFor(model => model.DeliveryDate, htmlAttributes: new { @class = "control-label col-md-3" })*@
                         <div class="col-md-9">
-                            @Html.EditorFor(model => model.DeliveryDate, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.DeliveryDate, new { htmlAttributes = new { @class = "form-control", @style = "font-size:medium" } })
                             @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -67,8 +67,9 @@
                     <labael class="control-label col-md-3 col-sm-3 col-xs-12">Giá đề xuất từ cửa hàng</labael>
                     @*@Html.LabelFor(model => model.Total, htmlAttributes: new { @class = "control-label col-md-3" })*@
                     <div class="col-md-9">
-                        <span class="total"></span> &#x20AB;
-                        
+                        <div style="padding:4px 10px 0px 2px">
+                            <span class="total" style="font-size:medium"></span> &#x20AB;
+                        </div>
                         <div id="oldTotal" style="display:none"></div>
 
                         <div style="visibility: hidden">
