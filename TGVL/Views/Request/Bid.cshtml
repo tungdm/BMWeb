@@ -90,7 +90,7 @@
                                         <div class="desc std">
                                             <p>
                                                 @Html.Raw(@item.Descriptions)
-                                                <a class="link-learn" title="Xem chi tiết" href="@Url.Action("Details", "Request", new { id = @item.GenerateSlug()})">Xem chi tiết</a>
+                                                <a class="link-learn" title="Xem chi tiết" href="@Url.Action("Details", "Request", new { id = @item.Slug})">Xem chi tiết</a>
                                             </p>
 
                                         </div>
