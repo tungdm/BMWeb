@@ -549,16 +549,20 @@
                 </div>
             </div>
 
-            @if (Model.Flag == 1)
-            {
-                <div class="col-md-3" id="sidebar">
+           
+            
+            <div class="col-md-3" id="sidebar">
                     <div class="theiaStickySidebar">
                         <div id="cart_box">
-                            <h3>THỜI GIAN CÒN LẠI</h3>
-                            <div class="widget-content" style="padding-bottom:20px">
-                                <div id="countdown-2"></div>
-                            </div>
-                            <hr />
+                            @if (Model.Flag == 1)
+                            {
+                                <h3>THỜI GIAN CÒN LẠI</h3>
+                                <div class="widget-content" style="padding-bottom:20px">
+                                    <div id="countdown-2"></div>
+                                </div>
+                                <hr />
+                            }
+                            
                             <h3>YÊU CẦU TƯƠNG TỰ</h3>
                             <ul class="sliderVip">
                                 @{
@@ -574,7 +578,7 @@
                                             }
                                             <li>
                                                 <div class="box_img_bottom">
-                                                    <a href="@Url.Action("Details", "Request", new { id = list[i].Slug})"><img src="~/Images/UserAvatar/@list[i].Avatar" /></a>
+                                                    <a href="@Url.Action("Details", "Request", new { id = list[i].Slug})"><img src="~/Images/Request/@list[i].Image" /></a>
                                                 </div>
                                                 <div class="info_raovat">
                                                     <h4>
@@ -602,54 +606,8 @@
                         </div><!-- End cart_box -->
                     </div>
                 </div>
-                                    }
-                                    else
-                                    {
-                <div class="col-right sidebar col-sm-3 wow bounceInUp animated">
-                    <div class="popular-posts widget widget__sidebar" id="recent-posts-4">
-                        <h3 class="widget-title"><strong>YÊU CẦU TƯƠNG TỰ</strong></h3>
-                        <div class="widget-content">
-                            <ul class="posts-list unstyled clearfix">
-                                @{
-                                    TGVL.Models.LuceneRequestResult similarRequest = ViewBag.SimilarRequest;
-                                    if (similarRequest.SimilarResult != null)
-                                    {
-                                        var list = similarRequest.SimilarResult.ToList();
-
-                                        for (int i = 1; i < list.Count(); i++)
-                                        {
-                                            <li>
-
-                                                <div class="row">
-                                                    <div class="col-md-3">
-                                                        <figure class="featured-thumb"><img width="50" height="50" alt="blog image" src="~/Images/UserAvatar/@list[i].Avatar"></figure>
-                                                    </div>
-                                                    <div class="col-md-9">
-
-                                                        <p><strong>@list[i].Title</strong></p>
-                                                        <p>@list[i].CustomerName</p>
-                                                        <p>@list[i].ListProduct</p>
-                                                        <a href="/Request/Details/@list[i].Id">Xem chi tiết</a>
-                                                    </div>
-                                                </div>
-
-                                            </li>
-                                        }
-                                    }
-                                }
-
-                            </ul>
-                            @*<br />
-                                <h4 style="text-align:center">
-                                    <a href="#"><strong>Xem thêm</strong></a>
-                                </h4>*@
-
-
-                        </div>
-
-                    </div>
-                </div>
-            }
+            
+            
 
 
         </div>
