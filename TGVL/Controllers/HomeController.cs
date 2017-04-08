@@ -21,7 +21,24 @@ namespace TGVL.Controllers
         private ApplicationSignInManager _signInManager;
         private BMWEntities db = new BMWEntities();
         private ApplicationUserManager _userManager;
-
+        private static string[] VietNamChar = new string[]
+        {
+           "aAeEoOuUiIdDyY",
+           "áàạảãâấầậẩẫăắằặẳẵ",
+           "ÁÀẠẢÃÂẤẦẬẨẪĂẮẰẶẲẴ",
+           "éèẹẻẽêếềệểễ",
+           "ÉÈẸẺẼÊẾỀỆỂỄ",
+           "óòọỏõôốồộổỗơớờợởỡ",
+           "ÓÒỌỎÕÔỐỒỘỔỖƠỚỜỢỞỠ",
+           "úùụủũưứừựửữ",
+           "ÚÙỤỦŨƯỨỪỰỬỮ",
+           "íìịỉĩ",
+           "ÍÌỊỈĨ",
+           "đ",
+           "Đ",
+           "ýỳỵỷỹ",
+           "ÝỲỴỶỸ"
+        };
 
         public HomeController()
         {
@@ -200,6 +217,8 @@ namespace TGVL.Controllers
                 luceneRequest.Avatar = request.User.Avatar;
                 luceneRequest.Title = request.Title;
                 luceneRequest.CustomerName = request.User.Fullname;
+                luceneRequest.StartDate = request.StartDate;
+                luceneRequest.Flag = (int)request.Flag;
 
                 var query = "SELECT [dbo].[SysProducts].[Name] "
                             + "FROM[dbo].[Requests], [dbo].[RequestProducts], [dbo].[SysProducts] "
@@ -584,7 +603,7 @@ namespace TGVL.Controllers
         public ActionResult Index()
         {
             var model = new HydridViewModel();
-
+           
             var newListHotdeal = new List<DealBriefViewModel>();
             var newListNewdeal = new List<DealBriefViewModel>();
             var newListHotshop = new List<HotShopViewModel>();
@@ -646,7 +665,7 @@ namespace TGVL.Controllers
             return View(model);
         }
 
-
+ 
 
         public ActionResult ViewDetail(int id, string searchString)
         {
@@ -771,20 +790,38 @@ namespace TGVL.Controllers
         {
             string phrase = string.Format("{0}-{1}", Id, Title);
 
-            string str = RemoveDiacritics(phrase).ToLower();
+            string str = ReplaceUnicode(phrase).ToLower();
+
+            //str = RemoveDiacritics(phrase);
+            
             // invalid chars           
             str = Regex.Replace(str, @"[^a-z0-9\s-]", "");
             // convert multiple spaces into one space   
             str = Regex.Replace(str, @"\s+", " ").Trim();
             // cut and trim 
-            str = str.Substring(0, str.Length <= 45 ? str.Length : 45).Trim();
+            str = str.Substring(0, str.Length <= 95 ? str.Length : 95).Trim();
             str = Regex.Replace(str, @"\s", "-"); // hyphens   
             return str;
         }
 
+        public string ReplaceUnicode(string strInput)
+        {
+            for (int i = 1; i < VietNamChar.Length; i++)
+            {
+                for (int j = 0; j < VietNamChar[i].Length; j++)
+                {
+                    strInput = strInput.Replace(VietNamChar[i][j], VietNamChar[0][i - 1]);
+                }
+            }
+            return strInput;
+        }
 
         public string RemoveDiacritics(string text)
         {
+            var noApostrophes = Encoding.ASCII.GetString(Encoding.GetEncoding("Cyrillic").GetBytes(text));
+            byte[] bytes = Encoding.GetEncoding("Cyrillic").GetBytes(text);
+            var test = Encoding.ASCII.GetString(bytes);
+
             var normalizedString = text.Normalize(NormalizationForm.FormD);
             var stringBuilder = new StringBuilder();
 
@@ -846,7 +883,7 @@ namespace TGVL.Controllers
         [System.Web.Mvc.Authorize(Roles = "Admin")]
         public ActionResult EditConfig(int? Id)
         {
-
+            
             Setting setting = db.Settings.Find(Id);
             if (setting == null)
             {
