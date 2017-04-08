@@ -1,120 +1,233 @@
-﻿@using Microsoft.AspNet.Identity
+﻿@using PagedList.Mvc
+@using PagedList
+@model  IPagedList<TGVL.Models.RequestFloorModel>
 
 @{
-    ViewBag.Title = "Thông tin yêu cầu";
+    ViewBag.Title = "Sàn đấu thầu";
     Layout = "~/Views/Shared/_HomePageViewLayout.cshtml";
-
-    List<Request> listRequests = ViewBag.ListRequests;
 }
 
 @Styles.Render("~/Content/searchproductcss")
-<link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />
+<style>
+.products-list .product-image {
+    width: 200px;
+    display: inline-block;
+}
+.products-list .product-image img {
+    width: 200px;
+    height: 200px;
+}
+.products-list .product-image img {
+    height: 200px;
+    margin-left: 10px;
+}
+.products-list .product-shop {
+    width: 80%;
+    text-align: left;
+    margin-left: 15px;
+    display: inline-block;
+    float: right;
+}
+.qa_content {
+    margin: 0 auto;
+    padding: 10px 0 20px 0;
+    overflow: hidden;
+}
+.qa_center {
+    /*width: 560px;*/
+    /*float: left;*/
+    /*margin-right: 15px;*/
+    background: #fff;
+    border: 1px solid #e5ecf4;
+    border-radius: 5px;
+}
+.qa_center .filter {
+    height: 40px;
+    border-bottom: 1px solid #ebebeb;
+    padding: 0px 20px;
+    display: block;
+    margin-top: 10px;
+}
+.selectBox {
+    display: inline-block;
+    position: relative;
+    margin-right: 6px;
+}
+.selectBox:hover .select_title{
+    background: #c8c8c8;
+    color: #fff;
+}
+.selectBox:hover .selectItem{
+    display: block;
+}
+.select_title {
+    background: #efeff4;
+    display: block;
+    width: 107px;
+    text-align: center;
+    padding: 6px 4px;
+    border-radius: 30px;
+    color: #476aba;
+    position: relative;
+    z-index: 5;
+}
+.select_title i {
+    background: url(/Images/arrow_down.gif);
+    float: right;
+    height: 5px;
+    width: 9px;
+    position: relative;
+    top: 8px;
+    left: -5px;
+}
+.selectItem {
+    background: #efeff4;
+    width: 108px;
+    padding: 20px 0 10px 0;
+    position: absolute;
+    top: 15px;
+    display: none;
+    z-index: 1;
+}
+.qa_center .filter a {
+    color: #476aba;
+}
+.selectItem a {
+    display: block;
+    padding: 4px 10px;
+}
+.qa_center .qa_item {
+    border-bottom: 1px solid #eaeaea;
+    overflow: hidden;
+    padding: 15px 20px;
+    display: block;
+}
+.picture_raovat {
+    float: left;
+    min-height: 135px;
+    overflow: hidden;
+    padding-right: 15px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+.picture_raovat img {
+    width: 140px;
+}
+.top_qa_item .info {
+    width: 100%;
+}
+.info {
+    display: inline-block;
+}
+.info a {
+    color: black;
+	font-size: 13px;
+}
+.info h2 {
+    font-size: 14px;
+    line-height: 20px;
+    float: left;
+    width: 100%;
+}
+.qa_item .description {
+    /*line-height: 18px;*/
+    overflow: hidden;
+    margin-top: 5px;
+}
+.teaser {
+    max-height: 53px;
+    overflow: hidden;
+}
+.info p, .info p a {
+    
+    margin: 6px 0;
+}
 
-<div class="main-container col2-left-layout" style="background:#f4f4f4">
+.info p span {
+    display: inline-block;
+    color: #b6b6b6;
+}
+.deliver_address {
+    display: block;
+    margin-top: 10px;
+}
+.deliver_address span {
+    color: #d13b3b;
+    
+}
+</style>
+
+<div class="main-container" style="background:#f4f4f4">
     <div class="main container">
         <div class="row">
-            <aside class="col-left sidebar col-sm-3">
-                <div class="block block-account">
-                    <div class="block-title">
-                        <div class="profile">
-                            <div class="profile_avatar">
-                                <img src="~/Content/images/gachbong.jpg" style="width:60px;height:60px;max-height:60px;max-width:60px" />
+            <section class="col-main col-sm-12">
+                @*<div class="category-title">
+                    <h2><strong>YÊU CẦU ĐẤU THẦU</strong></h2>
+                </div>*@
+
+                <div class="qa_content">
+                    <div class="qa_center">
+                        <div class="filter">
+                            <div class="selectBox">
+                                <div class="select_title">Mới nhất <i></i> </div>
+                                <div class="selectItem">
+                                    <a class="active" href="/raovat/index.php?&amp;sort=0">Mới</a>
+                                    <a href="/raovat/index.php?&amp;sort=1">Tin Nổi Bật</a>
+                                    <a href="/raovat/index.php?&amp;sort=2">Tin Vip</a>
+                                    <a href="/raovat/index.php?&amp;sort=3">Tin Siêu Vip</a>
+                                </div>
                             </div>
-                            <div class="profile_info">
-                                <div style="padding:5px; font-size:15px">@User.Identity.Name</div>
+                            <div class="selectBox">
+                                <div class="select_title">Theo loại <i></i> </div>
+                                <div class="selectItem">
+                                    <a class="active" href="/raovat/index.php?&amp;sort=0">Mua thường</a>
+                                    <a href="/raovat/index.php?&amp;sort=1">Đấu thầu</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="block-content">
-                        <ul>
-                            <li><a href="/Manage/Index">Thông tin cá nhân</a></li>
-                            <li><a href="/Request/Index">Thông tin yêu cầu</a></li>
-                            <li>
-                                <a href="/Order/Index">Thông tin đơn hàng</a>
-                            </li>
-                            <li>
-                                <a href="javascript:document.getElementById('logoutForm').submit()">Đăng xuất</a>
-                            </li>
-                        </ul>
+                        <div id="box_main_content">
+                            @foreach (var item in Model)
+                            {
+                                <div class="qa_item">
+                                    <div class="picture_raovat">
+                                        <a href="@Url.Action("Details", "Request", new { id = @item.Slug})"><img src="~/Images/UserAvatar/@item.Avatar" /></a>
+                                    </div>
+                                    <div class="description">
+                                        <div class="top_qa_item">
+                                            <div class="info">
+                                                <div class="raovat_name">
+                                                    <a href="@Url.Action("Details", "Request", new { id = @item.Slug})" style="font-size:18px" title="@item.Title">@item.Title<strong></strong></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="description teaser">
+                                            @Html.Raw(@item.Descriptions)
+                                        </div>
+                                        <div class="deliver_address"><span><strong>Địa chỉ nhận hàng</strong></span>: @item.DeliveryAddress</div>
+                                        <div class="info">
+                                            <p>
+                                                <strong><span>@item.UserName</span> <span>•</span> <span>@Convert.ToDateTime(item.StartDate).ToString("dd/MM/yyyy HH:mm")</span></strong>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
                     </div>
                 </div>
 
-            </aside>
-            <section class="col-main col-sm-9">
-                <div class="box">
-                    <div class="box-header">
-                        <h2 class="box-title" style="font-size:28px"><strong>YÊU CẦU ĐẤU THẦU</strong></h2>
-                    </div>
-                    <div class="box-body">
-                        <table id="example1" class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th>STT</th>
-                                    <th>Tiêu đề</th>
-                                    <th>Ngày nhận hàng</th>
-                                    
-                                    <th>&nbsp;</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @{int cnt = 0;
-                                    foreach (var item in listRequests)
-                                    {
-                                        cnt++;
-                                        <tr>
-                                            <td>@cnt</td>
-                                            <td><a href="/Request/Details/@item.Id">@item.Title</a></td>
-                                            <td>@Html.DisplayFor(x=>item.ReceivingDate)</td>
-                                            
-                                            <td>
-                                                @*<button id="cancelRequest" type="button" class="btn btn-danger btn-sm" onclick="cancelRequest(@item.Id)">Hủy yêu cầu</button>*@
-                                                @{
-                                                    var MaxDateCancelRequest = ViewBag.MaxDateCancelRequest;
-                                                    DateTime reqCreateDate = item.StartDate;
-                                                    var max = reqCreateDate.AddDays(MaxDateCancelRequest);
-                                                    var today = DateTime.Now;
-                                                    if (today < max)
-                                                    {
-                                                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=thegioivatlieu123@gmail.com&su=Đơn xin hủy yêu cầu" class="btn btn-danger btn-sm">Hủy yêu cầu</a>
-                                                    }
-                                                }
-                                            </td>
-                                        </tr>
-                                                    }
-                                }
-                            </tbody>
-                        </table>
-                    </div>
+                <div style="text-align:center">
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), PagedListRenderOptions.ClassicPlusFirstAndLast)
                 </div>
             </section>
-
         </div>
     </div>
 </div>
 
-<div id="cancelRequestModal" class="modal fade" role="dialog">
-    <div class="modal-dialog" style="left:0%">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Hủy yêu cầu</h4>
-            </div>
-            <div class="modal-body" style="min-height:calc(100vh - 210px);max-height: calc(100vh - 210px);overflow-y: auto;">
-                <div id="reasonText"></div>
-            </div>
-            <div class="modal-footer">
-                <input type="button" value="Đồng ý" class="btn btn-success" id="cancel-request" />
-                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
-            </div>
-        </div>
 
-    </div>
-</div>
 
-<script src="~/Scripts/jquery.dataTables.min.js"></script>
-<script src="~/Scripts/dataTables.bootstrap.min.js"></script>
-<script>
-    $(function () {
-        $("#example1").DataTable();
-    });
-</script>
+
+
+
+
+
