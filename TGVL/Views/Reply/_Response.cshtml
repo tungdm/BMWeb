@@ -20,12 +20,12 @@
                 @if (Model.Flag == 1) //bid
                 {
                     var bidPrice = string.Format("{0:C0}", Model.BidPrice);
- 
+                    
                     <div class="form-group">
                         <label class="control-label col-md-3" style="font-size:14px">Giá thầu (&#x20AB;) <span style="color:#ff0000"> *</span></label>
                         <div class="col-md-9">
                             @*@Html.EditorFor(model => model.Total, "", new { htmlAttributes = new { @class = "form-control" } })*@
-                            @Html.EditorFor(model => model.BidPrice, "", new { htmlAttributes = new { @class = "form-control" , @Value= bidPrice } })
+                            @Html.EditorFor(model => model.BidPrice, "", new { htmlAttributes = new { @class = "form-control" , @Value= bidPrice, @style = "font-size:medium" } })
                             @Html.ValidationMessageFor(model => model.BidPrice, "", new { @class = "text-danger" })
                         </div> 
                     </div>
@@ -33,7 +33,9 @@
                     <div class="form-group">
                         <label class="control-label col-md-3" style="font-size:14px">Giá đề xuất từ cửa hàng</label>
                         <div class="col-md-9">
-                            <span class="total"></span> &#x20AB;
+                            <div style="padding:4px 10px 0px 2px">
+                                <span class="total" style="font-size:medium"></span> &#x20AB;
+                            </div>
                             <div style="display:none">@Html.HiddenFor(model => model.Total, new { htmlAttributes = new { @class = "total2" } })</div>
                         </div>
                     </div>
@@ -42,7 +44,7 @@
                         <label class="control-label col-md-3" style="font-size:14px">Ngày giao hàng<span style="color:#ff0000"> *</span></label>
 
                         <div class="col-md-9">
-                            @Html.EditorFor(model => model.DeliveryDate, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.DeliveryDate, new { htmlAttributes = new { @class = "form-control", @style = "font-size:medium" } })
                             @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "text-danger" })
                         </div>
                     </div>
