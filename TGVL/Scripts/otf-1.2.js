@@ -83,8 +83,8 @@ function checkValidate(data, status, xhr) {
             confirmButtonText: "Đồng ý"
         }).then(function (isConfirm) {
             if (isConfirm) {
-                var url = "/Request/Details/" + data.RequestId;
-
+                //var url = "/Request/Details/" + data.RequestId;
+                var url = "/Request/Details/" + data.SeoUrl;
                 window.location.href = url;
             }
         });        
