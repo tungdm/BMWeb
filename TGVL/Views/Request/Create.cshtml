@@ -73,7 +73,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-xs-12">Tiêu đề<span style="color:#ff0000"> *</span></label>
                                     <div class="col-md-9 col-xs-12">
-                                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control MaxLengthInputTextSmall", @style="float:left" } })
+                                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control MaxLengthInputTextSmall", @style="float:left;font-size:medium" } })
                                         @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -83,7 +83,7 @@
                                     @*@Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
                                     <label class="control-label col-md-3 col-xs-12">Địa chỉ nhận hàng<span style="color:#ff0000"> *</span></label>
                                     <div class="col-md-9 col-xs-12" style="margin-top: 6px;">
-                                        @Html.EditorFor(model => model.ReceivingAddress, new { htmlAttributes = new { @class = "form-control MaxLengthInputTextSmall", @style = "float:left" } })
+                                        @Html.EditorFor(model => model.ReceivingAddress, new { htmlAttributes = new { @class = "form-control MaxLengthInputTextSmall", @style = "float:left;font-size:15px" } })
                                         @Html.ValidationMessageFor(model => model.ReceivingAddress, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -92,7 +92,7 @@
                                     @*@Html.LabelFor(model => model.ReceivingDate, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
                                     <label class="control-label col-md-3 col-xs-12">Ngày nhận hàng<span style="color:#ff0000"> *</span></label>
                                     <div class="col-md-9 col-xs-12">
-                                        @Html.EditorFor(model => model.ReceivingDate, new { htmlAttributes = new { @class = "form-control", @style = "float:left" } })
+                                        @Html.EditorFor(model => model.ReceivingDate, new { htmlAttributes = new { @class = "form-control", @style = "float:left;font-size:medium" } })
                                         @Html.ValidationMessageFor(model => model.ReceivingDate, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -100,7 +100,7 @@
                                     @*@Html.LabelFor(model => model.TimeRange, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
                                     <label class="control-label col-md-3 col-xs-12">Thời hạn yêu cầu (ngày)<span style="color:#ff0000"> *</span></label>
                                     <div class="col-md-9 col-xs-12">
-                                        @Html.EditorFor(model => model.TimeRange, new { htmlAttributes = new { @class = "form-control", onfocus = "if(this.value=='0') this.value=''", @style = "float:left" } })
+                                        @Html.EditorFor(model => model.TimeRange, new { htmlAttributes = new { @class = "form-control", onfocus = "if(this.value=='0') this.value=''", @style = "float:left;font-size:medium" } })
                                         @Html.ValidationMessageFor(model => model.TimeRange, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -113,7 +113,7 @@
                                         model => model.PaymentType,
                                         new SelectList(Model.AllTypeOfPayments, "Id", "Type"),
                                         "-----[Chọn hình thức thanh toán]-----",
-                                        htmlAttributes: new { @class = "form-control", @style = "float:left" }
+                                        htmlAttributes: new { @class = "form-control", @style = "float:left;font-size:medium" }
                                     )
                                         @Html.ValidationMessageFor(model => model.PaymentType, "", new { @class = "text-danger" })
                                     </div>
@@ -137,7 +137,7 @@
                                     @*@Html.LabelFor(model => model.CustomerName, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Tên người đăng</label>
                                     <div class="col-md-6 col-sm-6 col-xs-12" style="margin-top: 6px;">
-                                        @Html.DisplayFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.DisplayFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control"} })
                                        
                                     </div>
                                 </div>
@@ -146,7 +146,7 @@
                                     @*@Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Email</label>
                                     <div class="col-md-6 col-sm-6 col-xs-12" style="margin-top: 6px;">
-                                        @Html.DisplayFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.DisplayFor(model => model.Email, new { htmlAttributes = new { @class = "form-control"} })
                                         
                                     </div>
                                 </div>
@@ -155,7 +155,7 @@
                                     @*@Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Điện thoại</label>
                                     <div class="col-md-6 col-sm-6 col-xs-12" style="margin-top: 6px;">
-                                        @Html.DisplayFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.DisplayFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control"} })
                                         
                                     </div>
                                 </div>
@@ -164,7 +164,7 @@
                                     @*@Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Địa chỉ</label>
                                     <div class="col-md-6 col-sm-6 col-xs-12" style="margin-top: 6px;">
-                                        @Html.DisplayFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.DisplayFor(model => model.Address, new { htmlAttributes = new { @class = "form-control"} })
                                   
                                     </div>
                                 </div>
