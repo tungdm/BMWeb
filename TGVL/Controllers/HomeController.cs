@@ -219,6 +219,7 @@ namespace TGVL.Controllers
                 luceneRequest.CustomerName = request.User.Fullname;
                 luceneRequest.StartDate = request.StartDate;
                 luceneRequest.Flag = (int)request.Flag;
+                luceneRequest.Image = request.Image;
 
                 var query = "SELECT [dbo].[SysProducts].[Name] "
                             + "FROM[dbo].[Requests], [dbo].[RequestProducts], [dbo].[SysProducts] "

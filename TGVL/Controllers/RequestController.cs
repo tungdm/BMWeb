@@ -65,6 +65,7 @@ namespace TGVL.Controllers
                     Descriptions = item.Descriptions,
                     UserName = item.User.Fullname,
                     Avatar = item.User.Avatar,
+                    Image = item.Image,
                     StartDate = item.StartDate
                 };
                 allRequest.Add(m);
@@ -365,6 +366,7 @@ namespace TGVL.Controllers
                     {
                         Id = request.Id,
                         Avatar = user.Avatar,
+                        Image = request.Image,
                         CustomerName = user.Fullname,
                         Title = model.Title,
                         StartDate = request.StartDate,
