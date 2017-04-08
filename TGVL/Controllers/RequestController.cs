@@ -47,7 +47,34 @@ namespace TGVL.Controllers
         }
 
         // GET: Request
-        public ActionResult Index()
+        public ActionResult Index(int? page)
+        {
+            var pageSize = 10;
+            var pageNumber = (page ?? 1);
+            var userId = User.Identity.GetUserId<int>();
+            var requests = db.Requests.Where(r => r.StatusId == 1).OrderByDescending(r => r.StartDate).ToList();
+            var allRequest = new List<RequestFloorModel>();
+
+            foreach (var item in requests)
+            {
+                var m = new RequestFloorModel {
+                    Id = item.Id,
+                    Title = item.Title,
+                    Slug = new HomeController().GenerateSlug(item.Title, item.Id),
+                    DeliveryAddress = item.DeliveryAddress,
+                    Descriptions = item.Descriptions,
+                    UserName = item.User.Fullname,
+                    Avatar = item.User.Avatar,
+                    StartDate = item.StartDate
+                };
+                allRequest.Add(m);
+            }
+
+          
+            return View(allRequest.ToPagedList(pageNumber, pageSize));
+        }
+
+        public ActionResult Manage()
         {
             //Xem tất cả request
             var userId = User.Identity.GetUserId<int>();
