@@ -30,6 +30,8 @@ namespace TGVL.Models
         [DateRange]
         public DateTime? DueDate { get; set; }
 
+        public DateTime StartDate { get; set; }
+
         public string Descriptions { get; set; }
 
         public string DeliveryAddress { get; set; }
