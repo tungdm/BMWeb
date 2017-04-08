@@ -382,6 +382,7 @@ namespace TGVL.Controllers
                     Session["UnSeenNoti"] = numOfUnseen;
 
                     //return RedirectToAction("Index");
+                    var seoUrl = new HomeController().GenerateSlug(request.Title, request.Id);
 
                     return new JsonResult
                     {
@@ -389,6 +390,7 @@ namespace TGVL.Controllers
                         {
                             Success = "Success",
                             RequestId = request.Id,
+                            SeoUrl = seoUrl,
                             Message = "Đơn yêu cầu thành công!",
                         },
                         JsonRequestBehavior = JsonRequestBehavior.AllowGet
