@@ -2104,8 +2104,8 @@ ul#magicat li .open-close, .block-layered-nav dt .toggleBtn {
 	top: 0px;
 }
 .new-label {
-	font-size: 11px;
-	color: #000;
+	font-size: 14px;
+	color: #fff;
 	background: #ffc60a;
 	text-transform: uppercase;
 	padding: 0px;
@@ -2123,9 +2123,9 @@ ul#magicat li .open-close, .block-layered-nav dt .toggleBtn {
 	margin-left: 0px;
 }
 .sale-label {
-	font-size: 11px;
+	font-size: 14px;
 	color: #fff;
-	background: #d12631;
+	background: #ed1c24;
 	text-transform: uppercase;
 	padding: 0px;
 	text-align: center;
