@@ -563,46 +563,51 @@
                                 <hr />
                             }
                             
-                            <h3>YÊU CẦU TƯƠNG TỰ</h3>
-                            <ul class="sliderVip">
+                            
+                            
                                 @{
                                     TGVL.Models.LuceneRequestResult similarRequest = ViewBag.SimilarRequest;
-                                    if (similarRequest != null)
+                                    if (similarRequest != null && similarRequest.SimilarResult.Count != 0)
                                     {
                                         var list = similarRequest.SimilarResult.ToList();
-                                        for (int i = 0; i < list.Count(); i++)
-                                        {
-                                            if (list[i].Id == Model.Id)
+                                        <h3>YÊU CẦU TƯƠNG TỰ</h3>
+                                        <ul class="sliderVip">
+                                            @for (int i = 0; i < list.Count(); i++)
                                             {
-                                                continue;
-                                            }
-                                            <li>
-                                                <div class="box_img_bottom">
-                                                    <a href="@Url.Action("Details", "Request", new { id = list[i].Slug})"><img src="~/Images/Request/@list[i].Image" /></a>
-                                                </div>
-                                                <div class="info_raovat">
-                                                    <h4>
-                                                        <a href="@Url.Action("Details", "Request", new { id = list[i].Slug})">@list[i].Title</a>
-                                                    </h4>
-                                                    @if (list[i].Flag == 1)
-                                                    {
-                                                        <p>Đấu thầu</p>
-                                                    }
-                                                    else
-                                                    {
-                                                        <p>Mua thường</p>
-                                                    }
-                                                    <div class="report_raovat">
-                                                        <span class="i"></span>
-                                                        <small>@list[i].NumReplies</small>
-                                                        | <div>@Convert.ToDateTime(list[i].StartDate).ToString("dd/MM/yyyy")</div>
+                                                if (list[i].Id == Model.Id)
+                                                {
+                                                    continue;
+                                                }
+
+                                                <li>
+                                                    <div class="box_img_bottom">
+                                                        <a href="@Url.Action("Details", "Request", new { id = list[i].Slug})"><img src="~/Images/Request/@list[i].Image" /></a>
                                                     </div>
-                                                </div>
-                                            </li>
-                                        }
+                                                    <div class="info_raovat">
+                                                        <h4>
+                                                            <a href="@Url.Action("Details", "Request", new { id = list[i].Slug})">@list[i].Title</a>
+                                                        </h4>
+                                                        @if (list[i].Flag == 1)
+                                                        {
+                                                            <p>Đấu thầu</p>
+                                                        }
+                                                        else
+                                                        {
+                                                            <p>Mua thường</p>
+                                                        }
+                                                        <div class="report_raovat">
+                                                            <span class="i"></span>
+                                                            <small>@list[i].NumReplies</small>
+                                                            | <div>@Convert.ToDateTime(list[i].StartDate).ToString("dd/MM/yyyy")</div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            }
+                                        </ul>
                                     }
+
                                 }
-                            </ul>
+                            
                         </div><!-- End cart_box -->
                     </div>
                 </div>

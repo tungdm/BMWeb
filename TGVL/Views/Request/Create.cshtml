@@ -23,23 +23,33 @@
         font-family: 'Roboto';
         padding: 6px 5px 6px 5px;
     }
+    #imgPreview {
+        max-height:100px; 
+        max-width:100px;
+        margin-top: 10px;
+        display: block;
+    }
+    #ImageUrl {
+        margin-top: 5px;
+        width: 380px;
+        float:left;
+    }
 </style>
 
 <section class="main-container">
     <div class="main container">
         <fieldset>
-            @using (Ajax.BeginForm(
+            @using (Ajax.BeginForm("Create","Request", null,
                     new AjaxOptions
                     {
                         HttpMethod = "POST",
                         InsertionMode = InsertionMode.Replace,
                         UpdateTargetId = "",
                         OnSuccess = "checkValidate(data, status, xhr)"
-                    }
+                    }, new { enctype = "multipart/form-data" }
                 ))
             {
-                @*@using (Html.BeginForm())
-                    {*@
+
                 @Html.AntiForgeryToken()
 
                 <div class="col-md-12">
@@ -56,6 +66,7 @@
                                 <div id="mydiv" class="form-group" style="display:none">
                                     <div style="visibility: hidden">
                                         <input name="sum" id="total" value="0" />
+                                        <input name="mode" value=""/>
                                         <div id="min"></div>
                                     </div>
                                     <div class="col-md-offset-1 col-md-10" id="productList"></div>
@@ -78,6 +89,15 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group fallback">
+                                    <label class="control-label col-md-3 col-xs-12">Hình ảnh<span style="color:#ff0000"> *</span></label>
+                                    <div class="col-md-9 col-xs-12" id="image-dropzone">
+                                        <input type="file" id="ImageUrl" name="ImageUrl" accept="image/*" />
+                                        @Html.ValidationMessageFor(model => model.ImageUrl, "", new { @class = "text-danger" })
+                                        <img id="imgPreview" />
+
+                                    </div>
+                                </div>
                                 
                                 <div class="form-group">
                                     @*@Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
@@ -270,6 +290,15 @@ new AjaxOptions
                 }
             });
 
+            $("#ImageUrl").rules("add", {
+                required: true,
+                accept:"image/jpeg, image/pjpeg",
+                messages: {
+                    required: "Hình ảnh không được để trống",
+                    accept: "Hình ảnh không hợp lệ"
+                }
+            });
+
             $('.MaxLengthInputTextSmall').keypress(function (e) {
                 if (this.value.length == MaxLengthInputTextSmall) {
                     e.preventDefault();
@@ -286,9 +315,41 @@ new AjaxOptions
                     console.log(message);
                     $("#errorTotal").html(message);
                     $('#error').focus();
+                } else {
+                    var result = $('#form0').valid();
+                    console.log(result);
+                    if (result) {
+                        console.log("Hello 123");
+                        window.addEventListener("submit", function (e) {
+                            var form = e.target;
+                            if (form.getAttribute("enctype") === "multipart/form-data") {
+                                console.log("Hello Ok");
+
+                                if (form.dataset.ajax) {
+                                    e.preventDefault();
+                                    e.stopImmediatePropagation();
+                                    var xhr = new XMLHttpRequest();
+                                    xhr.open(form.method, form.action);
+                                    xhr.onreadystatechange = function () {
+                                        if (xhr.readyState == 4 && xhr.status == 200) {
+                                            console.log(xhr.responseText);
+                                            //if (form.dataset.ajaxUpdate) {
+                                            //    var updateTarget = document.querySelector(form.dataset.ajaxUpdate);
+                                            //    if (updateTarget) {
+                                            //        updateTarget.innerHTML = xhr.responseText;
+                                            //    } 
+                                            //}
+                                            checkValidate(xhr.responseText);
+                                        }
+                                    };
+                                    xhr.send(new FormData(form));
+                                }
+                            }
+                        }, true);
+                    }
+                   
                 }
-                //var sum = $("#total").val();
-                //console.log(sum);
+                
             });
 
             $('input[type="number"]').bind('keypress', function (e) {
@@ -367,13 +428,23 @@ new AjaxOptions
 
 
 
-        //$('#pricesell').priceFormat({
-        //    prefix: '',
-        //    centsSeparator: ',',
-        //    thousandsSeparator: ',',
-        //    centsLimit: 0,
-        //    suffix: ''
-        //});
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#imgPreview').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#ImageUrl").change(function(){
+            readURL(this);
+        });
+
+        
     </script>
 }
 
