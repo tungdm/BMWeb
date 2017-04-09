@@ -82,8 +82,7 @@ function checkValidate(data) {
             text: 'Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!!',
             type: 'success',
             showCancelButton: false,
-            confirmButtonClass: "btn-success",
-            confirmButtonText: "Đồng ý"
+            confirmButtonClass: "btn-success"
         }).then(function (isConfirm) {
             if (isConfirm) {
                 //var url = "/Request/Details/" + data.RequestId;
@@ -448,9 +447,9 @@ function createOrderSuccess(data) {
             confirmButtonColor: '#3085d6',
             confirmButtonText: 'Xem chi tiết đơn hàng',
 
-            cancelButtonText: 'Quan lại trang chủ',
+            cancelButtonText: 'Quay lại trang chủ',
             confirmButtonClass: 'btn btn-success',
-            cancelButtonClass: 'btn btn-info',
+            cancelButtonClass: 'btn btn-default',
             buttonsStyling: false
         }).then(function () {
             var url = "/Order/Details/" + data.OrderId;
