@@ -132,15 +132,18 @@ namespace TGVL.Controllers
             return View(model);
         }
 
-        public JsonResult CreateMapFromAjax(int sysProductId)
+        public JsonResult CreateMapFromAjax(int sysProductId, string sysProductName)
         {
             CreateMap(sysProductId);
+            var seoUrl = GenerateSlug(sysProductName, sysProductId);
+
             return new JsonResult
             {
                 Data = new
                 {
                     Message = "Success",
-                    SysProductId = sysProductId
+                    SysProductId = sysProductId,
+                    SeoUrl = seoUrl
                 },
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
@@ -789,6 +792,8 @@ namespace TGVL.Controllers
 
         public string GenerateSlug(string Title, int Id)
         {
+            Title = Title.Replace("-", "");
+
             string phrase = string.Format("{0}-{1}", Id, Title);
 
             string str = ReplaceUnicode(phrase).ToLower();
