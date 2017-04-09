@@ -700,6 +700,11 @@ namespace TGVL.Controllers
                   + "AND[dbo].[SysProducts].[SysCategoryId] = {0} "
                   + "AND[dbo].[SysProducts].[Id] <> {1} ";
             List<SimiliarProduct> simiProducts = db.Database.SqlQuery<SimiliarProduct>(query, categoryId, productId).ToList();
+            foreach (var pr in simiProducts)
+            {
+                pr.NumShops = db.Products.Where(p => p.SysProductId == pr.Id).Count();
+            }
+
             var userId = User.Identity.GetUserId<int>();
 
             var model = new SearchResultViewModel
