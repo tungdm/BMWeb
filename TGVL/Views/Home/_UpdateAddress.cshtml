@@ -3,14 +3,14 @@
 
 <ul>
     <li>
-        <div class="input-box">
+        <div class="input-box" style="font-size:medium">
             <strong>
                 @Html.DisplayFor(model => model.CustomerFullName, new { htmlAttributes = new { @class = "form-control", placeholder = "Họ tên người nhận" } })
             </strong>
         </div>
     </li>
     <li>
-        <div class="input-box">
+        <div class="input-box" style="font-size:medium">
 
             @Html.DisplayFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "Số điện thoại liên hệ" } })
 
@@ -18,22 +18,23 @@
     </li>
 
     <li>
-        <div class="input-box" style="width:100%">
+        <div class="input-box" style="width:100%;font-size:medium">
 
             @Html.DisplayFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", placeholder = "Địa chỉ nhận hàng" } })
 
         </div>
-
     </li>
 </ul>
-
-<div class="box-footer" style="padding-right:10px">
-    <div class="pull-left">
-        <button type="button" class="btn btn-default" onclick="updateExistedAddress()"><span>Sửa địa chỉ</span></button>
-    </div>
-    <div class="pull-right">
-        <button type="submit" class="btn btn-success" onclick="gotToCheckOut()" style="font-size:18px"><span>TIẾP TỤC</span></button>
-    </div>
+<div style="padding-bottom:10px">
+    <button type="button" class="btn btn-default" onclick="updateExistedAddress()" style="font-size:16px"><span>Sửa địa chỉ</span></button>
 </div>
 
+<div class="box-footer" style="padding-right:10px;padding-top:30px">
+    <div class="pull-left">
+        <a href="/Home/ShoppingCart" style="font-size:14px"><i class="fa fa-chevron-left"></i><strong> Quay lại giỏ hàng</strong></a>
+    </div>
+    <div class="pull-right">
+        <button type="submit" class="btn btn-success" onclick="gotToCheckOut()" style="font-size:20px"><span>TIẾP TỤC</span></button>
+    </div>
+</div>
 

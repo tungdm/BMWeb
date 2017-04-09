@@ -10,154 +10,151 @@
     <div class="main container">
         <fieldset>
             <div class="row">
-            <div class="col-md-8">
-                <div class="popular-posts widget widget__sidebar">
-                    <h2 class="widget-title">Thanh toán và vận chuyển</h2>
-                    @using (Ajax.BeginForm("Create", "Order",
-                            new AjaxOptions
+                <div class="col-md-8">
+                    <div class="popular-posts widget widget__sidebar">
+                        <h2 class="widget-title">Thanh toán và vận chuyển</h2>
+                        @using (Ajax.BeginForm("Create", "Order",
+                new AjaxOptions
+                {
+                    HttpMethod = "POST",
+                    OnSuccess = "createOrderSuccess(data)"
+                }
+            ))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            if (Model.IsRequestOrder)
                             {
-                                HttpMethod = "POST",
-                                OnSuccess = "createOrderSuccess(data)"
+                                @Html.HiddenFor(model => model.Reply.Id)
                             }
-                        ))
-                    {
-                        @Html.AntiForgeryToken()
+                            else
+                            {
+                                <input type="number" name="replyId" value="0" style="visibility:hidden" />
+                            }
 
-                        if (Model.IsRequestOrder)
-                        {
-                            @Html.HiddenFor(model => model.Reply.Id)
-                        }
-                        else
-                        {
-                            <input type="number" name="replyId" value="0" style="visibility:hidden" />
-                        }
-
-                        <div class="form-horizontal">
-                            <div class="form-group" style="margin-top:10px">
-                                @*@Html.LabelFor(model => model.PaymentType, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
-                                <label class="control-label col-md-4 col-sm-3 col-xs-12">Hình thức thanh toán<span style="color:#ff0000"> *</span></label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    @Html.DropDownListFor(
+                            <div class="form-horizontal">
+                                <div class="form-group" style="margin-top:10px">
+                                    @*@Html.LabelFor(model => model.PaymentType, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
+                                    <label class="control-label col-md-4 col-sm-3 col-xs-12">Hình thức thanh toán<span style="color:#ff0000"> *</span></label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        @Html.DropDownListFor(
                                         model => model.PaymentType,
                                         new SelectList(Model.AllTypeOfPayments, "Id", "Type"),
                                         "-----[Chọn hình thức thanh toán]-----",
-                                        htmlAttributes: new { @class = "form-control" }
+                                        htmlAttributes: new { @class = "form-control", @style = "font-size:medium" }
                                     )
-                                    @Html.ValidationMessageFor(model => model.PaymentType, "", new { @class = "text-danger" })
+                                        @Html.ValidationMessageFor(model => model.PaymentType, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-3 col-xs-12">Ghi chú cho bên giao hàng</label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @rows = "5", @columns = "30" })
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="form-group">
+                                    <button class="btn btn-success" style="float: right;margin-right: 50px;font-size:20px" type="submit">ĐẶT HÀNG</button>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-4 col-sm-3 col-xs-12">Ghi chú cho bên giao hàng</label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @rows = "5", @columns = "30" })
-                                </div>
-                            </div>
-                            <hr />
-                            <div class="form-group">
-                                
-                                    <button class="btn btn-success" style="float: right;margin-right: 50px;font-size:18px" type="submit">HOÀN TẤT</button>
-                                
-                            </div>
+                        }
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="popular-posts widget widget__sidebar">
+                        <h3 class="widget-title">ĐỊA CHỈ GIAO HÀNG</h3>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <tbody>
+                                    <tr>
+                                        <td>Họ tên: <strong>@Model.CustomerFullName</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Địa chỉ: @Model.Address</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Số điện thoại: @Model.PhoneNumber</td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+
                         </div>
-                    }
-                    
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="popular-posts widget widget__sidebar">
-                    <h3 class="widget-title">ĐỊA CHỈ GIAO HÀNG</h3>
-                    <div class="table-responsive">
-                        <table class="data-table">
-                            <tbody>
-                                <tr>
-                                    <td>Họ tên: <strong>@Model.CustomerFullName</strong></td>
-                                </tr>
-                                <tr>
-                                    <td>Địa chỉ: @Model.Address</td>
-                                </tr>
-                                
-                                <tr>
-                                    <td>Số điện thoại: @Model.PhoneNumber</td>
-                                </tr>
-                            </tbody>
+                <div class="col-md-4">
+                    <div class="popular-posts widget widget__sidebar">
+                        <h3 class="widget-title">THÔNG TIN ĐƠN HÀNG</h3>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <tbody>
+                                    @if (Model.IsRequestOrder)
+                                    {
+                                        foreach (var repProduct in Model.Reply.ReplyProducts)
+                                        {
+                                            decimal mini = repProduct.UnitPrice * repProduct.Quantity;
 
-                        </table>
+                                            <tr>
+                                                <td>@repProduct.Quantity x @repProduct.Product.SysProduct.Name</td>
+                                                <td>@string.Format("{0:C0}", mini)</td>
+                                            </tr>
+                                        }
+                                        <tr>
+                                            <td>Tổng sản phẩm</td>
+                                            <td>@Model.Reply.ReplyProducts.Count()</td>
+                                        </tr>
+                                        if (Model.Reply.Discount != 0)
+                                        {
+                                            <tr>
+                                                <td>Giảm giá</td>
+                                                <td>@Model.Reply.Discount %</td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        for (int i = 0; i < Model.ShoppingCart.ShoppingCartProducts.Count(); i++)
+                                        {
+                                            <tr>
+                                                <td>@Model.ShoppingCart.ShoppingCartProducts[i].Quantity x @Model.ShoppingCart.ShoppingCartProducts[i].ProductName</td>
+                                                <td>@Html.DisplayFor(modelItem => Model.ShoppingCart.ShoppingCartProducts[i].MiniTotal)</td>
+                                            </tr>
+                                        }
+
+                                        <tr>
+                                            <td>Tổng sản phẩm</td>
+                                            <td>@Model.ShoppingCart.ShoppingCartProducts.Count()</td>
+                                        </tr>
+                                    }
+
+
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td>
+                                            <strong>TỔNG CỘNG</strong>
+                                        </td>
+                                        <td>
+                                            @if (Model.IsRequestOrder)
+                                            {
+                                                <span>@string.Format("{0:C0}", Model.Reply.Total)</span>
+                                            }
+                                            else
+                                            {
+                                                @Html.DisplayFor(modelItem => Model.ShoppingCart.Total)
+                                            }
+
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
 
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="popular-posts widget widget__sidebar">
-                    <h3 class="widget-title">THÔNG TIN ĐƠN HÀNG</h3>
-                    <div class="table-responsive">
-                        <table class="data-table">
-                            <tbody>
-                                @if (Model.IsRequestOrder)
-                                {
-                                    foreach (var repProduct in Model.Reply.ReplyProducts)
-                                    {
-                                        decimal mini = repProduct.UnitPrice * repProduct.Quantity;
-
-                                        <tr>
-                                            <td>@repProduct.Quantity x @repProduct.Product.SysProduct.Name</td>
-                                            <td>@string.Format("{0:C0}", mini)</td>
-                                        </tr>
-                                    }
-                                    <tr>
-                                        <td>Tổng sản phẩm</td>
-                                        <td>@Model.Reply.ReplyProducts.Count()</td>
-                                    </tr>
-                                    if (Model.Reply.Discount != 0)
-                                    {
-                                        <tr>
-                                            <td>Giảm giá</td>
-                                            <td>@Model.Reply.Discount %</td>
-                                        </tr>
-                                    }
-                                }
-                                else
-                                {
-                                    for (int i = 0; i < Model.ShoppingCart.ShoppingCartProducts.Count(); i++)
-                                    {
-                                        <tr>
-                                            <td>@Model.ShoppingCart.ShoppingCartProducts[i].Quantity x @Model.ShoppingCart.ShoppingCartProducts[i].ProductName</td>
-                                            <td>@Html.DisplayFor(modelItem => Model.ShoppingCart.ShoppingCartProducts[i].MiniTotal)</td>
-                                        </tr>
-                                    }
-
-                                    <tr>
-                                        <td>Tổng sản phẩm</td>
-                                        <td>@Model.ShoppingCart.ShoppingCartProducts.Count()</td>
-                                    </tr>
-                                }
-                                
-                               
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td>
-                                        <strong>TỔNG CỘNG</strong>
-                                    </td>
-                                    <td>
-                                        @if (Model.IsRequestOrder)
-                                        {
-                                            <span>@string.Format("{0:C0}", Model.Reply.Total)</span>
-                                        }
-                                        else
-                                        {
-                                            @Html.DisplayFor(modelItem => Model.ShoppingCart.Total)
-                                        }
-                                        
-                                    </td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-
-                </div>
-            </div>
-        </div>
         </fieldset>
     </div>
 </section>
-

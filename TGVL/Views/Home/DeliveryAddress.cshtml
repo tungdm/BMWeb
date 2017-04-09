@@ -7,79 +7,75 @@
 @Styles.Render("~/Content/searchproductcss")
 
 <style>
-    #right{
-        padding-left:40px;
-        padding-right:0px;
+    #right {
+        padding-left: 40px;
+        padding-right: 0px;
     }
 </style>
 
 <section class="main-container col1-layout">
     <div class="main container">
-        <div class="account-login">
-            <div class="row">
-                <div class="col-md-8"> 
+        <div class="row">
+            <div class="col-md-8">
+                <div class="popular-posts widget widget__sidebar">
+                    <h3 class="widget-title"><strong>ĐỊA CHỈ GIAO HÀNG</strong></h3>
+                    <div class="widget-content" style="margin-bottom:-1px">
+                        <div class="col-2 registered-users">
+                            <ol>
+                                <li class="section allow active">
+                                    <div class="step a-item">
+                                        <fieldset class="group-select" id="deliveryAddress">
 
-                        <div class="popular-posts widget widget__sidebar">
-                            <h3 class="widget-title"><strong>ĐỊA CHỈ GIAO HÀNG</strong></h3>
-                            <div class="widget-content">
-                                <div class="col-2 registered-users">
-                                    <ol>
-                                        <li class="section allow active">
-                                            <div class="step a-item">
-                                                <fieldset class="group-select" id="deliveryAddress">
-                                                    
-                                                        @if (Model.Address == null)
+                                            @if (Model.Address == null)
                                                         {
-                                                            @Html.Partial("_AddNewAddress", Model)
+                                                    @Html.Partial("_AddNewAddress", Model)
                                                         }
                                                         else
                                                         {
-                                                            @Html.Partial("_UpdateAddress", Model)
+                                                    @Html.Partial("_UpdateAddress", Model)
                                                         }
 
-                                                    <br />                                                    
-                                                </fieldset>
-                                            </div>
-                                        </li>
-                                    </ol>
-                                </div>
-
-                            </div>
+                                            <br />
+                                        </fieldset>
+                                    </div>
+                                </li>
+                            </ol>
                         </div>
-                   
-                </div>
-                <div class="col-md-4">
-                    <div class="popular-posts widget widget__sidebar">
-                        <h3 class="widget-title"><strong>THÔNG TIN ĐƠN HÀNG</strong></h3>
-                        <div class="table-responsive">
-                            <table class="data-table">
-                                <tbody>
-                                    @for (int i = 0; i < Model.ShoppingCart.ShoppingCartProducts.Count(); i++)
-                                    {
-                                        <tr>
-                                            <td>@Model.ShoppingCart.ShoppingCartProducts[i].Quantity x @Model.ShoppingCart.ShoppingCartProducts[i].ProductName</td>
-                                            <td>@Html.DisplayFor(modelItem => Model.ShoppingCart.ShoppingCartProducts[i].MiniTotal)</td>
-                                        </tr>
-                                    }
-                                    
-                                    <tr>
-                                        <td>Tổng sản phẩm</td>
-                                        <td>@Model.ShoppingCart.ShoppingCartProducts.Count()</td>
-                                    </tr>
-                                    
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td>
-                                            <strong>TỔNG CỘNG</strong>
-                                        </td>
-                                        <td>@Html.DisplayFor(modelItem => Model.ShoppingCart.Total)</td>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-
                     </div>
+                </div>
+
+            </div>
+            <div class="col-md-4">
+                <div class="popular-posts widget widget__sidebar">
+                    <h3 class="widget-title"><strong>THÔNG TIN ĐƠN HÀNG</strong></h3>
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <tbody>
+                                @for (int i = 0; i < Model.ShoppingCart.ShoppingCartProducts.Count(); i++)
+                                    {
+                                    <tr>
+                                        <td>@Model.ShoppingCart.ShoppingCartProducts[i].Quantity x @Model.ShoppingCart.ShoppingCartProducts[i].ProductName</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.ShoppingCart.ShoppingCartProducts[i].MiniTotal)</td>
+                                    </tr>
+                                    }
+
+                                <tr>
+                                    <td>Tổng sản phẩm</td>
+                                    <td>@Model.ShoppingCart.ShoppingCartProducts.Count()</td>
+                                </tr>
+
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td>
+                                        <strong>TỔNG CỘNG</strong>
+                                    </td>
+                                    <td>@Html.DisplayFor(modelItem => Model.ShoppingCart.Total)</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
                 </div>
             </div>
         </div>
