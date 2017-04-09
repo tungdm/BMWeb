@@ -155,33 +155,86 @@
     color: #d13b3b;
     
 }
+.info p .reply {
+    background: url(/Images/icon_reply_gray.png) no-repeat center right;
+    padding: 0 15px 0 0;
+    color: #666666 !important;
+}
 </style>
 
 <div class="main-container" style="background:#f4f4f4">
     <div class="main container">
         <div class="row">
             <section class="col-main col-sm-12">
-                @*<div class="category-title">
-                    <h2><strong>YÊU CẦU ĐẤU THẦU</strong></h2>
-                </div>*@
-
                 <div class="qa_content">
                     <div class="qa_center">
+                        @{ 
+                            string f_page = ((int)ViewBag.page).ToString(); //min 1...
+                            string f_sort = ((int)ViewBag.sort).ToString(); //min 1, 2
+                            string f_type = ((int)ViewBag.type).ToString(); //min 0, 1, 2
+                            var list1 = ViewBag.list1;
+                            var list2 = ViewBag.list2;
+                            var title1 = f_sort == "1" ? "Mới nhất" : "Nổi bật";
+                            var title2 = "";
+                            if (f_type == "2")
+                            {
+                                title2 = "Tất cả";
+                            } else if (f_type == "1")
+                            {
+                                title2 = "Đấu thầu";
+                            } else {
+                                title2 = "Mua thường";
+                            }
+                        }
                         <div class="filter">
                             <div class="selectBox">
-                                <div class="select_title">Mới nhất <i></i> </div>
+                                <div class="select_title">@title1 <i></i> </div>
                                 <div class="selectItem">
-                                    <a class="active" href="/raovat/index.php?&amp;sort=0">Mới</a>
-                                    <a href="/raovat/index.php?&amp;sort=1">Tin Nổi Bật</a>
-                                    <a href="/raovat/index.php?&amp;sort=2">Tin Vip</a>
-                                    <a href="/raovat/index.php?&amp;sort=3">Tin Siêu Vip</a>
+                                    @{ 
+                                        foreach (var item in list1)
+                                        {
+                                            if (item.Value == (int)ViewBag.sort)
+                                            {
+                                                continue;
+                                            }
+                                            var link = "/Request?";
+                                            if (f_page != "1")
+                                            {
+                                                link += ("page=" + f_page + "&");
+                                            }
+                                            if (f_type != "2")
+                                            {
+                                                link += ("type=" + f_type + "&");
+                                            }
+                                            link += ("sort=" + item.Value);
+                                            <a href="@link">@item.Name</a>
+                                        }
+                                    }
                                 </div>
                             </div>
                             <div class="selectBox">
-                                <div class="select_title">Theo loại <i></i> </div>
+                                <div class="select_title">@title2 <i></i> </div>
                                 <div class="selectItem">
-                                    <a class="active" href="/raovat/index.php?&amp;sort=0">Mua thường</a>
-                                    <a href="/raovat/index.php?&amp;sort=1">Đấu thầu</a>
+                                    @{
+                                        foreach (var item in list2)
+                                        {
+                                            if (item.Value == (int)ViewBag.type)
+                                            {
+                                                continue;
+                                            }
+                                            var link = "/Request?";
+                                            if (f_page != "1")
+                                            {
+                                                link += ("page=" + f_page + "&");
+                                            }
+                                            if (f_sort != "1")
+                                            {
+                                                link += ("sort=" + f_sort + "&");
+                                            }
+                                            link += ("type=" + item.Value);
+                                            <a href="@link">@item.Name</a>
+                                        }
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -206,7 +259,7 @@
                                         <div class="deliver_address"><span><strong>Địa chỉ nhận hàng</strong></span>: @item.DeliveryAddress</div>
                                         <div class="info">
                                             <p>
-                                                <strong><span>@item.UserName</span> <span>•</span> <span>@Convert.ToDateTime(item.StartDate).ToString("dd/MM/yyyy HH:mm")</span></strong>
+                                                <strong><span>@item.UserName</span> <span>•</span> <span>@Convert.ToDateTime(item.StartDate).ToString("dd/MM/yyyy HH:mm")</span> <span>•</span> <span class="reply">@item.NumReplies</span></strong>
                                             </p>
                                         </div>
                                     </div>
@@ -217,7 +270,7 @@
                 </div>
 
                 <div style="text-align:center">
-                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), PagedListRenderOptions.ClassicPlusFirstAndLast)
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, ViewBag.sort, ViewBag.type }), PagedListRenderOptions.ClassicPlusFirstAndLast)
                 </div>
             </section>
         </div>
