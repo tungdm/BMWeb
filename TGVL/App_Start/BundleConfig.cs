@@ -42,6 +42,7 @@ namespace TGVL
 
             //TungDM
 
+            //Summernote
             bundles.Add(new StyleBundle("~/bundles/SummernoteCSS").Include(
                 "~/Scripts/summernote/summernote.css"
 
@@ -68,6 +69,7 @@ namespace TGVL
                 "~/Scripts/jquery-ui.js",
                 "~/Scripts/jquery.unobtrusive*",
                 "~/Scripts/jquery.validate*",
+                "~/Scripts/additional-methods.js",
                 "~/Scripts/MvcFoolproofJQueryValidation.js",
                 "~/Client_Scripts/mvcfoolproof.unobtrusive.js",
                 "~/Scripts/otf-1.2.js",
