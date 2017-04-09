@@ -384,25 +384,18 @@ function searchSuggest(searchString) {
     });
 }
 
-function viewProductDetails(sysProductId) {
+function viewProductDetails(sysProductId, sysProductName) {
     var options = {
         url: '/Home/CreateMapFromAjax',
-        data: { sysProductId: sysProductId },
+        data: { sysProductId: sysProductId, sysProductName: sysProductName },
         type: 'GET',
     };
 
     $.ajax(options).done(function (data) {
         if (data.Message == "Success") {
-            var url = "/Home/ViewDetail/" + data.SysProductId;
+            var url = "/Home/ViewDetail/" + data.SeoUrl;
             window.location.href = url;
-            //var win = window.open(url, '_blank');
-            //if (win) {
-            //    win.focus();
-            //} else {
-            //    alert('Please allow popups for this website');
-            //}
         }
-        
     });
 }
 
