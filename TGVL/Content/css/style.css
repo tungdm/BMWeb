@@ -6988,7 +6988,7 @@ input#coupon_code {
 	margin: 0;
 	outline: medium none;
 	padding: 8px;
-	width: 50px;
+	width: 60px;
     max-height:30px;
 	text-align: center;
 }
@@ -8923,6 +8923,7 @@ input.radio {
 .group-select li .input-box {
 	float: left;
 	width: 45%;
+    font-size:medium;
     padding-left:10px;
 }
 .group-select li input.input-text, .group-select li textarea {
