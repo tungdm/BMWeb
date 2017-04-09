@@ -5365,7 +5365,7 @@ li .list {
 }
 .product-view .product-name h1 {
 	border-bottom: 1px solid #e5e5e5;
-	font-family: 'Roboto', serif;
+	/*font-family: 'Roboto', serif;*/
 	font-size: 36px;
 	font-weight: normal;
 	letter-spacing: normal;
