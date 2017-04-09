@@ -43,6 +43,8 @@ namespace TGVL.Models
 
         public string Image { get; set; }
 
+        public int NumReplies { get; set; }
+
     }
 
     public class CreateRequestViewModel
@@ -199,5 +201,10 @@ namespace TGVL.Models
         public int RequestId { get; set; }
     }
 
+    public class FilterRequest
+    {
+        public string Name { get; set; }
+        public int Value { get; set; }
+    }
 
 }
