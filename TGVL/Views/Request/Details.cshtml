@@ -208,10 +208,10 @@
                                             var message = "";
                                             if (Model.StatusId == 2)
                                             {
-                                                message = "(Expired)";
+                                                message = "(Hết hạn)";
                                             } else if (Model.StatusId == 3)
                                             {
-                                                message = "(Completed)";
+                                                message = "(Hoàn tất)";
                                             }
                                         }
                                         <h2 class="blog_entry-title" style="text-align:center"> <strong>@Html.DisplayFor(model => model.Title)</strong> <span id="expiredMessage">@message</span></h2>
@@ -228,7 +228,6 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Sản phẩm yêu cầu: <span class="badge">@Model.RequestProducts.Count()</span></th>
-                                                        @*<th>Giá</th>*@
                                                         <th>Ảnh minh họa</th>
                                                         <th>Nhà sản xuất</th>
                                                         <th>Số lượng</th>
@@ -241,7 +240,7 @@
                                                         <tr>
                                                             <td>
                                                                 <strong>
-                                                                    <a href="javascript:;" onclick="viewProductDetails(@item.SysProductId)">@item.SysProduct.Name</a>
+                                                                    <a href="javascript:;" onclick="viewProductDetails(@item.SysProductId, '@item.SysProduct.Name')">@item.SysProduct.Name</a>
                                                                 </strong>
                                                             </td>
 

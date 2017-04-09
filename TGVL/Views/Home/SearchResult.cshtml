@@ -125,7 +125,7 @@
                                                     <td>
                                                         @Html.DisplayFor(modelItem => item.ManufactureName)
                                                     </td>
-                                                    <td><button id="viewProductDetails" class="btn btn-primary" onclick="viewProductDetails(@item.Id)">Xem chi tiết</button></td>
+                                                    <td><button id="viewProductDetails" class="btn btn-primary" onclick="viewProductDetails(@item.Id, '@item.Name')">Xem chi tiết</button></td>
                                                 </tr>
                                             }
                                         </tbody>
