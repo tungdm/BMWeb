@@ -29,7 +29,7 @@
 
     .item-inner {
         width: 250px;
-        height: 350px;
+        height: 320px;
         display: block;
         vertical-align: top;
     }
@@ -38,6 +38,7 @@
         width: 100%;
         height: auto;
         padding: 10px;
+        margin-bottom: 20px;
     }
 
     span.stars, span.stars span {
@@ -51,28 +52,32 @@
             background-position: 0 0;
         }
 
-    h3{
+    h3 {
         border-bottom: none 1px rgba(100, 100, 100, .30);
     }
 
+    #deal_border {
+        border: 1px solid #eaeaea;
+        background: #fff;
+    }
 </style>
 
-<section class="main-container">
-    <div class="main container">
-        <div class="breadcrumbs">
-            <div class="container">
-                <div class="row">
-                    <ul>
-                        <li class="home"><strong> Trang chủ </strong><span>&raquo;</span></li>
-                        <li class=""> <strong>@Model.SysProduct.SysCategory.Name</strong><span>&raquo;</span></li>
-                        <li class="category13"><strong> @Model.SysProduct.Name </strong></li>
-                    </ul>
-                </div>
-            </div>
+@*<div class="breadcrumbs">
+    <div class="container">
+        <div>
+            <ul>
+                <li class="home"><strong> Trang chủ </strong><span>&raquo;</span></li>
+                <li class=""> <strong>@Model.SysProduct.SysCategory.Name</strong><span>&raquo;</span></li>
+                <li class="category13"><strong> @Model.SysProduct.Name </strong></li>
+            </ul>
         </div>
-        <br />
+    </div>
+</div>*@
+
+<section class="main-container" style="background:#f4f4f4">
+    <div class="main container">
         <div class="col-main">
-            <div class="row">
+            <div class="row" id="deal_border">
                 <div class="col-md-12">
                     <div class="product-view">
                         <div class="product-essential">
@@ -84,7 +89,7 @@
                                 </div>
                                 <div class="clear"></div>
                             </div>
-                            <div class="product-shop col-sm-6 col-xs-12">
+                            <div class="product-shop col-sm-9 col-xs-12">
                                 <div class="product-name">
                                     <h1>@Model.SysProduct.Name</h1>
                                 </div>
@@ -96,7 +101,7 @@
                                 <hr />
                                 <div class="price-block">
                                     <div class="price-box">
-                                        Có <span class="total"> @Model.NumOfShops </span> cửa hàng bán với giá từ: <p class="special-price"> <span class="price-label"> Special Price</span> <span class="price">@string.Format("{0:C0}", Model.SysProduct.UnitPrice)</span> </p>
+                                        Có <span class="total"><strong> @Model.NumOfShops </strong> </span> cửa hàng bán với giá từ: <p class="special-price"> <span class="price-label"> Special Price</span> <span class="price">@string.Format("{0:C0}", Model.SysProduct.UnitPrice)</span> </p>
                                     </div>
                                 </div>
                                 <div class="toggle-content">
@@ -107,23 +112,23 @@
                                             </thead>
                                             @foreach (var item in Model.SysProduct.ProductAttributes)
                                             {
-                                                <tr>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Attribute)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Value)
-                                                    </td>
-                                                </tr>
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Attribute)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Value)
+                                                </td>
+                                            </tr>
                                             }
                                         </table>
                                     </div>
                                 </div>
                             </div>
-                            <div class="product-shop col-sm-3 col-xs-12">
+                            @*<div class="product-shop col-sm-3 col-xs-12">
                                 <div class="popular-posts widget widget__sidebar">
-                                    <h3 class="widget-title">CÙNG MỨC GIÁ</h3>
-                                    <div class="widget-content">
+                                    <h3 class="widget-title" style="background:#fff">CÙNG MỨC GIÁ</h3>
+                                    <div class="widget-content" style="background:#fff">
                                         <ul class="posts-list unstyled clearfix">
                                             <li>
                                                 <div class="row">
@@ -144,7 +149,7 @@
                                                         <img src="~/Content/images/xi-mang-fico-pcb40.jpg" width="40" height="70" />
                                                     </div>
                                                     <div class="col-md-10">
-                                                        <p >Gạch lát nền DTD1380 GOSAN003</p>
+                                                        <p>Gạch lát nền DTD1380 GOSAN003</p>
                                                         <p class="post-meta" style="color:#ff1341">
                                                             Giá: <strong>80.000 VNĐ</strong>
                                                         </p>
@@ -168,7 +173,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                            </div>
+                            </div>*@
 
 
                         </div>
@@ -176,7 +181,6 @@
                 </div>
             </div>
             <br />
-            
 
             <div class="row">
                 <div class="col-sm-12 col-xs-12">
@@ -209,22 +213,22 @@
                                             @foreach (var item in Model.ListShops)
                                             {
                                                 count++;
-                                                <tr>
-                                                    <td>@count</td>
-                                                    <td>@item.name</td>
-                                                    <td>@Html.DisplayFor(modelItem => item.price)</td>
-                                                    <td>
-                                                        <span style="float: left;" class="stars">@item.rating</span> (@item.rating)
-                                                    </td>
-                                                    <td>@item.address</td>
-                                                    <td>
-                                                        <button type="submit" class="btn btn-success" onclick="datmua(@item.productId)">Thêm vào giỏ hàng</button>
-                                                        <button type="submit" class="btn btn-primary" onclick="viewOnMap(@item.lat, @item.lng)">Xem bản đồ</button>
-                                                    </td>
-                                                </tr>
+                                            <tr>
+                                                <td>@count</td>
+                                                <td>@item.name</td>
+                                                <td>@Html.DisplayFor(modelItem => item.price)</td>
+                                                <td>
+                                                    <span style="float: left;" class="stars">@item.rating</span> (@item.rating)
+                                                </td>
+                                                <td>@item.address</td>
+                                                <td>
+                                                    <button type="submit" class="btn btn-success" onclick="datmua(@item.productId)">Thêm vào giỏ hàng</button>
+                                                    <button type="submit" class="btn btn-primary" onclick="viewOnMap(@item.lat, @item.lng)">Xem bản đồ</button>
+                                                </td>
+                                            </tr>
                                             }
-                                            
-                                            
+
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -251,107 +255,107 @@
 
                 </div>
                 @*<div class="col-sm-3 col-xs-12">
-                    <div class="popular-posts widget widget__sidebar">
-                        <h3 class="widget-title">CÙNG NHÀ SẢN XUẤT</h3>
-                        <div class="widget-content">
-                            <ul class="posts-list unstyled clearfix">
-                                <li>
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <img src="~/Content/images/xi-mang-fico-pcb40.jpg" width="40" height="70" />
+                        <div class="popular-posts widget widget__sidebar">
+                            <h3 class="widget-title">CÙNG NHÀ SẢN XUẤT</h3>
+                            <div class="widget-content">
+                                <ul class="posts-list unstyled clearfix">
+                                    <li>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <img src="~/Content/images/xi-mang-fico-pcb40.jpg" width="40" height="70" />
+                                            </div>
+                                            <div class="col-md-10">
+                                                <p>Gạch lát nền DTD1380 GOSAN003 daada</p>
+                                                <p class="post-meta" style="color:#ff1341">
+                                                    Giá: <strong>80.000 VNĐ</strong>
+                                                </p>
+                                            </div>
                                         </div>
-                                        <div class="col-md-10">
-                                            <p>Gạch lát nền DTD1380 GOSAN003 daada</p>
-                                            <p class="post-meta" style="color:#ff1341">
-                                                Giá: <strong>80.000 VNĐ</strong>
-                                            </p>
+                                    </li>
+                                    <li>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <img src="~/Content/images/xi-mang-fico-pcb40.jpg" width="40" height="70" />
+                                            </div>
+                                            <div class="col-md-10">
+                                                <p>Gạch lát nền DTD1380 GOSAN003</p>
+                                                <p class="post-meta" style="color:#ff1341">
+                                                    Giá: <strong>80.000 VNĐ</strong>
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <img src="~/Content/images/xi-mang-fico-pcb40.jpg" width="40" height="70" />
+                                    </li>
+                                    <li>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <img src="~/Content/images/xi-mang-fico-pcb40.jpg" width="40" height="70" />
+                                            </div>
+                                            <div class="col-md-10">
+                                                <p>Gạch lát nền DTD1380 GOSAN003</p>
+                                                <p class="post-meta" style="color:#ff1341">
+                                                    Giá: <strong>80.000 VNĐ</strong>
+                                                </p>
+                                            </div>
                                         </div>
-                                        <div class="col-md-10">
-                                            <p>Gạch lát nền DTD1380 GOSAN003</p>
-                                            <p class="post-meta" style="color:#ff1341">
-                                                Giá: <strong>80.000 VNĐ</strong>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <img src="~/Content/images/xi-mang-fico-pcb40.jpg" width="40" height="70" />
-                                        </div>
-                                        <div class="col-md-10">
-                                            <p>Gạch lát nền DTD1380 GOSAN003</p>
-                                            <p class="post-meta" style="color:#ff1341">
-                                                Giá: <strong>80.000 VNĐ</strong>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                </div>*@
+                    </div>*@
             </div>
             <br />
-            <section class="main-container col1-layout home-content-container">
-                <div class="container">
-                    <div class="row">
-                        <div class="std">
-                            <div id="border1" class="best-pro col-md-12">
-                                <div class="slider-items-products">
-                                    <div class="new_title center">
-                                        <h2>SẢN PHẨM TƯƠNG TỰ</h2>
-                                    </div>
-                                    <div id="best-seller-slider" class="product-flexslider hidden-buttons">
-                                        <div class="slider-items slider-width-col4">
-                                            @foreach (var item in Model.SimiliarProducts)
-                                            {
-                                                <div class="item">
-                                                    <div class="col-item">
-                                                        <div class="item-inner">
-                                                            <div class="item-img">
-                                                                <div class="item-img-info">
-                                                                    <a href="javascript:;" class="product-image" onclick="viewProductDetails(@item.Id)"> <img src="~/Images/Product/SysProduct/@item.Image"></a>
-                                                                    @*<img src="~/Images/Product/SysProduct/@item.Image" class="product-image"/>*@
-                                                                </div>
+
+            <div class="row">
+                <div class="std">
+                    <div id="border1" class="best-pro col-md-12">
+                        <div class="slider-items-products">
+                            <div class="new_title center">
+                                <h2><strong>SẢN PHẨM TƯƠNG TỰ</strong></h2>
+                            </div>
+                            <div id="best-seller-slider" class="product-flexslider hidden-buttons">
+                                <div class="slider-items slider-width-col4">
+                                    @foreach (var item in Model.SimiliarProducts)
+                                    {
+                                        <div class="item">
+                                            <div class="col-item">
+                                                <div class="item-inner">
+                                                    <div class="item-img">
+                                                        <div class="item-img-info">
+                                                            <a href="javascript:;" class="product-image" onclick="viewProductDetails(@item.Id)"> <img src="~/Images/Product/SysProduct/@item.Image"></a>
+                                                            @*<img src="~/Images/Product/SysProduct/@item.Image" class="product-image"/>*@
+                                                        </div>
+                                                    </div>
+                                                    <div class="item-info">
+                                                        <div class="info-inner">
+                                                            <div class="item-title" style="text-align:center">
+                                                                @*<a href="product_detail.html" title="Thép cây vằn Pomina D12"> Thép cây vằn Pomina D12 </a>*@
+                                                                <a href="javascript:;" onclick="viewProductDetails(@item.Id)" style="font-size:17px">@item.Name</a>
                                                             </div>
-                                                            <div class="item-info">
-                                                                <div class="info-inner">
-                                                                    <div class="item-title">
-                                                                        @*<a href="product_detail.html" title="Thép cây vằn Pomina D12"> Thép cây vằn Pomina D12 </a>*@ 
-                                                                        <a href="javascript:;" onclick="viewProductDetails(@item.Id)">@item.Name</a>
+                                                            <div class="item-content">
+                                                                <div class="item-price" style="text-align:center">
+                                                                    <div class="price-box">
+                                                                        <span class="regular-price"> <span class="price" style="font-size:20px">@string.Format("{0:C0}", @item.UnitPrice)</span> </span>
                                                                     </div>
-                                                                    <div class="item-content">
-                                                                        <div class="item-price">
-                                                                            <div class="price-box">
-                                                                                <span class="regular-price"> <span class="price">@string.Format("{0:C0}", @item.UnitPrice)</span> </span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
+                                                                </div>
+                                                                <div class="short-description" style="padding-left:10px;text-align:center">
+                                                                    <p>Có <strong>2</strong> cửa hàng bán </p>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            }
-                                            
+                                            </div>
                                         </div>
+                                    }
 
-                                    </div>
                                 </div>
-                            </div>
 
+                            </div>
                         </div>
                     </div>
+
                 </div>
-            </section>
+            </div>
 
         </div>
     </div>
@@ -387,7 +391,7 @@
             </div>
             <div class="modal-body">
                 <div id="mapsInfo">
-                    
+
                 </div>
             </div>
         </div>
@@ -410,14 +414,14 @@
 <script>
     $(document).ready(function () {
         $(".stars").each(function () {
-           
+
             var val = parseFloat($(this).html());
             console.log(val);
-          
+
             var size = Math.max(0, (Math.min(5, val))) * 16;
-         
+
             var $span = $('<span />').width(size);
-          
+
             $(this).html($span);
         });
 
