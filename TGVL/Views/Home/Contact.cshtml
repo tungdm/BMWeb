@@ -1,18 +1,46 @@
 ﻿@{
     ViewBag.Title = "Contact";
+    Layout = "~/Views/Shared/_HomePageViewLayout.cshtml";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
+<style>
+    h3 {
+        border-bottom: none 1px rgba(100, 100, 100, .30);
+    }
+</style>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
-
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+<section class="main-container">
+    <div class="main container">
+        <h3 style="font-size:x-large"><strong>THÔNG TIN LIÊN HỆ</strong></h3>
+        <div class="row">
+            <br />
+            <div class="col-md-2">
+                Địa chỉ
+            </div>
+            <div class="col-md-6">
+                Tòa nhà Innovation, Công Viên Phần Mềm Quang Trung, Quận 12, TPHCM
+            </div>
+        </div>
+        <div class="row">
+            <br />
+            <div class="col-md-2">
+                Điện thoại
+            </div>
+            <div class="col-md-6">
+                (08)-3877-0508
+            </div>
+        </div>
+        <div class="row">
+            <br />
+            <div class="col-md-2">
+                Email
+            </div>
+            <div class="col-md-6">
+                thegioivatlieu123@gmail.com
+            </div>
+        </div>
+        <br />
+        <h3 style="font-size:x-large"><strong>PHẢN HỒI</strong></h3>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=thegioivatlieu123@gmail.com&su=Phản hồi về hệ thống" class="btn btn-info">Phản hồi</a>
+    </div>
+</section>
