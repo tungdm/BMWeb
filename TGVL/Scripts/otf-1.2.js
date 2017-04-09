@@ -54,7 +54,10 @@ function selectedSuccess(data) {
 }
 
 //Create request
-function checkValidate(data, status, xhr) {
+function checkValidate(data) {
+    data = jQuery.parseJSON(data);
+
+    //console.log(data.Success);
     if (data.Success == "Fail") {
         var message = "";
         $('#mydiv').show();
