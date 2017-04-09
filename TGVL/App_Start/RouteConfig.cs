@@ -21,6 +21,13 @@ namespace TGVL
                 )
             );
 
+            routes.Add("ViewDetails", new SeoFriendlyRoute(
+                "Home/ViewDetail/{id}",
+                new RouteValueDictionary(new { controller = "Home", action = "ViewDetail" }),
+                new MvcRouteHandler()
+                )
+            );
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
