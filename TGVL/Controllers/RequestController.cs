@@ -25,7 +25,17 @@ namespace TGVL.Controllers
     {
         private BMWEntities db = new BMWEntities();
         private ApplicationUserManager _userManager;
-        
+        private List<FilterRequest> list1 = new List<FilterRequest> {
+            new FilterRequest { Name = "Mới nhất" , Value = 1},
+            new FilterRequest { Name = "Nổi bật" , Value = 2}
+        };
+
+        private List<FilterRequest> list2 = new List<FilterRequest> {
+            new FilterRequest { Name = "Tất cả" , Value = 2},
+            new FilterRequest { Name = "Mua thường" , Value = 0},
+            new FilterRequest { Name = "Đấu thầu" , Value = 1}
+        };
+
         public RequestController()
         {
         }
@@ -48,15 +58,55 @@ namespace TGVL.Controllers
         }
 
         // GET: Request
-        public ActionResult Index(int? page)
+        public ActionResult Index(int? page, int? sort, int? type)
         {
-            var pageSize = 10;
+            ViewBag.list1 = list1;
+            ViewBag.list2 = list2;
+
+            var pageSize = 2;
             var pageNumber = (page ?? 1);
+            int? sortNumber = sort;
+            if (sortNumber == null || sortNumber > 2 || sortNumber < 1)
+            {
+                sortNumber = 1; //default
+            }
+
+            int? typeNumber = type;
+            if (typeNumber == null || typeNumber > 2 || sortNumber < 0)
+            {
+                typeNumber = 2; //default
+            }
+
+            ViewBag.page = pageNumber;
+            ViewBag.sort = sortNumber;
+            ViewBag.type = typeNumber;
+
             var userId = User.Identity.GetUserId<int>();
-            var requests = db.Requests.Where(r => r.StatusId == 1).OrderByDescending(r => r.StartDate).ToList();
+
+            var requestFilter = new List<Request>();
+
+            if (typeNumber == 2) //all
+            {
+                var requests = db.Requests.Where(r => r.StatusId == 1);
+                if (sortNumber == 1) //mới nhất
+                {
+                    requests = requests.OrderByDescending(r => r.StartDate);
+                }
+                requestFilter = requests.ToList();
+            } else //normal hoặc bid
+            {
+                var requests = db.Requests.Where(r => r.StatusId == 1 && r.Flag == typeNumber);
+                if (sortNumber == 1) //mới nhất
+                {
+                    requests = requests.OrderByDescending(r => r.StartDate);
+                }
+                requestFilter = requests.ToList();
+            }
+            
+            //var requests = db.Requests.Where(r => r.StatusId == 1).OrderByDescending(r => r.StartDate).ToList();
             var allRequest = new List<RequestFloorModel>();
 
-            foreach (var item in requests)
+            foreach (var item in requestFilter)
             {
                 var m = new RequestFloorModel {
                     Id = item.Id,
@@ -67,11 +117,16 @@ namespace TGVL.Controllers
                     UserName = item.User.Fullname,
                     Avatar = item.User.Avatar,
                     Image = item.Image,
-                    StartDate = item.StartDate
+                    StartDate = item.StartDate,
+                    NumReplies = db.Replies.Where(r => r.RequestId == item.Id).Count()
                 };
                 allRequest.Add(m);
             }
 
+            if (sortNumber == 2)
+            {
+                allRequest = allRequest.OrderByDescending(r => r.NumReplies).ThenByDescending(r => r.StartDate).ToList();
+            }
           
             return View(allRequest.ToPagedList(pageNumber, pageSize));
         }
