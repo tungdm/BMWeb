@@ -16,6 +16,7 @@ using TGVL.LucenceSearch;
 using System.Globalization;
 using System.Data.Entity;
 using System.Net.Mail;
+using System.IO;
 
 namespace TGVL.Controllers
 {
@@ -301,7 +302,7 @@ namespace TGVL.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [System.Web.Mvc.Authorize(Roles = "Customer")]
-        public async Task<ActionResult> Create(CreateRequestViewModel model, string mode, string[] selectedProduct, int[] quantity, int sum)
+        public async Task<ActionResult> Create(CreateRequestViewModel model, string[] selectedProduct, int[] quantity, int sum)
         {
             if (ModelState.IsValid)
             {
@@ -321,7 +322,7 @@ namespace TGVL.Controllers
                 {
                     var minTotal = db.Settings.Where(s => s.SettingTypeId == 1 && s.SettingName == "MinBidPrice").FirstOrDefault().SettingValue;
 
-                    if (mode == "bid" && sum < minTotal)
+                    if (model.Flag == "bid" && sum < minTotal)
                     {
                         return new JsonResult
                         {
@@ -353,9 +354,27 @@ namespace TGVL.Controllers
                         StatusId = 1, //Init
                     };
 
-                    if (mode == "bid")
+                    if (model.Flag == "bid")
                     {
                         request.Flag = 1; //set flag = 1: bid request
+                    }
+                    var uploadImage = model.ImageUrl;
+
+                    if (uploadImage != null && uploadImage.ContentLength > 0)
+                    {
+                        var fileName = Path.GetFileName(uploadImage.FileName);
+
+                        var filePath = Path.Combine(Server.MapPath("~/Images/Request"), fileName);
+
+                        if (System.IO.File.Exists(filePath))
+                        {
+                            ViewBag.Error = "Hinh anh da ton tai";
+                        }
+                        else
+                        {
+                            uploadImage.SaveAs(filePath);
+                            request.Image = fileName;
+                        }
                     }
 
                     db.Requests.Add(request);
@@ -395,7 +414,7 @@ namespace TGVL.Controllers
                     luceneRequest.ListProduct = listProduct;
                     LuceneSimilar.AddUpdateLuceneIndex(luceneRequest);
 
-                    if (mode == "bid")
+                    if (model.Flag == "bid")
                     {
                         var bidRequest = new BidRequest
                         {
