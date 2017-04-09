@@ -27,5 +27,7 @@ namespace TGVL.Models
         public string UnitType { get; set; }
 
         public string Image { get; set; }
+
+        public int NumShops { get; set; }
     }
 }
