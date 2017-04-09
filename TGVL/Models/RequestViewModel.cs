@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using System.Text.RegularExpressions;
 using System.Text;
 using System.Globalization;
+using System.Web;
 
 namespace TGVL.Models
 {
@@ -97,6 +98,9 @@ namespace TGVL.Models
         public IList<RequestedProductWithQuantity> RequestProducts { get; set; }
 
         public string Flag { get; set; }
+
+
+        public HttpPostedFileBase ImageUrl { get; set; }
 
         //Validate
         public int MinNumSeletedProduct { get; set; }
