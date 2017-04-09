@@ -956,6 +956,7 @@ nav {
 #nav li a span {
 }
 #nav li ul a span {
+    font-size:16px
 }
 	/* 1st level only*/
 #nav > li {
@@ -1501,7 +1502,7 @@ li.level0 > a:hover > span > .pin-bottom:before, #nav li.level0:hover > a > span
 	left: 0;
 	padding: 6px 0 0 15px;
 	border-top: none;
-	width: 180px;
+	width: 200px;
 	text-align: left;
 	z-index: 1000;
 	border: 1px solid #ddd;
@@ -1995,9 +1996,9 @@ ul#magicat li .open-close, .block-layered-nav dt .toggleBtn {
 .new_title.center {
 	padding: 0 10px 10px 10px;
 	text-align: left;
-	/*border-bottom: 1px solid #e5e5e5;*/
-    border: 1px solid #eaeaea;
-    background:#fff;
+	border-bottom: 1px solid #e5e5e5;
+    /*border: 1px solid #eaeaea;
+    background:#fff;*/
 }
 .new_title {
 	color: #000000;
@@ -2974,7 +2975,7 @@ small {
 	line-height: 26px;
 }
 .slider-items-products .owl-buttons a {
-	background: #f3f3f3;
+	background: #fff;
 	display: block;
 	height: 30px;
 	margin: -8px 0 0;
@@ -3227,8 +3228,8 @@ a.button.detail-bnt span {
 .breadcrumbs {
 	font-size: 14px;
 	padding: 5px 10px;
-    margin-bottom:50px;
-    background-color:#f6f6f6;
+    /*margin-bottom:50px;
+    background-color:#f6f6f6;*/
 }
 .breadcrumbs ul {
 	margin: 0px 0px 0px 15px;
@@ -5306,6 +5307,7 @@ li .list {
 .product-essential .product-image img {
 	height: 150%;
 	width: 100%;
+    margin-top:10px;
 }
 .product-essential .button-viewall {
 	position: absolute;
@@ -5358,7 +5360,7 @@ li .list {
 	margin-left: 5px;
 }
 .product-view .product-shop {
-	margin-top: 0;
+	margin-top: 10px;
 	padding-right: 0;
     padding-top:10px;
     padding-bottom:10px;
