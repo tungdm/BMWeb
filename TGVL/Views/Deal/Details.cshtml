@@ -22,7 +22,7 @@
     .item-inner {
         width: 250px;
         height: 350px;
-        display: inline-block;
+        display: block;
         vertical-align: top;
     }
 
@@ -165,41 +165,71 @@
 
                     </div>
                 </div>
-                <div class="col-main col-sm-3">
+                <div class="best-pro col-md-3">
                     <div class="popular-posts widget widget__sidebar" style="background:#fff">
                         <h3 class="widget-title" style="background:#fff">ĐỊA CHỈ</h3>
                         <div class="widget-content">
-                            <p style="font-size:medium"><i class="fa fa-map-marker"> 123 Nguyễn Văn Trỗi P1, QPhú Nhuận, TPHCM</i></p>
+                            <p style="font-size:medium"><i class="fa fa-map-marker"> 123 Nguyễn Trãi </i></p>
                         </div>
                     </div>
                     <div class="slider-items-products">
-                        <div class="new_title center">
-                            <h2><strong>DEAL TƯƠNG TỰ</strong></h2>
-                        </div>
-                        <div id="best-seller-slider" class="product-flexslider hidden-buttons">
+                        <div class="slider-items-products">
+                            <div class="new_title center">
+                                <h2><strong>DEAL TƯƠNG TỰ</strong></h2>
+                            </div>
+                            <div id="best-seller-slider" class="product-flexslider hidden-buttons">
 
-                            @{
+                                @{
                                 if (Model.SimilarDeals != null)
                                 {
                                     foreach (var item in Model.SimilarDeals)
                                     {
-                                        <div class="item" style="padding-bottom:10px">
+                                            <div class="item" style="padding-bottom:10px">
+                                                <div class="col-item">
+                                                    <div class="item-inner">
+                                                        <div class="item-img">
+                                                            <div class="item-img-info">
+                                                                <a href="/Deal/Details/@item.Id" class="product-image"> <img src="~/Images/Product/Warehouse/@item.Image"></a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="item-info">
+                                                            <div class="info-inner">
+                                                                <div class="item-title"> <h3 href="#" style="font-size:14px"> @item.Title </h3> </div>
+                                                                <div class="item-content">
+                                                                    <div class="price-block">
+                                                                        <div class="price-box">
+                                                                            <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" style="font-size:20px"> @Html.DisplayFor(itemModel => item.UnitPrice)</span> Giảm <strong style="color:#ff1341; font-size:20px">@item.Discount %</strong> </p>
+                                                                            <br />
+                                                                            <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" style="font-size:18px"> @Html.DisplayFor(itemModel => item.PriceSave) </span> &nbsp; <span class="pull-right"> <i class="fa fa-user"> @item.NumBuyer </i></span></p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        }
+                                        <div class="item">
                                             <div class="col-item">
                                                 <div class="item-inner">
                                                     <div class="item-img">
                                                         <div class="item-img-info">
-                                                            <a href="/Deal/Details/@item.Id" class="product-image"> <img src="~/Images/Product/Warehouse/@item.Image"></a>
+                                                            <a href="product_detail.html" class="product-image"> <img src="~/Images/Product/SysProduct/PCB30.jpg"> </a>
                                                         </div>
                                                     </div>
                                                     <div class="item-info">
                                                         <div class="info-inner">
-                                                            <div class="item-title"> <h3 href="#" style="font-size:14px"> @item.Title </h3> </div>
+                                                            <div class="item-title" style="text-align:left"> <h3 style="font-size:14px">Thưởng Thức Dimsum Trưa Và Tối Tại Nhà Hàng Little Hong Kong</h3></div>
                                                             <div class="item-content">
                                                                 <div class="price-block">
                                                                     <div class="price-box">
-                                                                        <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" style="font-size:20px"> @Html.DisplayFor(itemModel => item.UnitPrice)</span> Giảm <strong style="color:#ff1341; font-size:20px">@item.Discount %</strong> </p>
+                                                                        <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" style="font-size:20px">89.000</span> Giảm <strong style="color:#ff1341; font-size:20px">5%</strong> </p>
                                                                         <br />
-                                                                        <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" style="font-size:18px"> @Html.DisplayFor(itemModel => item.PriceSave) </span> &nbsp; <span class="pull-right"> <i class="fa fa-user"> @item.NumBuyer </i></span></p>
+                                                                        <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" style="font-size:18px">78.000</span> &nbsp; <span class="pull-right" style="font-size:16px"> <i class="fa fa-user"> 100</i></span></p>
+
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -209,12 +239,11 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                     }
                                 }
-                            }
 
 
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -413,4 +442,5 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBO_d9y7dn40gSnQs0ZQRhClFpFDQKqzjM&callback=myMap" async defer>
 
 </script>
+
 
