@@ -424,11 +424,21 @@ namespace TGVL.Controllers
                     {
                         var fileName = Path.GetFileName(uploadImage.FileName);
 
+                        fileName = Guid.NewGuid().ToString() + fileName;
+                         
                         var filePath = Path.Combine(Server.MapPath("~/Images/Request"), fileName);
 
                         if (System.IO.File.Exists(filePath))
                         {
-                            ViewBag.Error = "Hinh anh da ton tai";
+                            return new JsonResult
+                            {
+                                Data = new
+                                {
+                                    Success = "Fail",
+                                    ErrorType = "Image",
+                                },
+                                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                            };
                         }
                         else
                         {
