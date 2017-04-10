@@ -55,7 +55,12 @@ function selectedSuccess(data) {
 
 //Create request
 function checkValidate(data) {
-    data = jQuery.parseJSON(data);
+    var type = typeof data;
+    console.log(type);
+    if (type != "object") {
+        data = jQuery.parseJSON(data);
+    }
+    
 
     //console.log(data.Success);
     if (data.Success == "Fail") {
@@ -373,15 +378,17 @@ function updateReview(data, status, xhr) {
 
 function searchSuggest(searchString) {
     $("#searchString").val(searchString);
-    var options = {
-        url: '/Request/Create',
-        data: { searchString: searchString },
-        type: 'GET',
-    };
-    $.ajax(options).done(function (data) {
-        var $target = $('#listProduct');
-        $target.html(data);
-    });
+    $("form[id='form1']").submit();
+
+    //var options = {
+    //    url: '/Request/Create',
+    //    data: { searchString: searchString },
+    //    type: 'GET',
+    //};
+    //$.ajax(options).done(function (data) {
+    //    var $target = $('#listProduct');
+    //    $target.html(data);
+    //});
 }
 
 function viewProductDetails(sysProductId, sysProductName) {
