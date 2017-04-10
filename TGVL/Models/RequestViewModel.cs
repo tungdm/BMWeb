@@ -45,6 +45,10 @@ namespace TGVL.Models
 
         public int NumReplies { get; set; }
 
+        public int Flag { get; set; }
+
+        public string DueDateCountdown { get; set; }
+
     }
 
     public class CreateRequestViewModel
