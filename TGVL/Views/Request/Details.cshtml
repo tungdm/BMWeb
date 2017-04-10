@@ -191,6 +191,11 @@
     margin-right: -30px;
     margin-top: -20px;
 }
+.more_item {
+    position: relative;
+    cursor: pointer;
+    font-size: 13px;
+}
 </style>
 
 <div class="main-container col2-right-layout">
@@ -531,18 +536,7 @@
                                 }
 
                             <br />
-                            @*<ul id="pagination-flickr">
-                                    <li class="previous-off">«Trước</li>
-                                    <li class="active">1</li>
-                                    <li><a href="?page=2">2</a></li>
-                                    <li><a href="?page=3">3</a></li>
-                                    <li><a href="?page=4">4</a></li>
-                                    <li><a href="?page=5">5</a></li>
-                                    <li><a href="?page=6">6</a></li>
-                                    <li><a href="?page=7">7</a></li>
-                                    <li class="next"><a href="?page=2">Sau »</a></li>
-                                </ul>*@
-                            <br />
+
                         </div>
                     </div>
                 </div>
@@ -599,6 +593,12 @@
                                                             <small>@list[i].NumReplies</small>
                                                             | <div>@Convert.ToDateTime(list[i].StartDate).ToString("dd/MM/yyyy")</div>
                                                         </div>
+                                                        @if (list[i].Flag == 1)
+                                                        {
+                                                            <div class="more_item">
+                                                                <i class="fa fa-clock-o" aria-hidden="true"></i> <span class="count-down" data-time="@list[i].DueDateCountdown"></span>
+                                                            </div>
+                                                        }
                                                     </div>
                                                 </li>
                                             }
@@ -663,7 +663,8 @@
         $('#sidebar')
             .theiaStickySidebar({
                 additionalMarginTop: 50
-            });
+        });
+        clock();
     });
     
 </script>
