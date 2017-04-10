@@ -590,18 +590,21 @@ namespace TGVL.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page";
-
+            return View();
+        }
+        
+        public ActionResult Contact()
+        {
             return View();
         }
 
-
-
-        [Authorize]
-        public ActionResult Contact()
+        public ActionResult Blog()
         {
-            ViewBag.Message = "Your contact page.";
+            return View();
+        }
 
+        public ActionResult Question()
+        {
             return View();
         }
 
