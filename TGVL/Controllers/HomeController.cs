@@ -221,6 +221,7 @@ namespace TGVL.Controllers
                 luceneRequest.Title = request.Title;
                 luceneRequest.CustomerName = request.User.Fullname;
                 luceneRequest.StartDate = request.StartDate;
+                luceneRequest.DueDate = request.DueDate;
                 luceneRequest.Flag = (int)request.Flag;
                 luceneRequest.Image = request.Image;
 

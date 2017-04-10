@@ -63,7 +63,7 @@ namespace TGVL.Controllers
             ViewBag.list1 = list1;
             ViewBag.list2 = list2;
 
-            var pageSize = 2;
+            var pageSize = 5;
             var pageNumber = (page ?? 1);
             int? sortNumber = sort;
             if (sortNumber == null || sortNumber > 2 || sortNumber < 1)
@@ -118,8 +118,13 @@ namespace TGVL.Controllers
                     Avatar = item.User.Avatar,
                     Image = item.Image,
                     StartDate = item.StartDate,
-                    NumReplies = db.Replies.Where(r => r.RequestId == item.Id).Count()
+                    NumReplies = db.Replies.Where(r => r.RequestId == item.Id).Count(),
+                    Flag = (int)item.Flag,
                 };
+                if (m.Flag == 1)
+                {
+                    m.DueDateCountdown = item.DueDate.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+                }
                 allRequest.Add(m);
             }
 
@@ -444,6 +449,7 @@ namespace TGVL.Controllers
                         CustomerName = user.Fullname,
                         Title = model.Title,
                         StartDate = request.StartDate,
+                        DueDate = request.DueDate,
                         Flag = (int)request.Flag
                     };
 
@@ -560,6 +566,10 @@ namespace TGVL.Controllers
                 var requestId = item.Id;
                 item.Slug = new HomeController().GenerateSlug(item.Title, item.Id);
                 item.NumReplies = db.Replies.Where(r => r.RequestId == requestId).Count();
+                if (item.Flag == 1)
+                {
+                    item.DueDateCountdown = item.DueDate.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+                }
             }
             ViewBag.SimilarRequest = searchResult;
 
