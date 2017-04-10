@@ -119,11 +119,15 @@
             }).remove();
 
             var rowCount = $('.removable > tbody > tr').length;
+            console.log("rowCount=" + rowCount);
             if (rowCount == 0) {
                 $('#productList').empty();
                 $('#mydiv').hide();
             }
+            
             update_amounts();
+            
+            
             //$(this).closest('tr').remove();
 
         });

@@ -81,7 +81,7 @@ else
 {
     @Html.HiddenFor(model => model.Flag)
     <div class="table-responsive">
-        <table class="data-table removable" id="my-orders-table">
+        <table class="data-table" id="my-orders-table2">
             <thead>
                 <tr>
                     <th>
@@ -142,8 +142,9 @@ else
         </table>
     </div>
 
+}
     @*Selected Product*@
-if (Model.SelectedProduct != null)
+@if (Model.SelectedProduct != null)
 {
     <table class="table" style="display:none;">
         <tr>
@@ -189,5 +190,5 @@ if (Model.SelectedProduct != null)
     </table>
     }
 
-}
+
 

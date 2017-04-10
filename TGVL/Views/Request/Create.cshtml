@@ -221,14 +221,14 @@
                 <div class="form-horizontal">
                     @*Tìm kiếm sản phẩm*@
                     @using (Ajax.BeginForm(
-new AjaxOptions
-{
-    HttpMethod = "GET",
-    InsertionMode = InsertionMode.Replace,
-    UpdateTargetId = "listProduct",
-    OnSuccess = "$('#select').show()"
-}
-))
+                        new AjaxOptions
+                        {
+                            HttpMethod = "GET",
+                            InsertionMode = InsertionMode.Replace,
+                            UpdateTargetId = "listProduct",
+                            OnSuccess = "$('#select').show()"
+                        }
+                    ))
                     {
                         <p style="text-align:center">
                             @Html.TextBox("searchString", null, new { @class = "form-control text-box", style = "display:inline-block", placeholder = "Nhập vào đây để tìm kiếm" })
@@ -242,14 +242,14 @@ new AjaxOptions
 
                 <div id="result">
                     @using (Ajax.BeginForm("SelectProduct", "Request",
-new AjaxOptions
-{
-    HttpMethod = "GET",
-    InsertionMode = InsertionMode.Replace,
-    UpdateTargetId = "productList",
-    OnSuccess = "selectedSuccess(data)"
-}, new { @id = "formAjax" }
-))
+                        new AjaxOptions
+                        {
+                            HttpMethod = "GET",
+                            InsertionMode = InsertionMode.Replace,
+                            UpdateTargetId = "productList",
+                            OnSuccess = "selectedSuccess(data)"
+                        }, new { @id = "formAjax" }
+                    ))
                     {
                         <div id="listProduct"></div>
                     }
