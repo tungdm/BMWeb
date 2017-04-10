@@ -51,14 +51,14 @@
                                                         <td>
                                                             @Model.ShoppingCartProducts[i].SupplierName
                                                         </td>
-                                                        <td class="a-center hidden-table"><span class="cart-price"> <span class="price">@Html.DisplayFor(modelItem => Model.ShoppingCartProducts[i].UnitPrice) / @Model.ShoppingCartProducts[i].UnitType</span> </span></td>
+                                                        <td class="a-center hidden-table"><span class="cart-price" style="font-size:15px"> <span class="price">@Html.DisplayFor(modelItem => Model.ShoppingCartProducts[i].UnitPrice) / @Model.ShoppingCartProducts[i].UnitType</span> </span></td>
                                                         <td>
                                                             @Html.EditorFor(model => Model.ShoppingCartProducts[i].Quantity, new { htmlAttributes = new { @class = "qty form-control" } })
                                                             @Html.ValidationMessageFor(model => Model.ShoppingCartProducts[i].Quantity, "", new { @class = "text-danger" })
                                                         </td>
 
-                                                        <td class="a-center movewishlist">
-                                                            <span class="cart-price"> <span class="minitotal"><strong>@Html.DisplayFor(modelItem => Model.ShoppingCartProducts[i].MiniTotal)</strong></span> </span>
+                                                        <td>
+                                                            <span style="font-size:15px" class="cart-price"> <span class="minitotal"><strong>@Html.DisplayFor(modelItem => Model.ShoppingCartProducts[i].MiniTotal)</strong></span> </span>
                                                             @Html.HiddenFor(modelItem => Model.ShoppingCartProducts[i].MiniTotal)
                                                         </td>
 
