@@ -73,6 +73,7 @@ namespace TGVL.LucenceSearch
             doc.Add(new Field("Title", data.Title, Field.Store.YES, Field.Index.NOT_ANALYZED));
             doc.Add(new Field("CustomerName", data.CustomerName, Field.Store.YES, Field.Index.NOT_ANALYZED));
             doc.Add(new Field("StartDate", data.StartDate.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
+            doc.Add(new Field("DueDate", data.DueDate.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
             doc.Add(new Field("Flag", data.Flag.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
 
             // add entry to index
@@ -202,7 +203,8 @@ namespace TGVL.LucenceSearch
                 CustomerName = doc.Get("CustomerName"),
                 Title = doc.Get("Title"),
                 StartDate = Convert.ToDateTime(doc.Get("StartDate")),
-                Flag = Convert.ToInt32(doc.Get("Flag"))
+                Flag = Convert.ToInt32(doc.Get("Flag")),
+                DueDate = Convert.ToDateTime(doc.Get("DueDate"))
             };
         }
 
