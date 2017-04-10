@@ -307,10 +307,10 @@
                                     <br />
                                     <h4><strong>Thông tin chi tiết</strong></h4>
                                     <div class="table-responsive">
-                                        <table class="data-table" id="my-orders-table">
-                                            
+                                        <table class="data-table">
+                                            <tbody>
                                                 <tr style="display:none;">
-                                                    <td id="requestID" style="width:300px">@Html.DisplayFor(model => model.Id)</td>
+                                                    <td id="requestID">@Html.DisplayFor(model => model.Id)</td>
                                                     <td id="requestType">@Html.DisplayFor(model => model.Flag)</td>
                                                 </tr>
 
@@ -330,40 +330,38 @@
                                                 </tr>
                                                 <tr>
                                                     <td>Mô tả</td>
-                                                    <td>@Html.Raw(Model.Descriptions)</td>
+                                                    <td style="max-width:10px">@Html.Raw(Model.Descriptions)</td>
                                                 </tr>
-                                           
+                                            </tbody>
                                         </table>
 
                                     </div>
+
                                 </div>
                                 <br />
                                 <div class="entry-content">
-
                                     <h4><strong>Thông tin liên hệ</strong></h4>
                                     <div class="table-responsive">
-                                        <form>
-                                            <table class="data-table" id="my-orders-table">
-                                                <tbody>
-                                                    <tr>
-                                                        <td>Người đăng</td>
-                                                        <td>@Html.DisplayFor(model => model.User.Fullname)</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Email</td>
-                                                        <td>@Html.DisplayFor(model => model.User.Email)</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Số điện thoại</td>
-                                                        <td>@Html.DisplayFor(model => model.User.PhoneNumber)</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Địa chỉ</td>
-                                                        <td>@Html.DisplayFor(model => model.User.Address)</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </form>
+                                        <table class="data-table">
+                                            <tbody>
+                                                <tr>
+                                                    <td>Người đăng</td>
+                                                    <td>@Html.DisplayFor(model => model.User.Fullname)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Email</td>
+                                                    <td>@Html.DisplayFor(model => model.User.Email)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Số điện thoại</td>
+                                                    <td>@Html.DisplayFor(model => model.User.PhoneNumber)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Địa chỉ</td>
+                                                    <td>@Html.DisplayFor(model => model.User.Address)</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </article>
