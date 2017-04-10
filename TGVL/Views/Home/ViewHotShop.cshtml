@@ -6,6 +6,16 @@
 }
 
 <style>
+      span.stars, span.stars span {
+        display: block;
+        background: url("/Images/stars.png") 0 -16px repeat-x;
+        width: 80px;
+        height: 16px;
+    }
+
+        span.stars span {
+            background-position: 0 0;
+        }  
     .item-img-info {
         width: 250px;
         height: 200px;
@@ -80,3 +90,19 @@
     </div>
 </div>
 
+<script>
+    $(document).ready(function () {
+        $(".stars").each(function () {
+
+            var val = parseFloat($(this).html());
+            console.log(val);
+
+            var size = Math.max(0, (Math.min(5, val))) * 16;
+
+            var $span = $('<span />').width(size);
+
+            $(this).html($span);
+        });
+        });
+
+</script>
