@@ -187,7 +187,7 @@ function edit(replyId) {
 function retract(replyId) {
     swal({
         title: "Bạn có chắc chắn muốn rút thầu?",
-        text: "Bạn sẽ không thể tham gia đặt thầu này nữa ",
+        text: "Bạn sẽ không thể đặt thầu này nữa ",
         type: "warning",
         showCancelButton: true,
         confirmButtonText: "ĐỒNG Ý",
@@ -444,13 +444,10 @@ function createOrderSuccess(data) {
             text: "Cửa hàng sẽ liên hệ thông báo giao hàng với bạn",
             type: 'success',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
             confirmButtonText: 'Xem chi tiết đơn hàng',
-
-            cancelButtonText: 'Quay lại trang chủ',
             confirmButtonClass: 'btn btn-success',
             cancelButtonClass: 'btn btn-default',
-            buttonsStyling: false
+            cancelButtonText: 'Quay lại trang chủ',
         }).then(function () {
             var url = "/Order/Details/" + data.OrderId;
             window.location.href = url;
