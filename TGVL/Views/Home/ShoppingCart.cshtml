@@ -15,7 +15,7 @@
                     @if (Model.ShoppingCartProducts != null)
                     {
                         <div class="col-md-9">
-                            
+
                             <div class="box">
                                 @using (Html.BeginForm("DeliveryAddress", "Home", FormMethod.Post, new { id = "submitFormWithButton" }))
                                 {
@@ -32,12 +32,12 @@
                                                     <th rowspan="1">&nbsp;</th>
                                                 </tr>
                                             </thead>
-                                            
+
                                             <tbody>
 
                                                 @for (int i = 0; i < Model.ShoppingCartProducts.Count(); i++)
                                                 {
-                                                   
+
                                                     var id = Model.ShoppingCartProducts[i].Type == "deal" ? Model.ShoppingCartProducts[i].Type + "_" + Model.ShoppingCartProducts[i].DealId : Model.ShoppingCartProducts[i].Type + "_" + Model.ShoppingCartProducts[i].ProductId;
                                                     <tr id="@id">
                                                         <td class="image">
@@ -45,7 +45,7 @@
                                                         </td>
                                                         <td>
                                                             <a href="/Deal/Details/@Model.ShoppingCartProducts[i].DealId">@Model.ShoppingCartProducts[i].ProductName</a>
-                                                            
+
                                                             @Html.HiddenFor(modelItem => Model.ShoppingCartProducts[i].ProductName)
                                                         </td>
                                                         <td>
@@ -80,7 +80,7 @@
                                             </tbody>
                                         </table>
                                     </div>
-                            
+
                                     <div class="box-footer" style="margin-bottom: -1px;">
                                         <div class="pull-left">
                                             <a href="/Home" style="font-size:14px"><i class="fa fa-chevron-left"></i><strong> Tiếp tục mua hàng</strong></a>
@@ -92,6 +92,7 @@
                                         </div>
                                     </div>
                                 }
+
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -108,7 +109,7 @@
                                                 <td>Thành tiền</td>
                                                 <td class="total">@Html.DisplayFor(model => model.Total)</td>
                                             </tr>
-                                           
+
                                         </tbody>
                                         <tfoot>
                                             <tr>
@@ -123,75 +124,81 @@
                             </div>
                         </div>
                     }
-                    
+                    else
+                    {
+                        <text>
+                            <br /><h2>Không có sản phẩm nào trong giỏ hàng</h2><br />
+                            <br /><a href="/Home">Tiếp tục mua hàng</a><br />
+                        </text>
+                    }
                 </div>
             </div>
         </div>
 
-       
+
     </div>
 </section>
 
 @section Scripts {
-    
-<script>
-    $(document).ready(function () {
-        var MaxLengthInputNumberSmall = @Model.MaxLengthInputNumberSmall;
-        $(".qty").rules("add", {
-            maxlength: MaxLengthInputNumberSmall,
-            messages: {
-                range: "Xin hãy nhập ít hơn " + MaxLengthInputNumberSmall + " số"
-            }
-        });
 
-        $('input[type="number"]').bind('keypress', function (e) {
-            if (e.keyCode == '9' || e.keyCode == '16') {
-                return;
-            }
-            var code;
-            if (e.keyCode) code = e.keyCode;
-            else if (e.which) code = e.which;
-            if (e.which == 46)
-                return false;
-            if (code == 8 || code == 46)
-                return true;
-            if (code < 48 || code > 57)
-                return false;
-        });
-        $('.qty').on('input', function () {
-            update_amounts_shoppingcart();
-            var newQty = $(this).val();
-            
-            var trId = $(this).closest('tr').attr('id');
-            var res = trId.split("_");
-            console.log("newQty=" + newQty + ", type=" + res[0] + ", id=" + res[1]);
-            updateQuantitySession(newQty, res[0], res[1]);
-        });
-
-        function update_amounts_shoppingcart() {
-            var sum = 0.0;
-
-            $('#shopping-cart-table > tbody  > tr').each(function () {
-                var qty = $(this).find('.qty').val();
-                if (qty == null) {
-                    qty = $(this).find('.qtyBid').text();
+    <script>
+        $(document).ready(function () {
+            var MaxLengthInputNumberSmall = @Model.MaxLengthInputNumberSmall;
+            $(".qty").rules("add", {
+                maxlength: MaxLengthInputNumberSmall,
+                messages: {
+                    range: "Xin hãy nhập ít hơn " + MaxLengthInputNumberSmall + " số"
                 }
-                var price = $(this).find('.price').text();
-                var price2 = Number(price.replace(/[^0-9]+/g, ""));
-
-                console.log("qty:" + qty + ", price:" + price + ", price2:" + price2);
-
-                var amount = (qty * price2);
-                var miniTotal = addDot(amount);
-                $(this).find('.minitotal').html("<strong>" + miniTotal + " &#x20AB;</strong>");
-                sum += amount;
             });
 
-            console.log(sum);
+            $('input[type="number"]').bind('keypress', function (e) {
+                if (e.keyCode == '9' || e.keyCode == '16') {
+                    return;
+                }
+                var code;
+                if (e.keyCode) code = e.keyCode;
+                else if (e.which) code = e.which;
+                if (e.which == 46)
+                    return false;
+                if (code == 8 || code == 46)
+                    return true;
+                if (code < 48 || code > 57)
+                    return false;
+            });
+            $('.qty').on('input', function () {
+                update_amounts_shoppingcart();
+                var newQty = $(this).val();
 
-            $('.total').html(addDot(sum) + " &#x20AB;");
-            //$('.total2').val(total);
-        }
-    });
-</script>
+                var trId = $(this).closest('tr').attr('id');
+                var res = trId.split("_");
+                console.log("newQty=" + newQty + ", type=" + res[0] + ", id=" + res[1]);
+                updateQuantitySession(newQty, res[0], res[1]);
+            });
+
+            function update_amounts_shoppingcart() {
+                var sum = 0.0;
+
+                $('#shopping-cart-table > tbody  > tr').each(function () {
+                    var qty = $(this).find('.qty').val();
+                    if (qty == null) {
+                        qty = $(this).find('.qtyBid').text();
+                    }
+                    var price = $(this).find('.price').text();
+                    var price2 = Number(price.replace(/[^0-9]+/g, ""));
+
+                    console.log("qty:" + qty + ", price:" + price + ", price2:" + price2);
+
+                    var amount = (qty * price2);
+                    var miniTotal = addDot(amount);
+                    $(this).find('.minitotal').html("<strong>" + miniTotal + " &#x20AB;</strong>");
+                    sum += amount;
+                });
+
+                console.log(sum);
+
+                $('.total').html(addDot(sum) + " &#x20AB;");
+                //$('.total2').val(total);
+            }
+        });
+    </script>
 }
