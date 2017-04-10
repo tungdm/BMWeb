@@ -42,6 +42,11 @@
         border-left: 1px solid #eaeaea;
         padding-left: 20px;
     }
+    .more_item {
+    margin-right: 15px;
+    position: relative;
+    cursor: pointer;
+}
 </style>
 
 <section class="main-container" style="background:#f4f4f4">
@@ -128,13 +133,14 @@
                                 <div class="toggle-content">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <i class="fa fa-user"></i> <strong style="font-size:18px"><span id="num-buyer">@Model.NumBuyer</span> người đã mua</strong>
+                                            <i class="fa fa-user"></i> &nbsp; <span id="num-buyer" style="font-size:18px">@Model.NumBuyer</span> <span style="font-size:18px">người đã mua</span>
                                         </div>
-                                        <div id="time" class="col-md-8">
-
-                                            <span id="countdown-2">
-
-                                            </span>
+                                        <div class="col-md-8">
+                                            <div  id="time" class="more_item">
+                                                @*<span id="countdown-2">
+                                                </span>*@
+                                                <i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; <span class="count-down" data-time="@Model.DueDateCountdown" style="font-size:18px"></span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -436,6 +442,9 @@
 
     });
 
+    $(document).ready(function () {
+        clock();
+    });
 
 </script>
 
