@@ -6270,6 +6270,7 @@ fieldset {
 	border-bottom: 1px solid #eaeaea;
 	border-right: 0px solid #dcdcdc;
 	padding: 10px 10px 6px;
+    /*max-width:5px;*/
 }
 .cart-table tbody th h2, .cart-table tbody td h2 {
 	margin: auto;
@@ -7042,8 +7043,8 @@ input#coupon_code {
 	display: block;
 }
 #shopping-cart-table .cart-price .price {
-	font-size: 16px;
-	font-weight: bold;
+	font-size: 15px;
+	/*font-weight: bold;*/
 }
 .cart-table .btn-continue {
 	float: left;
