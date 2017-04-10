@@ -8481,6 +8481,7 @@ form-list label.required em {
 	clear: both;
 	overflow: hidden;
 	padding-top: 15px;
+    padding-bottom:15px;
 	margin-top: 20px;
 }
 .toggle-white {
