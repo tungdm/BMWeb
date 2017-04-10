@@ -1,4 +1,11 @@
-﻿@model TGVL.Models.ReplyDetails
+﻿<style>
+.text-danger {
+    color: #ed1c24;
+     padding: 0px; 
+    font-size: 15px;
+}
+</style>
+@model TGVL.Models.ReplyDetails
 
 @using (Ajax.BeginForm(
     "Edit",
@@ -193,15 +200,32 @@
             console.log("Hello from edit");
             var result = $('#form0').valid();
             console.log(result);
+
+            var rawBidPrice = $('#BidPrice').val();
+            if (rawBidPrice == "") {
+                var message = "Giá thầu không được để trống";
+                $('#errorTotal').html(message);
+                $('#errorTotal').show();
+                return;
+            }
+
             if (result) {
                 if (@Model.Flag == 1) {
                     var newBidPrice = Number($("#BidPrice").val().replace(/[^0-9]+/g, ""));
                     var test = Number(oldBidPrice.replace(/[^0-9]+/g, ""));
                     console.log("newBidPrice=" + newBidPrice + ", test=" + test);
 
+                    if (newBidPrice == 0) {
+                        var message = "Giá thầu mới phải lớn hơn 0 &#x20AB;";
+                      
+                        $('#errorTotal').html(message);
+                        $('#errorTotal').show();
+                        return;
+                    }
+
                     if (newBidPrice <= test) {
                         $("form[id='form0']").submit();
-                    }
+                    } 
                 } else {
                     $("form[id='form0']").submit();
                 }
@@ -227,16 +251,31 @@
 
         $('#BidPrice').keyup(function (event) {
             if (event.which >= 37 && event.which <= 40) return;
+            var rawBidPrice = $(this).val();
+            if (rawBidPrice == "") {
+                var message = "Giá thầu không được để trống";
+                console.log(message);
+                $('#errorTotal').html(message);
+                $('#errorTotal').show();
+                return;
+            }
+
             var newBidPrice = Number($(this).val().replace(/[^0-9]+/g, ""));
             var test = Number(oldBidPrice.replace(/[^0-9]+/g, ""));
 
-            console.log("newBidPrice=" + newBidPrice + ",oldBidPrice=" + test);
+            console.log("rawBidPrice=" + rawBidPrice +", newBidPrice=" + newBidPrice + ",oldBidPrice=" + test);
             if (newBidPrice > test) {
                 var message = "Giá thầu mới phải nhỏ hơn hoặc bằng giá cũ (@Model.BidPrice &#x20AB;)";
                 console.log(message);
                 $('#errorTotal').html(message);
                 $('#errorTotal').show();
-            } else {
+            } else if (newBidPrice == 0) {
+                var message = "Giá thầu mới phải lớn hơn 0 &#x20AB;";
+                console.log(message);
+                $('#errorTotal').html(message);
+                $('#errorTotal').show();
+            }
+            else {
                 $('#errorTotal').empty();
                 $('#errorTotal').hide();
             }
