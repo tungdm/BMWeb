@@ -201,7 +201,28 @@ namespace TGVL.Controllers
                         //Sản phẩm hiện k có trong hệ thống
                         model.Message = "Sản phẩm hiện không có trong hệ thống";
                         model.SuggestWords = searchResult.SuggestWords;
-                        //return Json(null, JsonRequestBehavior.AllowGet);
+                        if (selectedProduct != null)
+                        {
+                            for (int i = 0; i < selectedProduct.Count(); i++)
+                            {
+                                var key = "product" + selectedProduct[i];
+                                Session[key] = quantity[i];
+                            }
+                            model.SelectedProduct = new List<ProductSearchResult>();
+                            foreach (var productId in selectedProduct)
+                            {
+                                var query = "SELECT [dbo].[SysProducts].[Id], [dbo].[SysProducts].[Name], [dbo].[SysProducts].[Image], "
+                                        + " [dbo].[SysProducts].[Description], [dbo].[SysProducts].[UnitPrice], "
+                                        + "[dbo].[Manufacturers].[Name] AS ManufactureName, [dbo].[UnitTypes].[Type] AS UnitType "
+                                        + "FROM[dbo].[SysProducts], [dbo].[Manufacturers], [dbo].[UnitTypes] "
+                                        + "WHERE[dbo].[Manufacturers].[Id] = [dbo].[SysProducts].[ManufacturerId] "
+                                        + "AND[dbo].[UnitTypes].[Id] = [dbo].[SysProducts].[UnitTypeId] "
+                                        + "AND[dbo].[SysProducts].[Id] = {0}";
+                                ProductSearchResult data = db.Database.SqlQuery<ProductSearchResult>(query, productId).FirstOrDefault();
+                                model.SelectedProduct.Add(data);
+                            }
+                        }
+                        
                     }
                     else
                     {
