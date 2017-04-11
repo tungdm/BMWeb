@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity.Owin;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,8 +60,9 @@ namespace TGVL.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+           
             Deal deal = db.Deals.Find(id);
-
+            
             var model = new DealDetailsViewModel
             {
                 Id = deal.Id,
@@ -81,6 +83,8 @@ namespace TGVL.Controllers
                 Expired = deal.Expired
             };
             var shops = db.Warehouses.Where(w => w.SupplierId == deal.SupplierId).ToList();
+
+            ViewBag.ListShop = shops;
             
             var ShopAddress = new ArrayList();
 
@@ -94,10 +98,12 @@ namespace TGVL.Controllers
                 var info = "['<div class=\"info_content\"><h3>" + shops[i].Address + "</h3></div>']";
                 result[i] = place;
                 infoWindowContent[i] = info;
+                
             }
 
             ViewBag.Result = result;
             ViewBag.Info = infoWindowContent;
+            
 
             if (model.ProductDetails == null)
             {

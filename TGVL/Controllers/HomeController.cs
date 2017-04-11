@@ -608,6 +608,16 @@ namespace TGVL.Controllers
             return View();
         }
 
+        public ActionResult Instruction()
+        {
+            return View();
+        }
+
+        public ActionResult Policy()
+        {
+            return View();
+        }
+
         public ActionResult Index()
         {
             var model = new HydridViewModel();
