@@ -984,7 +984,8 @@ namespace TGVL.Controllers
                     SavePrice = Math.Ceiling(hd.UnitPrice - (hd.UnitPrice * hd.Discount / 100)),
                     Image = hd.Product.Image,
                     NumBuyer = hd.NumBuyer,
-
+                    DueDate = hd.DueDate,
+                    DueDateCountdown = hd.DueDate.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture)
                 };
                 newListHotdeal.Add(hdmodel);
             }
@@ -998,7 +999,7 @@ namespace TGVL.Controllers
             var newListNewdeal = new List<DealBriefViewModel>();
             
             var NewDeal = db.Deals.Where(d => d.Expired == false).OrderByDescending(d => d.CreatedDate).ToList();
-
+            
             foreach (var nd in NewDeal)
             {
                 var ndmodel = new DealBriefViewModel
@@ -1010,6 +1011,8 @@ namespace TGVL.Controllers
                     SavePrice = Math.Ceiling(nd.UnitPrice - (nd.UnitPrice * nd.Discount / 100)),
                     Image = nd.Product.Image,
                     NumBuyer = nd.NumBuyer,
+                    DueDate = nd.DueDate,
+                    DueDateCountdown = nd.DueDate.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture)
                 };
 
                 newListNewdeal.Add(ndmodel);
