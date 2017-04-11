@@ -13,6 +13,7 @@
         background: url("/Images/stars.png") 0 -16px repeat-x;
         width: 80px;
         height: 16px;
+        margin-bottom: 10px;
     }
 
         span.stars span {
@@ -157,6 +158,7 @@
                                                                 <i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; <span class="count-down" data-time="@item.DueDateCountdown" style="font-size:13px"></span>
                                                             </div>
                                                             <span class="view"><a class="view_detail" href="/Deal/Details/@item.Id">Xem ngay</a></span>
+                                                           
                                                         </div>
                                                     </div>
                                                 </div>
@@ -191,7 +193,7 @@
         </div>
         <br />
         <div style="text-align:center">
-            <a href="/Home/ViewNewDeal" class="btn btn-primary" style="font-size:16px">Xem tất cả <i class="fa fa-caret-right"></i></a>
+            <a href="/Home/ViewNewDeal" class="btn btn-default" style="font-size:16px">Xem tất cả <i class="fa fa-caret-right"></i></a>
         </div>
     </div>
     <br />
@@ -210,7 +212,7 @@
                                     <div class="item">
                                         <div class="col-item">
                                             <div class="item-inner">
-                                                <div class="sale-label sale-top-right">Hot</div>
+                                                @*<div class="sale-label sale-top-right">Hot</div>*@
                                                 <div class="item-img">
                                                     <div class="item-img-info">
                                                         <a href="/Deal/Details/@item.Id" class="product-image"> <img src="~/Images/Product/SysProduct/@item.Image"></a>
@@ -253,7 +255,7 @@
         </div>
         <br />
         <div style="text-align:center">
-            <a href="/Home/ViewHotDeal" class="btn btn-primary" style="font-size:16px">Xem tất cả <i class="fa fa-caret-right"></i></a>
+            <a href="/Home/ViewHotDeal" class="btn btn-default" style="font-size:16px">Xem tất cả <i class="fa fa-caret-right"></i></a>
         </div>
     </div>
     <br />
@@ -272,17 +274,22 @@
                                 <div class="item">
                                     <div class="col-item">
                                         <div class="item-inner">
-                                            <div class="sale-label sale-top-right">Hot</div>
+                                            @*<div class="sale-label sale-top-right">Hot</div>*@
                                             <div class="item-img">
                                                 <div class="item-img-info">
                                                     <a href="product_detail.html" class="product-image"> <img src="~/Images/UserAvatar/@item.Avatar"> </a>
+                                                    <div class="item-box-hover">
+                                                        <span class="view"><a class="view_detail" href="#">Xem ngay</a></span>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="item-info">
                                                 <div class="info-inner">
                                                     <div class="item-title" style="text-align:left"> <h3 style="font-size:14px"> @item.ShopName </h3></div>
                                                     <div class="item-content">
-                                                        <span style="float: left;" class="stars">@item.Rating</span> (@item.Rating)
+                                                        <div style="margin-left:10px">
+                                                            <span class="stars">@item.Rating</span> @*(@item.Rating)*@
+                                                        </div>
                                                         <div class="short-description" style="padding-left:10px">
                                                             <p>@item.Address</p>
                                                         </div>
@@ -303,7 +310,7 @@
         </div>
         <br />
         <div style="text-align:center">
-            <a href="/Home/ViewHotShop" class="btn btn-primary" style="font-size:16px">Xem tất cả <i class="fa fa-caret-right"></i></a>
+            <a href="/Home/ViewHotShop" class="btn btn-default" style="font-size:16px">Xem tất cả <i class="fa fa-caret-right"></i></a>
         </div>
     </div>
     <br />
