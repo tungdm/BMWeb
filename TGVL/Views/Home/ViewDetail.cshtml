@@ -104,77 +104,9 @@
                                         Có <span class="total"><strong class="price"> @Model.NumOfShops </strong> </span> cửa hàng bán với giá từ: <p class="special-price"> <span class="price-label"> Special Price</span> <span class="price">@string.Format("{0:C0}", Model.SysProduct.UnitPrice)</span> </p>
                                     </div>
                                 </div>
-                                @*<div class="toggle-content">
-                                        <div class="table-responsive">
-                                            <table class="data-table col-md-4">
-                                                <thead>
-                                                    <tr>THÔNG SỐ SẢN PHẨM</tr>
-                                                </thead>
-                                                @foreach (var item in Model.SysProduct.ProductAttributes)
-                                                {
-                                                <tr>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Attribute)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Value)
-                                                    </td>
-                                                </tr>
-                                                }
-                                            </table>
-                                        </div>
-                                    </div>*@
+                                
                             </div>
-                            @*<div class="product-shop col-sm-3 col-xs-12">
-                                    <div class="popular-posts widget widget__sidebar">
-                                        <h3 class="widget-title" style="background:#fff">CÙNG MỨC GIÁ</h3>
-                                        <div class="widget-content" style="background:#fff">
-                                            <ul class="posts-list unstyled clearfix">
-                                                <li>
-                                                    <div class="row">
-                                                        <div class="col-md-2">
-                                                            <img src="~/Content/images/xi-mang-fico-pcb40.jpg" width="40" height="70" />
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <p>Gạch lát nền DTD1380 GOSAN003 daada</p>
-                                                            <p class="post-meta" style="color:#ff1341">
-                                                                Giá: <strong>80.000 VNĐ</strong>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="row">
-                                                        <div class="col-md-2">
-                                                            <img src="~/Content/images/xi-mang-fico-pcb40.jpg" width="40" height="70" />
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <p>Gạch lát nền DTD1380 GOSAN003</p>
-                                                            <p class="post-meta" style="color:#ff1341">
-                                                                Giá: <strong>80.000 VNĐ</strong>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="row">
-                                                        <div class="col-md-2">
-                                                            <img src="~/Content/images/xi-mang-fico-pcb40.jpg" width="40" height="70" />
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <p>Gạch lát nền DTD1380 GOSAN003</p>
-                                                            <p class="post-meta" style="color:#ff1341">
-                                                                Giá: <strong>80.000 VNĐ</strong>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </li>
-
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>*@
-
+                           
 
                         </div>
                     </div>
@@ -235,6 +167,11 @@
                             </div>
 
                             <div class="tab-pane" id="tab_3">
+                                <div style="display:none">
+                                    <select id="bh-sl-maxdistance" name="bh-sl-maxdistance">
+                                        <option value="@ViewBag.MaxDistance" selected="selected"></option>
+                                    </select>
+                                </div>
                                 <div class="bh-sl-container container-fluid">
                                     <div id="bh-sl-map-container" class="bh-sl-map-container">
                                         <div class="row">
@@ -254,54 +191,7 @@
                     </div>
 
                 </div>
-                @*<div class="col-sm-3 col-xs-12">
-                        <div class="popular-posts widget widget__sidebar">
-                            <h3 class="widget-title">CÙNG NHÀ SẢN XUẤT</h3>
-                            <div class="widget-content">
-                                <ul class="posts-list unstyled clearfix">
-                                    <li>
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <img src="~/Content/images/xi-mang-fico-pcb40.jpg" width="40" height="70" />
-                                            </div>
-                                            <div class="col-md-10">
-                                                <p>Gạch lát nền DTD1380 GOSAN003 daada</p>
-                                                <p class="post-meta" style="color:#ff1341">
-                                                    Giá: <strong>80.000 VNĐ</strong>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <img src="~/Content/images/xi-mang-fico-pcb40.jpg" width="40" height="70" />
-                                            </div>
-                                            <div class="col-md-10">
-                                                <p>Gạch lát nền DTD1380 GOSAN003</p>
-                                                <p class="post-meta" style="color:#ff1341">
-                                                    Giá: <strong>80.000 VNĐ</strong>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <img src="~/Content/images/xi-mang-fico-pcb40.jpg" width="40" height="70" />
-                                            </div>
-                                            <div class="col-md-10">
-                                                <p>Gạch lát nền DTD1380 GOSAN003</p>
-                                                <p class="post-meta" style="color:#ff1341">
-                                                    Giá: <strong>80.000 VNĐ</strong>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>*@
+                
             </div>
             <br />
 
@@ -445,7 +335,8 @@
                 'lengthUnit': 'km',
                 'autoGeocode': true,
                 'originMarker': true,
-                'originMarkerImg': '/Images/marker-home.png'
+                'originMarkerImg': '/Images/marker-home.png',
+                'maxDistance': true
             });
 
             Handlebars.registerHelper("printPrice", function (price) {
