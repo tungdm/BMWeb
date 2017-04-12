@@ -186,7 +186,11 @@ namespace TGVL.Controllers
 
                     var ListRequest = new List<LuceneRequest>();
 
-
+                    if (!test.Any())
+                    {
+                        ViewBag.SearchString = searchString;
+                        return View();
+                    }
                     foreach (var rId in test)
                     {
                         var request = db.Requests.Find(rId);
