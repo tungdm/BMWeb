@@ -84,7 +84,7 @@ namespace TGVL.Models
         //public IEnumerable<SysCategory> Categories { get; set; }
         //public IEnumerable<Manufacturer> Manufacuters { get; set; }
 
-        public IEnumerable<ProductAttribute> ProductAttributes { get; set; }
+        
 
 
 

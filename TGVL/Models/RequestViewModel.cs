@@ -187,7 +187,7 @@ namespace TGVL.Models
 
         public ICollection<ProductSearchResult> SelectedProduct { get; set; }
 
-        public IEnumerable<ProductAttribute> ProductAttributes { get; set; }
+        
 
         public string Message { get; set; }
 
