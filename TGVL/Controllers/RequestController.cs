@@ -290,14 +290,28 @@ namespace TGVL.Controllers
             }
         }
 
-        public ActionResult Manage()
+        public async Task<ActionResult> Manage()
         {
             //Xem tất cả request
             var userId = User.Identity.GetUserId<int>();
-            IEnumerable<Request> listRequests = db.Requests.Where(x => x.CustomerId == userId && x.Flag == 1).ToList();
-            ViewBag.ListRequests = listRequests;
-
-            ViewBag.MaxDateCancelRequest = db.Settings.Where(s => s.SettingName == "MaxDateCancelRequest").FirstOrDefault().SettingValue;
+            if (await UserManager.IsInRoleAsync(userId, "Customer"))
+            {
+                IEnumerable<Request> listRequests = db.Requests.Where(x => x.CustomerId == userId && x.StatusId != 4).ToList();
+                ViewBag.ListRequests = listRequests;
+                ViewBag.MaxDateCancelRequest = db.Settings.Where(s => s.SettingName == "MaxDateCancelRequest").FirstOrDefault().SettingValue;
+            } else if (await UserManager.IsInRoleAsync(userId, "Supplier"))
+            {
+                var listId = db.Replies.Where(r => r.SupplierId == userId && r.BidReply.Flag != 9 && r.Request.StatusId != 4).Select(r => new { Id = r.RequestId }).ToList();
+                var listRequests = new List<Request>();
+                foreach (var id in listId)
+                {
+                    var request = db.Requests.Find(id.Id);
+                    listRequests.Add(request);
+                }
+                ViewBag.ListRequests = listRequests;
+            }
+            
+            
             return View();
         }
 
