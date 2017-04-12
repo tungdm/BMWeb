@@ -58,12 +58,12 @@ namespace TGVL.Controllers
         }
 
         // GET: Request
-        public ActionResult Index(int? page, int? sort, int? type)
+        public ActionResult Index(int? page, int? sort, int? type, string searchString)
         {
             ViewBag.list1 = list1;
             ViewBag.list2 = list2;
 
-            var pageSize = 5;
+            var pageSize = 3;
             var pageNumber = (page ?? 1);
             int? sortNumber = sort;
             if (sortNumber == null || sortNumber > 2 || sortNumber < 1)
@@ -85,55 +85,205 @@ namespace TGVL.Controllers
 
             var requestFilter = new List<Request>();
 
-            if (typeNumber == 2) //all
+            if (searchString == null)
             {
-                var requests = db.Requests.Where(r => r.StatusId == 1);
-                if (sortNumber == 1) //mới nhất
+                if (typeNumber == 2) //all
                 {
-                    requests = requests.OrderByDescending(r => r.StartDate);
+                    var requests = db.Requests.Where(r => r.StatusId == 1);
+                    if (sortNumber == 1) //mới nhất
+                    {
+                        requests = requests.OrderByDescending(r => r.StartDate);
+                    }
+                    requestFilter = requests.ToList();
                 }
-                requestFilter = requests.ToList();
-            } else //normal hoặc bid
-            {
-                var requests = db.Requests.Where(r => r.StatusId == 1 && r.Flag == typeNumber);
-                if (sortNumber == 1) //mới nhất
+                else //normal hoặc bid
                 {
-                    requests = requests.OrderByDescending(r => r.StartDate);
+                    var requests = db.Requests.Where(r => r.StatusId == 1 && r.Flag == typeNumber);
+                    if (sortNumber == 1) //mới nhất
+                    {
+                        requests = requests.OrderByDescending(r => r.StartDate);
+                    }
+                    requestFilter = requests.ToList();
                 }
-                requestFilter = requests.ToList();
-            }
-            
-            //var requests = db.Requests.Where(r => r.StatusId == 1).OrderByDescending(r => r.StartDate).ToList();
-            var allRequest = new List<RequestFloorModel>();
 
-            foreach (var item in requestFilter)
-            {
-                var m = new RequestFloorModel {
-                    Id = item.Id,
-                    Title = item.Title,
-                    Slug = new HomeController().GenerateSlug(item.Title, item.Id),
-                    DeliveryAddress = item.DeliveryAddress,
-                    Descriptions = item.Descriptions,
-                    UserName = item.User.Fullname,
-                    Avatar = item.User.Avatar,
-                    Image = item.Image,
-                    StartDate = item.StartDate,
-                    NumReplies = db.Replies.Where(r => r.RequestId == item.Id).Count(),
-                    Flag = (int)item.Flag,
-                };
-                if (m.Flag == 1)
-                {
-                    m.DueDateCountdown = item.DueDate.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
-                }
-                allRequest.Add(m);
-            }
+                //var requests = db.Requests.Where(r => r.StatusId == 1).OrderByDescending(r => r.StartDate).ToList();
+                var allRequest = new List<RequestFloorModel>();
 
-            if (sortNumber == 2)
-            {
-                allRequest = allRequest.OrderByDescending(r => r.NumReplies).ThenByDescending(r => r.StartDate).ToList();
+                foreach (var item in requestFilter)
+                {
+                    string listProduct = "";
+                    var requestId = item.Id;
+
+                    var query = "SELECT Distinct [dbo].[SysProducts].[Name] "
+                            + "FROM[dbo].[RequestProducts], [dbo].[SysProducts] "
+                            + "WHERE[dbo].[RequestProducts].[SysProductId] = [dbo].[SysProducts].[Id] "
+                            + "AND[dbo].[RequestProducts].[RequestId] = {0} ";
+                    var listProductRaw = db.Database.SqlQuery<ReplyProducts>(query, requestId).ToList();
+
+                    for (int i = 0; i < listProductRaw.Count; i++)
+                    {
+                        if (i == (listProductRaw.Count - 1))
+                        {
+                            listProduct = listProduct + listProductRaw[i].Name;
+                        }
+                        else
+                        {
+                            listProduct = listProduct + listProductRaw[i].Name + ", ";
+                        }
+                    }
+
+                    var m = new RequestFloorModel
+                    {
+                        Id = requestId,
+                        Title = item.Title,
+                        Slug = new HomeController().GenerateSlug(item.Title, requestId),
+                        DeliveryAddress = item.DeliveryAddress,
+                        Descriptions = item.Descriptions,
+                        UserName = item.User.Fullname,
+                        Avatar = item.User.Avatar,
+                        Image = item.Image,
+                        StartDate = item.StartDate,
+                        NumReplies = db.Replies.Where(r => r.RequestId == requestId).Count(),
+                        Flag = (int)item.Flag,
+                        ListProducts = listProduct
+                    };
+                    if (m.Flag == 1)
+                    {
+                        m.DueDateCountdown = item.DueDate.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+                    }
+                    allRequest.Add(m);
+                }
+
+                if (sortNumber == 2)
+                {
+                    allRequest = allRequest.OrderByDescending(r => r.NumReplies).ThenByDescending(r => r.StartDate).ToList();
+                }
+
+                return View(allRequest.ToPagedList(pageNumber, pageSize));
             }
-          
-            return View(allRequest.ToPagedList(pageNumber, pageSize));
+            else
+            {
+                var LuceneFilter = new List<LuceneRequest>();
+
+                var hit_limits = db.Requests.Where(r => r.StatusId == 1).Count();
+
+                var searchResult = new LuceneRequestResult();
+
+                if (searchString.Length == 1)
+                {
+                    searchResult = LuceneSimilar.Search(searchString, hit_limits);
+                }
+                else
+                {
+                    searchResult = LuceneSimilar.SearchDefault(searchString, hit_limits);
+                }
+
+                if (searchResult.SimilarResult.Count == 0)
+                {
+                    var allRequests = db.Requests.Where(r => r.StatusId == 1);
+
+                    var test = db.RequestProducts.Where(r => r.SysProduct.Name.Contains(searchString)).Select(r => r.RequestId).Distinct();
+
+                    var ListRequest = new List<LuceneRequest>();
+
+
+                    foreach (var rId in test)
+                    {
+                        var request = db.Requests.Find(rId);
+
+                        var luceneRequest = new LuceneRequest();
+                        var requestId = request.Id;
+                        luceneRequest.Id = requestId;
+                        luceneRequest.Avatar = request.User.Avatar;
+                        luceneRequest.Title = request.Title;
+                        luceneRequest.CustomerName = request.User.Fullname;
+                        luceneRequest.StartDate = request.StartDate;
+                        luceneRequest.DueDate = request.DueDate;
+                        luceneRequest.Flag = (int)request.Flag;
+                        luceneRequest.Image = request.Image;
+
+                        ListRequest.Add(luceneRequest);
+                    }
+                    searchResult.SimilarResult = ListRequest;
+                }
+
+
+                //searchResult = LuceneSimilar.SearchDefault(searchString, hit_limits);
+                ViewBag.SearchString = searchString;
+                if (typeNumber == 2) //all
+                {
+                    var requests = searchResult.SimilarResult.ToList();
+                    if (sortNumber == 1) //mới nhất
+                    {
+                        requests = requests.OrderByDescending(r => r.StartDate).ToList();
+                    }
+                    LuceneFilter = requests;
+                }
+                else //normal hoặc bid
+                {
+                    var requests = searchResult.SimilarResult.Where(r => r.Flag == typeNumber).ToList();
+                    if (sortNumber == 1) //mới nhất
+                    {
+                        requests = requests.OrderByDescending(r => r.StartDate).ToList();
+                    }
+                    LuceneFilter = requests;
+                }
+                var allRequest = new List<RequestFloorModel>();
+
+                foreach (var item in LuceneFilter)
+                {
+                    var requestId = item.Id;
+                    var luRe = db.Requests.Find(requestId);
+                    string listProduct = "";
+
+                    var query = "SELECT Distinct [dbo].[SysProducts].[Name] "
+                            + "FROM[dbo].[RequestProducts], [dbo].[SysProducts] "
+                            + "WHERE[dbo].[RequestProducts].[SysProductId] = [dbo].[SysProducts].[Id] "
+                            + "AND[dbo].[RequestProducts].[RequestId] = {0} ";
+                    var listProductRaw = db.Database.SqlQuery<ReplyProducts>(query, requestId).ToList();
+
+                    for (int i = 0; i < listProductRaw.Count; i++)
+                    {
+                        if (i == (listProductRaw.Count - 1))
+                        {
+                            listProduct = listProduct + listProductRaw[i].Name;
+                        }
+                        else
+                        {
+                            listProduct = listProduct + listProductRaw[i].Name + ", ";
+                        }
+                    }
+
+                    var m = new RequestFloorModel
+                    {
+                        Id = requestId,
+                        Title = item.Title,
+                        Slug = new HomeController().GenerateSlug(item.Title, requestId),
+                        DeliveryAddress = luRe.DeliveryAddress,
+                        Descriptions = luRe.Descriptions,
+                        UserName = luRe.User.Fullname,
+                        Avatar = luRe.User.Avatar,
+                        Image = item.Image,
+                        StartDate = item.StartDate,
+                        NumReplies = db.Replies.Where(r => r.RequestId == requestId).Count(),
+                        Flag = item.Flag,
+                        ListProducts = listProduct
+                    };
+
+                    if (m.Flag == 1)
+                    {
+                        m.DueDateCountdown = item.DueDate.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+                    }
+                    allRequest.Add(m);
+                }
+
+                if (sortNumber == 2)
+                {
+                    allRequest = allRequest.OrderByDescending(r => r.NumReplies).ThenByDescending(r => r.StartDate).ToList();
+                }
+
+                return View(allRequest.ToPagedList(pageNumber, pageSize));
+            }
         }
 
         public ActionResult Manage()
@@ -591,7 +741,9 @@ namespace TGVL.Controllers
                 }
             }
             var searchResult = new LuceneRequestResult();
-            searchResult = LuceneSimilar.SearchDefault(listProduct);
+            var hit_limit = 3;
+
+            searchResult = LuceneSimilar.SearchDefault(listProduct, hit_limit);
             foreach (var item in searchResult.SimilarResult)
             {
                 var requestId = item.Id;
@@ -626,6 +778,7 @@ namespace TGVL.Controllers
                         + "ORDER BY CASE WHEN [dbo].[Replies].[SupplierId] = {1} THEN 0 else 1 END, [dbo].[Replies].[CreatedDate] DESC ";
                     IEnumerable<BriefReply> data = db.Database.SqlQuery<BriefReply>(query, id, userId).ToList();
                     ViewBag.Replies = data;
+                    ViewBag.AutoReplyId = 0;
 
                 }
             }
@@ -641,7 +794,8 @@ namespace TGVL.Controllers
                     if (await UserManager.IsInRoleAsync(userId, "Customer") && userId == request.CustomerId)
                     {
                         //View all bid reply: cho customer sở hữu request đó
-                        var query = "SELECT [dbo].[BidReplies].[Rank], [dbo].[Replies].[SupplierId], [dbo].[Requests].[CustomerId], [dbo].[Users].[Fullname], [dbo].[Users].[Avatar], [dbo].[Users].[Address], [dbo].[Replies].[Total], [dbo].[Replies].[DeliveryDate], [dbo].[Replies].[Id] "
+                        var query = "SELECT [dbo].[BidReplies].[Rank], [dbo].[Replies].[SupplierId], [dbo].[Requests].[CustomerId], [dbo].[Users].[Fullname], [dbo].[Users].[Avatar], "
+                            + "[dbo].[Users].[Address], [dbo].[Replies].[Total], [dbo].[Replies].[DeliveryDate], [dbo].[Replies].[Id] "
                             + "FROM [dbo].[Replies], [dbo].[BidReplies], [dbo].[Users], [dbo].[Requests] "
                             + "WHERE [dbo].[Replies].[RequestId] = {0} "
                             + "AND [dbo].[Replies].[RequestId] = [dbo].[Requests].[Id]"
@@ -652,6 +806,7 @@ namespace TGVL.Controllers
 
                         IEnumerable<BriefBidReply> data = db.Database.SqlQuery<BriefBidReply>(query, id).ToList();
                         ViewBag.BidReplies = data;
+                        ViewBag.AutoReplyId = 0;
                     }
                     else if (await UserManager.IsInRoleAsync(userId, "Supplier"))
                     {
@@ -660,7 +815,20 @@ namespace TGVL.Controllers
                         
                         if (reply.Count() == 1) //current supplier đã reply
                         {
-                            if (reply.FirstOrDefault().BidReply.Flag != 9) 
+                            var min = reply.FirstOrDefault().BidReply.MinBidPrice;
+                            var lowestPrice = reply.FirstOrDefault().Request.BidRequest.LowestPrice;
+                            var currentPrice = reply.FirstOrDefault().Total;
+
+                            if (min != null && min < lowestPrice && currentPrice > lowestPrice)
+                            {
+                                ViewBag.AutoBid = true;
+                                ViewBag.AutoReplyId = reply.FirstOrDefault().Id;
+                            } else
+                            {
+                                ViewBag.AutoReplyId = 0;
+                                ViewBag.AutoBid = false;
+                            }
+                            if (reply.FirstOrDefault().BidReply.Flag != 9)  //chưa rút thầu
                             {
                                 var query = "SELECT [dbo].[BidReplies].[Rank], [dbo].[Replies].[SupplierId], [dbo].[Requests].[CustomerId], [dbo].[Users].[Fullname], [dbo].[Users].[Avatar], [dbo].[Users].[Address], [dbo].[Replies].[Total], [dbo].[Replies].[DeliveryDate], [dbo].[Replies].[Id] "
                                     + "FROM [dbo].[Replies], [dbo].[BidReplies], [dbo].[Users], [dbo].[Requests] "
@@ -870,10 +1038,24 @@ namespace TGVL.Controllers
             var userId = User.Identity.GetUserId<int>();
 
             var reply = db.Replies.Where(r => r.RequestId == requestId && r.SupplierId == userId).FirstOrDefault();
+            var request = db.Requests.Find(reply.RequestId);
+            var bidRequest = db.BidRequests.Find(request.Id);
+
             if (reply != null)
             {
-                var rank = db.BidReplies.Where(r => r.ReplyId == reply.Id).FirstOrDefault().Rank;
-                return new JsonResult { Data = new { Rank = rank}, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                var bidreply = db.BidReplies.Where(r => r.ReplyId == reply.Id).FirstOrDefault();
+                var rank = bidreply.Rank;
+                var oldRank = bidreply.OldRank;
+                var min = bidreply.MinBidPrice;
+                var step = bidreply.Deduction;
+                
+                return new JsonResult { Data = new {
+                    ReplyId = reply.Id,
+                    Rank = rank,
+                    OldRank = oldRank,
+                    Min = min,
+                    Step = step
+                }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
             return new JsonResult { Data = new { Success = "FAIL" }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }

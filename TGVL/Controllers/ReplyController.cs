@@ -37,8 +37,332 @@ namespace TGVL.Controllers
                 _userManager = value;
             }
         }
+        //GET
+        public ActionResult AutoBidAgain(int replyId)
+        {
+            var reply = db.Replies.Find(replyId);
 
-        
+            if (reply != null)
+            {
+                var requestId = reply.RequestId;
+                Request request = db.Requests.Find(requestId);
+                var bidRequest = db.BidRequests.Find(requestId);
+ 
+                if (request.StatusId == 2)
+                {
+                    //request expired
+                    return new JsonResult
+                    {
+                        Data = new
+                        {
+                            Error = "Expired",
+                            Message = "Request Expired."
+                        },
+                        JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                    };
+                }
+
+                if (request.StatusId == 3)
+                {
+                    //request completed
+                    return new JsonResult
+                    {
+                        Data = new
+                        {
+                            Error = "Completed",
+                            Message = "Request Completed."
+                        },
+                        JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                    };
+                }
+                var min = reply.BidReply.MinBidPrice;
+                var step = reply.BidReply.Deduction;
+
+                var currentPrice = reply.Total;
+
+                var lowestPrice = bidRequest.LowestPrice;
+
+                if (min >= lowestPrice)
+                {
+                    reply.Total = (decimal)min;
+                }
+                else
+                {
+                    var r = Math.Floor((currentPrice - lowestPrice) / (decimal)step) + 1;
+                    var newPrice = currentPrice - ((decimal)step * r);
+                    if (newPrice <= min)
+                    {
+                        reply.Total = (decimal)min;
+                    }
+                    else
+                    {
+                        reply.Total = newPrice;
+                    }
+                    bidRequest.LowestPrice = reply.Total;
+                    bidRequest.Leader = reply.SupplierId;
+                    db.Entry(bidRequest).State = EntityState.Modified;
+                }
+
+                db.Entry(reply).State = EntityState.Modified;
+                db.SaveChanges();
+
+                //update rank
+                var query = "Update BidReplies "
+                            + "SET [Rank] = t2.[Rank], [OldRank] = t1.[Rank]"
+                            + "FROM BidReplies t1 "
+                            + "LEFT OUTER JOIN "
+                            + "("
+                            + "SELECT BidReplies.ReplyId, Replies.RequestId, Rank() OVER (PARTITION BY RequestId ORDER BY Total asc) as [Rank] "
+                            + "FROM BidReplies, Replies "
+                            + "WHERE BidReplies.ReplyId = Replies.Id "
+                            + "AND  BidReplies.Flag <> 9 "
+                            + ") as t2 "
+                            + "ON t1.ReplyId = t2.ReplyId "
+                            + "AND t2.RequestId = {0} ";
+
+                db.Database.ExecuteSqlCommand(query, requestId);
+
+                query = "SELECT[dbo].[Users].[UserName] "
+                        + "FROM[dbo].[Replies], [dbo].[Requests], [dbo].[Users] "
+                        + "WHERE[dbo].[Replies].[SupplierId] = [dbo].[Users].[Id] "
+                        + "AND[dbo].[Replies].[RequestId] = [dbo].[Requests].[Id] "
+                        + "AND[dbo].[Requests].[Id] = {0} "
+                        + "AND[dbo].[Replies].[Id] <> {1}";
+                List<string> listUser = db.Database.SqlQuery<string>(query, requestId, replyId).ToList();
+
+                if (listUser.Count() != 0)
+                {
+                    var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+
+                    notificationHub.Clients.User(reply.Request.User.UserName).notify("updatebidtable"); //noti customer
+
+                    foreach (var userId in listUser)
+                    {
+                        notificationHub.Clients.User(userId).notify("update"); //noti supplier
+                    }
+                }
+                else
+                {
+                    var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+
+                    notificationHub.Clients.User(reply.Request.User.UserName).notify("updatebidtable"); //noti customer
+                }
+
+                //update bid info
+                return new JsonResult
+                {
+                    Data = new
+                    {
+                        Success = "Success",
+                        Type = "Changed",
+                        ReplyType = "Bid",
+                        ReplyId = reply.Id,
+                    },
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            }
+            return new JsonResult
+            {
+                Data = new
+                {
+                    Success = "Success",
+          
+                },
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+
+        //GET
+        public ActionResult AutoBid(int replyId)
+        {
+            Reply reply = db.Replies.Find(replyId);
+            var model = new AutobidViewModel
+            {
+                ReplyId = replyId,
+                CurentPrice = string.Format("{0:C0}", reply.Total),
+                MinimumPrice = reply.BidReply.MinBidPrice == null ? "0" : string.Format("{0:N0}", reply.BidReply.MinBidPrice),
+                Deduction = reply.BidReply.Deduction == null ? "0" : string.Format("{0:N0}", reply.BidReply.Deduction),
+                Type = reply.BidReply.MinBidPrice == null ? "new" : "edit"
+            };
+            ViewBag.MinDeduction = db.Settings.Where(s => s.SettingName == "MinDeduction").FirstOrDefault().SettingValue;
+            return PartialView("_Autobid", model);
+        }
+
+        //POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SetAutoBid(AutobidViewModel model)
+        {
+            var replyId = model.ReplyId;
+
+            var reply = db.Replies.FirstOrDefault(r => r.Id == model.ReplyId);
+            if (reply != null)
+            {
+                Request request = db.Requests.Find(reply.RequestId);
+                var requestId = reply.RequestId;
+                
+
+                if (request.StatusId == 2)
+                {
+                    //request expired
+                    return new JsonResult
+                    {
+                        Data = new
+                        {
+                            Error = "Expired",
+                            Message = "Request Expired."
+                        },
+                        JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                    };
+                }
+
+                if (request.StatusId == 3)
+                {
+                    //request completed
+                    return new JsonResult
+                    {
+                        Data = new
+                        {
+                            Error = "Completed",
+                            Message = "Request Completed."
+                        },
+                        JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                    };
+                }
+                var min = decimal.Parse(model.MinimumPrice);
+                var step = decimal.Parse(model.Deduction);
+
+                reply.BidReply.MinBidPrice = min;
+                reply.BidReply.Deduction = step;
+                db.Entry(reply).State = EntityState.Modified;
+
+                var currentPrice = reply.Total;
+                var bidRequest = db.BidRequests.Find(request.Id);
+
+                var leaderId = bidRequest.Leader;
+                var currentSupplierId = User.Identity.GetUserId<int>();
+
+                var lowestPrice = bidRequest.LowestPrice;
+
+                if (currentPrice >= lowestPrice && leaderId != currentSupplierId)
+                {
+                    if (min >= lowestPrice)
+                    {
+                        reply.Total = min;
+                    } else
+                    {
+                        var r = Math.Floor((currentPrice - lowestPrice) / step) + 1;
+                        var newPrice = currentPrice - (step * r);
+                        if (newPrice <= min)
+                        {
+                            reply.Total = min;
+                        } else
+                        {
+                            reply.Total = newPrice;
+                        }
+                        bidRequest.LowestPrice = reply.Total;
+                        bidRequest.Leader = reply.SupplierId;
+                        db.Entry(bidRequest).State = EntityState.Modified;
+                    }
+
+                    db.Entry(reply).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                    //update rank
+                    var query = "Update BidReplies "
+                               + "SET [Rank] = t2.[Rank], [OldRank] = t1.[Rank]"
+                               + "FROM BidReplies t1 "
+                               + "LEFT OUTER JOIN "
+                               + "("
+                               + "SELECT BidReplies.ReplyId, Replies.RequestId, Rank() OVER (PARTITION BY RequestId ORDER BY Total asc) as [Rank] "
+                               + "FROM BidReplies, Replies "
+                               + "WHERE BidReplies.ReplyId = Replies.Id "
+                               + "AND  BidReplies.Flag <> 9 "
+                               + ") as t2 "
+                               + "ON t1.ReplyId = t2.ReplyId "
+                               + "AND t2.RequestId = {0} ";
+
+                    db.Database.ExecuteSqlCommand(query, requestId);
+
+                    query = "SELECT[dbo].[Users].[UserName] "
+                            + "FROM[dbo].[Replies], [dbo].[Requests], [dbo].[Users] "
+                            + "WHERE[dbo].[Replies].[SupplierId] = [dbo].[Users].[Id] "
+                            + "AND[dbo].[Replies].[RequestId] = [dbo].[Requests].[Id] "
+                            + "AND[dbo].[Requests].[Id] = {0} "
+                            + "AND[dbo].[Replies].[Id] <> {1}";
+                    List<string> listUser = db.Database.SqlQuery<string>(query, requestId, replyId).ToList();
+
+                    if (listUser.Count() != 0)
+                    {
+                        var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+
+                        notificationHub.Clients.User(reply.Request.User.UserName).notify("updatebidtable"); //noti customer
+
+                        foreach (var userId in listUser)
+                        {
+                            notificationHub.Clients.User(userId).notify("update"); //noti supplier
+                        }
+                    }
+                    else
+                    {
+                        var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+
+                        notificationHub.Clients.User(reply.Request.User.UserName).notify("updatebidtable"); //noti customer
+                    }
+
+                    //update bid info
+                    return new JsonResult
+                    {
+                        Data = new
+                        {
+                            Success = "Success",
+                            Type = "Changed",
+                            ReplyType = "Bid",
+                            ReplyId = reply.Id,
+                        },
+                        JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                    };
+                } else
+                {
+                    db.SaveChanges();
+                    return new JsonResult
+                    {
+                        Data = new
+                        {
+                            Success = "Success",
+                            Type = "Notchanged",
+                            ReplyType = "Bid",
+                            ReplyId = reply.Id,
+                        },
+                        JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                    };
+                }
+                    
+
+            }
+            return View();
+        }
+
+        public ActionResult RemoveAutoBid(int replyId)
+        {
+            var bidReply = db.BidReplies.Find(replyId);
+            bidReply.MinBidPrice = null;
+            bidReply.Deduction = null;
+            db.Entry(bidReply).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return new JsonResult
+            {
+                Data = new
+                {
+                    Success = "Success",
+                   
+                },
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
         //GET: Reply/Details/6
         public ActionResult Details(int replyId, string type)
         {
@@ -260,6 +584,7 @@ namespace TGVL.Controllers
                 {
                     total = Math.Ceiling(total - (total * model.Discount / 100));
                 }
+
                 //Create normal reply
                 var reply = new Reply
                 {
@@ -280,6 +605,15 @@ namespace TGVL.Controllers
                 //Create bid reply
                 if (request.Flag == 1)
                 {
+                    var lowsestPrice = request.BidRequest.LowestPrice; //update lowest price
+                    if (total < lowsestPrice || lowsestPrice == 0)
+                    {
+                        request.BidRequest.LowestPrice = total;
+                        request.BidRequest.Leader = User.Identity.GetUserId<int>();
+
+                        db.Entry(request).State = EntityState.Modified;
+                    }
+
                     var bidReply = new BidReply
                     {
                         ReplyId = reply.Id,
@@ -521,8 +855,18 @@ namespace TGVL.Controllers
                     }
                     else if (reply.Flag == 1 && oldTotal >= decimal.Parse(model.BidPrice))
                     {
-                        //bid            
-                        reply.Total = decimal.Parse(model.BidPrice); //new total
+                        //bid         
+                        var newBidPrice = decimal.Parse(model.BidPrice);
+                        reply.Total = newBidPrice; //new total
+                        var lowestPrice = request.BidRequest.LowestPrice;
+
+                        if (newBidPrice < lowestPrice)  //update lowest price
+                        {
+                            request.BidRequest.LowestPrice = newBidPrice;
+                            request.BidRequest.Leader = User.Identity.GetUserId<int>();
+
+                            db.Entry(request).State = EntityState.Modified;
+                        }
 
                         //Update rank
                         reply.BidReply.OldRank = reply.BidReply.Rank;
@@ -739,14 +1083,15 @@ namespace TGVL.Controllers
         // GET: 
         public ActionResult GetRank(int id)
         {
-            var query = "SELECT[dbo].[BidReplies].[Rank], [dbo].[Users].[Fullname], [dbo].[Users].[Avatar], [dbo].[Users].[Address], [dbo].[Replies].[Total], [dbo].[Replies].[DeliveryDate], [dbo].[Replies].[Id] "
+            var query = "SELECT[dbo].[BidReplies].[Rank], [dbo].[Users].[Fullname], [dbo].[Users].[Avatar], [dbo].[Users].[Address], "
+                        + "[dbo].[Replies].[Total], [dbo].[Replies].[DeliveryDate], [dbo].[Replies].[Id] "
                         + "FROM[dbo].[Replies], [dbo].[BidReplies], [dbo].[Users] "
                         + "WHERE[dbo].[Replies].[Id] = {0} "
                         + "AND[dbo].[BidReplies].[ReplyId] = [dbo].[Replies].[Id] "
                         + "AND[dbo].[Replies].[SupplierId] = [dbo].[Users].[Id] ";
 
             BriefBidReply data = db.Database.SqlQuery<BriefBidReply>(query, id).SingleOrDefault();
-
+            
             return new JsonResult
             {
                 Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet
