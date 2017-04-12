@@ -80,4 +80,6 @@ namespace TGVL.Models
         public ICollection<LuceneRequest> SimilarResult { get; set; }
      
     }
+
+    
 }

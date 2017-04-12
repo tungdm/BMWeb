@@ -14,7 +14,7 @@ namespace TGVL.Models
         [DisplayFormat(DataFormatString = "{0:C0}", ApplyFormatInEditMode = true)]
         public decimal Total { get; set; }
 
-        [Required(ErrorMessage ="Giá thầu không được để trống")]
+        //[Required(ErrorMessage ="Giá thầu không được để trống")]
         public string BidPrice { get; set; }
 
         public string Description { get; set; }
@@ -50,6 +50,21 @@ namespace TGVL.Models
         public int Flag { get; set; }
 
         public int MinDateDeliveryRange { get; set; }
+    }
+
+    public class AutobidViewModel
+    {
+        public int ReplyId { get; set; }
+
+        public string CurentPrice { get; set; }
+
+        //[Required]
+        public string MinimumPrice { get; set; }
+
+        //[Required]
+        public string Deduction { get; set; }
+
+        public string Type { get; set; } //tao moi hoac update (huy)
     }
 
     public class WarehouseProductViewModel
@@ -100,8 +115,6 @@ namespace TGVL.Models
     {
         public int Rank { get; set; }
 
-        
-
         public string Fullname { get; set; }
 
         public string Avatar { get; set; }
@@ -138,7 +151,6 @@ namespace TGVL.Models
         [DisplayFormat(DataFormatString = "{0:C0}")]
         public decimal Total { get; set; }
 
-        [Required(ErrorMessage = "Giá thầu không được để trống")]
         public string BidPrice { get; set; }
 
         //[DisplayFormat(DataFormatString = "{0:C0}")]

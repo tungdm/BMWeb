@@ -49,6 +49,8 @@ namespace TGVL.Models
 
         public string DueDateCountdown { get; set; }
 
+        public string ListProducts { get; set; }
+
     }
 
     public class CreateRequestViewModel
