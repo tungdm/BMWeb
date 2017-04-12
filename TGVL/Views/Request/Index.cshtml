@@ -166,6 +166,13 @@
     position: relative;
     cursor: pointer;
 }
+.no_result_search_message {
+    text-align: center;
+    padding: 25px;
+    font-size: 13px;
+    color: #bcbcbc;
+    line-height: 18px;
+}
 </style>
 
 <div class="main-container" style="background:#f4f4f4">
@@ -257,45 +264,64 @@
                             </div>
                         </div>
                         <div id="box_main_content">
-                            @foreach (var item in Model)
-                            {
-                                <div class="qa_item">
-                                    <div class="picture_raovat">
-                                        <a href="@Url.Action("Details", "Request", new { id = @item.Slug})"><img src="~/Images/Request/@item.Image" /></a>
+                            @{
+                                if (Model == null)
+                                {
+                                    <div class="no_result_search_message">
+                                        <img src="~/Images/note_search.png"><br>
+                                        Không có yêu cầu nào phù hợp với tiêu chí tìm kiếm của bạn.<br>Bạn hãy thử lại bằng tiêu chí khác.<br> (nhập Từ khóa khác, chọn loại yêu cầu khác...)
                                     </div>
-                                    <div class="description">
-                                        <div class="top_qa_item">
-                                            <div class="info">
-                                                <div class="raovat_name">
-                                                    <a href="@Url.Action("Details", "Request", new { id = @item.Slug})" style="font-size:18px" title="@item.Title"><strong>@item.Title</strong></a>
+                                }
+                                else
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <div class="qa_item">
+                                            <div class="picture_raovat">
+                                                <a href="@Url.Action("Details", "Request", new { id = @item.Slug})"><img src="~/Images/Request/@item.Image" /></a>
+                                            </div>
+                                            <div class="description">
+                                                <div class="top_qa_item">
+                                                    <div class="info">
+                                                        <div class="raovat_name">
+                                                            <a href="@Url.Action("Details", "Request", new { id = @item.Slug})" style="font-size:18px" title="@item.Title"><strong>@item.Title</strong></a>
+                                                        </div>
+                                                    </div>
                                                 </div>
+                                                <div class="description teaser">
+                                                    @Html.Raw(@item.Descriptions)
+                                                </div>
+                                                <div class="deliver_address"><span><strong>Địa chỉ nhận hàng</strong></span>: @item.DeliveryAddress</div>
+                                                <div class="info">
+                                                    <p>
+                                                        <strong><span>@item.UserName</span> <span>•</span> <span>@Convert.ToDateTime(item.StartDate).ToString("dd/MM/yyyy HH:mm")</span> <span>•</span> <span>@item.ListProducts</span> <span>•</span> <span class="reply">@item.NumReplies</span></strong>
+                                                    </p>
+                                                </div>
+                                                @if (item.Flag == 1)
+                                                {
+                                                    <div class="more_item">
+                                                        <i class="fa fa-clock-o" aria-hidden="true"></i> <span class="count-down" data-time="@item.DueDateCountdown"></span>
+                                                    </div>
+                                                }
                                             </div>
                                         </div>
-                                        <div class="description teaser">
-                                            @Html.Raw(@item.Descriptions)
-                                        </div>
-                                        <div class="deliver_address"><span><strong>Địa chỉ nhận hàng</strong></span>: @item.DeliveryAddress</div>
-                                        <div class="info">
-                                            <p>
-                                                <strong><span>@item.UserName</span> <span>•</span> <span>@Convert.ToDateTime(item.StartDate).ToString("dd/MM/yyyy HH:mm")</span> <span>•</span> <span>@item.ListProducts</span> <span>•</span> <span class="reply">@item.NumReplies</span></strong>
-                                            </p>
-                                        </div>
-                                        @if(item.Flag == 1)
-                                        {
-                                            <div class="more_item">
-                                                <i class="fa fa-clock-o" aria-hidden="true"></i> <span class="count-down" data-time="@item.DueDateCountdown"></span>
-                                            </div>
-                                        }
-                                    </div>
-                                </div>
+                                    }
+                                }
                             }
+                            
                         </div>
                     </div>
                 </div>
 
                 <div style="text-align:center">
-                    @{ var searchString = Url.Encode(f_searchString);}
-                    @Html.PagedListPager(Model, page => Url.Action("Index", new { searchString, page, ViewBag.sort, ViewBag.type }), PagedListRenderOptions.ClassicPlusFirstAndLast)
+                    @{
+                        var searchString = Url.Encode(f_searchString);
+                        if (Model != null)
+                        {
+                            @Html.PagedListPager(Model, page => Url.Action("Index", new { searchString, page, ViewBag.sort, ViewBag.type }), PagedListRenderOptions.ClassicPlusFirstAndLast)
+                        }
+                    }
+                    
                 </div>
             </section>
         </div>
