@@ -69,18 +69,22 @@
                                             <td>
                                                 @*<button id="cancelRequest" type="button" class="btn btn-danger btn-sm" onclick="cancelRequest(@item.Id)">Hủy yêu cầu</button>*@
                                                 @{
-                                                    var MaxDateCancelRequest = ViewBag.MaxDateCancelRequest;
-                                                    DateTime reqCreateDate = item.StartDate;
-                                                    var max = reqCreateDate.AddDays(MaxDateCancelRequest);
-                                                    var today = DateTime.Now;
-                                                    if (today < max)
+                                                    if (User.IsInRole("Customer"))
                                                     {
-                                                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=thegioivatlieu123@gmail.com&su=Đơn xin hủy yêu cầu" class="btn btn-danger btn-sm">Hủy yêu cầu</a>
+                                                        var MaxDateCancelRequest = ViewBag.MaxDateCancelRequest;
+                                                        DateTime reqCreateDate = item.StartDate;
+                                                        var max = reqCreateDate.AddDays(MaxDateCancelRequest);
+                                                        var today = DateTime.Now;
+                                                        if (today < max)
+                                                        {
+                                                            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=thegioivatlieu123@gmail.com&su=Đơn xin hủy yêu cầu" class="btn btn-danger btn-sm">Hủy yêu cầu</a>
+                                                        }
                                                     }
+
                                                 }
                                             </td>
                                         </tr>
-                                                    }
+                                    }
                                 }
                             </tbody>
                         </table>
