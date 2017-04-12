@@ -80,7 +80,7 @@ namespace TGVL.LucenceSearch
             writer.AddDocument(doc);
         }
 
-        public static LuceneRequestResult Search(string input, string fieldName = "")
+        public static LuceneRequestResult Search(string input, int hits_limit)
         {
             if (string.IsNullOrEmpty(input))
             {
@@ -91,10 +91,10 @@ namespace TGVL.LucenceSearch
                 .Where(x => !string.IsNullOrEmpty(x)).Select(x => x.Trim() + "*");
             input = string.Join(" ", terms);
 
-            return _search(input, fieldName);
+            return _search(input, hits_limit);
         }
 
-        public static LuceneRequestResult SearchDefault(string input, string fieldName = "")
+        public static LuceneRequestResult SearchDefault(string input, int hits_limit)
         {
             if (string.IsNullOrEmpty(input))
             {
@@ -102,14 +102,14 @@ namespace TGVL.LucenceSearch
             }
             else
             {
-                return _search(input, fieldName);
+                return _search(input, hits_limit);
             }
             //return string.IsNullOrEmpty(input) ? new List<ProductSearchResult>() : _search(input, fieldName);
 
         }
 
         // main search method
-        private static LuceneRequestResult _search(string searchQuery, string searchField = "")
+        private static LuceneRequestResult _search(string searchQuery, int hits_limit)
         {
             // validation
             if (string.IsNullOrEmpty(searchQuery.Replace("*", "").Replace("?", "")))
@@ -122,32 +122,38 @@ namespace TGVL.LucenceSearch
             // set up lucene searcher
             using (var searcher = new IndexSearcher(_directory, false))
             {
-                var hits_limit = 3;
+                //var hits_limit = 3;
 
                 //var analyzer = new StandardAnalyzer(Version.LUCENE_30);
 
                 var analyzer = new CustomAnalyzer(new StandardAnalyzer(Version.LUCENE_30));
 
                 // search by single field
-                if (!string.IsNullOrEmpty(searchField))
-                {
-                    var parser = new QueryParser(Version.LUCENE_30, searchField, analyzer);
-                    var query = parseQuery(searchQuery, parser);
-                    var hits = searcher.Search(query, hits_limit).ScoreDocs;
-                    var results = _mapLuceneToDataList(hits, searcher);
-                    analyzer.Close();
-                    searcher.Dispose();
-                    //return results;
-                    return new LuceneRequestResult { SimilarResult = results };
-                }
-                // search by multiple fields (ordered by RELEVANCE)
-                else
-                {
-                    MultiFieldQueryParser parser = new MultiFieldQueryParser(Version.LUCENE_30, new[] { "ListProduct" }, analyzer);
-                    parser.DefaultOperator = QueryParser.Operator.OR;
+                //if (!string.IsNullOrEmpty(searchField))
+                //{
+                //    var parser = new QueryParser(Version.LUCENE_30, searchField, analyzer);
+                //    var query = parseQuery(searchQuery, parser);
+                //    var hits = searcher.Search(query, hits_limit).ScoreDocs;
+                //    var results = _mapLuceneToDataList(hits, searcher);
+                //    analyzer.Close();
+                //    searcher.Dispose();
+                //    //return results;
+                //    return new LuceneRequestResult { SimilarResult = results };
+                //}
+                //// search by multiple fields (ordered by RELEVANCE)
+                //else
+                //{
+                //MultiFieldQueryParser parser = new MultiFieldQueryParser(Version.LUCENE_30, new[] { "ListProduct" }, analyzer);
+                    var parser = new QueryParser(Version.LUCENE_30, "ListProduct", analyzer);
+                    parser.DefaultOperator = QueryParser.Operator.AND;
 
-                    //var parser = new QueryParser(Version.LUCENE_30, "Name", analyzer);
-                    //parser.DefaultOperator = QueryParser.Operator.AND;
+                //var parser = new QueryParser(Version.LUCENE_30, "Name", analyzer);
+                //parser.DefaultOperator = QueryParser.Operator.AND;
+
+
+                  
+
+
 
                     var query = parseQuery(searchQuery, parser);
 
@@ -160,7 +166,7 @@ namespace TGVL.LucenceSearch
                     searcher.Dispose();
                     //return results;
                     return new LuceneRequestResult { SimilarResult = results };
-                }
+                //}
             }
         }
 

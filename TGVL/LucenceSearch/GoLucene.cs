@@ -95,7 +95,7 @@ namespace TGVL.LucenceSearch
             // set up lucene searcher
             using (var searcher = new IndexSearcher(_directory, false))
             {
-                var hits_limit = 10;
+                var hits_limit = 1000;
 
                 //var analyzer = new StandardAnalyzer(Version.LUCENE_30);
 
