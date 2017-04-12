@@ -14,7 +14,7 @@
 <style>
     .item-img-info {
         width: 250px;
-        height: 250px;
+        height: 220px;
         background-image: none;
         background-repeat: no-repeat;
         background-position: center center;
@@ -23,7 +23,7 @@
 
     .item-inner {
         width: 250px;
-        height: 380px;
+        height: 350px;
         display: block;
         vertical-align: top;
     }
@@ -33,6 +33,10 @@
         height: auto;
         padding: 10px;
         margin-bottom: 20px;
+    }
+
+    h3 {
+        border-bottom: none 1px rgba(100, 100, 100, .30);
     }
 
     #deal_border {
@@ -50,6 +54,22 @@
         position: relative;
         cursor: pointer;
     }
+    .deal_discount {
+        display: inline-block;
+        width: 55px;
+        height: 24px;
+        padding: 0 2px 0 10px;
+        line-height: 25px;
+        background: url("/Images/discount.svg") no-repeat;
+        background-size: contain;
+        color: #fff;
+        font-size: 18px;
+        font-weight: 400;
+        vertical-align: text-top;
+        margin-left: 10px;
+        vertical-align: 4px;
+    }
+     
 </style>
 
 <section class="main-container" style="background:#f4f4f4">
@@ -65,14 +85,14 @@
                                         <img src="~/Images/Product/Warehouse/@Model.ProductImage" width="100" height="100" />
                                     </div>
                                     @*<div class="flexslider flexslider-thumb">
-                                            <ul class="previews-list slides">
-                                                <li><a href="~/Content/images/gachbong.jpg" class="cloud-zoom-gallery" rel="useZoom: 'zoom1', smallImage: '~/Content/images/gachbong.jpg' "><img src="~/Content/images/gachbong.jpg" alt="Thumbnail 1" /></a></li>
-                                                <li><a href='~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' "><img src="~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg" alt="Thumbnail 2" /></a></li>
-                                                <li><a href='~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' "><img src="~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg" alt="Thumbnail 1" /></a></li>
-                                                <li><a href='~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' "><img src="~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg" alt="Thumbnail 2" /></a></li>
-                                                <li><a href='~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' "><img src="~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg" alt="Thumbnail 2" /></a></li>
-                                            </ul>
-                                        </div>*@
+                                        <ul class="previews-list slides">
+                                            <li><a href="~/Content/images/gachbong.jpg" class="cloud-zoom-gallery" rel="useZoom: 'zoom1', smallImage: '~/Content/images/gachbong.jpg' "><img src="~/Content/images/gachbong.jpg" alt="Thumbnail 1" /></a></li>
+                                            <li><a href='~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' "><img src="~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg" alt="Thumbnail 2" /></a></li>
+                                            <li><a href='~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' "><img src="~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg" alt="Thumbnail 1" /></a></li>
+                                            <li><a href='~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' "><img src="~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg" alt="Thumbnail 2" /></a></li>
+                                            <li><a href='~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg' "><img src="~/Content/images/Xi măng Hà Tiên 1 PCB 40.jpg" alt="Thumbnail 2" /></a></li>
+                                        </ul>
+                                    </div>*@
                                 </div>
 
                                 <div class="clear"></div>
@@ -98,7 +118,7 @@
                                     <div class="price-box">
                                         <p class="old-price"> Giá gốc: <span class="price-label">Regular Price:</span> <span class="price"> @Html.DisplayFor(model => model.UnitPrice)/@Model.UnitType </span> </p>
                                         <br />
-                                        <p class="special-price"> <span class="price-label">Special Price</span> <span class="price"> @Html.DisplayFor(model => model.PriceSave)/@Model.UnitType</span> Giảm <strong style="color:#ff1341; font-size:24px">@Model.Discount %</strong> </p>
+                                        <p class="special-price"> <span class="price-label">Special Price</span> <span class="price"> @Html.DisplayFor(model => model.PriceSave)/@Model.UnitType</span> <span class="deal_discount">@Model.Discount%</span></p>
                                     </div>
                                 </div>
                                 <hr />
@@ -141,7 +161,7 @@ new AjaxOptions
                                         <div class="col-md-8">
                                             <div id="time" class="more_item">
                                                 @*<span id="countdown-2">
-                                                    </span>*@
+                                                </span>*@
                                                 <i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; <span class="count-down" data-time="@Model.DueDateCountdown" style="font-size:18px"></span>
                                             </div>
                                         </div>
@@ -152,8 +172,10 @@ new AjaxOptions
                     </div>
                 </div>
             </div>
-            <br />
-            <br />
+        </div>
+        <br />
+        <br />
+        <div class="container">
             <div class="row">
                 <div class="col-main col-sm-9">
                     <div class="nav-tabs-custom">
@@ -174,12 +196,12 @@ new AjaxOptions
 
                     </div>
                 </div>
-                <div class="best-pro col-md-3">
+                <div class="col-md-3">
                     <div class="popular-posts widget widget__sidebar" style="background:#fff">
                         <h3 class="widget-title" style="background:#fff">ĐỊA CHỈ</h3>
                         <div class="widget-content">
-                            @foreach(var item in ListShop) { 
-                            <p style="font-size:medium"><i class="fa fa-map-marker"> @item.Address </i></p>
+                            @foreach(var item in ListShop) {
+                                <p style="font-size:medium"><i class="fa fa-map-marker"> @item.Address </i></p>
                             }
 
                         </div>
@@ -189,7 +211,7 @@ new AjaxOptions
                             <div class="new_title center">
                                 <h2><strong>DEAL TƯƠNG TỰ</strong></h2>
                             </div>
-                            <div id="best-seller-slider" class="product-flexslider hidden-buttons">
+                            <div class="product-flexslider hidden-buttons">
 
                                 @{
                                     if (Model.SimilarDeals != null)
@@ -209,8 +231,8 @@ new AjaxOptions
                                                                 <div class="item-title"> <h3 href="#" style="font-size:14px"> @item.Title </h3> </div>
                                                                 <div class="item-content">
                                                                     <div class="price-block">
-                                                                        <div class="price-box">
-                                                                            <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" style="font-size:20px"> @Html.DisplayFor(itemModel => item.UnitPrice)</span> Giảm <strong style="color:#ff1341; font-size:20px">@item.Discount %</strong> </p>
+                                                                        <div class="price-box" style="margin-top:10px">
+                                                                            <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" style="font-size:20px"> @Html.DisplayFor(itemModel => item.UnitPrice)</span> <span class="deal_discount">@item.Discount%</span></p>
                                                                             <br />
                                                                             <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" style="font-size:18px"> @Html.DisplayFor(itemModel => item.PriceSave) </span> &nbsp; <span class="pull-right"> <i class="fa fa-user"> @item.NumBuyer </i></span></p>
                                                                         </div>
@@ -234,7 +256,8 @@ new AjaxOptions
                 </div>
             </div>
             <br />
-
+        </div>
+        <div class="container">
             <div class="row">
                 <div class="std">
                     <div id="border1" class="best-pro col-md-12">
@@ -260,9 +283,9 @@ new AjaxOptions
                                                             <div class="info-inner">
                                                                 <div class="item-title" style="text-align:left"> <h3 style="font-size:14px">@item.Title</h3></div>
                                                                 <div class="item-content">
-                                                                    <div class="price-block">
+                                                                    <div class="price-block" style="margin-top:10px">
                                                                         <div class="price-box">
-                                                                            <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" style="font-size:20px">@Html.DisplayFor(itemModel => item.UnitPrice)</span> Giảm <strong style="color:#ff1341; font-size:20px">@item.Discount %</strong> </p>
+                                                                            <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" style="font-size:20px">@Html.DisplayFor(itemModel => item.UnitPrice)</span> <span class="deal_discount">@item.Discount%</span></p>
                                                                             <br />
                                                                             <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" style="font-size:18px">@Html.DisplayFor(itemModel => item.PriceSave)</span> &nbsp; <span class="pull-right"> <i class="fa fa-user"> @item.NumBuyer</i></span></p>
 
@@ -289,14 +312,14 @@ new AjaxOptions
             </div>
 
             @*<div class="popular-posts widget widget__sidebar">
-                    <h3 class="widget-title">THÔNG TIN CHI TIẾT</h3>
-                    <div class="widget-content">
-                        @Html.Raw(Model.ProductDetails)
-                    </div>
-                </div>*@
+                <h3 class="widget-title">THÔNG TIN CHI TIẾT</h3>
+                <div class="widget-content">
+                    @Html.Raw(Model.ProductDetails)
+                </div>
+            </div>*@
             <br />
-
         </div>
+        
     </div>
 </section>
 @Scripts.Render("~/bundles/clockjquery")
