@@ -5,6 +5,7 @@
 @{
     ViewBag.Title = "Sàn đấu thầu";
     Layout = "~/Views/Shared/_HomePageViewLayout.cshtml";
+    ViewData["RequestSearchString"] = ViewBag.SearchString;
 }
 
 @Styles.Render("~/Content/searchproductcss")
@@ -177,6 +178,8 @@
                             string f_page = ((int)ViewBag.page).ToString(); //min 1...
                             string f_sort = ((int)ViewBag.sort).ToString(); //min 1, 2
                             string f_type = ((int)ViewBag.type).ToString(); //min 0, 1, 2
+                            string f_searchString = ViewBag.SearchString;
+
                             var list1 = ViewBag.list1;
                             var list2 = ViewBag.list2;
                             var title1 = f_sort == "1" ? "Mới nhất" : "Nổi bật";
@@ -203,6 +206,11 @@
                                                 continue;
                                             }
                                             var link = "/Request?";
+                                            if (f_searchString != null)
+                                            {
+                                                var test = Url.Encode(f_searchString);
+                                                link += ("searchString=" + test + "&");
+                                            }
                                             if (f_page != "1")
                                             {
                                                 link += ("page=" + f_page + "&");
@@ -228,6 +236,11 @@
                                                 continue;
                                             }
                                             var link = "/Request?";
+                                            if (f_searchString != null)
+                                            {
+                                                var test = Url.Encode(f_searchString);
+                                                link += ("searchString=" + test + "&");
+                                            }
                                             if (f_page != "1")
                                             {
                                                 link += ("page=" + f_page + "&");
@@ -264,7 +277,7 @@
                                         <div class="deliver_address"><span><strong>Địa chỉ nhận hàng</strong></span>: @item.DeliveryAddress</div>
                                         <div class="info">
                                             <p>
-                                                <strong><span>@item.UserName</span> <span>•</span> <span>@Convert.ToDateTime(item.StartDate).ToString("dd/MM/yyyy HH:mm")</span> <span>•</span> <span class="reply">@item.NumReplies</span></strong>
+                                                <strong><span>@item.UserName</span> <span>•</span> <span>@Convert.ToDateTime(item.StartDate).ToString("dd/MM/yyyy HH:mm")</span> <span>•</span> <span>@item.ListProducts</span> <span>•</span> <span class="reply">@item.NumReplies</span></strong>
                                             </p>
                                         </div>
                                         @if(item.Flag == 1)
@@ -281,7 +294,8 @@
                 </div>
 
                 <div style="text-align:center">
-                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, ViewBag.sort, ViewBag.type }), PagedListRenderOptions.ClassicPlusFirstAndLast)
+                    @{ var searchString = Url.Encode(f_searchString);}
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { searchString, page, ViewBag.sort, ViewBag.type }), PagedListRenderOptions.ClassicPlusFirstAndLast)
                 </div>
             </section>
         </div>

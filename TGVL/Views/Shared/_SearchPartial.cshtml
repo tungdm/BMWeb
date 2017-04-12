@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity
+
 <div class="header container">
     <div class="row">
         <div class="col-md-3 col-sm-12 col-xs-12">
@@ -9,19 +10,39 @@
             </div>
         </div>
         <div class="col-md-7 col-sm-12 col-xs-12">
-
-            <form id="header_search" name="header_search" action="/Home/Search" method="get">
-                <div class="border" id="home_search_control">
-
-                    <input type="submit" class="button" value="Tìm kiếm">
-                    <div class="keyword">
-                        <div>
-                            <input type="text" id="header_search_keyword" name="searchString" value="@ViewData["SearchString"]" placeholder="Chào bạn, hôm nay bạn muốn mua gì?" maxlength="100" class="ac_input" data-otf-autocomplete="@Url.Action("ProductAutocomplete")">
+            @{
+                var controller = ViewContext.RouteData.Values["Controller"].ToString();
+                if (controller == "Request")
+                {
+                    <form id="header_search" name="header_search" action="/Home/SearchRequest" method="get">
+                        <div class="border" id="home_search_control">
+                            <input type="button" class="button" value="Tìm kiếm yêu cầu" id="searchBtn">
+                            <div class="keyword">
+                                <div>
+                                    <input type="text" id="header_search_keyword" name="searchString" value="@ViewData["RequestSearchString"]" maxlength="100" class="ac_input tag">
+                                </div>
+                            </div>
+                            <div class="clear"></div>
                         </div>
-                    </div>
-                    <div class="clear"></div>
-                </div>
-            </form>
+                    </form>
+                }
+                else
+                {
+                    <form id="header_search" name="header_search" action="/Home/Search" method="get">
+                        <div class="border" id="home_search_control">
+
+                            <input type="button" class="button" value="Tìm kiếm" id="searchBtn">
+                            <div class="keyword">
+                                <div>
+                                    <input type="text" id="header_search_keyword" name="searchString" value="@ViewData["SearchString"]" placeholder="Chào bạn, hôm nay bạn muốn mua gì?" maxlength="100" class="ac_input" data-otf-autocomplete="@Url.Action("ProductAutocomplete")">
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </form>
+                }
+            } 
+            
         </div>
         
         <div class="col-md-2 header-cart-wrapper">
@@ -44,3 +65,16 @@
     </div>
 </div>
 
+<script>
+
+    $(document).ready(function () {
+        $("#searchBtn").click(function (event) {
+            var searchString = $("#header_search_keyword").val();
+            if (searchString != "") {
+                $("form[id='header_search']").submit();
+            }
+        });
+    })
+
+
+</script>

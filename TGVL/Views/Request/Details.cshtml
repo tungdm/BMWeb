@@ -214,6 +214,15 @@
     cursor: pointer;
     font-size: 13px;
 }
+.supplierName {
+    font-size: 15px;
+}
+
+.modal-body {
+    min-height:calc(100vh - 210px);
+    max-height: calc(100vh - 210px);
+    overflow-y: auto;
+}
 </style>
 
 <div class="main-container col2-right-layout">
@@ -501,8 +510,9 @@
                                                                                                 </td>
 
                                                                                                 <td>
-                                                                                                    <img src="~/Images/UserAvatar/@reply.Avatar" width="100" height="100" alt="avatar" />
-                                                                                                    @reply.Fullname
+                                                                                                    <img src="~/Images/UserAvatar/@reply.Avatar" width="100" height="100" alt="avatar" style="display: block; margin-bottom: 5px;"/>
+                                                                                                    
+                                                                                                    <span class="supplierName"><strong>@reply.Fullname</strong></span>
                                                                                                 </td>
 
                                                                                                 <td>
@@ -517,6 +527,9 @@
                                                                                                     @if (User.Identity.GetUserId<int>() == reply.SupplierId && Model.StatusId == 1)
                                                                                                     {
                                                                                                         <button id="edit" type="button" class="btn btn-warning btn-sm" onclick="edit(@reply.Id)">Chỉnh sửa</button>
+                                                                                                        
+                                                                                                        <button id="autobid" type="button" class="btn btn-info btn-sm" onclick="autobid(@reply.Id)">Tự đặt giá</button>
+                                                                                                       
                                                                                                         if (ViewBag.Retractable)
                                                                                                         {
                                                                                                             <button id="retract" type="button" class="btn btn-danger btn-sm" onclick="retract(@reply.Id)">Rút thầu</button>
@@ -642,21 +655,42 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Trả lời</h4>
+                <h4 class="modal-title">Cập nhật đơn thầu</h4>
             </div>
-            <div class="modal-body" style="min-height:calc(100vh - 210px);max-height: calc(100vh - 210px);overflow-y: auto;">
+            <div class="modal-body">
                 <div id="replyInfo"></div>
             </div>
             <div class="modal-footer">
+               
                 <input type="button" value="Hoàn tất" class="btn btn-success" id="submit-btn-reply" style="display:none" />
-                <input type="button" value="Hoàn tất" class="btn btn-success" id="submit-btn-edit" style="display:none" />
-                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                <input type="button" value="Cập nhật" class="btn btn-success" id="submit-btn-edit" style="display:none" />
+               
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="close-reply-form">Đóng</button>
             </div>
         </div>
 
     </div>
 </div>
 
+<div id="autoBidModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg" style="left:0%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Cài đặt tự động đấu thầu</h4>
+            </div>
+            <div class="modal-body">
+                <div id="autoBidInfo"></div>
+            </div>
+            <div class="modal-footer">
+                <input type="button" value="Hủy tự đặt giá" class="btn btn-danger" id="submit-btn-remove-autobid" style="display:none" />
+                <input type="button" value="Hoàn tất" class="btn btn-success" id="submit-btn-autobid" />
+                
+                <button class="btn btn-default" data-dismiss="modal" id="close-reply-form-auto" >Đóng</button>
+            </div>
+        </div>
+
+    </div>
+</div>
 @Scripts.Render("~/bundles/clockjquery")
 
 <script>
@@ -681,6 +715,20 @@
                 additionalMarginTop: 50
         });
         clock();
+
+        //auto bid
+        var auto = '@ViewBag.AutoBid';
+
+        if (auto == 'True') {
+            console.log("auto bid - run");
+            var replyId = @ViewBag.AutoReplyId;
+            setTimeout(function () {
+                autobidAgain(replyId);
+            }, 5000)
+        } else {
+            console.log("auto bid - 404");
+        }
+
     });
 
 </script>
