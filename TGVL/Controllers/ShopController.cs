@@ -124,7 +124,7 @@ namespace TGVL.Controllers
                         model.ProductName = product.Name;
                         model.CategoryName = product.SysCategory.Name;
                         model.ManufactureName = product.Manufacturer.Name;
-                        model.ProductAttributes = product.ProductAttributes;
+                        
                         model.UnitType = product.UnitType.Type;
                     }
 
