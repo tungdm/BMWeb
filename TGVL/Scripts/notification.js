@@ -123,11 +123,42 @@ function supplierUpdateBidReply(requestId) {
             }
 
             $("#rank").html(rank);
+
+            var pending = $('#autoBidModal').is(':visible'); //pending = true <=> dang cap nhat, tam thoi k update
+            console.log("pending=" + pending);
+
+            if (data.Rank > data.OldRank && data.Min != null && !pending) {
+                
+                var replyId = data.ReplyId;
+                
+                myTimeOut = setTimeout(function () {
+                    autobidAgain(replyId);
+                }, 5000)
+            }
         },
         error: function (error) {
             console.log(error);
         }
         
+    });
+}
+
+function autobidAgain(replyId) {
+    var options = {
+        url: '/Reply/AutoBidAgain',
+        type: 'GET',
+        data: { replyId: replyId }
+    };
+
+    $.ajax(options).done(function (data) {
+        $.ajax({
+            type: 'GET',
+            url: '/Reply/GetRank',
+            data: 'id=' + data.ReplyId,
+            success: function (data) {
+                updateBid(data);
+            }
+        });
     });
 }
 
@@ -163,7 +194,7 @@ function updateReply(requestId, userName) {
                     table += '<tr id="reply_' + value.Id + '">'
                 + '<td>' + rank + '</td>'
 
-                + '<td><img src="/Images/UserAvatar/' + value.Avatar + '" width="100" height="100" alt="avatar"> ' + value.Fullname + '</td>'
+                + '<td><img src="/Images/UserAvatar/' + value.Avatar + '" width="100" height="100" alt="avatar" style="display: block; margin-bottom: 5px;"><span class="supplierName"><strong> ' + value.Fullname + '</strong></span></td>'
 
                 + '<td><strong><span style="color: #ff1341; font-size: 20px">' + addDot(value.Total) + ' &#x20AB;</span></strong></td>'
 
@@ -289,13 +320,14 @@ function updateBid(data) {
 	+'<tr>'
 	+ '<td id="rank">' + rank + '</td>'
 
-	+ '<td><img src="/Images/UserAvatar/' + data.Avatar + '" width="100" height="100" alt="avatar"> ' + data.Fullname + '</td>'
+	+ '<td><img src="/Images/UserAvatar/' + data.Avatar + '" width="100" height="100" alt="avatar" style="display: block; margin-bottom: 5px;" /><span class="supplierName"><strong> ' + data.Fullname + '</strong></span></td>'
 
 	+ '<td><strong><span style="color: #ff1341; font-size: 20px">' + addDot(data.Total) + ' &#x20AB;</span></strong></td>'
 
 	+ '<td>' + new Date(parseInt(data.DeliveryDate.substr(6))).format("dd/mm/yyyy") + '</td>'
 
 	+ '<td><button id="viewDetails" type="button" class="btn btn-warning btn-sm" onclick="edit(' + data.Id + ')">Chỉnh sửa</button> '
+    + '<button id="autobid" type="button" class="btn btn-info btn-sm" onclick="autobid(' + data.Id + ')">Tự đặt giá</button> '
     + '<button id="retract" type="button" class="btn btn-danger btn-sm" onclick="retract(' + data.Id + ')">Rút thầu</button>'
 			
 	+'</td></tr></tbody></table>';
@@ -430,6 +462,7 @@ function updateClientReply2(requestId, userName, newreplyId) {
         }
     });
 }
+
 function updateExistReplies(data, status, xhr) {
     console.log("updateExistReplies");
     if (data.Success === "Fail") {
@@ -443,7 +476,14 @@ function updateExistReplies(data, status, xhr) {
         }
     } else {
         $('#replyModal').modal('toggle');
+        $('#autoBidModal').modal({
+            backdrop: true,
+            keyboard: true
+        });
+
+        $('#autoBidModal').modal('toggle');
         $("#replyInfo").empty();
+        $('#submit-btn-reply').hide();
 
         if (data.ReplyType === "Bid") {
             console.log("get new rank");
@@ -462,6 +502,46 @@ function updateExistReplies(data, status, xhr) {
             $(totalId).html(newTotal);
         }
         
+    }
+}
+
+function updateExistRepliesAutoBid(data, status, xhr) {
+    console.log("updateExistRepupdateExistRepliesAutoBidlies");
+    if (data.Success === "Fail") {
+        console.log("Fail");
+        if (data.ReplyType === "Bid") {
+            console.log(data.OldTotal);
+            var message = data.Message + " (" + addDot(data.OldTotal) + " &#x20AB;)";
+            console.log(message);
+            $("#errorTotal").html(message);
+            $("#oldTotal").html(data.OldTotal);
+        }
+    } else {
+       
+        $('#autoBidModal').modal({
+            backdrop: true,
+            keyboard: true
+        });
+
+        $('#autoBidModal').modal('toggle');
+       
+        if (data.ReplyType === "Bid") {
+            console.log("get new rank");
+            $.ajax({
+                type: 'GET',
+                url: '/Reply/GetRank',
+                data: 'id=' + data.ReplyId,
+                success: function (data) {
+                    updateBid(data);
+                }
+            });
+        } else {
+            var newTotal = '<p><strong>Giá đề xuất: <span style="color: #ff1341; font-size: 28px">' + addDot(data.NewTotal) + ' &#x20AB;</span></strong></p>';
+            var totalId = "#total_" + data.ReplyId;
+            console.log("totalId:" + totalId, ", newTotal:" + data.NewTotal);
+            $(totalId).html(newTotal);
+        }
+
     }
 }
 

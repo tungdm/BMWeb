@@ -344,7 +344,12 @@
 				this.settings.callbackNotify.call(this, notifyText);
 			}
 			else {
-				alert(notifyText);
+			    //alert(notifyText);
+			    swal(
+                  'Oops...',
+                  notifyText,
+                  'error'
+                );
 			}
 		},
 

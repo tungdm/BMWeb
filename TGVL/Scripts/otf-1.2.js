@@ -164,6 +164,11 @@ function select(replyId) {
 
 //Edit Reply - Supplier
 function edit(replyId) {
+    if (typeof myTimeOut !== "undefined") {
+        console.log("myTimeOut existed");
+        clearTimeout(myTimeOut);
+    }
+    
     var options = {
         url: '/Reply/Details',
         type: 'GET',
@@ -174,13 +179,40 @@ function edit(replyId) {
         var $target = $('#replyInfo');
         $target.html(data);
 
-        
         $('#submit-btn-edit').show();
 
         var form = $("#form0");
         $.validator.unobtrusive.parse(form);
 
         $('#replyModal').modal('show');
+    });
+}
+
+//auto bid - supplier
+function autobid(replyId) {
+    if (typeof myTimeOut !== "undefined") {
+        console.log("myTimeOut existed");
+        clearTimeout(myTimeOut);
+    }
+
+    var options = {
+        url: '/Reply/AutoBid',
+        type: 'GET',
+        data: { replyId: replyId }
+    };
+
+    $.ajax(options).done(function (data) {
+        var $target = $('#autoBidInfo');
+        $target.html(data);
+
+        var form = $("#form0");
+        $.validator.unobtrusive.parse(form);
+
+        //$('#replyModal').modal('show');
+        $('#autoBidModal').modal({
+            backdrop: 'static',
+            keyboard: false
+        })
     });
 }
 
