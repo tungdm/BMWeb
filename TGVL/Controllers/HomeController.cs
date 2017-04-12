@@ -102,6 +102,18 @@ namespace TGVL.Controllers
             }
 
             return new EmptyResult();
+            
+        }
+
+        public ActionResult SearchRequest(string searchString)
+        {
+            //TODO: validate client-side
+            if (!String.IsNullOrWhiteSpace(searchString))
+            {
+                return RedirectToAction("Index", "Request", new { searchString });
+            }
+
+            return new EmptyResult();
         }
 
         public ActionResult SearchResult(string searchString)
