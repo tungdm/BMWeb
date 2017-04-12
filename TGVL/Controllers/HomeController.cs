@@ -744,6 +744,7 @@ namespace TGVL.Controllers
                 SimiliarProducts = simiProducts,
                 SearchString = searchString == null ? product.Name : searchString
             };
+            ViewBag.MaxDistance = db.Settings.Where(s => s.SettingName == "MaxDistance").FirstOrDefault().SettingValue;
             return View(model);
         }
 
