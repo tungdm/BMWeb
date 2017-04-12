@@ -6,7 +6,7 @@
     Layout = "~/Views/Shared/TestLayout.cshtml";
 }
 @Styles.Render("~/Content/slidercss")
-
+<link href="~/Content/css/AdminLTE.min.css" rel="stylesheet" />
 <style>
     span.stars, span.stars span {
         display: block;
@@ -30,7 +30,7 @@
 
     .item-inner {
         width: 250px;
-        height: 380px;
+        height: 350px;
         display: block;
         vertical-align: top;
     }
@@ -152,131 +152,114 @@
 <section class="main-container col1-layout home-content-container" style="background:#f4f4f4">
     <div class="container">
         <div class="row">
-            <div class="std">
-                <div id="border1" class="best-pro col-md-12">
-                    <div class="slider-items-products">
-                        <div class="new_title center">
-                            <h2><strong>DEAL MỚI</strong></h2>
-                        </div>
-                        <div id="best-seller-slider" class="product-flexslider hidden-buttons">
-                            <div class="slider-items slider-width-col4">
+            <div class="col-md-12">
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#tab_1" data-toggle="tab" style="font-size:large">DEAL NỔI BẬT</a></li>
+                        <li><a href="#tab_2" data-toggle="tab" style="font-size:large">DEAL MỚI</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab_1">
+                            <div class="row">
+                                <ul class="products-grid">
+                                    @foreach (var item in Model.Hotdeal)
+                                    {
+                                        <li class="item col-md-3">
+                                            <div class="col-item">
+                                                <div class="item-inner">
+                                                    <div class="item-img">
+                                                        <div class="item-img-info">
+                                                            <a href="/Deal/Details/@item.Id" class="product-image"> <img src="~/Images/Product/SysProduct/@item.Image"></a>
+                                                            <div class="item-box-hover">
+                                                                <div class="more_item">
+                                                                    <i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; <span class="count-down" data-time="@item.DueDateCountdown" style="font-size:13px"></span>
+                                                                </div>
+                                                                <span class="view"><a class="view_detail" href="/Deal/Details/@item.Id">Xem ngay</a></span>
 
-                                @foreach (var item in Model.Newdeal)
-                                {
-                                    <div class="item">
-                                        <div class="col-item">
-                                            @*<div class="new-label new-top-right">Mới</div>*@
-                                            <div class="item-inner">
-                                                <div class="item-img">
-                                                    <div class="item-img-info">
-                                                        <a href="/Deal/Details/@item.Id" class="product-image"> <img src="~/Images/Product/SysProduct/@item.Image"></a>
-                                                        <div class="item-box-hover">
-                                                            <div class="more_item">
-                                                                <i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; <span class="count-down" data-time="@item.DueDateCountdown" style="font-size:13px"></span>
                                                             </div>
-                                                            <span class="view"><a class="view_detail" href="/Deal/Details/@item.Id">Xem ngay</a></span>
-
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="item-info">
-                                                    <div class="info-inner">
-                                                        <div class="item-title" style="text-align:left"> <h3 style="font-size:14px">@item.Title</h3></div>
-                                                        <div class="item-content">
-                                                            <div class="price-block">
-                                                                <div class="price-box">
-                                                                    <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" style="font-size:20px;font-weight:700">@Html.DisplayFor(itemModel => item.SavePrice)</span> <span class="deal_discount">@item.Discount%</span></p>
-                                                                    <br />
-                                                                    <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" style="font-size:18px">@Html.DisplayFor(itemModel => item.UnitPrice)</span> &nbsp; <span class="pull-right" style="font-size:16px"> <i class="fa fa-user"> @item.NumBuyer</i></span></p>
+                                                    <div class="item-info">
+                                                        <div class="info-inner">
+                                                            <div class="item-title" style="text-align:left"> <h3 style="font-size:14px">@item.Title</h3></div>
+                                                            <div class="item-content">
+                                                                <div class="price-block">
+                                                                    <div class="price-box" style="text-align:left">
+                                                                        <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" style="font-size:20px;font-weight:700">@Html.DisplayFor(itemModel => item.SavePrice)</span> <span class="deal_discount">@item.Discount%</span></p>
+                                                                        <br />
+                                                                        <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" style="font-size:18px">@Html.DisplayFor(itemModel => item.UnitPrice)</span> &nbsp; <span class="pull-right" style="font-size:16px"> <i class="fa fa-user"> @item.NumBuyer</i></span></p>
 
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
 
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                }
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                            <br />
+                            <div style="text-align:center">
+                                <a href="/Home/ViewHotDeal" class="btn btn-info" style="font-size:16px">Xem tất cả Deal nổi bật <i class="fa fa-caret-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab_2">
+                            <div class="row">
+                                <ul class="products-grid">
+                                    @foreach (var item in Model.Newdeal)
+                                    {
+                                        <li class="item col-md-3">
+                                            <div class="col-item">
+                                                <div class="item-inner">
 
+                                                    <div class="item-img">
+                                                        <div class="item-img-info">
+                                                            <a href="/Deal/Details/@item.Id" class="product-image"> <img src="~/Images/Product/SysProduct/@item.Image"></a>
+                                                            <div class="item-box-hover">
+                                                                <div class="more_item">
+                                                                    <i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; <span class="count-down" data-time="@item.DueDateCountdown" style="font-size:13px"></span>
+                                                                </div>
+                                                                <span class="view"><a class="view_detail" href="/Deal/Details/@item.Id">Xem ngay</a></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item-info">
+                                                        <div class="info-inner">
+                                                            <div class="item-title" style="text-align:left"> <h3 style="font-size:14px"><strong>@item.Title</strong></h3></div>
+                                                            <div class="item-content">
+                                                                <div class="price-block">
+                                                                    <div class="price-box" style="text-align:left">
+                                                                        <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" style="font-size:20px">@Html.DisplayFor(itemModel => item.SavePrice)</span> <span class="deal_discount">@item.Discount%</span></p>
+                                                                        <br />
+                                                                        <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" style="font-size:18px">@Html.DisplayFor(itemModel => item.UnitPrice)</span> &nbsp; <span class="pull-right" style="font-size:16px"> <i class="fa fa-user"> @item.NumBuyer</i></span></p>
 
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                            <div style="text-align:center">
+                                <a href="/Home/ViewNewDeal" class="btn btn-info" style="font-size:16px">Xem tất cả Deal mới <i class="fa fa-caret-right"></i></a>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
-        <br />
-        <div style="text-align:center">
-            <a href="/Home/ViewNewDeal" class="btn btn-default" style="font-size:16px">Xem tất cả <i class="fa fa-caret-right"></i></a>
-        </div>
+
     </div>
-    <br />
-    <div class="container">
-        <div class="row">
-            <div class="std">
-                <div id="border1" class="best-pro col-md-12">
-                    <div class="slider-items-products">
-                        <div class="new_title center">
-                            <h2><strong>DEAL NỔI BẬT</strong></h2>
-                        </div>
-                        <div id="best-seller-slider" class="product-flexslider hidden-buttons">
-                            <div class="slider-items slider-width-col4">
-                                @foreach (var item in Model.Hotdeal)
-                                {
-                                    <div class="item">
-                                        <div class="col-item">
-                                            <div class="item-inner">
-                                                @*<div class="sale-label sale-top-right">Hot</div>*@
-                                                <div class="item-img">
-                                                    <div class="item-img-info">
-                                                        <a href="/Deal/Details/@item.Id" class="product-image"> <img src="~/Images/Product/SysProduct/@item.Image"></a>
-                                                        <div class="item-box-hover">
-                                                            <div class="more_item">
-                                                                <i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; <span class="count-down" data-time="@item.DueDateCountdown" style="font-size:13px"></span>
-                                                            </div>
-                                                            <span class="view"><a class="view_detail" href="/Deal/Details/@item.Id">Xem ngay</a></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="item-info">
-                                                    <div class="info-inner">
-                                                        <div class="item-title" style="text-align:left"> <h3 style="font-size:14px"><strong>@item.Title</strong></h3></div>
-                                                        <div class="item-content">
-                                                            <div class="price-block">
-                                                                <div class="price-box">
-                                                                    <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" style="font-size:20px">@Html.DisplayFor(itemModel => item.SavePrice)</span> <span class="deal_discount">@item.Discount%</span></p>
-                                                                    <br />
-                                                                    <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" style="font-size:18px">@Html.DisplayFor(itemModel => item.UnitPrice)</span> &nbsp; <span class="pull-right" style="font-size:16px"> <i class="fa fa-user"> @item.NumBuyer</i></span></p>
 
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
-
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-        <br />
-        <div style="text-align:center">
-            <a href="/Home/ViewHotDeal" class="btn btn-default" style="font-size:16px">Xem tất cả <i class="fa fa-caret-right"></i></a>
-        </div>
-    </div>
-    <br />
-    <div class="container">
+    @*<div class="container">
         <div class="row">
             <div class="std">
                 <div id="border1" class="best-pro col-md-12">
@@ -291,13 +274,9 @@
                                     <div class="item">
                                         <div class="col-item">
                                             <div class="item-inner">
-                                                @*<div class="sale-label sale-top-right">Hot</div>*@
                                                 <div class="item-img">
                                                     <div class="item-img-info">
                                                         <a href="product_detail.html" class="product-image"> <img src="~/Images/UserAvatar/@item.Avatar"> </a>
-                                                        @*<div class="item-box-hover">
-                                                            <span class="view"><a class="view_detail" href="#">Xem ngay</a></span>
-                                                        </div>*@
                                                     </div>
                                                 </div>
                                                 <div class="item-info">
@@ -329,8 +308,7 @@
         <div style="text-align:center">
             <a href="/Home/ViewHotShop" class="btn btn-default" style="font-size:16px">Xem tất cả <i class="fa fa-caret-right"></i></a>
         </div>
-    </div>
-    <br />
+    </div>*@
 
 </section>
 

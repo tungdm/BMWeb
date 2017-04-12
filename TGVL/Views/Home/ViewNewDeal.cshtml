@@ -8,7 +8,7 @@
 <style>
     .item-img-info {
         width: 250px;
-        height: 200px;
+        height: 220px;
         background-image: none;
         background-repeat: no-repeat;
         background-position: center center;
@@ -88,6 +88,21 @@
         -webkit-border-radius: 2px;
         border-radius: 2px;
     }
+    .deal_discount {
+        display: inline-block;
+        width: 55px;
+        height: 24px;
+        padding: 0 2px 0 10px;
+        line-height: 25px;
+        background: url("/Images/discount.svg") no-repeat;
+        background-size: contain;
+        color: #fff;
+        font-size: 18px;
+        font-weight: 400;
+        vertical-align: text-top;
+        margin-left: 10px;
+        vertical-align: 4px;
+    }
 </style>
 
 <div class="main-container col2-left-layout" style="background:#f4f4f4">
@@ -115,18 +130,18 @@
                                                 <span class="view"><a class="view_detail" href="/Deal/Details/@item.Id">Xem ngay</a></span>
                                                 
                                             </div>
-                                            <div class="location">
+                                            @*<div class="location">
                                                 <i class="fa fa-map-marker"></i>&nbsp; <span style="font-size:14px"> Quận 1</span>
-                                            </div>
+                                            </div>*@
                                         </div>
                                     </div>
                                     <div class="item-info">
                                         <div class="info-inner">
                                             <div class="item-title" style="text-align:left"> <h3 style="font-size:14px">@item.Title</h3></div>
                                             <div class="item-content">
-                                                <div class="price-block" style="text-align:left">
+                                                <div class="price-block" style="text-align:left;margin-top:10px">
                                                     <div class="price-box">
-                                                        <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" style="font-size:20px">@Html.DisplayFor(x=>item.SavePrice)</span> Giảm <strong style="color:#ff1341; font-size:20px">@item.Discount%</strong> </p>
+                                                        <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" style="font-size:20px">@Html.DisplayFor(x=>item.SavePrice)</span> <span class="deal_discount">@item.Discount%</span></p>
                                                         <br />
                                                         <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" style="font-size:18px">@Html.DisplayFor(x=>item.UnitPrice)</span> &nbsp; <span class="pull-right" style="font-size:16px"> <i class="fa fa-user"> @item.NumBuyer</i></span></p>
 
