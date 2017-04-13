@@ -116,40 +116,74 @@
     }
 </style>
 
-@*<div class="promo-area">
-        <div class="zigzag-bottom"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3 col-sm-6">
-                    <div class="single-promo promo1">
-                        <i class="fa fa-refresh"></i>
-                        <p>ĐẤU THẦU</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="single-promo promo2">
-                        <i class="fa fa-truck"></i>
-                        <p>MUA DEAL</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="single-promo promo3">
-                        <i class="fa fa-lock"></i>
-                        <p>MUA LẺ</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="single-promo promo4">
-                        <i class="fa fa-gift"></i>
-                        <p>MUA THƯỜNG</p>
+@*<section class="main-container col1-layout home-content-container" style="background:#f4f4f4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#tab_1" data-toggle="tab" style="font-size:large">YÊU CẦU NỔI BẬT</a></li>
+                        <li><a href="#tab_2" data-toggle="tab" style="font-size:large">YÊU CẦU MỚI</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab_1">
+
+                        </div>
+                        <div class="tab-pane" id="tab_2">
+                            <div class="row">
+                                <ul class="products-grid">
+                                    @foreach (var item in Model.NewRequest)
+                                    {
+                                        <li class="item col-md-3">
+                                            <div class="col-item">
+                                                <div class="item-inner">
+                                                    <div class="item-img">
+                                                        <div class="item-img-info">
+                                                            <a href="/Request/Details/@item.Id" class="product-image"> <img src="~/Images/Request/@item.Image"></a>
+                                                            <div class="item-box-hover">
+                                                                <div class="more_item">
+                                                                    <i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; <span class="count-down" data-time="@item.DueDateCountdown" style="font-size:13px"></span>
+                                                                </div>
+                                                                <span class="view"><a class="view_detail" href="/Request/Details/@item.Id">Xem ngay</a></span>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item-info">
+                                                        <div class="info-inner">
+                                                            <div class="item-title" style="text-align:left"> <h3 style="font-size:14px">@item.Title</h3></div>
+                                                            <div class="item-content">
+                                                                <div class="short-description"></div>
+                                                                <div class="short-description">
+                                                                    <span class="pull-left">@item.UserName</span>
+                                                                    <span class="pull-right">@item.NumReplies</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                            <br />
+                            <div style="text-align:center">
+                                <a href="/Request" class="btn btn-info" style="font-size:16px">Xem tất cả <i class="fa fa-caret-right"></i></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
-    </div>*@
 
-<section class="main-container col1-layout home-content-container" style="background:#f4f4f4">
+    </div>
+
+    
+</section>*@
+
+<section class="main-container" style="background:#f4f4f4">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -200,11 +234,12 @@
                                         </li>
                                     }
                                 </ul>
+                               
+                                <div style="text-align:center">
+                                    <a href="/Home/ViewHotDeal" class="btn btn-info" style="font-size:16px">Xem tất cả <i class="fa fa-caret-right"></i></a>
+                                </div>
                             </div>
-                            <br />
-                            <div style="text-align:center">
-                                <a href="/Home/ViewHotDeal" class="btn btn-info" style="font-size:16px">Xem tất cả Deal nổi bật <i class="fa fa-caret-right"></i></a>
-                            </div>
+                            
                         </div>
                         <div class="tab-pane" id="tab_2">
                             <div class="row">
@@ -214,7 +249,6 @@
                                         <li class="item col-md-3">
                                             <div class="col-item">
                                                 <div class="item-inner">
-
                                                     <div class="item-img">
                                                         <div class="item-img-info">
                                                             <a href="/Deal/Details/@item.Id" class="product-image"> <img src="~/Images/Product/SysProduct/@item.Image"></a>
@@ -247,10 +281,11 @@
                                         </li>
                                     }
                                 </ul>
+                                <div style="text-align:center">
+                                    <a href="/Home/ViewNewDeal" class="btn btn-info" style="font-size:16px">Xem tất cả <i class="fa fa-caret-right"></i></a>
+                                </div>
                             </div>
-                            <div style="text-align:center">
-                                <a href="/Home/ViewNewDeal" class="btn btn-info" style="font-size:16px">Xem tất cả Deal mới <i class="fa fa-caret-right"></i></a>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -260,55 +295,55 @@
     </div>
 
     @*<div class="container">
-        <div class="row">
-            <div class="std">
-                <div id="border1" class="best-pro col-md-12">
-                    <div class="slider-items-products">
-                        <div class="new_title center">
-                            <h2><strong>CỬA HÀNG NỔI BẬT</strong></h2>
-                        </div>
-                        <div id="best-seller-slider" class="product-flexslider hidden-buttons">
-                            <div class="slider-items slider-width-col4">
-                                @foreach (var item in Model.Hotshop)
-                                {
-                                    <div class="item">
-                                        <div class="col-item">
-                                            <div class="item-inner">
-                                                <div class="item-img">
-                                                    <div class="item-img-info">
-                                                        <a href="product_detail.html" class="product-image"> <img src="~/Images/UserAvatar/@item.Avatar"> </a>
-                                                    </div>
-                                                </div>
-                                                <div class="item-info">
-                                                    <div class="info-inner">
-                                                        <div class="item-title" style="text-align:left"> <h3 style="font-size:14px"> @item.ShopName </h3></div>
-                                                        <div class="item-content">
-
-                                                            <span style="float:left" class="stars">@item.Rating</span> (@item.Rating)
-
-                                                            <div class="short-description" style="padding-left:10px">
-                                                                <p>@item.Address</p>
-                                                            </div>
+            <div class="row">
+                <div class="std">
+                    <div id="border1" class="best-pro col-md-12">
+                        <div class="slider-items-products">
+                            <div class="new_title center">
+                                <h2><strong>CỬA HÀNG NỔI BẬT</strong></h2>
+                            </div>
+                            <div id="best-seller-slider" class="product-flexslider hidden-buttons">
+                                <div class="slider-items slider-width-col4">
+                                    @foreach (var item in Model.Hotshop)
+                                    {
+                                        <div class="item">
+                                            <div class="col-item">
+                                                <div class="item-inner">
+                                                    <div class="item-img">
+                                                        <div class="item-img-info">
+                                                            <a href="product_detail.html" class="product-image"> <img src="~/Images/UserAvatar/@item.Avatar"> </a>
                                                         </div>
                                                     </div>
+                                                    <div class="item-info">
+                                                        <div class="info-inner">
+                                                            <div class="item-title" style="text-align:left"> <h3 style="font-size:14px"> @item.ShopName </h3></div>
+                                                            <div class="item-content">
 
+                                                                <span style="float:left" class="stars">@item.Rating</span> (@item.Rating)
+
+                                                                <div class="short-description" style="padding-left:10px">
+                                                                    <p>@item.Address</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                }
+                                    }
+                                </div>
                             </div>
                         </div>
-                    </div>
 
+                    </div>
                 </div>
             </div>
-        </div>
-        <br />
-        <div style="text-align:center">
-            <a href="/Home/ViewHotShop" class="btn btn-default" style="font-size:16px">Xem tất cả <i class="fa fa-caret-right"></i></a>
-        </div>
-    </div>*@
+            <br />
+            <div style="text-align:center">
+                <a href="/Home/ViewHotShop" class="btn btn-default" style="font-size:16px">Xem tất cả <i class="fa fa-caret-right"></i></a>
+            </div>
+        </div>*@
 
 </section>
 

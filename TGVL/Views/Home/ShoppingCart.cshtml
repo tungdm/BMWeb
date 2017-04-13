@@ -48,7 +48,7 @@
 
                                                             @Html.HiddenFor(modelItem => Model.ShoppingCartProducts[i].ProductName)
                                                         </td>
-                                                        <td style="font-size:14px;">
+                                                        <td style="font-size:14px;white-space:nowrap">
                                                             @Model.ShoppingCartProducts[i].SupplierName
                                                         </td>
                                                         <td class="a-center hidden-table"><span class="cart-price" style="font-size:15px"> <span class="price">@Html.DisplayFor(modelItem => Model.ShoppingCartProducts[i].UnitPrice) / @Model.ShoppingCartProducts[i].UnitType</span> </span></td>
@@ -58,7 +58,7 @@
                                                         </td>
 
                                                         <td>
-                                                            <span style="font-size:13px" class="cart-price"> <span class="minitotal"><strong>@Html.DisplayFor(modelItem => Model.ShoppingCartProducts[i].MiniTotal)</strong></span> </span>
+                                                            <span style="font-size:15px"> <span class="minitotal" style="white-space:nowrap">@Html.DisplayFor(modelItem => Model.ShoppingCartProducts[i].MiniTotal)</span></span> 
                                                             @Html.HiddenFor(modelItem => Model.ShoppingCartProducts[i].MiniTotal)
                                                         </td>
 
