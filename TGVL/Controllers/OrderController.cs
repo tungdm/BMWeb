@@ -183,11 +183,14 @@ namespace TGVL.Controllers
                 {
                     ReplyId = reply.Id,
                     RequestId = request.Id,
+                    OrderId = newOrderId,
                     UserId = reply.SupplierId,
+                    SenderId = request.User.Id,
                     CreatedDate = DateTime.Now,
                     Message = message,
                     IsSeen = false,
-                    IsClicked = false
+                    IsClicked = false,
+                    Flag = 5, //select winner
                 };
                 db.Notifications.Add(noti);
 

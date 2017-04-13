@@ -578,7 +578,7 @@ namespace TGVL.Controllers
                 }
 
                 var message = "";
-                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
+                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>()); //current supplier
                 var total = decimal.Parse(model.BidPrice);
                 if (model.Discount > 0)
                 {
@@ -648,10 +648,12 @@ namespace TGVL.Controllers
                     ReplyId = reply.Id,
                     RequestId = requestId,
                     UserId = request.CustomerId,
+                    SenderId = user.Id,
                     CreatedDate = reply.CreatedDate,
                     Message = message,
                     IsSeen = false,
-                    IsClicked = false
+                    IsClicked = false,
+                    Flag = 1, //reply
                 };
                 db.Notifications.Add(notify);
 
@@ -1005,11 +1007,32 @@ namespace TGVL.Controllers
                 {
                     //bid            
                     reply.BidReply.Flag = 9; //retract
+                    var message = reply.User.Fullname + " đã rút đơn thầu khỏi  yêu cầu \"" + request.Title + "\" của bạn.";
+                    //create noti
+                    var notify = new Notification
+                    {
+                        ReplyId = reply.Id,
+                        RequestId = reply.RequestId,
+                        UserId = request.CustomerId,
+                        SenderId = reply.SupplierId,
+                        CreatedDate = reply.CreatedDate,
+                        Message = message,
+                        IsSeen = false,
+                        IsClicked = false,
+                        Flag = 4, // retract
+                    };
+                    db.Notifications.Add(notify);
 
-                    //Update rank
-                    
                     db.SaveChanges();
 
+                    //SignalR
+                    var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+
+                    //Call customer update noti count
+                    var customerName = request.User.UserName;
+                    notificationHub.Clients.User(customerName).notify("added");
+
+                    //Update rank
                     var requestId = reply.RequestId;
                     var query = "Update BidReplies "
                                 + "SET [Rank] = t2.[Rank], [OldRank] = t1.[Rank] "
@@ -1039,8 +1062,6 @@ namespace TGVL.Controllers
                     List<string> listUser = db.Database.SqlQuery<string>(query, requestId, supplierId).ToList();
                     if (listUser.Count() != 0)
                     {
-                        var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
-
                         notificationHub.Clients.User(reply.Request.User.UserName).notify("updatebidtable"); //noti customer
 
                         foreach (var userId in listUser)
@@ -1050,8 +1071,6 @@ namespace TGVL.Controllers
                     }
                     else
                     {
-                        var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
-
                         notificationHub.Clients.User(reply.Request.User.UserName).notify("updatebidtable"); //noti customer
                     }
 

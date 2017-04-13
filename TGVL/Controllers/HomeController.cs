@@ -265,19 +265,19 @@ namespace TGVL.Controllers
         }
 
         [Authorize]
-        public JsonResult GetNotificationReplies()
+        public JsonResult GetNotificationReplies(int? page)
         {
             int userId = User.Identity.GetUserId<int>();
 
-            var query = "SELECT [dbo].[Notifications].[Id], [dbo].[Notifications].[RequestId], [dbo].[Notifications].[ReplyId], [dbo].[Notifications].[CreatedDate], "
-                    + "[dbo].[Notifications].[Message], [dbo].[Notifications].[IsSeen], [dbo].[Notifications].[IsClicked], [dbo].[Users].[Fullname] "
+            var query = "SELECT [dbo].[Notifications].[Id], [dbo].[Notifications].[RequestId], [dbo].[Notifications].[ReplyId], [dbo].[Notifications].[OrderId], "
+                    + "[dbo].[Notifications].[CreatedDate], [dbo].[Notifications].[Message], [dbo].[Notifications].[Flag], "
+                    + "[dbo].[Notifications].[IsSeen], [dbo].[Notifications].[IsClicked], [dbo].[Users].[Fullname], [dbo].[Users].[Avatar] "
                     + "FROM[dbo].[Notifications], [dbo].[Users] "
-                    + "WHERE[dbo].[Notifications].[UserId] = [dbo].[Users].[Id] "
+                    + "WHERE[dbo].[Notifications].[SenderId] = [dbo].[Users].[Id] "
                     + "AND[dbo].[Notifications].[UserId] = {0} "
                     + "ORDER BY CASE WHEN[dbo].[Notifications].[IsSeen] = 'False' THEN 0 else 1 END, [dbo].[Notifications].[CreatedDate] DESC ";
 
             IEnumerable<MyNotification> data = db.Database.SqlQuery<MyNotification>(query, userId).ToList();
-
             query = "UPDATE [dbo].[Notifications] "
                     + "SET[dbo].[Notifications].[IsSeen] = 1 "
                     + "WHERE[dbo].[Notifications].[UserId] = {0} ";
@@ -285,7 +285,28 @@ namespace TGVL.Controllers
 
             Session.Clear();
 
-            return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+
+            var total = data.Count();
+            var pageSize = 5;
+            var pageNumber = (page ?? 1);
+            var skip = pageSize * (pageNumber - 1);
+            if (skip <= total)
+            {
+                var pagedData = data.Skip((int)skip).Take(pageSize).ToList();
+                return new JsonResult { Data = pagedData, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            } else
+            {
+                return new JsonResult
+                {
+                    Data = new
+                    {
+                        Success = "End"
+                    },
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            }
+
+            //return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
 

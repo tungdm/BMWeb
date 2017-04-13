@@ -1142,14 +1142,21 @@ namespace TGVL.Controllers
                 LuceneSimilar.ClearLuceneIndexRecord(request.Id);
 
                 var message = "Yêu cầu \"" + request.Title + "\" của bạn vừa mới kết thúc 2!";
+                var query = "SELECT [dbo].[UserRoles].[UserId] "
+                            + "FROM[dbo].[UserRoles] "
+                            + "WHERE[dbo].[UserRoles].[RoleId] = 1 ";
+                var adminId = db.Database.SqlQuery<int>(query).FirstOrDefault();
+
                 var notify = new Notification
                 {
                     RequestId = request.Id,
                     UserId = currentUserId,
+                    SenderId = adminId, //System Admin
                     Message = message,
                     CreatedDate = DateTime.Now,
                     IsSeen = false,
-                    IsClicked = false
+                    IsClicked = false,
+                    Flag = 2, //expired
                 };
                 db.Notifications.Add(notify);
 
