@@ -69,7 +69,7 @@ namespace TGVL.LucenceSearch
             doc.Add(new Field("Id", data.Id.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
             doc.Add(new Field("ListProduct", data.ListProduct, Field.Store.YES, Field.Index.ANALYZED));
             doc.Add(new Field("Avatar", data.Avatar, Field.Store.YES, Field.Index.NOT_ANALYZED));
-            doc.Add(new Field("Image", data.Image, Field.Store.YES, Field.Index.NOT_ANALYZED));
+            //doc.Add(new Field("Image", data.Image, Field.Store.YES, Field.Index.NOT_ANALYZED));
             doc.Add(new Field("Title", data.Title, Field.Store.YES, Field.Index.NOT_ANALYZED));
             doc.Add(new Field("CustomerName", data.CustomerName, Field.Store.YES, Field.Index.NOT_ANALYZED));
             doc.Add(new Field("StartDate", data.StartDate.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
@@ -145,7 +145,7 @@ namespace TGVL.LucenceSearch
                 //{
                 //MultiFieldQueryParser parser = new MultiFieldQueryParser(Version.LUCENE_30, new[] { "ListProduct" }, analyzer);
                     var parser = new QueryParser(Version.LUCENE_30, "ListProduct", analyzer);
-                    parser.DefaultOperator = QueryParser.Operator.AND;
+                    parser.DefaultOperator = QueryParser.Operator.OR;
 
                 //var parser = new QueryParser(Version.LUCENE_30, "Name", analyzer);
                 //parser.DefaultOperator = QueryParser.Operator.AND;
@@ -205,7 +205,7 @@ namespace TGVL.LucenceSearch
                 Id = Convert.ToInt32(doc.Get("Id")),
                 ListProduct = doc.Get("ListProduct"),
                 Avatar = doc.Get("Avatar"),
-                Image = doc.Get("Image"),
+                //Image = doc.Get("Image"),
                 CustomerName = doc.Get("CustomerName"),
                 Title = doc.Get("Title"),
                 StartDate = Convert.ToDateTime(doc.Get("StartDate")),
