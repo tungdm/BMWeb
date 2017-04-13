@@ -224,9 +224,15 @@
                     }
 
                     if (newBidPrice <= test) {
+                        $("#submit-btn-edit").off().on('click', function() {
+                            console.log("Solved");
+                        });
                         $("form[id='form0']").submit();
                     } 
                 } else {
+                    $("#submit-btn-edit").off().on('click', function() {
+                        console.log("Solved");
+                    });
                     $("form[id='form0']").submit();
                 }
 

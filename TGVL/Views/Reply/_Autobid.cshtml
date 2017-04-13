@@ -165,6 +165,7 @@
 
         $("#submit-btn-remove-autobid").click(function (event) {
             event.preventDefault();
+
             console.log("remove autobid");
             $('#replyModal').modal('toggle');
             swal({
@@ -183,6 +184,17 @@
 
                 $.ajax(options).done(function (data) {
                     if (data.Success == "Success") {
+                        $("#submit-btn-remove-autobid").off().on('click', function() {
+                            console.log("Solved");
+                        });
+
+                        $('#autoBidModal').modal({
+                            backdrop: true,
+                            keyboard: true
+                        });
+
+                        $('#autoBidModal').modal('toggle');
+
                         swal("Hoàn tất", "Hủy tự động đặt thầu thành công", "success");
                     } else {
                         swal("Lỗi", data.Message, "error");
@@ -241,7 +253,9 @@
                 $('#errorTotal2').show();
                 return;
             }
-
+            $("#submit-btn-autobid").off().on('click', function() {
+                console.log("Solved");
+            });
             $("form[id='form0']").submit();
 
         });

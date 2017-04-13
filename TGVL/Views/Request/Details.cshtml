@@ -496,17 +496,38 @@
                                                                                             <tr id="reply_@reply.Id">
                                                                                                 @*<td id="bidreplyId">@reply.Id</td>*@
                                                                                                 <td id="rank">
-
-                                                                                                    @if (reply.Rank <= 3)
+                                                                                                    @if (User.IsInRole("Customer"))
                                                                                                     {
-                                                                                                        var image = "rank_" + reply.Rank + ".png";
-                                                                                                        <img src="~/Images/@image" style="max-height:75px; max-width:75px" />
+                                                                                                        if (reply.Rank <= 3)
+                                                                                                        {
+                                                                                                            var image = "rank_" + reply.Rank + ".png";
+                                                                                                            <img src="~/Images/@image" style="max-height:75px; max-width:75px" />
+                                                                                                        }
+                                                                                                        else
+                                                                                                        {
+                                                                                                            @reply.Rank
+                                                                                                        }
                                                                                                     }
                                                                                                     else
                                                                                                     {
-                                                                                                        @reply.Rank
+                                                                                                        if (reply.Rank == 1)
+                                                                                                        {
+                                                                                                            var image = "rank_" + reply.Rank + ".png";
+                                                                                                            <img src="~/Images/@image" style="max-height:75px; max-width:75px" />
+
+                                                                                                        }
+                                                                                                        else if (reply.Rank > 1 && reply.Rank <= 5)
+                                                                                                        {
+                                                                                                            @Html.Raw("Nhóm dẫn đầu")
+                                                                                                        }
+                                                                                                        else
+                                                                                                        {
+                                                                                                            @reply.Rank
+                                                                                                        }
                                                                                                     }
 
+
+                                                                                                    
 
                                                                                                 </td>
 
@@ -604,7 +625,7 @@
 
                                                 <li>
                                                     <div class="box_img_bottom">
-                                                        <a href="@Url.Action("Details", "Request", new { id = list[i].Slug})"><img src="~/Images/Request/@list[i].Image" /></a>
+                                                        <a href="@Url.Action("Details", "Request", new { id = list[i].Slug})"><img src="~/Images/UserAvatar/@list[i].Avatar" /></a>
                                                     </div>
                                                     <div class="info_raovat">
                                                         <h4>
