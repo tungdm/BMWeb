@@ -235,7 +235,7 @@ namespace TGVL.Controllers
                 luceneRequest.StartDate = request.StartDate;
                 luceneRequest.DueDate = request.DueDate;
                 luceneRequest.Flag = (int)request.Flag;
-                luceneRequest.Image = request.Image;
+                //luceneRequest.Image = request.Image;
 
                 var query = "SELECT [dbo].[SysProducts].[Name] "
                             + "FROM[dbo].[Requests], [dbo].[RequestProducts], [dbo].[SysProducts] "
@@ -722,7 +722,7 @@ namespace TGVL.Controllers
                 {
                     Id = re.Id,
                     Title = re.Title,
-                    Image = re.Image,
+                    //Image = re.Image,
                     ReceivingDate = re.ReceivingDate,
                     UserName = re.User.UserName,
                     DueDate = re.DueDate,

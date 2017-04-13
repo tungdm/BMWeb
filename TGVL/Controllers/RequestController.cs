@@ -141,7 +141,7 @@ namespace TGVL.Controllers
                         Descriptions = item.Descriptions,
                         UserName = item.User.Fullname,
                         Avatar = item.User.Avatar,
-                        Image = item.Image,
+                        //Image = item.Image,
                         StartDate = item.StartDate,
                         NumReplies = db.Replies.Where(r => r.RequestId == requestId).Count(),
                         Flag = (int)item.Flag,
@@ -204,7 +204,7 @@ namespace TGVL.Controllers
                         luceneRequest.StartDate = request.StartDate;
                         luceneRequest.DueDate = request.DueDate;
                         luceneRequest.Flag = (int)request.Flag;
-                        luceneRequest.Image = request.Image;
+                        //luceneRequest.Image = request.Image;
 
                         ListRequest.Add(luceneRequest);
                     }
@@ -267,7 +267,7 @@ namespace TGVL.Controllers
                         Descriptions = luRe.Descriptions,
                         UserName = luRe.User.Fullname,
                         Avatar = luRe.User.Avatar,
-                        Image = item.Image,
+                        //Image = item.Image,
                         StartDate = item.StartDate,
                         NumReplies = db.Replies.Where(r => r.RequestId == requestId).Count(),
                         Flag = item.Flag,
@@ -607,44 +607,47 @@ namespace TGVL.Controllers
                     {
                         request.Flag = 1; //set flag = 1: bid request
                     }
-                    var uploadImage = model.ImageUrl;
 
-                    if (uploadImage != null && uploadImage.ContentLength > 0)
-                    {
-                        var fileName = Path.GetFileName(uploadImage.FileName);
 
-                        fileName = Guid.NewGuid().ToString() + fileName;
+                    //var uploadImage = model.ImageUrl;
+
+                    //if (uploadImage != null && uploadImage.ContentLength > 0)
+                    //{
+                    //    var fileName = Path.GetFileName(uploadImage.FileName);
+
+                    //    fileName = Guid.NewGuid().ToString() + fileName;
                          
-                        var filePath = Path.Combine(Server.MapPath("~/Images/Request"), fileName);
+                    //    var filePath = Path.Combine(Server.MapPath("~/Images/Request"), fileName);
 
-                        if (System.IO.File.Exists(filePath))
-                        {
-                            return new JsonResult
-                            {
-                                Data = new
-                                {
-                                    Success = "Fail",
-                                    ErrorType = "Image",
-                                },
-                                JsonRequestBehavior = JsonRequestBehavior.AllowGet
-                            };
-                        }
-                        else
-                        {
-                            uploadImage.SaveAs(filePath);
-                            request.Image = fileName;
-                        }
-                    }
+                    //    if (System.IO.File.Exists(filePath))
+                    //    {
+                    //        return new JsonResult
+                    //        {
+                    //            Data = new
+                    //            {
+                    //                Success = "Fail",
+                    //                ErrorType = "Image",
+                    //            },
+                    //            JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                    //        };
+                    //    }
+                    //    else
+                    //    {
+                    //        uploadImage.SaveAs(filePath);
+                    //        request.Image = fileName;
+                    //    }
+                    //}
 
                     db.Requests.Add(request);
                     db.SaveChanges();
+
                     //Add doc to index
                     string listProduct = "";
                     var luceneRequest = new LuceneRequest
                     {
                         Id = request.Id,
                         Avatar = user.Avatar,
-                        Image = request.Image,
+                        //Image = request.Image,
                         CustomerName = user.Fullname,
                         Title = model.Title,
                         StartDate = request.StartDate,
