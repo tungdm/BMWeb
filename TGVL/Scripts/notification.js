@@ -219,11 +219,19 @@ function supplierUpdateBidReply(requestId) {
         data: { requestId: requestId },
         success: function (data) {
             var rank = "";
-            if (data.Rank <= 3) {
+            if (data.Rank == 1) {
                 rank = '<img src="/Images/rank_' + data.Rank + '.png" style="max-height:75px; max-width:75px" />';
+            } else if (data.Rank <= 5 && data.Rank > 1) {
+                rank = "Nhóm dẫn đầu";
             } else {
                 rank = data.Rank;
             }
+
+            //if (data.Rank <= 3) {
+            //    rank = '<img src="/Images/rank_' + data.Rank + '.png" style="max-height:75px; max-width:75px" />';
+            //} else {
+            //    rank = data.Rank;
+            //}
 
             $("#rank").html(rank);
 
@@ -236,7 +244,7 @@ function supplierUpdateBidReply(requestId) {
                 
                 myTimeOut = setTimeout(function () {
                     autobidAgain(replyId);
-                }, 5000)
+                }, 3000)
             }
         },
         error: function (error) {
@@ -405,11 +413,20 @@ function updateReplies(data) {
 
 function updateBid(data) {
     var rank = "";
-    if (data.Rank <= 3) {
+    //if (data.Rank <= 3) {
+    //    rank = '<img src="/Images/rank_' + data.Rank + '.png" style="max-height:75px; max-width:75px" />';
+    //} else {
+    //    rank = data.Rank;
+    //}
+
+    if (data.Rank == 1) {
         rank = '<img src="/Images/rank_' + data.Rank + '.png" style="max-height:75px; max-width:75px" />';
+    } else if (data.Rank <=5 && data.Rank > 1) {
+        rank = "Nhóm dẫn đầu";
     } else {
         rank = data.Rank;
     }
+
     console.log(rank);
 
     var reply = '<table class="table">'
@@ -578,15 +595,18 @@ function updateExistReplies(data, status, xhr) {
             $("#oldTotal").html(data.OldTotal);
         }
     } else {
-        $('#replyModal').modal('toggle');
-        $('#autoBidModal').modal({
-            backdrop: true,
-            keyboard: true
-        });
-
-        $('#autoBidModal').modal('toggle');
-        $("#replyInfo").empty();
-        $('#submit-btn-reply').hide();
+        if ($('#replyModal').is(':visible')) {
+            $('#replyModal').modal('toggle');
+            $("#replyInfo").empty();
+            $('#submit-btn-reply').hide();
+        } else if ($('#autoBidModal').is(':visible')) {
+            $('#autoBidModal').modal({
+                backdrop: true,
+                keyboard: true
+            });
+            $('#autoBidModal').modal('toggle');
+            $("#autoBidInfo").empty();
+        }
 
         if (data.ReplyType === "Bid") {
             console.log("get new rank");
