@@ -40,7 +40,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label col-md-3" style="font-size:14px">Giá thầu mong muốn (&#x20AB;) <span style="color:#ff0000"> *</span></label>
+                    <label class="control-label col-md-3" style="font-size:14px">Giá thầu tối thiểu (&#x20AB;) <span style="color:#ff0000"> *</span></label>
                     <div class="col-md-9">
                         @Html.EditorFor(model => model.MinimumPrice, "", new { htmlAttributes = new { @class = "form-control", onfocus = "if(this.value=='0') this.value=''", @Value = MinimumPrice, @style = "font-size:medium" } })
                         @Html.ValidationMessageFor(model => model.MinimumPrice, "", new { @class = "text-danger" })
@@ -85,7 +85,7 @@
 
             var rawMin = $(this).val();
             if (rawMin == "") {
-                var message = "Giá thầu mong muốn không được để trống";
+                var message = "Giá thầu tối thiểu không được để trống";
                 console.log(message);
                 $('#errorTotal1').html(message);
                 $('#errorTotal1').show();
@@ -98,12 +98,12 @@
             console.log("min=" + min + ", test=" + test);
 
             if (min >= test) {
-                var message = "Giá thầu mong muốn phải nhỏ hơn giá thầu hiện tại (@Model.CurentPrice)";
+                var message = "Giá thầu tối thiểu phải nhỏ hơn giá thầu hiện tại (@Model.CurentPrice)";
                 console.log(message);
                 $('#errorTotal1').html(message);
                 $('#errorTotal1').show();
             } else if (min == 0) {
-                var message = "Giá thầu mong muốn phải lớn hơn 0 &#x20AB;";
+                var message = "Giá thầu tối thiểu phải lớn hơn 0 &#x20AB;";
                 console.log(message);
                 $('#errorTotal1').html(message);
                 $('#errorTotal1').show();
@@ -140,7 +140,7 @@
             console.log("rawmin= "+ rawmin +", min=" + min + ", deduction=" + deduction);
 
             if (deduction >= min) {
-                var message = "Giá trừ phải nhỏ hơn giá thầu mong muốn (" + rawmin + " &#x20AB;)";
+                var message = "Giá trừ phải nhỏ hơn giá thầu tối thiểu (" + rawmin + " &#x20AB;)";
                 console.log(message);
                 $('#errorTotal2').html(message);
                 $('#errorTotal2').show();
@@ -199,20 +199,20 @@
 
             var rawMin = $('#MinimumPrice').val();
             if (rawMin == "") {
-                var message = "Giá thầu mong muốn không được để trống";
+                var message = "Giá thầu tối thiểu không được để trống";
                 $('#errorTotal1').html(message);
                 $('#errorTotal1').show();
                 return;
             }
             var min = Number($('#MinimumPrice').val().replace(/[^0-9]+/g, ""));
             if (min == 0) {
-                var message = "Giá thầu mong muốn phải lớn hơn 0 &#x20AB;";
+                var message = "Giá thầu tối thiểu phải lớn hơn 0 &#x20AB;";
                 $('#errorTotal1').html(message);
                 $('#errorTotal1').show();
                 return;
             }
             if (min >= test) {
-                var message = "Giá thầu mong muốn phải nhỏ hơn giá thầu hiện tại (@Model.CurentPrice)";
+                var message = "Giá thầu tối thiểu phải nhỏ hơn giá thầu hiện tại (@Model.CurentPrice)";
                 console.log(message);
                 $('#errorTotal1').html(message);
                 $('#errorTotal1').show();
@@ -235,7 +235,7 @@
                 return;
             }
             if (deduction >= min) {
-                var message = "Giá trừ phải nhỏ hơn giá thầu mong muốn (" + rawMin + " &#x20AB;)";
+                var message = "Giá trừ phải nhỏ hơn giá thầu tối thiểu (" + rawMin + " &#x20AB;)";
                 console.log(message);
                 $('#errorTotal2').html(message);
                 $('#errorTotal2').show();
