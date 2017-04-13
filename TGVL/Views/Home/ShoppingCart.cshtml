@@ -25,11 +25,11 @@
                                                 <tr>
                                                     @*<th rowspan="1">&nbsp;</th>*@
                                                     <th colspan="2">Sản phẩm trong giỏ hàng: <span class="badge">@Model.ShoppingCartProducts.Count()</span></th>
-                                                    <th rowspan="1">Cửa hàng</th>
-                                                    <th colspan="1">Đơn giá</th>
+                                                    <th>Cửa hàng</th>
+                                                    <th>Đơn giá</th>
                                                     <th>Số lượng</th>
-                                                    <th colspan="1">Thành tiền</th>
-                                                    <th rowspan="1">&nbsp;</th>
+                                                    <th>Thành tiền</th>
+                                                    <th>&nbsp;</th>
                                                 </tr>
                                             </thead>
 
@@ -48,7 +48,7 @@
 
                                                             @Html.HiddenFor(modelItem => Model.ShoppingCartProducts[i].ProductName)
                                                         </td>
-                                                        <td>
+                                                        <td style="font-size:14px;">
                                                             @Model.ShoppingCartProducts[i].SupplierName
                                                         </td>
                                                         <td class="a-center hidden-table"><span class="cart-price" style="font-size:15px"> <span class="price">@Html.DisplayFor(modelItem => Model.ShoppingCartProducts[i].UnitPrice) / @Model.ShoppingCartProducts[i].UnitType</span> </span></td>
