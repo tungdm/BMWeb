@@ -135,13 +135,19 @@ namespace TGVL.Models
         public int? RequestId { get; set; }
         public int? ReplyId { get; set; }
 
+        public int? OrderId { get; set; }
+
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime CreatedDate { get; set; }
 
         public string Message { get; set; }
+
+        public int Flag { get; set; }
         public bool IsSeen { get; set; }
         public bool IsClicked { get; set; }
-        public string Fullname { get; set; }
+        public string Fullname { get; set; }  //sender
+
+        public string Avatar { get; set; } //sender
     }
 }
