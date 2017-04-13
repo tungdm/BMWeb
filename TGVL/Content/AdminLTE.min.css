@@ -2718,7 +2718,7 @@ a:hover,a:active,a:focus
 }
 .nav-tabs-custom>.nav-tabs>li.active
 {
-	border-top:2px solid #71be0e;
+	border-top:2px solid #ed1c24;
     border-bottom-color:#ffffff;
     background-color:#ffffff;
 }
@@ -2731,7 +2731,7 @@ a:hover,a:active,a:focus
 {
 	border-left-color: #f4f4f4;
 	border-right-color: #f4f4f4;
-	border-top-color: #71be0e;
+	border-top-color: #ed1c24;
 }
 .nav-tabs-custom>.nav-tabs>li:first-of-type
 {
