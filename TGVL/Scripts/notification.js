@@ -1,6 +1,9 @@
 ﻿// HIDE NOTIFICATIONS WHEN CLICKED ANYWHERE ON THE PAGE.
-$(document).click(function () {
-    $('#notifications').hide();
+$(document).click(function (e) {
+    var container = $('#notifications');
+    if (!container.is(e.target) && container.has(e.target).length === 0) {
+        container.hide();
+    }
 });
 
 // Click on notification icon for show notification
@@ -9,10 +12,20 @@ $('#noti_Button').click(function (e) {
     //$('.noti-content').show();
 
     $('#notifications').fadeToggle('fast', 'linear', function () {
-        $('#notiContent').empty();
-        if ($('#notifications').is(':visible')) {
-            updateNotification();
+        
+        var page = $("#page-noti").text();
+        console.log(page);
+        if (page == "") {
+            $('#notiContent').empty();
+            $("#page-noti").text(1);
+            page = parseInt($("#page-noti").text()); //set page = 1
+
+            if ($('#notifications').is(':visible')) {
+                updateNotification(page);
+            }
         }
+
+        
     });
 
     //$('#noti_Counter').fadeOut('slow');
@@ -25,11 +38,12 @@ $('#noti_Button').click(function (e) {
 
 
 // update notification
-function updateNotification() {
-   
+function updateNotification(page) {
+    console.log(page);
     $.ajax({
         type: 'GET',
         url: '/Home/GetNotificationReplies',
+        data: { page: page },
         success: function (response) {
             if (response.length === 0) {
                 $('#notiContent').append($('<li>No data available</li>'));
@@ -38,17 +52,106 @@ function updateNotification() {
             count = $("#notiContent li").length;
             if (count !== response.length) {
                 $('#notiContent').empty();
-            
+                $("#page-noti").text(page+1); //next page
+
                 $.each(response, function (index, value) {
-                    var redirectUrl = "/Request/Details/" + value.RequestId + "#reply_" + value.ReplyId;
-                    console.log(redirectUrl);
-                    var message = '<li><a href="' + redirectUrl + '">' + value.Message + '<br/>' + new Date(parseInt(value.CreatedDate.substr(6))).format("dd/mm/yyyy HH:MM:ss") + '</a></li><hr/>';
+                    var flag = value.Flag;
+                    var redirectUrl = "";
+                    switch (flag) {
+                        case 1:
+                            redirectUrl = "/Request/Details/" + value.RequestId + "#reply_" + value.ReplyId;
+                            break;
+                        case 2:
+                            redirectUrl = "/Request/Details/" + value.RequestId;
+                            break;
+                        case 3:
+                            redirectUrl = "#";
+                            break;
+                        case 4:
+                            redirectUrl = "/Request/Details/" + value.RequestId;
+                            break;
+                        case 5:
+                            redirectUrl = "/Order/Details/" + value.OrderId;
+                    }
+                    
+                    //console.log(redirectUrl);
+                    var day = new Date(parseInt(value.CreatedDate.substr(6))).format("yyyy/mm/dd HH:MM:ss");
+                    //console.log(day);
+                    //console.log($.timeago(day));
+                   
+                    var message = '<li><a href="' + redirectUrl + '">'
+                                  + '<span class="image"><img src="/Images/UserAvatar/' + value.Avatar + '" /></span>'
+                                  + '<span>'
+                                  + '<span><strong>' + value.Fullname + '</strong></span>'
+                                  + '<span class="time">' + $.timeago(day) + '</span>'
+                                  + '</span>'
+                                  + '<span class="message">' + value.Message + '</span>'
+                                  + '</a></li>';
+
                     
                     $('#notiContent').append(message);
                 });
             }
 
             
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
+
+function updateNotification2(page) {
+    console.log(page);
+    $.ajax({
+        type: 'GET',
+        url: '/Home/GetNotificationReplies',
+        data: { page: page },
+        success: function (response) {
+            if (response.Success == "End") {
+                console.log("End");
+                $("#page-noti").text(0); //end page
+            } else {
+                
+                $("#page-noti").text(page+1); //next page
+                $.each(response, function (index, value) {
+                    var flag = value.Flag;
+                    var redirectUrl = "";
+                    switch (flag) {
+                        case 1:
+                            redirectUrl = "/Request/Details/" + value.RequestId + "#reply_" + value.ReplyId;
+                            break;
+                        case 2:
+                            redirectUrl = "/Request/Details/" + value.RequestId;
+                            break;
+                        case 3:
+                            redirectUrl = "#";
+                            break;
+                        case 4:
+                            redirectUrl = "/Request/Details/" + value.RequestId;
+                            break;
+                        case 5:
+                            redirectUrl = "/Order/Details/" + value.OrderId;
+                    }
+
+                    //console.log(redirectUrl);
+                    var day = new Date(parseInt(value.CreatedDate.substr(6))).format("yyyy/mm/dd HH:MM:ss");
+                    //console.log(day);
+                    //console.log($.timeago(day));
+
+                    var message = '<li><a href="' + redirectUrl + '">'
+                                    + '<span class="image"><img src="/Images/UserAvatar/' + value.Avatar + '" /></span>'
+                                    + '<span>'
+                                    + '<span><strong>' + value.Fullname + '</strong></span>'
+                                    + '<span class="time">' + $.timeago(day) + '</span>'
+                                    + '</span>'
+                                    + '<span class="message">' + value.Message + '</span>'
+                                    + '</a></li>';
+
+
+                    $('#notiContent').append(message);
+                });
+            }
         },
         error: function (error) {
             console.log(error);
