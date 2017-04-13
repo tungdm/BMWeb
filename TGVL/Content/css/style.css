@@ -7689,6 +7689,7 @@ footer {
 	overflow: hidden;
 	padding: 0;
 	width: 100%;
+    border-top: 1px solid #eaeaea;
 	padding-top: 20px;
 }
 footer address {
