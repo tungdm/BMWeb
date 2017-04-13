@@ -722,9 +722,9 @@
 
         if (auto == 'True') {
             console.log("auto bid - run");
-            var replyId = @ViewBag.AutoReplyId;
+            var replyId = '@ViewBag.AutoReplyId';
             setTimeout(function () {
-                autobidAgain(replyId);
+                autobidAgain(parseInt(replyId));
             }, 5000)
         } else {
             console.log("auto bid - 404");
