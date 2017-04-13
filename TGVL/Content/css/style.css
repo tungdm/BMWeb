@@ -7044,7 +7044,7 @@ input#coupon_code {
 }
 #shopping-cart-table .cart-price .price {
 	font-size: 15px;
-	/*font-weight: bold;*/
+	font-weight: bold;
 }
 .cart-table .btn-continue {
 	float: left;
