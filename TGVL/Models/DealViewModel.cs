@@ -101,5 +101,7 @@ namespace TGVL.Models
         public ICollection<DealBriefViewModel> Newdeal { get; set; }
 
         public ICollection<HotShopViewModel> Hotshop { get; set; }
+
+        public ICollection<RequestFloorModel> NewRequest { get; set; }
     }
 }
