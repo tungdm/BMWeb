@@ -211,8 +211,8 @@ namespace TGVL.Controllers
 
 
 
-            var callbackUrl = Url.Action("Details", "MyOrders", null, protocol: Request.Url.Scheme);
-            await UserManager.SendEmailAsync(user.Id, "Đặt hàng thành công", "Xem chi tiết tại <a href=\"" + callbackUrl + "\">đây nè :)</a>");
+            //var callbackUrl = Url.Action("Details", "MyOrders", null, protocol: Request.Url.Scheme);
+            //await UserManager.SendEmailAsync(user.Id, "Đặt hàng thành công", "Xem chi tiết tại <a href=\"" + callbackUrl + "\">đây nè :)</a>");
 
             return new JsonResult {
                 Data = new {
