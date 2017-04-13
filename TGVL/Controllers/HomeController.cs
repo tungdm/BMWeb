@@ -675,7 +675,7 @@ namespace TGVL.Controllers
             }
 
 
-            var HotDeal = db.Deals.Where(d => d.Expired == false).OrderByDescending(d => d.NumBuyer).ToList();
+            var HotDeal = db.Deals.Where(d => d.Expired == false).OrderByDescending(d => d.NumBuyer).Take(8).ToList();
 
             foreach (var hd in HotDeal)
             {
@@ -694,7 +694,7 @@ namespace TGVL.Controllers
                 newListHotdeal.Add(hdmodel);
             }
 
-            var NewDeal = db.Deals.Where(d => d.Expired == false).OrderByDescending(d => d.CreatedDate).ToList();
+            var NewDeal = db.Deals.Where(d => d.Expired == false).OrderByDescending(d => d.CreatedDate).Take(8).ToList();
 
             foreach (var nd in HotDeal)
             {
