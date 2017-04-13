@@ -658,6 +658,7 @@ namespace TGVL.Controllers
             var newListHotdeal = new List<DealBriefViewModel>();
             var newListNewdeal = new List<DealBriefViewModel>();
             var newListHotshop = new List<HotShopViewModel>();
+            var newListRequest = new List<RequestFloorModel>();
 
             var HotShop = db.Users.Where(d => d.Flag == 1).OrderByDescending(d => d.AverageGrade).ToList();
 
@@ -696,7 +697,7 @@ namespace TGVL.Controllers
 
             var NewDeal = db.Deals.Where(d => d.Expired == false).OrderByDescending(d => d.CreatedDate).Take(8).ToList();
 
-            foreach (var nd in HotDeal)
+            foreach (var nd in NewDeal)
             {
                 var ndmodel = new DealBriefViewModel
                 {
@@ -713,14 +714,31 @@ namespace TGVL.Controllers
 
                 newListNewdeal.Add(ndmodel);
             }
+
+            var NewRequest = db.Requests.Where(x=>x.Flag == 1).Take(8).ToList();
+
+            foreach (var re in NewRequest) {
+                var requestModel = new RequestFloorModel
+                {
+                    Id = re.Id,
+                    Title = re.Title,
+                    Image = re.Image,
+                    ReceivingDate = re.ReceivingDate,
+                    UserName = re.User.UserName,
+                    DueDate = re.DueDate,
+                    DueDateCountdown = re.DueDate.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture)
+                };
+                newListRequest.Add(requestModel);
+            }
+
             model.Hotshop = newListHotshop;
             model.Hotdeal = newListHotdeal;
             model.Newdeal = newListNewdeal;
+            model.NewRequest = newListRequest;
             return View(model);
         }
 
  
-
         public ActionResult ViewDetail(int id, string searchString)
         {
             var product = db.SysProducts.Find(id);
