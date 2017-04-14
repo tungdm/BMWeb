@@ -130,6 +130,8 @@ function reply(requestId) {
             $target.html(messageError);
         } else {
             $target.html(data);
+            $(".modal-title").html("Tạo đơn thầu mới");
+            
             $('#submit-btn-reply').show();
             var form = $("#form0");
             $.validator.unobtrusive.parse(form);
@@ -149,6 +151,7 @@ function viewDetails(replyId) {
     };
 
     $.ajax(options).done(function (data) {
+        $(".modal-title").html("Nội dung đơn thầu");
         var $target = $('#replyInfo');
         $target.html(data);
         $('#replyModal').modal('show');
@@ -161,6 +164,48 @@ function select(replyId) {
     
     window.location.href = url;
 }
+
+//Ban
+function ban(replyId) {
+    var options = {
+        url: '/Request/Ban',
+        type: 'GET',
+        data: { replyId: replyId }
+    };
+
+    $.ajax(options).done(function (data) {
+        if (data.Message == "Success") {
+            swal({
+                title: "Bạn có chắc chắn muốn chặn nhà cung cấp này?",
+                //text: "Nhà cung cấp sẽ không thể tiếp tục đặt thầu cho yêu cầu này của bạn",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonText: "ĐỒNG Ý",
+                cancelButtonText: 'HỦY',
+                confirmButtonColor: '#d33'
+            }).then(function () {
+                var options = {
+                    url: '/Reply/Ban',
+                    type: 'GET',
+                    data: { replyId: replyId }
+                };
+
+                $.ajax(options).done(function (data) {
+                    //if (data.Success == "Success") {
+                    //    $("#bidtable").remove();
+
+                    //    swal("Hoàn tất", "Rút thầu thành công", "success");
+                    //} else {
+                    //    swal("Lỗi", data.Message, "error");
+                    //}
+
+                });
+            })
+        }
+    });
+
+}
+
 
 //Edit Reply - Supplier
 function edit(replyId) {
@@ -178,7 +223,7 @@ function edit(replyId) {
     $.ajax(options).done(function (data) {
         var $target = $('#replyInfo');
         $target.html(data);
-
+        $(".modal-title").html("Cập nhật đơn thầu");
         $('#submit-btn-edit').show();
 
         var form = $("#form0");

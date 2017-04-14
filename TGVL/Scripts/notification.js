@@ -36,6 +36,23 @@ $('#noti_Button').click(function (e) {
 
 });
 
+//update numbidder - all client
+function updateNumbidder(controllerName, actionName, requestId) {
+    if (controllerName === 'Request' && actionName === 'Details') {
+        var options = {
+            url: '/Request/GetNumBidder',
+            type: 'GET',
+            data: { requestId: requestId },
+        };
+
+        $.ajax(options).done(function (data) {
+            if (data.Message == "Success") {
+                console.log("Update Numbidder all");
+                $("#numBidder").text(data.NumBidder);
+            }
+        });
+    }
+}
 
 // update notification
 function updateNotification(page) {
@@ -193,12 +210,17 @@ function updateNotificationCount(controllerName, actionName, requestId, userName
 //Update bid table khi supplier update info - customer
 function updateCustomerBidTable(controllerName, actionName, requestId) {
     if (controllerName === 'Request' && actionName === 'Details') {
-        
         updateReply(requestId);
-        
     }
-   
 }
+
+//Update bid table khi customer ban supplier - customer
+function updateCustomerBidTable(controllerName, actionName, requestId) {
+    if (controllerName === 'Request' && actionName === 'Details') {
+        updateReply(requestId);
+    }
+}
+
 //Supplier - update bid table khi rank thay đổi
 function updateBidTable(controllerName, actionName, requestId) {
     if (controllerName === 'Request' && actionName === 'Details') {
@@ -229,11 +251,10 @@ function supplierUpdateBidReply(requestId) {
                 rank = data.Rank;
             }
 
-            //if (data.Rank <= 3) {
-            //    rank = '<img src="/Images/rank_' + data.Rank + '.png" style="max-height:75px; max-width:75px" />';
-            //} else {
-            //    rank = data.Rank;
-            //}
+            if (data.Rank == null) {
+                console.log("Ban");
+                $("#bidtable").remove();
+            }
 
             $("#rank").html(rank);
 
@@ -286,6 +307,7 @@ function updateReply(requestId, userName) {
         success: function (data) {
             if (data.ReplyType === "Bid") {
                 console.log("Hello from realtime update bid reply");
+                //$("#numBidder").text(data.NumBidder);
                 var table = '<table class="table">'
                     + '<tbody><tr>'
                     + '<th>Thứ hạng</th>'
@@ -315,15 +337,20 @@ function updateReply(requestId, userName) {
 
                 + '<td><button type="button" class="btn btn-primary btn-sm" onclick="viewDetails(' + value.Id + ')">Chi tiết</button> '
 
-                + '<button type="button" class="select btn btn-success btn-sm" style="display:none" onclick="select(' + value.Id + ')">Lựa chọn</button>'
+                + '<button type="button" class="select btn btn-success btn-sm" style="display:none" onclick="select(' + value.Id + ')">Lựa chọn</button> ';
 
-                + '</td></tr>';
+                    if (data.Banable == "true") {
+                        table += '<button type="button" class="select btn btn-danger btn-sm ban-btn" onclick="ban(' + value.Id + ')">Cấm đặt thầu</button> ';
+                    }
+                
+
+                table += '</td></tr>';
                 });
 
                 table += '</tbody></table>';
 
-                //console.log(table);
                 $("#bidtable").html(table);
+
             } else {
                 $("#replyCount").empty();
                 var reply = "";
@@ -367,6 +394,7 @@ function updateReply(requestId, userName) {
     });
 }
 
+
 //realtime update reply list - supplier
 function updateReplies(data) {
     //console.log("Hello from updateReplies");
@@ -375,6 +403,9 @@ function updateReplies(data) {
     } else {
         if (data.ReplyType === "Bid") {
             console.log("Bid");
+            //var numBidder = parseInt($("#numBidder").text()) + 1;
+            //$("#numBidder").text(numBidder); //increase numbidder + 1
+
             $.ajax({
                 type: 'GET',
                 url: '/Reply/GetRank',
@@ -698,7 +729,7 @@ function showExpired() {
             $('#message').html(message);
             $('#messageModal').modal('show');
             $('.select').show();
-            $('#expired').html("Expired");
+            $('#expired').html("Hết hạn");
 
         },
         error: function (error) {
@@ -725,7 +756,8 @@ function countdownRequest(requestId) {
         if (data.Message == "Success") {
             if (data.IsOwner) {
                 $('.select').show();
-            } else if(!data.IsOwner && data.IsSupplier)
+                $(".ban-btn").hide();
+            } else if (!data.IsOwner)
             {
                 console.log("Hello from realtime update bid reply after expired");
                 var table = '<table class="table">'
