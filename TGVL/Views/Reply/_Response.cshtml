@@ -295,6 +295,9 @@
             var result = $('#form0').valid();
             console.log(result);
             if (result) {
+                $("#submit-btn-reply").off().on('click', function() {
+                    console.log("Solved");
+                });
                 $("form[id='form0']").submit();
 
                 $('#replyModal').modal('toggle');
