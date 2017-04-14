@@ -662,6 +662,9 @@ namespace TGVL.Controllers
                 //SignalR
                 var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
 
+                //Call all client update num-bidder
+                notificationHub.Clients.All.broadcastMessage("updatenumbidder", requestId);   //noti all client
+
                 //Call customer update noti count
                 var customer = UserManager.FindById(request.CustomerId).UserName;
                 notificationHub.Clients.User(customer).notify("added");
@@ -957,6 +960,109 @@ namespace TGVL.Controllers
             };
         }
 
+
+        public ActionResult Ban(int replyId)
+        {
+            var reply = db.Replies.Find(replyId);
+            var banNum = db.ListBanneds.Where(l => l.RequestId == reply.RequestId).Count();
+            var maxBan = db.Settings.Where(s => s.SettingName == "MaxBanned").FirstOrDefault().SettingValue;
+
+            var ban = new ListBanned
+            {
+                RequestId = reply.RequestId,
+                SupplierId = reply.SupplierId,
+                CreatedDate = DateTime.Now,
+            };
+            
+
+            db.ListBanneds.Add(ban);
+
+            reply.BidReply.Flag = 9;
+            db.Entry(reply).State = EntityState.Modified;
+
+            db.SaveChanges();
+
+            var message = reply.Request.User.Fullname + " đã cấm bạn đặt thầu trong yêu cầu \"" + reply.Request.Title + "\" của họ.";
+            
+            //create noti
+            var notify = new Notification
+            {
+                ReplyId = reply.Id,
+                RequestId = reply.RequestId,
+                UserId = reply.User.Id,
+                SenderId = reply.Request.User.Id,
+                CreatedDate = DateTime.Now,
+                Message = message,
+                IsSeen = false,
+                IsClicked = false,
+                Flag = 3, // ban
+            };
+            db.Notifications.Add(notify);
+
+            db.SaveChanges();
+            var requestId = reply.RequestId;
+            //SignalR
+            var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+
+            //Call all client update num-bidder
+            notificationHub.Clients.All.broadcastMessage("updatenumbidder", requestId);   //noti all client
+
+            //Call customer update noti count
+            var supplierName = reply.User.UserName;
+            notificationHub.Clients.User(supplierName).notify("added");
+
+            //Update rank
+            var query = "Update BidReplies "
+                        + "SET [Rank] = t2.[Rank], [OldRank] = t1.[Rank] "
+                        + "FROM BidReplies t1 "
+                        + "LEFT OUTER JOIN "
+                        + "("
+                        + "SELECT BidReplies.ReplyId, Replies.RequestId, Rank() OVER (PARTITION BY RequestId ORDER BY Total asc) as [Rank] "
+                        + "FROM BidReplies, Replies "
+                        + "WHERE BidReplies.ReplyId = Replies.Id "
+                        + "AND  BidReplies.Flag <> 9 "
+                        + ") as t2 "
+                        + "ON t1.ReplyId = t2.ReplyId "
+                        + "AND t2.RequestId = {0} ";
+
+            var result = db.Database.ExecuteSqlCommand(query, requestId);
+
+            //var bansupplierId = reply.SupplierId;
+
+            query = "SELECT[dbo].[Users].[UserName] "
+                    + "FROM[dbo].[Replies], [dbo].[Requests], [dbo].[Users] "
+                    + "WHERE[dbo].[Replies].[SupplierId] = [dbo].[Users].[Id] "
+                    + "AND[dbo].[Replies].[RequestId] = [dbo].[Requests].[Id] "
+                    + "AND[dbo].[Requests].[Id] = {0} ";
+
+            List<string> listUser = db.Database.SqlQuery<string>(query, requestId).ToList();
+
+            if (listUser.Count() != 0)
+            {
+                notificationHub.Clients.User(reply.Request.User.UserName).notify("updatebidtable"); //noti customer
+
+                foreach (var userId in listUser)
+                {
+                    notificationHub.Clients.User(userId).notify("update"); //noti supplier
+                }
+            }
+            else
+            {
+                notificationHub.Clients.User(reply.Request.User.UserName).notify("updatebidtable"); //noti customer
+            }
+
+            banNum = maxBan - banNum - 1;
+            return new JsonResult
+            {
+                Data = new
+                {
+                    Success = "Success",                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+                    Num = banNum
+                },
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
         public ActionResult Retract(int replyId)
         {
             var reply = db.Replies.FirstOrDefault(r => r.Id == replyId);
@@ -1015,7 +1121,7 @@ namespace TGVL.Controllers
                         RequestId = reply.RequestId,
                         UserId = request.CustomerId,
                         SenderId = reply.SupplierId,
-                        CreatedDate = reply.CreatedDate,
+                        CreatedDate = DateTime.Now,
                         Message = message,
                         IsSeen = false,
                         IsClicked = false,
@@ -1024,16 +1130,19 @@ namespace TGVL.Controllers
                     db.Notifications.Add(notify);
 
                     db.SaveChanges();
-
+                    var requestId = reply.RequestId;
                     //SignalR
                     var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+
+                    //Call all client update num-bidder
+                    notificationHub.Clients.All.broadcastMessage("updatenumbidder", requestId);   //noti all client
 
                     //Call customer update noti count
                     var customerName = request.User.UserName;
                     notificationHub.Clients.User(customerName).notify("added");
 
                     //Update rank
-                    var requestId = reply.RequestId;
+                    
                     var query = "Update BidReplies "
                                 + "SET [Rank] = t2.[Rank], [OldRank] = t1.[Rank] "
                                 + "FROM BidReplies t1 "

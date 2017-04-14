@@ -787,6 +787,7 @@ namespace TGVL.Controllers
                     var reply = db.Replies
                                         .Where(r => r.SupplierId == userId && r.RequestId == id);
 
+                    var requestId = (int)id;
 
                     ViewBag.Repliable = reply.Count() == 1 ? false : true;
 
@@ -796,16 +797,16 @@ namespace TGVL.Controllers
                         + "AND [dbo].[Replies].[SupplierId] = [dbo].[Users].[Id] "
                         + "AND [dbo].[Requests].[Id] = [dbo].[Replies].[RequestId] "
                         + "ORDER BY CASE WHEN [dbo].[Replies].[SupplierId] = {1} THEN 0 else 1 END, [dbo].[Replies].[CreatedDate] DESC ";
-                    IEnumerable<BriefReply> data = db.Database.SqlQuery<BriefReply>(query, id, userId).ToList();
+                    IEnumerable<BriefReply> data = db.Database.SqlQuery<BriefReply>(query, requestId, userId).ToList();
                     ViewBag.Replies = data;
                     ViewBag.AutoReplyId = 0;
 
                 }
             }
-            else if (request.Flag == 1)
+            else if (request.Flag == 1) //Bid request
             {
-                //Bid request
                 ViewBag.DueDateCountdown = request.DueDate.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+                ViewBag.NumBidder = db.Replies.Where(r => r.RequestId == id && r.BidReply.Flag != 9).Count();
 
                 if (User.Identity.IsAuthenticated)
                 {
@@ -815,10 +816,13 @@ namespace TGVL.Controllers
                         ViewBag.Winner = winnerReply;
                     } else
                     {
+                        var requestId = (int)id;
+
                         var userId = User.Identity.GetUserId<int>();
 
                         if (await UserManager.IsInRoleAsync(userId, "Customer") && userId == request.CustomerId)
                         {
+                            
                             //View all bid reply: cho customer sở hữu request đó
                             var query = "SELECT [dbo].[BidReplies].[Rank], [dbo].[Replies].[SupplierId], [dbo].[Requests].[CustomerId], [dbo].[Users].[Fullname], [dbo].[Users].[Avatar], "
                                 + "[dbo].[Users].[Address], [dbo].[Replies].[Total], [dbo].[Replies].[DeliveryDate], [dbo].[Replies].[Id] "
@@ -830,9 +834,21 @@ namespace TGVL.Controllers
                                 + "AND [dbo].[BidReplies].[Flag] <> 9 "
                                 + "ORDER BY [dbo].[BidReplies].[Rank] ASC ";
 
-                            IEnumerable<BriefBidReply> data = db.Database.SqlQuery<BriefBidReply>(query, id).ToList();
+                            IEnumerable<BriefBidReply> data = db.Database.SqlQuery<BriefBidReply>(query, requestId).ToList();
                             ViewBag.BidReplies = data;
                             ViewBag.AutoReplyId = 0;
+
+                            //setting config
+                            var maxBan = db.Settings.Where(s => s.SettingName == "MaxBanned").FirstOrDefault().SettingValue;
+
+                            var banNum = db.ListBanneds.Where(l => l.RequestId == request.Id).Count();
+                            if (banNum < maxBan)
+                            {
+                                ViewBag.Banable = true; 
+                            } else
+                            {
+                                ViewBag.Banable = false;
+                            }
                         }
                         else if (await UserManager.IsInRoleAsync(userId, "Supplier"))
                         {
@@ -1047,13 +1063,21 @@ namespace TGVL.Controllers
                             + "ORDER BY [dbo].[BidReplies].[Rank] ASC ";
 
                 IEnumerable<BriefBidReply> list = db.Database.SqlQuery<BriefBidReply>(query, id).ToList();
-
+             
                 Session["LastUpdated"] = DateTime.Now;
+
+                var maxBan = db.Settings.Where(s => s.SettingName == "MaxBanned").FirstOrDefault().SettingValue;
+
+                var banNum = db.ListBanneds.Where(l => l.RequestId == id).Count();
+
                 return new JsonResult {
                     Data = new {
                         ReplyType = "Bid",
-                        BidReplies = list
-                    }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                        BidReplies = list,
+                        NumBidder = list.Count(),
+                        Banable = banNum < maxBan ? "true" : "false"
+                    }, JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
             } else
             {
                 //normal
@@ -1128,10 +1152,11 @@ namespace TGVL.Controllers
             }
             db.SaveChanges();
             var currentUserId = User.Identity.GetUserId<int>();
+            
             var reply = db.Replies.Where(r => r.SupplierId == currentUserId && r.RequestId == requestId);
-            if (reply.Count() == 1)//supplier có bid trong request này
+            if (reply.Count() == 1 || currentUserId == request.CustomerId)//supplier có bid trong request này hoac la owner
             {
-                var query = "SELECT [dbo].[BidReplies].[Rank], [dbo].[Replies].[SupplierId], [dbo].[Requests].[CustomerId], [dbo].[Users].[Fullname], [dbo].[Users].[Avatar], "
+                var query = "SELECT TOP (5) [dbo].[BidReplies].[Rank], [dbo].[Replies].[SupplierId], [dbo].[Requests].[CustomerId], [dbo].[Users].[Fullname], [dbo].[Users].[Avatar], "
                             + "[dbo].[Users].[Address], [dbo].[Replies].[Total], [dbo].[Replies].[DeliveryDate], [dbo].[Replies].[Id] "
                             + "FROM [dbo].[Replies], [dbo].[BidReplies], [dbo].[Users], [dbo].[Requests] "
                             + "WHERE [dbo].[Replies].[RequestId] = {0} "
@@ -1148,8 +1173,7 @@ namespace TGVL.Controllers
                     {
                         Message = "Success",
                         RequestId = requestId,
-                        IsOwner = false,
-                        IsSupplier = true,
+                        IsOwner = currentUserId == request.CustomerId ? true : false,
                         ListBid = data
                     },
 
@@ -1161,8 +1185,7 @@ namespace TGVL.Controllers
                 Data = new {
                     Message = "Success",
                     RequestId = requestId,
-                    IsOwner = currentUserId == request.CustomerId ? true : false,
-                    IsSupplier = false
+                    IsGuest = true,
                 },
 
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
@@ -1403,6 +1426,54 @@ namespace TGVL.Controllers
             };
         }
 
+        //GET
+        public ActionResult Ban(int replyId)
+        {
+            var requestId = db.Replies.Find(replyId).RequestId;
+
+            var maxBan = db.Settings.Where(s => s.SettingName == "MaxBanned").FirstOrDefault().SettingValue;
+
+            var banNum = db.ListBanneds.Where(l => l.RequestId == requestId).Count();
+            if (banNum < maxBan)
+            {
+                return new JsonResult
+                {
+                    Data = new
+                    {
+                        Message = "Success"
+                    },
+
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            }
+            else
+            {
+                return new JsonResult
+                {
+                    Data = new
+                    {
+                        Message = "Fail"
+                    },
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            }
+        }
+
+        public ActionResult GetNumBidder(int requestId)
+        {
+            var numBidder = db.Replies.Where(r => r.RequestId == requestId && r.BidReply.Flag != 9).Count();
+
+            return new JsonResult
+            {
+                Data = new
+                {
+                    Message = "Success",
+                    NumBidder = numBidder
+                },
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
         public ActionResult PlaceBidRequest()
         {
             return View();
@@ -1452,5 +1523,7 @@ namespace TGVL.Controllers
         {
             return View();
         }
+
+       
     }
 }

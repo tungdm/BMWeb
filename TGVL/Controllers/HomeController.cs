@@ -445,7 +445,8 @@ namespace TGVL.Controllers
                             Quantity = c.Quantity,
                             UnitPrice = (decimal)product.UnitPrice,
                             UnitType = product.SysProduct.UnitType.Type,
-                            MiniTotal = (decimal)product.UnitPrice * c.Quantity
+                            MiniTotal = (decimal)product.UnitPrice * c.Quantity,
+                            SysProductId = product.SysProductId
                         };
                         model.ShoppingCartProducts.Add(scProducts);
                         total += scProducts.MiniTotal;
