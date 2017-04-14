@@ -779,7 +779,6 @@ namespace TGVL.Controllers
 
             if (request.Flag == 0)
             {
-
                 //normal request
                 if (User.Identity.IsAuthenticated)
                 {
@@ -810,90 +809,126 @@ namespace TGVL.Controllers
 
                 if (User.Identity.IsAuthenticated)
                 {
-                    var userId = User.Identity.GetUserId<int>();
-
-                    if (await UserManager.IsInRoleAsync(userId, "Customer") && userId == request.CustomerId)
+                    if (request.StatusId == 3)
                     {
-                        //View all bid reply: cho customer sở hữu request đó
-                        var query = "SELECT [dbo].[BidReplies].[Rank], [dbo].[Replies].[SupplierId], [dbo].[Requests].[CustomerId], [dbo].[Users].[Fullname], [dbo].[Users].[Avatar], "
-                            + "[dbo].[Users].[Address], [dbo].[Replies].[Total], [dbo].[Replies].[DeliveryDate], [dbo].[Replies].[Id] "
-                            + "FROM [dbo].[Replies], [dbo].[BidReplies], [dbo].[Users], [dbo].[Requests] "
-                            + "WHERE [dbo].[Replies].[RequestId] = {0} "
-                            + "AND [dbo].[Replies].[RequestId] = [dbo].[Requests].[Id]"
-                            + "AND [dbo].[Replies].[SupplierId] = [dbo].[Users].[Id] "
-                            + "AND [dbo].[Replies].[Id] = [dbo].[BidReplies].[ReplyId] "
-                            + "AND [dbo].[BidReplies].[Flag] <> 9 "
-                            + "ORDER BY [dbo].[BidReplies].[Rank] ASC ";
-
-                        IEnumerable<BriefBidReply> data = db.Database.SqlQuery<BriefBidReply>(query, id).ToList();
-                        ViewBag.BidReplies = data;
-                        ViewBag.AutoReplyId = 0;
-                    }
-                    else if (await UserManager.IsInRoleAsync(userId, "Supplier"))
+                        var winnerReply = db.Replies.Where(r => r.RequestId == request.Id && (bool)r.Selected).FirstOrDefault();
+                        ViewBag.Winner = winnerReply;
+                    } else
                     {
-                        var reply = db.Replies
-                                        .Where(r => r.SupplierId == userId && r.RequestId == id);
-                        
-                        if (reply.Count() == 1) //current supplier đã reply
+                        var userId = User.Identity.GetUserId<int>();
+
+                        if (await UserManager.IsInRoleAsync(userId, "Customer") && userId == request.CustomerId)
                         {
-                            var min = reply.FirstOrDefault().BidReply.MinBidPrice;
-                            var lowestPrice = reply.FirstOrDefault().Request.BidRequest.LowestPrice;
-                            var currentPrice = reply.FirstOrDefault().Total;
+                            //View all bid reply: cho customer sở hữu request đó
+                            var query = "SELECT [dbo].[BidReplies].[Rank], [dbo].[Replies].[SupplierId], [dbo].[Requests].[CustomerId], [dbo].[Users].[Fullname], [dbo].[Users].[Avatar], "
+                                + "[dbo].[Users].[Address], [dbo].[Replies].[Total], [dbo].[Replies].[DeliveryDate], [dbo].[Replies].[Id] "
+                                + "FROM [dbo].[Replies], [dbo].[BidReplies], [dbo].[Users], [dbo].[Requests] "
+                                + "WHERE [dbo].[Replies].[RequestId] = {0} "
+                                + "AND [dbo].[Replies].[RequestId] = [dbo].[Requests].[Id]"
+                                + "AND [dbo].[Replies].[SupplierId] = [dbo].[Users].[Id] "
+                                + "AND [dbo].[Replies].[Id] = [dbo].[BidReplies].[ReplyId] "
+                                + "AND [dbo].[BidReplies].[Flag] <> 9 "
+                                + "ORDER BY [dbo].[BidReplies].[Rank] ASC ";
 
-                            if (min != null && min < lowestPrice && currentPrice > lowestPrice)
-                            {
-                                ViewBag.AutoBid = true;
-                                ViewBag.AutoReplyId = reply.FirstOrDefault().Id;
-                            } else
-                            {
-                                ViewBag.AutoReplyId = 0;
-                                ViewBag.AutoBid = false;
-                            }
-                            if (reply.FirstOrDefault().BidReply.Flag != 9)  //chưa rút thầu
-                            {
-                                var query = "SELECT [dbo].[BidReplies].[Rank], [dbo].[Replies].[SupplierId], [dbo].[Requests].[CustomerId], [dbo].[Users].[Fullname], [dbo].[Users].[Avatar], [dbo].[Users].[Address], [dbo].[Replies].[Total], [dbo].[Replies].[DeliveryDate], [dbo].[Replies].[Id] "
-                                    + "FROM [dbo].[Replies], [dbo].[BidReplies], [dbo].[Users], [dbo].[Requests] "
-                                    + "WHERE [dbo].[Replies].[RequestId] = {0} "
-                                    + "AND [dbo].[Replies].[RequestId] = [dbo].[Requests].[Id]"
-                                    + "AND [dbo].[Replies].[SupplierId] = [dbo].[Users].[Id] "
-                                    + "AND [dbo].[Replies].[Id] = [dbo].[BidReplies].[ReplyId] "
-                                    + "AND [dbo].[Replies].[SupplierId] = {1} "
-                                    + "ORDER BY [dbo].[BidReplies].[Rank] ASC ";
-                                IEnumerable<BriefBidReply> data = db.Database.SqlQuery<BriefBidReply>(query, id, userId).ToList();
-                                ViewBag.BidReplies = data;
-                                ViewBag.Bidable = false;
-                                ViewBag.Retracted = false;
+                            IEnumerable<BriefBidReply> data = db.Database.SqlQuery<BriefBidReply>(query, id).ToList();
+                            ViewBag.BidReplies = data;
+                            ViewBag.AutoReplyId = 0;
+                        }
+                        else if (await UserManager.IsInRoleAsync(userId, "Supplier"))
+                        {
+                            var reply = db.Replies
+                                            .Where(r => r.SupplierId == userId && r.RequestId == id);
 
-                                var MaxDateRetract = db.Settings.Where(s => s.SettingName == "MaxDateRetract").FirstOrDefault().SettingValue;
-                                DateTime repCreateDate = (DateTime)reply.FirstOrDefault().CreatedDate;
-                                var max = repCreateDate.AddDays(MaxDateRetract);
-                                var today = DateTime.Now;
-                                
-                                if (max >= request.DueDate)
+                            if (reply.Count() == 1) //current supplier đã reply
+                            {
+                                var min = reply.FirstOrDefault().BidReply.MinBidPrice;
+                                var lowestPrice = reply.FirstOrDefault().Request.BidRequest.LowestPrice;
+                                var currentPrice = reply.FirstOrDefault().Total;
+
+                                //Kiểm tra có auto bid hay ko
+                                if (min != null && min < lowestPrice && currentPrice > lowestPrice)
                                 {
-                                    ViewBag.Retractable = false;
-                                } else
+                                    ViewBag.AutoBid = true;
+                                    ViewBag.AutoReplyId = reply.FirstOrDefault().Id;
+                                }
+                                else
                                 {
-                                    if (today >= max)
+                                    ViewBag.AutoReplyId = 0;
+                                    ViewBag.AutoBid = false;
+                                }
+
+                                if (reply.FirstOrDefault().BidReply.Flag != 9)  //chưa rút thầu
+                                {
+                                    if (request.StatusId == 1)
+                                    {
+                                        var query = "SELECT [dbo].[BidReplies].[Rank], [dbo].[Replies].[SupplierId], [dbo].[Requests].[CustomerId], [dbo].[Users].[Fullname], [dbo].[Users].[Avatar], "
+                                        + "[dbo].[Users].[Address], [dbo].[Replies].[Total], [dbo].[Replies].[DeliveryDate], [dbo].[Replies].[Id] "
+                                        + "FROM [dbo].[Replies], [dbo].[BidReplies], [dbo].[Users], [dbo].[Requests] "
+                                        + "WHERE [dbo].[Replies].[RequestId] = {0} "
+                                        + "AND [dbo].[Replies].[RequestId] = [dbo].[Requests].[Id]"
+                                        + "AND [dbo].[Replies].[SupplierId] = [dbo].[Users].[Id] "
+                                        + "AND [dbo].[Replies].[Id] = [dbo].[BidReplies].[ReplyId] "
+                                        + "AND [dbo].[Replies].[SupplierId] = {1} "
+                                        + "ORDER BY [dbo].[BidReplies].[Rank] ASC ";
+                                        IEnumerable<BriefBidReply> data = db.Database.SqlQuery<BriefBidReply>(query, id, userId).ToList();
+                                        ViewBag.BidReplies = data;
+                                    }
+                                    else if (request.StatusId == 2)
+                                    {
+                                        //View all bid reply: cho customer sở hữu request đó
+                                        var query = "SELECT [dbo].[BidReplies].[Rank], [dbo].[Replies].[SupplierId], [dbo].[Requests].[CustomerId], [dbo].[Users].[Fullname], [dbo].[Users].[Avatar], "
+                                            + "[dbo].[Users].[Address], [dbo].[Replies].[Total], [dbo].[Replies].[DeliveryDate], [dbo].[Replies].[Id] "
+                                            + "FROM [dbo].[Replies], [dbo].[BidReplies], [dbo].[Users], [dbo].[Requests] "
+                                            + "WHERE [dbo].[Replies].[RequestId] = {0} "
+                                            + "AND [dbo].[Replies].[RequestId] = [dbo].[Requests].[Id]"
+                                            + "AND [dbo].[Replies].[SupplierId] = [dbo].[Users].[Id] "
+                                            + "AND [dbo].[Replies].[Id] = [dbo].[BidReplies].[ReplyId] "
+                                            + "AND [dbo].[BidReplies].[Flag] <> 9 "
+                                            + "ORDER BY [dbo].[BidReplies].[Rank] ASC ";
+
+                                        IEnumerable<BriefBidReply> data = db.Database.SqlQuery<BriefBidReply>(query, id).ToList();
+                                        ViewBag.BidReplies = data;
+                                    }
+
+                                    ViewBag.Bidable = false;
+                                    ViewBag.Retracted = false;
+
+                                    var MaxDateRetract = db.Settings.Where(s => s.SettingName == "MaxDateRetract").FirstOrDefault().SettingValue;
+                                    DateTime repCreateDate = (DateTime)reply.FirstOrDefault().CreatedDate;
+                                    var max = repCreateDate.AddDays(MaxDateRetract);
+                                    var today = DateTime.Now;
+
+                                    if (max >= request.DueDate)
                                     {
                                         ViewBag.Retractable = false;
-                                    } else
+                                    }
+                                    else
                                     {
-                                        ViewBag.Retractable = true;
+                                        if (today >= max)
+                                        {
+                                            ViewBag.Retractable = false;
+                                        }
+                                        else
+                                        {
+                                            ViewBag.Retractable = true;
+                                        }
                                     }
                                 }
-                            } else
-                            {
-                                ViewBag.Bidable = false;
-                                ViewBag.Retracted = true;
+                                else
+                                {
+                                    ViewBag.Bidable = false;
+                                    ViewBag.Retracted = true;
+                                }
                             }
-                        } else
-                        {
-                            ViewBag.Bidable = true;
-                            ViewBag.Retracted = false;
-                        }
+                            else
+                            {
+                                ViewBag.Bidable = true;
+                                ViewBag.Retracted = false;
+                            }
 
+                        }
                     }
+                    
                 }
 
             }
@@ -1003,7 +1038,6 @@ namespace TGVL.Controllers
             if (request.Flag == 1)
             {
                 //bid
-
                 var query = "SELECT [dbo].[BidReplies].[Rank], [dbo].[Users].[Fullname], [dbo].[Users].[Avatar], [dbo].[Users].[Address], [dbo].[Replies].[Total], [dbo].[Replies].[DeliveryDate], [dbo].[Replies].[Id] "
                             + "FROM [dbo].[Replies], [dbo].[BidReplies], [dbo].[Users] "
                             + "WHERE [dbo].[Replies].[RequestId] = {0} "
@@ -1085,50 +1119,50 @@ namespace TGVL.Controllers
         public ActionResult Expired(int requestId)
         {
             var request = db.Requests.Find(requestId);
-            LuceneSimilar.ClearLuceneIndexRecord(requestId);
+            //LuceneSimilar.ClearLuceneIndexRecord(requestId);
 
             if (request.StatusId == 1) //first person
             {
                 request.StatusId = 2;
                 db.Entry(request).State = EntityState.Modified;
             }
-
-            var currentUserId = User.Identity.GetUserId<int>();
-
-            //if (currentUserId == request.CustomerId)
-            //{
-            //    //var message = "Yêu cầu \"" + request.Title + "\" của bạn vừa mới kết thúc!";
-
-            //    //var notify = new Notification
-            //    //{
-            //    //    RequestId = request.Id,
-            //    //    UserId = currentUserId,
-            //    //    Message = message,
-            //    //    CreatedDate = DateTime.Now,
-            //    //    IsSeen = false,
-            //    //    IsClicked = false
-            //    //};
-            //    //db.Notifications.Add(notify);
-
-            //    var numOfUnseen = Session["UnSeenNoti"] == null ? 0 : (int)Session["UnSeenNoti"];
-            //    numOfUnseen += 1;
-            //    Session["UnSeenNoti"] = numOfUnseen;
-
-            //    //SignalR
-            //    var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
-
-            //    //Call customer update noti count
-            //    var customer = UserManager.FindById(request.CustomerId).UserName;
-            //    notificationHub.Clients.User(customer).notify("added");
-            //}
-
             db.SaveChanges();
+            var currentUserId = User.Identity.GetUserId<int>();
+            var reply = db.Replies.Where(r => r.SupplierId == currentUserId && r.RequestId == requestId);
+            if (reply.Count() == 1)//supplier có bid trong request này
+            {
+                var query = "SELECT [dbo].[BidReplies].[Rank], [dbo].[Replies].[SupplierId], [dbo].[Requests].[CustomerId], [dbo].[Users].[Fullname], [dbo].[Users].[Avatar], "
+                            + "[dbo].[Users].[Address], [dbo].[Replies].[Total], [dbo].[Replies].[DeliveryDate], [dbo].[Replies].[Id] "
+                            + "FROM [dbo].[Replies], [dbo].[BidReplies], [dbo].[Users], [dbo].[Requests] "
+                            + "WHERE [dbo].[Replies].[RequestId] = {0} "
+                            + "AND [dbo].[Replies].[RequestId] = [dbo].[Requests].[Id]"
+                            + "AND [dbo].[Replies].[SupplierId] = [dbo].[Users].[Id] "
+                            + "AND [dbo].[Replies].[Id] = [dbo].[BidReplies].[ReplyId] "
+                            + "AND [dbo].[BidReplies].[Flag] <> 9 "
+                            + "ORDER BY [dbo].[BidReplies].[Rank] ASC ";
+                IEnumerable<BriefBidReply> data = db.Database.SqlQuery<BriefBidReply>(query, requestId).ToList();
+                
+                return new JsonResult
+                {
+                    Data = new
+                    {
+                        Message = "Success",
+                        RequestId = requestId,
+                        IsOwner = false,
+                        IsSupplier = true,
+                        ListBid = data
+                    },
+
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            }
 
             return new JsonResult {
                 Data = new {
                     Message = "Success",
-                    RequestId = request.Id,
-                    IsOwner = currentUserId == request.CustomerId ? true : false
+                    RequestId = requestId,
+                    IsOwner = currentUserId == request.CustomerId ? true : false,
+                    IsSupplier = false
                 },
 
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet

@@ -4,6 +4,7 @@ using Microsoft.AspNet.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -159,7 +160,14 @@ namespace TGVL.Controllers
                     StatusId = 1 //mới đặt
                 };
                 db.Orders.Add(newOrder);
-                db.SaveChanges();
+                try {
+                    db.SaveChanges();
+                }
+                catch (DbEntityValidationException e)
+                {
+                    
+                }
+               
 
                 newOrderId = newOrder.Id;
 
@@ -177,8 +185,9 @@ namespace TGVL.Controllers
                     db.OrderDetails.Add(oderDetails);
                 }
 
+                //Gửi noti cho người thắng
                 var message = request.User.Fullname + " đã chọn bạn làm nhà cung cấp cho yêu cầu \"" + request.Title + "\" của họ.";
-                //Create noti
+                
                 var noti = new Notification
                 {
                     ReplyId = reply.Id,
@@ -193,13 +202,32 @@ namespace TGVL.Controllers
                     Flag = 5, //select winner
                 };
                 db.Notifications.Add(noti);
-
                 //SignalR
                 var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
                 var supplier = UserManager.FindById(reply.SupplierId).UserName;
 
                 notificationHub.Clients.User(supplier).notify("winner");
 
+                var listLoser = db.Replies.Where(r => r.RequestId == request.Id && (bool)!r.Selected).ToList();
+                foreach (var loser in listLoser)
+                {
+                    message = request.User.Fullname + " đã chọn " + reply.User.Fullname + " làm nhà cung cấp cho yêu cầu \"" + request.Title + "\" của họ.";
+
+                    noti = new Notification
+                    {
+                        RequestId = request.Id,
+                        UserId = loser.User.Id,
+                        SenderId = request.User.Id,
+                        CreatedDate = DateTime.Now,
+                        Message = message,
+                        IsSeen = false,
+                        IsClicked = false,
+                        Flag = 6, //noti loser
+                    };
+                    db.Notifications.Add(noti);
+                    var loserName = loser.User.UserName;
+                    notificationHub.Clients.User(loserName).notify("winner");
+                }
             }
             db.SaveChanges();
 
@@ -207,9 +235,6 @@ namespace TGVL.Controllers
 
             var numOfUnseen = db.Notifications.Where(n => n.UserId == userId && n.IsSeen == false).Count();
             Session["UnSeenNoti"] = numOfUnseen;
-
-
-
 
             //var callbackUrl = Url.Action("Details", "MyOrders", null, protocol: Request.Url.Scheme);
             //await UserManager.SendEmailAsync(user.Id, "Đặt hàng thành công", "Xem chi tiết tại <a href=\"" + callbackUrl + "\">đây nè :)</a>");
