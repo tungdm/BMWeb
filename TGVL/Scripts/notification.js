@@ -72,9 +72,11 @@ function updateNotification(page) {
                             break;
                         case 5:
                             redirectUrl = "/Order/Details/" + value.OrderId;
+                        case 6:
+                            redirectUrl = "/Request/Details/" + value.RequestId;
                     }
                     
-                    //console.log(redirectUrl);
+                    console.log(redirectUrl);
                     var day = new Date(parseInt(value.CreatedDate.substr(6))).format("yyyy/mm/dd HH:MM:ss");
                     //console.log(day);
                     //console.log($.timeago(day));
@@ -723,6 +725,45 @@ function countdownRequest(requestId) {
         if (data.Message == "Success") {
             if (data.IsOwner) {
                 $('.select').show();
+            } else if(!data.IsOwner && data.IsSupplier)
+            {
+                console.log("Hello from realtime update bid reply after expired");
+                var table = '<table class="table">'
+                    + '<tbody><tr>'
+                    + '<th>Thứ hạng</th>'
+                    + '<th>Cửa hàng</th>'
+                    + '<th>Giá thầu</th>'
+                    + '<th>Ngày giao hàng</th>'
+                    + '<th>Thao tác</th>'
+                    + '</tr>';
+
+                $.each(data.ListBid, function (index, value) {
+                    var rank = "";
+                    if (value.Rank <= 3) {
+                        rank = '<img src="/Images/rank_' + value.Rank + '.png" style="max-height:75px; max-width:75px" />';
+                    } else {
+                        rank = value.Rank;
+                    }
+                    console.log(rank);
+
+                    table += '<tr id="reply_' + value.Id + '">'
+                + '<td>' + rank + '</td>'
+
+                + '<td><img src="/Images/UserAvatar/' + value.Avatar + '" width="100" height="100" alt="avatar" style="display: block; margin-bottom: 5px;"><span class="supplierName"><strong> ' + value.Fullname + '</strong></span></td>'
+
+                + '<td><strong><span style="color: #ff1341; font-size: 20px">' + addDot(value.Total) + ' &#x20AB;</span></strong></td>'
+
+                + '<td>' + new Date(parseInt(value.DeliveryDate.substr(6))).format("dd/mm/yyyy") + '</td>'
+
+                + '<td><button type="button" class="btn btn-primary btn-sm" onclick="viewDetails(' + value.Id + ')">Chi tiết</button> '
+
+                + '</td></tr>';
+                });
+
+                table += '</tbody></table>';
+
+                //console.log(table);
+                $("#bidtable").html(table);
             }
             
             $("#bidBtn").hide();
@@ -732,7 +773,6 @@ function countdownRequest(requestId) {
         }
 
     });
-
 }
 
 function ExpiredOutside() {
