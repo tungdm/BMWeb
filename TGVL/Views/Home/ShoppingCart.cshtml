@@ -44,7 +44,15 @@
                                                             <a href="#" class="product-image"><img width="60" height="60" src="~/Images/Product/Warehouse/@Model.ShoppingCartProducts[i].Image"></a>
                                                         </td>
                                                         <td>
-                                                            <a href="/Deal/Details/@Model.ShoppingCartProducts[i].DealId">@Model.ShoppingCartProducts[i].ProductName</a>
+                                                            @if (Model.ShoppingCartProducts[i].ProductId != 0)
+                                                            {
+                                                                <a href="javascript:;" onclick="viewProductDetails(@Model.ShoppingCartProducts[i].SysProductId, '@Model.ShoppingCartProducts[i].ProductName')">@Model.ShoppingCartProducts[i].ProductName</a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <a href="/Deal/Details/@Model.ShoppingCartProducts[i].DealId">@Model.ShoppingCartProducts[i].ProductName</a>
+                                                            }
+                                                            
 
                                                             @Html.HiddenFor(modelItem => Model.ShoppingCartProducts[i].ProductName)
                                                         </td>
