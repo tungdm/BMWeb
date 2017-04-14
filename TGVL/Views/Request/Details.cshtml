@@ -224,6 +224,7 @@
     max-height: calc(100vh - 210px);
     overflow-y: auto;
 }
+
 </style>
 
 <section class="main-container col2-right-layout" style="transform: none;background: #f4f4f4;">
@@ -457,7 +458,7 @@
                                                         }
 
                                                         <div id="bidtable">
-                                                            @if (User.IsInRole("Customer") && Model.CustomerId == User.Identity.GetUserId<int>() && bidReplies != null)
+                                                            @if (User.IsInRole("Customer") && Model.CustomerId == User.Identity.GetUserId<int>() && (!bidReplies.Any()))
                                                             {
                                                                 <p>Hiện tại chưa có ai đặt thầu</p>
                                                             }
@@ -639,7 +640,10 @@
                                                                                                 {
                                                                                                     <button type="button" class="select btn btn-success btn-sm" onclick="select(@reply.Id)">Lựa chọn</button>
                                                                                                 }
-
+                                                                                                if (ViewBag.Banable)
+                                                                                                {
+                                                                                                    <button type="button" class="select btn btn-danger btn-sm ban-btn" onclick="ban(@reply.Id)">Cấm đặt thầu</button>
+                                                                                                }
                                                                                             }
                                                                                             else if (/*User.Identity.GetUserId<int>() == reply.SupplierId && */Model.StatusId == 2)
                                                                                             {
@@ -683,15 +687,19 @@
                                 </div>
                                 <hr />
                         }
-
-
+                        
+                        <h3 style="margin-top: -20px;">SỐ NGƯỜI ĐẤU THẦU</h3>
+                        <div class="widget-content" style="padding-bottom:20px;text-align: center;">
+                            <i class="fa fa-user-circle-o fa-3x" aria-hidden="true"> <span id="numBidder">@ViewBag.NumBidder</span></i>
+                        </div>
+                        <hr />
 
                         @{
                             TGVL.Models.LuceneRequestResult similarRequest = ViewBag.SimilarRequest;
                             if (similarRequest != null && similarRequest.SimilarResult.Count != 0)
                             {
                                 var list = similarRequest.SimilarResult.ToList();
-                                <h3>YÊU CẦU TƯƠNG TỰ</h3>
+                                <h3 style="margin-top: -20px;">YÊU CẦU TƯƠNG TỰ</h3>
                                         <ul class="sliderVip">
                                             @for (int i = 0; i < list.Count(); i++)
                                             {
@@ -775,7 +783,7 @@
     <div class="modal-dialog modal-lg" style="left:0%">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Cài đặt tự động đấu thầu</h4>
+                <h4 class="modal-title2">Cài đặt tự động đấu thầu</h4>
             </div>
             <div class="modal-body">
                 <div id="autoBidInfo"></div>

@@ -1,5 +1,11 @@
 ﻿@model TGVL.Models.ReplyViewModel
 
+<style>
+#errorPolicies {
+    display: block;
+    padding: 0px;
+}
+</style>
 @using (Ajax.BeginForm(
     new AjaxOptions
     {
@@ -57,6 +63,15 @@
                             @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @rows = "5", @cols = "20" })
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-3">
+                            @Html.CheckBoxFor(model => model.Policies)
+                            <label> Tôi đã đọc và đồng ý với các <a href="/Home/">điều khoản và chính sách</a> của BMW </label>
+                            @*@Html.ValidationMessageFor(model => model.Policies, "", new { @class = "text-danger" })*@
+                            <span class="text-danger field-validation-valid" id="errorPolicies" style="display:none"></span>
+                        </div>
+                    </div>
                 }
 
                 else
@@ -98,11 +113,17 @@
 
                     <div class="form-group">
                         <label class="control-label col-md-3" style="font-size:14px">Ghi chú</label>
-
                         <div class="col-md-9">
                             @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @rows = "5", @cols = "20" } )
-                            
                         </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.CheckBoxFor(model => model.Policies)
+                        <label> Tôi đã đọc và đồng ý với các <a href="/Home/">điều khoản và chính sách</a> của BMW </label>
+                        @*@Html.ValidationMessageFor(model => model.Policies, "", new { @class = "text-danger" })*@
+
+                        <span class="text-danger field-validation-valid" id="errorPolicies" style="display:none"></span>
                     </div>
                 }
             </div>
@@ -288,10 +309,27 @@
 
         $.validator.unobtrusive.adapters.addBool("daterange");
 
+        $("#Policies").change(function() {
+            if(this.checked) {
+                $('#errorPolicies').empty();
+                $('#errorPolicies').hide();
+            }
+        });
+
+
         $("#submit-btn-reply").click(function (event) {
             console.log("Hello from response");
-
             event.preventDefault();
+            var checkPolicies = $("#Policies").is(":checked")
+            if (!checkPolicies) {
+                
+                var message = "Vui lòng đọc và đồng ý với các điều khoản của BMW";
+                console.log(message);
+                $('#errorPolicies').html(message);
+                $('#errorPolicies').show();
+                return;
+            }
+
             var result = $('#form0').valid();
             console.log(result);
             if (result) {

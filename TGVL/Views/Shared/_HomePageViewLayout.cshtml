@@ -694,6 +694,12 @@
                 console.log('Update client reply2:' + requestId);
                 updateClientReplyTable2(controllerName, actionName, requestId, userName, newreplyId);
             }
+
+            if (message && message.toLowerCase() === "updatenumbidder") {
+                console.log('updatenumbidder:' + requestId);
+                
+                updateNumbidder(controllerName, actionName, requestId);
+            }
         }
 
         //signalr method for push server message to client
@@ -717,6 +723,11 @@
                 console.log('Customer update bid table');
                 updateCustomerBidTable(controllerName, actionName, requestId);
             }
+
+            //if (message && message.toLowerCase() === "updatebidtableafterban") { //customer update bid table after ban
+            //    console.log('Customer update bid table after ban');
+            //    updateCustomerBidTableAfterBan(controllerName, actionName, requestId);
+            //}
 
             if (message && message.toLowerCase() === "updatereplytable") { //supplier update reply table
                 console.log('updatereplytable');

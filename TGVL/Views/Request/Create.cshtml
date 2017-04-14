@@ -109,14 +109,6 @@
                                 </div>
 
                                 <div class="form-group">
-                                    @*@Html.LabelFor(model => model.ReceivingDate, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
-                                    <label class="control-label col-md-3 col-xs-12">Ngày nhận hàng<span style="color:#ff0000"> *</span></label>
-                                    <div class="col-md-9 col-xs-12">
-                                        @Html.EditorFor(model => model.ReceivingDate, new { htmlAttributes = new { @class = "form-control", @style = "float:left;font-size:medium" } })
-                                        @Html.ValidationMessageFor(model => model.ReceivingDate, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                                <div class="form-group">
                                     @*@Html.LabelFor(model => model.TimeRange, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
                                     <label class="control-label col-md-3 col-xs-12">Thời hạn yêu cầu (ngày)<span style="color:#ff0000"> *</span></label>
                                     <div class="col-md-9 col-xs-12">
@@ -124,6 +116,16 @@
                                         @Html.ValidationMessageFor(model => model.TimeRange, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
+
+                                <div class="form-group">
+                                    @*@Html.LabelFor(model => model.ReceivingDate, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
+                                    <label class="control-label col-md-3 col-xs-12">Ngày nhận hàng<span style="color:#ff0000"> *</span></label>
+                                    <div class="col-md-9 col-xs-12">
+                                        @Html.EditorFor(model => model.ReceivingDate, new { htmlAttributes = new { @class = "form-control", @style = "float:left;font-size:medium" } })
+                                        @Html.ValidationMessageFor(model => model.ReceivingDate, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                
              
                                 <div class="form-group">
                                     @*@Html.LabelFor(model => model.PaymentType, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
@@ -191,6 +193,13 @@
                                 <hr />
                                 <div class="form-group">
                                     <div style="text-align:center">
+                                        <div class="checkbox">
+                                            @Html.CheckBoxFor(model => model.Policies)
+                                            <label> Tôi đã đọc và đồng ý với các <a href="/Home/">điều khoản và chính sách</a> của BMW </label>
+                                            @Html.ValidationMessageFor(model => model.Policies, "", new { @class = "text-danger" })
+
+                                        </div>
+                                        <br/>
                                         @*<p><button class="btn btn-success sweet-3" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'sweet-3']);">Hoàn tất</button></p>*@
                                         <p><button class="btn btn-success" type="submit" id="hoantat" style="font-size:x-large">Hoàn tất</button></p>
                                     </div>
@@ -258,6 +267,7 @@
 
             </div>
             <div class="modal-footer">
+
                 <input id="select" type="button" value="Xác nhận" class="btn btn-warning" style="display:none" />
 
                 <button type="button" class="btn btn-default" data-dismiss="modal" id="deleteSearchForm">Hủy</button>
@@ -369,21 +379,37 @@
 
             var MinDateDeliveryRange = @Model.MinDateDeliveryRange;
             var now = moment().format('YYYY-MM-DD');
+            
             var minDate = moment(now).add(MinDateDeliveryRange, 'days').format('YYYY-MM-DD');
 
             $.validator.addMethod("daterange", function (value, element) {
                 var receivingDate = $("#ReceivingDate").val();
 
-                console.log("now:" + now + ", receivingDate:" + receivingDate + ", minDate:" +minDate);
+                var timeRange = $("#TimeRange").val();
+                if (timeRange > MinDateDeliveryRange) {
+                    minDate = moment(now).add(timeRange, 'days').format('YYYY-MM-DD'); 
+                } 
 
-                return receivingDate >= minDate;
+                console.log("now:" + now + ", receivingDate:" + receivingDate + ", minDate:" + minDate);
 
-            }, "Ngày nhận hàng phải từ ngày " + moment(minDate).format('DD/MM/YYYY') + " về sau");
+                return (receivingDate >= minDate);
+
+            }, function(value, element) {
+                return "Ngày nhận hàng phải từ ngày " + moment(minDate).format('DD/MM/YYYY') + " về sau";
+            });
+
+            
 
             $('input[name="ReceivingDate"]').rules("add", {
                 daterange: true
             });
 
+            $("#Policies").rules("add", {
+                required: true,
+                messages: {
+                    required: "Vui lòng đọc và đồng ý với các điều khoản của BMW"
+                }
+            });
             function update_amounts() {
                 var sum = 0.0;
                 var min = @Model.MinBidPrice;  //set config
