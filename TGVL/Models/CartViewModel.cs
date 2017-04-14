@@ -37,6 +37,8 @@ namespace TGVL.Models
     {
         public int ProductId { get; set; } //cho t/h mua rieng tung san pham
 
+        public int SysProductId { get; set; }
+
         public int DealId { get; set; } //cho t/h mua deal
 
         public int SupplierId { get; set; }

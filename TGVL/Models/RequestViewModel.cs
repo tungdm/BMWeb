@@ -107,6 +107,9 @@ namespace TGVL.Models
 
         public string Flag { get; set; }
 
+        
+        public bool Policies { get; set; }
+
 
         //public HttpPostedFileBase ImageUrl { get; set; }
 

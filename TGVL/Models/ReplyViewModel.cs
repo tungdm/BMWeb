@@ -50,6 +50,8 @@ namespace TGVL.Models
         public int Flag { get; set; }
 
         public int MinDateDeliveryRange { get; set; }
+
+        public bool Policies { get; set; }
     }
 
     public class AutobidViewModel
