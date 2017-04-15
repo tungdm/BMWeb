@@ -194,7 +194,10 @@ function updateNotificationCount(controllerName, actionName, requestId, userName
         .css({ top: '-10px' })
         .animate({ top: '10px', opacity: 1 }, 500)
         .fadeIn('slow');
-    
+
+    $("#page-noti").empty();
+    console.log("page-noti=" + $("#page-noti").text());
+
     //ajax update session
     var options = {
         url: '/Request/UpdateNumOfUnseen',
@@ -717,6 +720,8 @@ function showExpired() {
         .css({ top: '-10px' })
         .animate({ top: '10px', opacity: 1 }, 500)
         .fadeIn('slow');
+
+    $("#page-noti").empty();
 
     $.ajax({
         type: 'GET',
