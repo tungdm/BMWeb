@@ -50,6 +50,8 @@
                 {
                     var bidPrice = string.Format("{0:C0}", Model.BidPrice);
 
+                    <div id="DueDateRequest" style="display:none">@Convert.ToDateTime(Model.DueDate).ToString("yyyy-MM-dd")</div>
+
                     <div class="form-group">
                         <label class="control-label col-md-3" style="font-size:14px">Giá thầu (&#x20AB;) <span style="color:#ff0000"> *</span></label>
                         <div class="col-md-9">
@@ -65,6 +67,7 @@
                         <div class="col-md-9">
                             @Html.EditorFor(model => model.DeliveryDate, new { htmlAttributes = new { @class = "form-control", @style = "font-size:medium" } })
                             @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "text-danger" })
+                            <span class="text-danger field-validation-valid" id="custome-duedate" style="display:none; padding: 0px;"></span>
                         </div>
                     </div>
 
@@ -183,17 +186,50 @@
         $('.discount').on('input', function () {
             update_amounts();
         });
-        $.validator.addMethod("daterange", function (value, element) {
+
+        //$.validator.addMethod("daterange", function (value, element) {
+        //    var deliveryDate = $("#DeliveryDate").val();
+
+        //    var now = moment().format('YYYY-MM-DD');
+
+        //    return deliveryDate >= now;
+
+        //    //return someDate >= today;
+        //}, "Delivery date must be on or after today");
+
+        //$.validator.unobtrusive.adapters.addBool("daterange");
+
+        $("#DeliveryDate").on("change", function() {
             var deliveryDate = $("#DeliveryDate").val();
 
+            var MinDateDeliveryRange = @Model.MinDateDeliveryRange;
             var now = moment().format('YYYY-MM-DD');
+            var minDate = moment(now).add(MinDateDeliveryRange, 'days').format('YYYY-MM-DD');
 
-            return deliveryDate >= now;
+            var DueDate = $("#DueDateRequest").text();
 
-            //return someDate >= today;
-        }, "Delivery date must be on or after today");
+            DueDate = moment(DueDate).format('YYYY-MM-DD');
+            console.log("now:" + now + ", DeliveryDate:" + deliveryDate + ", minDate:" +minDate + ", DueDate:" + DueDate);
 
-        $.validator.unobtrusive.adapters.addBool("daterange");
+            if (DueDate > minDate) {
+                console.log(deliveryDate >= DueDate);
+                minDate = DueDate;
+                console.log(deliveryDate >= minDate);
+            }
+
+            if (deliveryDate < minDate) {
+
+                var message = "Ngày giao hàng phải từ ngày " + moment(minDate).format('DD/MM/YYYY')  + " về sau";
+                console.log(message);
+                $('#custome-duedate').html(message);
+                $('#custome-duedate').show();
+            } else {
+                $('#custome-duedate').empty();
+                $('#custome-duedate').hide();
+            }
+
+        });
+
 
         $("#submit-btn-edit").click(function (event) {
             event.preventDefault();
@@ -201,34 +237,69 @@
             var result = $('#form0').valid();
             console.log(result);
 
-            var rawBidPrice = $('#BidPrice').val();
-            if (rawBidPrice == "") {
-                var message = "Giá thầu không được để trống";
-                $('#errorTotal').html(message);
-                $('#errorTotal').show();
-                return;
-            }
+            
 
             if (result) {
                 if (@Model.Flag == 1) {
-                    var newBidPrice = Number($("#BidPrice").val().replace(/[^0-9]+/g, ""));
-                    var test = Number(oldBidPrice.replace(/[^0-9]+/g, ""));
-                    console.log("newBidPrice=" + newBidPrice + ", test=" + test);
-
-                    if (newBidPrice == 0) {
-                        var message = "Giá thầu mới phải lớn hơn 0 &#x20AB;";
-                      
+                    //Validate price;
+                    var check1 = true;
+                    var rawBidPrice = $('#BidPrice').val();
+                    if (rawBidPrice == "") {
+                        var message = "Giá thầu không được để trống";
                         $('#errorTotal').html(message);
                         $('#errorTotal').show();
-                        return;
+                        check1 = false;
+                        //return;
+                    } else {
+                        var newBidPrice = Number($("#BidPrice").val().replace(/[^0-9]+/g, ""));
+                        var test = Number(oldBidPrice.replace(/[^0-9]+/g, ""));
+                        console.log("newBidPrice=" + newBidPrice + ", test=" + test);
+                    
+                        if (newBidPrice == 0) {
+                            var message = "Giá thầu mới phải lớn hơn 0 &#x20AB;";
+
+                            $('#errorTotal').html(message);
+                            $('#errorTotal').show();
+                            check1 = false;
+                            //return;
+                        }
+                    }
+                    
+
+                    //Validate deliveryDate
+                    var check2 = true;
+                    var deliveryDate = $("#DeliveryDate").val();
+
+                    var MinDateDeliveryRange = @Model.MinDateDeliveryRange;
+                    var now = moment().format('YYYY-MM-DD');
+                    var minDate = moment(now).add(MinDateDeliveryRange, 'days').format('YYYY-MM-DD');
+
+                    var DueDate = $("#DueDateRequest").text();
+
+                    DueDate = moment(DueDate).format('YYYY-MM-DD');
+                    console.log("now:" + now + ", DeliveryDate:" + deliveryDate + ", minDate:" +minDate + ", DueDate:" + DueDate);
+
+                    if (DueDate > minDate) {
+                        console.log(deliveryDate >= DueDate);
+                        minDate = DueDate;
+                        console.log(deliveryDate >= minDate);
                     }
 
-                    if (newBidPrice <= test) {
+                    if (deliveryDate < minDate) {
+                        var message = "Ngày giao hàng phải từ ngày " + moment(minDate).format('DD/MM/YYYY')  + " về sau";
+                        console.log(message);
+                        $('#custome-duedate').html(message);
+                        $('#custome-duedate').show();
+                        //return;
+                        check2 = false;
+                    } 
+
+                    if (newBidPrice <= test && check1 && check2) {
                         $("#submit-btn-edit").off().on('click', function() {
                             console.log("Solved");
                         });
                         $("form[id='form0']").submit();
-                    } 
+                    }
                 } else {
                     $("#submit-btn-edit").off().on('click', function() {
                         console.log("Solved");
@@ -297,12 +368,6 @@
 
         });
     });
-
-
-
-
-
-
 
     function update_amounts() {
         var sum = 0.0;

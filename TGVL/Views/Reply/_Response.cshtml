@@ -1,10 +1,10 @@
 ﻿@model TGVL.Models.ReplyViewModel
 
 <style>
-#errorPolicies {
-    display: block;
-    padding: 0px;
-}
+    #errorPolicies {
+        display: block;
+        padding: 0px;
+    }
 </style>
 @using (Ajax.BeginForm(
     new AjaxOptions
@@ -26,14 +26,17 @@
                 @if (Model.Flag == 1) //bid
                 {
                     var bidPrice = string.Format("{0:C0}", Model.BidPrice);
-                    
+
+                    <div id="DueDateRequest" style="display:none">@Convert.ToDateTime(Model.DueDate).ToString("yyyy-MM-dd")</div>
+
                     <div class="form-group">
                         <label class="control-label col-md-3" style="font-size:14px">Giá thầu (&#x20AB;) <span style="color:#ff0000"> *</span></label>
                         <div class="col-md-9">
                             @*@Html.EditorFor(model => model.Total, "", new { htmlAttributes = new { @class = "form-control" } })*@
                             @Html.EditorFor(model => model.BidPrice, "", new { htmlAttributes = new { @class = "form-control" , @Value= bidPrice, @style = "font-size:medium" } })
                             @Html.ValidationMessageFor(model => model.BidPrice, "", new { @class = "text-danger" })
-                        </div> 
+                            <span class="text-danger field-validation-valid" id="error-bidprice" style="display:none; padding: 0px;"></span>
+                        </div>
                     </div>
 
                     <div class="form-group">
@@ -52,6 +55,7 @@
                         <div class="col-md-9">
                             @Html.EditorFor(model => model.DeliveryDate, new { htmlAttributes = new { @class = "form-control", @style = "font-size:medium" } })
                             @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "text-danger" })
+                            <span class="text-danger field-validation-valid" id="custome-duedate" style="display:none; padding: 0px;"></span>
                         </div>
                     </div>
 
@@ -59,7 +63,7 @@
                         <label class="control-label col-md-3" style="font-size:14px">Ghi chú</label>
 
                         <div class="col-md-9">
-                            
+
                             @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @rows = "5", @cols = "20" })
                         </div>
                     </div>
@@ -76,7 +80,7 @@
 
                 else
                 {
-                    @Html.HiddenFor(model => model.BidPrice, new { htmlAttributes = new { @Value= "0" } })
+                    @Html.HiddenFor(model => model.BidPrice, new { htmlAttributes = new { @Value = "0" } })
                     <div class="form-group">
                         <label class="control-label col-md-3" style="font-size:14px">Giá đề xuất từ cửa hàng</label>
                         <div class="col-md-9">
@@ -90,7 +94,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-3" style="font-size:14px">Ngày giao hàng<span style="color:#ff0000"> *</span></label>
                         <div class="col-md-9">
-                            @Html.EditorFor(model => model.DeliveryDate, new { htmlAttributes = new { @class = "form-control", @style="font-size:medium" } })
+                            @Html.EditorFor(model => model.DeliveryDate, new { htmlAttributes = new { @class = "form-control", @style = "font-size:medium" } })
                             @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -98,7 +102,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-3" style="font-size:14px">Giảm giá (%)</label>
                         <div class="col-md-9">
-                            @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @class = "discount form-control", onfocus = "if(this.value=='0') this.value=''", @style="font-size:medium" } })
+                            @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @class = "discount form-control", onfocus = "if(this.value=='0') this.value=''", @style = "font-size:medium" } })
                             @Html.ValidationMessageFor(model => model.Discount, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -114,7 +118,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-3" style="font-size:14px">Ghi chú</label>
                         <div class="col-md-9">
-                            @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @rows = "5", @cols = "20" } )
+                            @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @rows = "5", @cols = "20" })
                         </div>
                     </div>
 
@@ -187,75 +191,75 @@
                                 @string.Format("{0:C0}", mini)
                             </td>
                         </tr>
-                    }
+                                    }
                 </tbody>
             </table>
-                        }
-                        else
-                        {
-                            <table class="data-table" id="myTable" style="display:none">
-                                <thead>
-                                    <tr>
-                                        <th colspan="1">
-                                            Số thứ tự
-                                        </th>
-                                        <th colspan="1">
-                                            Sản phẩm
-                                        </th>
-                                        <th colspan="1">
-                                            Hình ảnh
-                                        </th>
-                                        <th colspan="1">
-                                            Đơn giá
-                                        </th>
-                                        <th colspan="1">
-                                            Đơn vị tính
-                                        </th>
-                                        <th colspan="1">
-                                            Số lượng
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tfoot style="display:none">
-                                    <tr>
-                                        <th colspan="5">TỔNG CỘNG</th>
-                                        <th colspan="6">
-                                            <span class="total" style="font-size:18px"></span> &#x20AB;
-                                            <div style="display:none">@Html.EditorFor(model => model.Total, new { htmlAttributes = new { @class = "total2" } })</div>
-                                        </th>
-                                    </tr>
-                                </tfoot>
-                                <tbody>
-                                    @{
-                                        int count2 = 0;
                                     }
-
-                                    @for (int i = 0; i < Model.ReplyProductsTest.Count(); i++)
+                                    else
                                     {
-                                        count2++;
-                                        <tr>
-                                            <td>@count2</td>
-                                            <td style="display:none">
-                                                @Html.EditorFor(model => Model.ReplyProductsTest[i].Product.Id)
-                                                @Html.EditorFor(model => Model.ReplyProductsTest[i].Product.UnitPrice)
-                                            </td>
-                                            <td>@Html.DisplayFor(model => Model.ReplyProductsTest[i].Product.Name)</td>
-                                            <td></td>
-                                            <td class="price">
-                                                @Html.DisplayFor(model => Model.ReplyProductsTest[i].Product.UnitPrice)
-                                            </td>
-                                            <td>@Html.DisplayFor(model => Model.ReplyProductsTest[i].Product.Type)</td>
-                                            <td>
-                                                <div class="qtyBid">@Html.DisplayFor(model => Model.ReplyProductsTest[i].Quantity)</div>
-                                                @Html.HiddenFor(model => Model.ReplyProductsTest[i].Quantity)
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                                        }
+                                        <table class="data-table" id="myTable" style="display:none">
+                                            <thead>
+                                                <tr>
+                                                    <th colspan="1">
+                                                        Số thứ tự
+                                                    </th>
+                                                    <th colspan="1">
+                                                        Sản phẩm
+                                                    </th>
+                                                    <th colspan="1">
+                                                        Hình ảnh
+                                                    </th>
+                                                    <th colspan="1">
+                                                        Đơn giá
+                                                    </th>
+                                                    <th colspan="1">
+                                                        Đơn vị tính
+                                                    </th>
+                                                    <th colspan="1">
+                                                        Số lượng
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tfoot style="display:none">
+                                                <tr>
+                                                    <th colspan="5">TỔNG CỘNG</th>
+                                                    <th colspan="6">
+                                                        <span class="total" style="font-size:18px"></span> &#x20AB;
+                                                        <div style="display:none">@Html.EditorFor(model => model.Total, new { htmlAttributes = new { @class = "total2" } })</div>
+                                                    </th>
+                                                </tr>
+                                            </tfoot>
+                                            <tbody>
+                                                @{
+                                                    int count2 = 0;
+                                                }
+
+                                                @for (int i = 0; i < Model.ReplyProductsTest.Count(); i++)
+                                                {
+                                                    count2++;
+                                                    <tr>
+                                                        <td>@count2</td>
+                                                        <td style="display:none">
+                                                            @Html.EditorFor(model => Model.ReplyProductsTest[i].Product.Id)
+                                                            @Html.EditorFor(model => Model.ReplyProductsTest[i].Product.UnitPrice)
+                                                        </td>
+                                                        <td>@Html.DisplayFor(model => Model.ReplyProductsTest[i].Product.Name)</td>
+                                                        <td></td>
+                                                        <td class="price">
+                                                            @Html.DisplayFor(model => Model.ReplyProductsTest[i].Product.UnitPrice)
+                                                        </td>
+                                                        <td>@Html.DisplayFor(model => Model.ReplyProductsTest[i].Product.Type)</td>
+                                                        <td>
+                                                            <div class="qtyBid">@Html.DisplayFor(model => Model.ReplyProductsTest[i].Quantity)</div>
+                                                            @Html.HiddenFor(model => Model.ReplyProductsTest[i].Quantity)
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                                    }
     </div>
-                                        }
+                                                    }
 
 
 
@@ -263,10 +267,38 @@
 
 
     $(document).ready(function () {
-        update_amounts();      
+        //if (!Modernizr.inputtypes.date) {
+        //    $('#DeliveryDate').datepicker({
+        //        dateFormat: "dd/mm/yy"
+        //    });
+        //}
+
+        update_amounts();
 
         $('#BidPrice').keyup(function(event) {
             if(event.which >= 37 && event.which <= 40) return;
+
+            var rawPrice = $(this).val();
+            if (rawPrice == "") {
+                var message = "Giá thầu không được để trống";
+                console.log(message);
+                $('#error-bidprice').html(message);
+                $('#error-bidprice').show();
+                return;
+            }
+
+            var price = Number($(this).val().replace(/[^0-9]+/g, ""));
+
+            if (price == 0) {
+                var message = "Giá thầu phải lớn hơn 0 &#x20AB;";
+                console.log(message);
+                $('#error-bidprice').html(message);
+                $('#error-bidprice').show();
+            }
+            else {
+                $('#error-bidprice').empty();
+                $('#error-bidprice').hide();
+            }
 
             $(this).val(function(index, value) {
                 return value
@@ -274,10 +306,12 @@
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ".")
                 ;
             });
+
+            
         });
 
 
-        $("#Discount").on("keypress keyup blur", function (event) {    
+        $("#Discount").on("keypress keyup blur", function (event) {
             $(this).val($(this).val().replace(/[^\d].+/, ""));
             if ((event.which < 48 || event.which > 57)) {
                 event.preventDefault();
@@ -295,19 +329,56 @@
             update_amounts();
         });
 
-        var MinDateDeliveryRange = @Model.MinDateDeliveryRange;
-        var now = moment().format('YYYY-MM-DD');
-        var minDate = moment(now).add(MinDateDeliveryRange, 'days').format('YYYY-MM-DD');
 
-        $.validator.addMethod("daterange", function (value, element) {
+
+        @*$.validator.addMethod("daterange", function (value, element) {
             var deliveryDate = $("#DeliveryDate").val();
-            console.log("now:" + now + ", DeliveryDate:" + deliveryDate + ", minDate:" +minDate);
-            
+
+            var MinDateDeliveryRange = @Model.MinDateDeliveryRange;
+            var now = moment().format('YYYY-MM-DD');
+            var minDate = moment(now).add(MinDateDeliveryRange, 'days').format('YYYY-MM-DD');
+
+            var DueDate = $("#DueDateRequest").text();
+
+            DueDate = moment(DueDate).format('YYYY-MM-DD');
+            console.log("now:" + now + ", DeliveryDate:" + deliveryDate + ", minDate:" +minDate + ", DueDate:" + DueDate);
+
             return deliveryDate >= minDate;
 
-        }, "Ngày giao hàng phải từ ngày " + moment(minDate).format('DD/MM/YYYY') + " về sau");
+        }, "Hello");*@
 
-        $.validator.unobtrusive.adapters.addBool("daterange");
+        //$.validator.unobtrusive.adapters.addBool("daterange");
+
+        $("#DeliveryDate").on("change", function() {
+            var deliveryDate = $("#DeliveryDate").val();
+
+            var MinDateDeliveryRange = @Model.MinDateDeliveryRange;
+            var now = moment().format('YYYY-MM-DD');
+            var minDate = moment(now).add(MinDateDeliveryRange, 'days').format('YYYY-MM-DD');
+
+            var DueDate = $("#DueDateRequest").text();
+
+            DueDate = moment(DueDate).format('YYYY-MM-DD');
+            console.log("now:" + now + ", DeliveryDate:" + deliveryDate + ", minDate:" +minDate + ", DueDate:" + DueDate);
+
+            if (DueDate > minDate) {
+                console.log(deliveryDate >= DueDate);
+                minDate = DueDate;
+                console.log(deliveryDate >= minDate);
+            }
+
+            if (deliveryDate < minDate) {
+
+                var message = "Ngày giao hàng phải từ ngày " + moment(minDate).format('DD/MM/YYYY')  + " về sau";
+                console.log(message);
+                $('#custome-duedate').html(message);
+                $('#custome-duedate').show();
+            } else {
+                $('#custome-duedate').empty();
+                $('#custome-duedate').hide();
+            }
+
+        });
 
         $("#Policies").change(function() {
             if(this.checked) {
@@ -316,22 +387,79 @@
             }
         });
 
-
         $("#submit-btn-reply").click(function (event) {
             console.log("Hello from response");
             event.preventDefault();
+            
+            //Validate bid price
+            var check1 = true;
+            var rawPrice = $("#BidPrice").val();
+            if (rawPrice == "") {
+                var message = "Giá thầu không được để trống";
+                console.log(message);
+                $('#error-bidprice').html(message);
+                $('#error-bidprice').show();
+                //return;
+                check1 = false;
+            } else {
+                var price = Number($("#BidPrice").val().replace(/[^0-9]+/g, ""));
+
+                if (price == 0) {
+                    var message = "Giá thầu phải lớn hơn 0 &#x20AB;";
+                    console.log(message);
+                    $('#error-bidprice').html(message);
+                    $('#error-bidprice').show();
+                    //return;
+                    check1 = false;
+                }
+            }
+
+            //Validate policy
+            var check2 = true;
             var checkPolicies = $("#Policies").is(":checked")
             if (!checkPolicies) {
-                
+
                 var message = "Vui lòng đọc và đồng ý với các điều khoản của BMW";
                 console.log(message);
                 $('#errorPolicies').html(message);
                 $('#errorPolicies').show();
-                return;
+                //return;
+                check2 = false;
             }
 
+            //Validate deliveryDate
+            var check3 = true;
+            var deliveryDate = $("#DeliveryDate").val();
+
+            var MinDateDeliveryRange = @Model.MinDateDeliveryRange;
+            var now = moment().format('YYYY-MM-DD');
+            var minDate = moment(now).add(MinDateDeliveryRange, 'days').format('YYYY-MM-DD');
+
+            var DueDate = $("#DueDateRequest").text();
+
+            DueDate = moment(DueDate).format('YYYY-MM-DD');
+            console.log("now:" + now + ", DeliveryDate:" + deliveryDate + ", minDate:" +minDate + ", DueDate:" + DueDate);
+
+            if (DueDate > minDate) {
+                console.log(deliveryDate >= DueDate);
+                minDate = DueDate;
+                console.log(deliveryDate >= minDate);
+            }
+
+            if (deliveryDate < minDate) {
+                var message = "Ngày giao hàng phải từ ngày " + moment(minDate).format('DD/MM/YYYY')  + " về sau";
+                console.log(message);
+                $('#custome-duedate').html(message);
+                $('#custome-duedate').show();
+                //return;
+                check3 = false;
+            } 
+            if (!check1 || !check2 || !check3) {
+                return;
+            }
             var result = $('#form0').valid();
-            console.log(result);
+
+            //console.log(result);
             if (result) {
                 $("#submit-btn-reply").off().on('click', function() {
                     console.log("Solved");

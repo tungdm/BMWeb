@@ -57,7 +57,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @{int cnt = 0;
+                                @{
+                                    int cnt = 0;
                                     foreach (var item in listRequests)
                                     {
                                         cnt++;
@@ -65,7 +66,7 @@
                                             <td>@cnt</td>
                                             <td><a href="/Request/Details/@item.Id">@item.Title</a></td>
                                             <td>@Convert.ToDateTime(item.StartDate).ToString("dd/MM/yyyy HH:mm")</td>
-                                            <td>@item.RequestStatue.Status</td>
+                                            <td>@item.RequestStatus.Status</td>
                                             <td>
                                                 @*<button id="cancelRequest" type="button" class="btn btn-danger btn-sm" onclick="cancelRequest(@item.Id)">Hủy yêu cầu</button>*@
                                                 @{
