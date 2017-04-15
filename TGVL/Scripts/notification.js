@@ -76,7 +76,7 @@ function updateNotification(page) {
                     var redirectUrl = "";
                     switch (flag) {
                         case 1:
-                            redirectUrl = "/Request/Details/" + value.RequestId + "#reply_" + value.ReplyId;
+                            redirectUrl = "/Request/Details/" + value.RequestId;
                             break;
                         case 2:
                             redirectUrl = "/Request/Details/" + value.RequestId;
