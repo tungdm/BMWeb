@@ -822,17 +822,34 @@ namespace TGVL.Controllers
 
                         if (await UserManager.IsInRoleAsync(userId, "Customer") && userId == request.CustomerId)
                         {
-                            
-                            //View all bid reply: cho customer sở hữu request đó
-                            var query = "SELECT [dbo].[BidReplies].[Rank], [dbo].[Replies].[SupplierId], [dbo].[Requests].[CustomerId], [dbo].[Users].[Fullname], [dbo].[Users].[Avatar], "
-                                + "[dbo].[Users].[Address], [dbo].[Replies].[Total], [dbo].[Replies].[DeliveryDate], [dbo].[Replies].[Id] "
-                                + "FROM [dbo].[Replies], [dbo].[BidReplies], [dbo].[Users], [dbo].[Requests] "
-                                + "WHERE [dbo].[Replies].[RequestId] = {0} "
-                                + "AND [dbo].[Replies].[RequestId] = [dbo].[Requests].[Id]"
-                                + "AND [dbo].[Replies].[SupplierId] = [dbo].[Users].[Id] "
-                                + "AND [dbo].[Replies].[Id] = [dbo].[BidReplies].[ReplyId] "
-                                + "AND [dbo].[BidReplies].[Flag] <> 9 "
-                                + "ORDER BY [dbo].[BidReplies].[Rank] ASC ";
+                            var query = "";
+
+                            if (request.StatusId == 2) //hoan tat
+                            {
+                                //View 5 top bid reply: cho customer sở hữu request đó
+                                query = "SELECT TOP (5) [dbo].[BidReplies].[Rank], [dbo].[Replies].[SupplierId], [dbo].[Requests].[CustomerId], [dbo].[Users].[Fullname], [dbo].[Users].[Avatar], "
+                                    + "[dbo].[Users].[Address], [dbo].[Replies].[Total], [dbo].[Replies].[DeliveryDate], [dbo].[Replies].[Id] "
+                                    + "FROM [dbo].[Replies], [dbo].[BidReplies], [dbo].[Users], [dbo].[Requests] "
+                                    + "WHERE [dbo].[Replies].[RequestId] = {0} "
+                                    + "AND [dbo].[Replies].[RequestId] = [dbo].[Requests].[Id]"
+                                    + "AND [dbo].[Replies].[SupplierId] = [dbo].[Users].[Id] "
+                                    + "AND [dbo].[Replies].[Id] = [dbo].[BidReplies].[ReplyId] "
+                                    + "AND [dbo].[BidReplies].[Flag] <> 9 "
+                                    + "ORDER BY [dbo].[BidReplies].[Rank] ASC ";
+
+                            } else
+                            {
+                                //View all bid reply: cho customer sở hữu request đó
+                                query = "SELECT [dbo].[BidReplies].[Rank], [dbo].[Replies].[SupplierId], [dbo].[Requests].[CustomerId], [dbo].[Users].[Fullname], [dbo].[Users].[Avatar], "
+                                    + "[dbo].[Users].[Address], [dbo].[Replies].[Total], [dbo].[Replies].[DeliveryDate], [dbo].[Replies].[Id] "
+                                    + "FROM [dbo].[Replies], [dbo].[BidReplies], [dbo].[Users], [dbo].[Requests] "
+                                    + "WHERE [dbo].[Replies].[RequestId] = {0} "
+                                    + "AND [dbo].[Replies].[RequestId] = [dbo].[Requests].[Id]"
+                                    + "AND [dbo].[Replies].[SupplierId] = [dbo].[Users].[Id] "
+                                    + "AND [dbo].[Replies].[Id] = [dbo].[BidReplies].[ReplyId] "
+                                    + "AND [dbo].[BidReplies].[Flag] <> 9 "
+                                    + "ORDER BY [dbo].[BidReplies].[Rank] ASC ";
+                            }
 
                             IEnumerable<BriefBidReply> data = db.Database.SqlQuery<BriefBidReply>(query, requestId).ToList();
                             ViewBag.BidReplies = data;
