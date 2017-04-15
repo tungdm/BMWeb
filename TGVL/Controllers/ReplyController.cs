@@ -382,6 +382,9 @@ namespace TGVL.Controllers
                 Rank = reply.Flag == 1 ? (int)reply.BidReply.Rank : 0,
                 Flag = (int) reply.Flag,
                 BidPrice = string.Format("{0:N0}", reply.Total),
+                DueDate = reply.Request.DueDate,
+                MinDateDeliveryRange = db.Settings.Where(s => s.SettingTypeId == 1 && s.SettingName == "MinDateDeliveryRange").FirstOrDefault().SettingValue
+
             };
 
             var query = "SELECT [dbo].[ReplyProducts].[Id] AS [ReplyProductId], [dbo].[Products].[Id], [dbo].[Products].[UnitPrice], [dbo].[Products].[Image], [dbo].[SysProducts].[Name], [dbo].[UnitTypes].[Type], [dbo].[ReplyProducts].[Quantity] "
@@ -516,6 +519,7 @@ namespace TGVL.Controllers
                         model.Flag = (int) request.Flag;
                         model.Total = (decimal)total;
                         model.BidPrice = string.Format("{0:N0}", total);
+                        model.DueDate = request.DueDate;
                         model.MinDateDeliveryRange = db.Settings.Where(s => s.SettingTypeId == 1 && s.SettingName == "MinDateDeliveryRange").FirstOrDefault().SettingValue;
 
 
