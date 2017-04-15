@@ -148,12 +148,12 @@
                                                 <tr>
                                                     <td>@count</td>
                                                     <td>@item.name</td>
-                                                    <td>@Html.DisplayFor(modelItem => item.price)</td>
-                                                    <td>
+                                                    <td style="white-space:nowrap">@Html.DisplayFor(modelItem => item.price)</td>
+                                                    <td style="white-space:nowrap">
                                                         <span style="float: left;" class="stars">@item.rating</span> (@item.rating)
                                                     </td>
                                                     <td>@item.address</td>
-                                                    <td>
+                                                    <td style="white-space:nowrap">
                                                         <button type="submit" class="btn btn-success" onclick="datmua(@item.productId)">Thêm vào giỏ hàng</button>
                                                         <button type="submit" class="btn btn-primary" onclick="viewOnMap(@item.lat, @item.lng)">Xem bản đồ</button>
                                                     </td>
