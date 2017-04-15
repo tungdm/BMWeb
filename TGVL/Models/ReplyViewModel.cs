@@ -52,6 +52,9 @@ namespace TGVL.Models
         public int MinDateDeliveryRange { get; set; }
 
         public bool Policies { get; set; }
+
+       
+        public DateTime DueDate { get; set; }
     }
 
     public class AutobidViewModel
@@ -182,6 +185,10 @@ namespace TGVL.Models
         public string RequestType { get; set; }
 
         public IList<RepliedProduct> ReplyProducts { get; set; }
+
+        public int MinDateDeliveryRange { get; set; }
+
+        public DateTime DueDate { get; set; }
     }
 
     public class RepliedProduct
