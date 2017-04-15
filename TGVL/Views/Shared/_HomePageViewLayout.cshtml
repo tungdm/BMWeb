@@ -664,12 +664,12 @@
             NProgress.done();
         });
 
-        if (window.location.hash != null && window.location.hash != '') {
+        //if (window.location.hash != null && window.location.hash != '') {
 
-            $('html, body').animate({
-                scrollTop: $(window.location.hash).offset().top
-            }, 1500);
-        }
+        //    $('html, body').animate({
+        //        scrollTop: $(window.location.hash).offset().top
+        //    }, 1500);
+        //}
 
         var controllerName = '@ViewContext.RouteData.Values["Controller"].ToString()';
         var actionName = '@ViewContext.RouteData.Values["Action"].ToString()';
