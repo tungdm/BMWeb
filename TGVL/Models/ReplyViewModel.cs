@@ -194,7 +194,16 @@ namespace TGVL.Models
         public DateTime DueDate { get; set; }
 
         public int MaxYearInput { get; set; }
+
+        public string SupplierName { get; set; }
+
+        public string PhoneNumber { get; set; }
+
+        public List<string> WarehouseAddress { get; set; }
+
     }
+
+    
 
     public class RepliedProduct
     {
