@@ -84,7 +84,8 @@ namespace TGVL.Controllers
             var userId = User.Identity.GetUserId<int>();
 
             var requestFilter = new List<Request>();
-
+            searchString = searchString.Trim();
+            searchString = System.Text.RegularExpressions.Regex.Replace(searchString, @"\s+", " ");
             if (searchString == null)
             {
                 if (typeNumber == 2) //all
