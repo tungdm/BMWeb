@@ -126,6 +126,7 @@ namespace TGVL.Models
         public int MinDateDeliveryRange { get; set; }
 
         public int NumOfUnseen { get; set; }
+        public int MaxYearInput { get; set; }
     }
 
     public class RequestedProduct

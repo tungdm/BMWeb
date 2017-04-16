@@ -51,6 +51,9 @@ namespace TGVL.Models
 
         public int MinDateDeliveryRange { get; set; }
 
+        public int MaxLengthInputNumberBig { get; set; }
+
+        public int MaxYearInput { get; set; }
         public bool Policies { get; set; }
 
        
@@ -189,6 +192,8 @@ namespace TGVL.Models
         public int MinDateDeliveryRange { get; set; }
 
         public DateTime DueDate { get; set; }
+
+        public int MaxYearInput { get; set; }
     }
 
     public class RepliedProduct
