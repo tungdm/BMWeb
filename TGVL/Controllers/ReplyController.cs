@@ -383,8 +383,8 @@ namespace TGVL.Controllers
                 Flag = (int) reply.Flag,
                 BidPrice = string.Format("{0:N0}", reply.Total),
                 DueDate = reply.Request.DueDate,
-                MinDateDeliveryRange = db.Settings.Where(s => s.SettingTypeId == 1 && s.SettingName == "MinDateDeliveryRange").FirstOrDefault().SettingValue
-
+                MinDateDeliveryRange = db.Settings.Where(s => s.SettingTypeId == 1 && s.SettingName == "MinDateDeliveryRange").FirstOrDefault().SettingValue,
+                MaxYearInput = db.Settings.Where(s => s.SettingName == "MaxYearInput").FirstOrDefault().SettingValue,
             };
 
             var query = "SELECT [dbo].[ReplyProducts].[Id] AS [ReplyProductId], [dbo].[Products].[Id], [dbo].[Products].[UnitPrice], [dbo].[Products].[Image], [dbo].[SysProducts].[Name], [dbo].[UnitTypes].[Type], [dbo].[ReplyProducts].[Quantity] "
@@ -521,8 +521,8 @@ namespace TGVL.Controllers
                         model.BidPrice = string.Format("{0:N0}", total);
                         model.DueDate = request.DueDate;
                         model.MinDateDeliveryRange = db.Settings.Where(s => s.SettingTypeId == 1 && s.SettingName == "MinDateDeliveryRange").FirstOrDefault().SettingValue;
-
-
+                        model.MaxLengthInputNumberBig = db.Settings.Where(s => s.SettingName == "MaxLengthInputNumberBig").FirstOrDefault().SettingValue;
+                        model.MaxYearInput = db.Settings.Where(s => s.SettingName == "MaxYearInput").FirstOrDefault().SettingValue;
                         return PartialView("_Response", model);
                     }
                     else

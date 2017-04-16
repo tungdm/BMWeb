@@ -474,6 +474,7 @@ namespace TGVL.Controllers
             model2.MinTimeRange = configs.Select(c => new { SettingValue = c.SettingValue, SettingName = c.SettingName }).Where(c => c.SettingName == "MinTimeRange").SingleOrDefault().SettingValue;
             model2.MaxTimeRange = configs.Select(c => new { SettingValue = c.SettingValue, SettingName = c.SettingName }).Where(c => c.SettingName == "MaxTimeRange").SingleOrDefault().SettingValue;
             model2.MinDateDeliveryRange = configs.Select(c => new { SettingValue = c.SettingValue, SettingName = c.SettingName }).Where(c => c.SettingName == "MinDateDeliveryRange").SingleOrDefault().SettingValue;
+            model2.MaxYearInput = db.Settings.Where(s => s.SettingName == "MaxYearInput").FirstOrDefault().SettingValue;
 
             var numOfUnseen = db.Notifications.Where(n => n.UserId == userId && n.IsSeen == false).Count();
             Session["UnSeenNoti"] = numOfUnseen;
