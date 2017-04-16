@@ -197,9 +197,12 @@ namespace TGVL.Models
 
         public string SupplierName { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:####-###-###}")]
         public string PhoneNumber { get; set; }
 
         public List<string> WarehouseAddress { get; set; }
+
+        public double Rating { get; set; }
 
     }
 
