@@ -63,7 +63,7 @@ namespace TGVL.Controllers
             ViewBag.list1 = list1;
             ViewBag.list2 = list2;
 
-            var pageSize = 3;
+            var pageSize = 5;
             var pageNumber = (page ?? 1);
             int? sortNumber = sort;
             if (sortNumber == null || sortNumber > 2 || sortNumber < 1)
