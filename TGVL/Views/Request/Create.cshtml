@@ -123,6 +123,7 @@
                                     <div class="col-md-9 col-xs-12">
                                         @Html.EditorFor(model => model.ReceivingDate, new { htmlAttributes = new { @class = "form-control", @style = "float:left;font-size:medium" } })
                                         @Html.ValidationMessageFor(model => model.ReceivingDate, "", new { @class = "text-danger" })
+                                        <span tabindex="1" class="text-danger field-validation-valid" id="custome-duedate" style="display:none; padding: 0px;margin-left:-15px;outline: none;"></span>
                                     </div>
                                 </div>
                                 
@@ -195,8 +196,8 @@
                                     <div style="text-align:center">
                                         <div class="checkbox">
                                             @Html.CheckBoxFor(model => model.Policies)
-                                            <label> Tôi đã đọc và đồng ý với các <a href="/Home/Policy  ">điều khoản và chính sách</a> của BMW </label>
-                                            @Html.ValidationMessageFor(model => model.Policies, "", new { @class = "text-danger" })
+                                            <label> Tôi đã đọc và đồng ý với các <a href="/Home/">điều khoản và chính sách</a> của BMW </label>
+                                            @Html.ValidationMessageFor(model => model.Policies, "", new { @class = "text-danger" , style = "display: block;" })
 
                                         </div>
                                         <br/>
@@ -315,7 +316,10 @@
                 }
             });
 
-            $('#hoantat').click(function () {
+            
+
+            $('#hoantat').click(function (e) {
+                
                 update_amounts();
                 var numOfSelectedProduct = $("#my-orders-table > tbody > tr").length;
                 console.log("numOfSelectedProduct=" + numOfSelectedProduct);
@@ -326,9 +330,28 @@
                     $("#errorTotal").html(message);
                     $('#error').focus();
                 } else {
+                    var check = true;
+                    var receivingDate = $("#ReceivingDate").val();
+
+                    var d = new Date(receivingDate);
+                    var current = new Date();
+                    var currentYear = current.getFullYear();
+                    var year = d.getFullYear();
+                    var MaxYearInput = @Model.MaxYearInput;
+
+                    if (year > (currentYear + MaxYearInput)) {
+                        var message = "Ngày giao hàng không được vượt quá năm " + (currentYear + MaxYearInput);
+                        console.log(message);
+                        $('#custome-duedate').html(message);
+                        $('#custome-duedate').show();
+                        check = false;
+                       
+                    } 
+
                     var result = $('#form0').valid();
                     console.log(result);
-                    if (result) {
+                    console.log("check=" + check);
+                    if (result && check) {
                         console.log("Hello 123");
                         window.addEventListener("submit", function (e) {
                             var form = e.target;
@@ -356,7 +379,14 @@
                                 }
                             }
                         }, true);
+                    } else {
+                        console.log("error");
+                        e.preventDefault();
+                        $('#custome-duedate').focus();
+                        return;
                     }
+                    
+
                    
                 }
                 
@@ -404,6 +434,27 @@
                 daterange: true
             });
 
+            $("#ReceivingDate").on("change", function() {
+                var receivingDate = $("#ReceivingDate").val();
+
+                var d = new Date(receivingDate);
+                var current = new Date();
+                var currentYear = current.getFullYear();
+                var year = d.getFullYear();
+                var MaxYearInput = @Model.MaxYearInput;
+
+                if (year > (currentYear + MaxYearInput)) {
+                    var message = "Ngày giao hàng không được vượt quá năm " + (currentYear + MaxYearInput);
+                    console.log(message);
+                    $('#custome-duedate').html(message);
+                    $('#custome-duedate').show();
+                } else {
+                    $('#custome-duedate').empty();
+                    $('#custome-duedate').hide();
+                }
+
+            });
+
             $("#Policies").rules("add", {
                 required: true,
                 messages: {
@@ -449,7 +500,30 @@
             minHeight: null, // set minimum height of editor
             maxHeight: null, // set maximum height of editor
             focus: false, // set focus to editable area after initializing summernote
-            lang: "vi-VN"
+            lang: "vi-VN",
+            callbacks: {
+                onKeydown: function (e) { 
+                    var t = e.currentTarget.innerText; 
+                    console.log(t);
+                    if (t.trim().length >= 400) {
+                        //delete key
+                        if (e.keyCode != 8)
+                            e.preventDefault(); 
+                    } 
+                },
+                onKeyup: function (e) {
+                    var t = e.currentTarget.innerText;
+                    $('#maxContentPost').text(400 - t.trim().length);
+                },
+                onPaste: function (e) {
+                    var t = e.currentTarget.innerText;
+                    var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+                    e.preventDefault();
+                    var all = t + bufferText;
+                    document.execCommand('insertText', false, all.trim().substring(0, 400));
+                    $('#maxContentPost').text(400 - t.length);
+                }
+            }
         });
 
 
