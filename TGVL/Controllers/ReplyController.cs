@@ -5,11 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using TGVL.Hubs;
 using TGVL.Models;
-
 namespace TGVL.Controllers
 {
     public class ReplyController : Controller
@@ -386,6 +386,7 @@ namespace TGVL.Controllers
                 DueDate = reply.Request.DueDate,
                 MinDateDeliveryRange = db.Settings.Where(s => s.SettingTypeId == 1 && s.SettingName == "MinDateDeliveryRange").FirstOrDefault().SettingValue,
                 MaxYearInput = db.Settings.Where(s => s.SettingName == "MaxYearInput").FirstOrDefault().SettingValue,
+                Rating = reply.User.AverageGrade,
             };
 
             var addresses = db.Warehouses.Where(w => w.SupplierId == reply.SupplierId).Select(w => new { Address = w.Address }).ToList();
@@ -407,6 +408,7 @@ namespace TGVL.Controllers
             IList<RepliedProduct> data = db.Database.SqlQuery<RepliedProduct>(query, replyId).ToList();
             ViewBag.RepliedProduct = data;
             model.ReplyProducts = data;
+            
 
             if (type == "Edit" && reply.SupplierId == User.Identity.GetUserId<int>())
             {
