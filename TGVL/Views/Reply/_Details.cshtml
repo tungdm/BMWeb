@@ -66,12 +66,32 @@
         <dl class="dl-horizontal">
             @if (Model.Rank != 0)
             {
+                
                 <dt>
-                    Thứ hạng
+                    Cửa hàng
                 </dt>
 
                 <dd>
-                    @Model.Rank
+                    @Model.SupplierName
+                </dd>
+
+                <dt>
+                    Địa chỉ
+                </dt>
+
+                <dd>
+                    @foreach(var addr in Model.WarehouseAddress)
+                    {
+                        <span class="warehouse-address" style="display:block">@addr</span>
+                    }
+                </dd>
+
+                <dt>
+                    Số điện thoại
+                </dt>
+
+                <dd>
+                    @Model.PhoneNumber
                 </dd>
 
                 <dt>
