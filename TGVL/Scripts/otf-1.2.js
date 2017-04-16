@@ -191,16 +191,14 @@ function ban(replyId) {
                 };
 
                 $.ajax(options).done(function (data) {
-                    //if (data.Success == "Success") {
-                    //    $("#bidtable").remove();
-
-                    //    swal("Hoàn tất", "Rút thầu thành công", "success");
-                    //} else {
-                    //    swal("Lỗi", data.Message, "error");
-                    //}
-
+                    console.log("ban success");
                 });
-            })
+            }, function (dismiss) {
+                    if (dismiss === 'cancel') {
+                        console.log("cancel");
+                    }
+               }
+            )
         }
     });
 
@@ -287,7 +285,12 @@ function retract(replyId) {
             }
             
         });
-    })   
+    },  function (dismiss) {
+            if (dismiss === 'cancel') {
+                console.log("cancel");
+            }
+        }
+    )   
 }
 
 function cancelRequest(requestId) {
