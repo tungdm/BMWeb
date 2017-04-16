@@ -374,7 +374,8 @@ namespace TGVL.Controllers
             {
                 Id = reply.Id,
                 Total = reply.Total,
-               
+                SupplierName = reply.User.Fullname,
+                PhoneNumber = reply.User.PhoneNumber,
                 Description = reply.Description,
                 DeliveryDate = reply.DeliveryDate,
                 ShippingFee = (int) reply.ShippingFee,
@@ -386,6 +387,15 @@ namespace TGVL.Controllers
                 MinDateDeliveryRange = db.Settings.Where(s => s.SettingTypeId == 1 && s.SettingName == "MinDateDeliveryRange").FirstOrDefault().SettingValue,
                 MaxYearInput = db.Settings.Where(s => s.SettingName == "MaxYearInput").FirstOrDefault().SettingValue,
             };
+
+            var addresses = db.Warehouses.Where(w => w.SupplierId == reply.SupplierId).Select(w => new { Address = w.Address }).ToList();
+            var warehouseAddress = new List<string>();
+            foreach (var a in addresses)
+            {
+                var addr = a.Address;
+                warehouseAddress.Add(addr); 
+            }
+            model.WarehouseAddress = warehouseAddress;
 
             var query = "SELECT [dbo].[ReplyProducts].[Id] AS [ReplyProductId], [dbo].[Products].[Id], [dbo].[Products].[UnitPrice], [dbo].[Products].[Image], [dbo].[SysProducts].[Name], [dbo].[UnitTypes].[Type], [dbo].[ReplyProducts].[Quantity] "
                    + "FROM [dbo].[Replies], [dbo].[ReplyProducts], [dbo].[Products], [dbo].[SysProducts], [dbo].[UnitTypes] "
