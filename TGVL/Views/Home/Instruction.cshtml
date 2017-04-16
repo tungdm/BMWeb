@@ -3,7 +3,50 @@
     ViewBag.Title = "Instruction";
     Layout = "~/Views/Shared/_HomePageViewLayout.cshtml";
 }
-
-
-
+@Styles.Render("~/Content/searchproductcss")
+<style>
+    p{
+        font-size:16px;
+        margin-right:10px;
+    }
+    
+    img{
+        display:block;
+        margin-left:auto;
+        margin-right:auto;
+        max-width:100%;
+        height:auto;
+    }
+</style>
+<section class="main-container col1-layout" style="background:#f4f4f4">
+    <div class="main container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="popular-posts widget widget__sidebar" style="background:#fff">
+                    <div class="widget-content">
+                        <p style="font-size:28px"><strong>I. Hướng dẫn mua hàng</strong></p>
+                        <p style="font-size:18px"><span style="text-decoration:underline"><strong>Bước 1:</strong></span> Sau khi Khách Hàng chọn deal muốn mua, trong trang chi tiết deal, Khách Hàng nhấn nút “Giỏ Hàng” để thêm deal vào giỏ hàng của mình.</p>
+                        <p><img src="~/Images/Add_To_Cart.jpg" width="623" height="340"></p>
+                        <p style="font-size:18px"><span style="text-decoration:underline"><strong>Bước 2:</strong></span> Vào xem số lượng deal trong giỏ hàng.</p>
+                        <p><img src="~/Images/Shopping Cart.jpg" width="623" height="340"></p>
+                        <p>- &nbsp; &nbsp; Khách hàng có thể thêm số lượng trong cùng một deal hoặc xóa deal hoặc quay lại mua hàng.</p>
+                        <p>- &nbsp; &nbsp; Khách hàng nhấn nút “ Đặt Hàng” để sang bước 3 “Địa chỉ giao hàng”</p>
+                        <p style="font-size:18px"><span style="text-decoration:underline"><strong>Bước 3:</strong></span> Địa chỉ giao hàng.</p>
+                        <p><img src="~/Images/Delivery Address.jpg" width="623" height="340"/></p>
+                        <p>- &nbsp; &nbsp; Khách hàng có thể cập nhật địa chỉ cũ của họ.</p>
+                        <p>- &nbsp; &nbsp; Sau khi hoàn tất các thông tin trên Khách hàng bấm “TIẾP TỤC” để chuyển sang bước Thanh toán và vận chuyển hoặc quay lại để chỉnh sửa thông tin sản phẩm (trong giỏ hàng).</p>
+                        <p style="font-size:18px"><span style="text-decoration:underline"><strong>Bước 4:</strong></span> Thanh toán và vận chuyển.</p>
+                        <img src="~/Images/Payment.jpg" width="623" height="340"/>
+                        <p>- &nbsp; &nbsp; Khách hàng lựa chọn hình thức thanh toán: Thanh toán khi nhận hàng.</p>
+                        <p>- &nbsp; &nbsp; Khách hàng có thể thêm ghi chú cho bộ phận giao hàng.</p>
+                        <p>- &nbsp; &nbsp; Nhấn nút "Đặt Hàng".</p>
+                        <p>- &nbsp; &nbsp;  Sau khi bấm nút “Đặt Hàng”, khách hàng sẽ được chuyển đến trang thông báo đặt mua thành công, đồng thời khách hàng sẽ nhận được e-mail “Xác nhận đơn hàng” do BMW gửi về e-mail đăng nhập của khách hàng.</p>
+                        <p><img src="~/Images/confirm_order.jpg" width="623" height="340"/></p>
+                        <p>- &nbsp; &nbsp; Khách hàng nhấn vào nút “Xem chi tiết đơn hàng” để xem thông tin chi tiết của đơn hàng vừa đặt thành công.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 

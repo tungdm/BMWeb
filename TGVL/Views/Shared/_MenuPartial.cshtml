@@ -1,0 +1,27 @@
+﻿@using Microsoft.AspNet.Identity
+
+
+<div class="block block-account">
+    <div class="block-title">
+        <div class="profile">
+            <div class="profile_avatar">
+                <img src="~/Images/UserAvatar/Admin1.jpg" style="width:60px;height:60px;max-height:60px;max-width:60px" />
+            </div>
+            <div class="profile_info">
+                <div style="padding:5px; font-size:15px">@User.Identity.Name</div>
+            </div>
+        </div>
+    </div>
+    <div class="block-content">
+        <ul>
+            <li><a href="/Manage/Index">Thông tin cá nhân</a></li>
+            <li><a href="/Request/Manage">Thông tin yêu cầu</a></li>
+            <li>
+                <a href="/Order/Index">Thông tin đơn hàng</a>
+            </li>
+            <li>
+                <a href="javascript:document.getElementById('logoutForm').submit()">Đăng xuất</a>
+            </li>
+        </ul>
+    </div>
+</div>
