@@ -202,6 +202,13 @@
         $("#DeliveryDate").on("change", function() {
             var deliveryDate = $("#DeliveryDate").val();
 
+            var d = new Date(deliveryDate);
+            var current = new Date();
+            var currentYear = current.getFullYear();
+            var year = d.getFullYear();
+            var MaxYearInput = @Model.MaxYearInput;
+
+
             var MinDateDeliveryRange = @Model.MinDateDeliveryRange;
             var now = moment().format('YYYY-MM-DD');
             var minDate = moment(now).add(MinDateDeliveryRange, 'days').format('YYYY-MM-DD');
@@ -223,6 +230,11 @@
                 console.log(message);
                 $('#custome-duedate').html(message);
                 $('#custome-duedate').show();
+            } else if (year > (currentYear + MaxYearInput)) {
+                var message = "Ngày giao hàng không được vượt quá năm " + (currentYear + MaxYearInput);
+                console.log(message);
+                $('#custome-duedate').html(message);
+                $('#custome-duedate').show();
             } else {
                 $('#custome-duedate').empty();
                 $('#custome-duedate').hide();
@@ -237,7 +249,7 @@
             var result = $('#form0').valid();
             console.log(result);
 
-            
+
 
             if (result) {
                 if (@Model.Flag == 1) {
@@ -254,7 +266,7 @@
                         var newBidPrice = Number($("#BidPrice").val().replace(/[^0-9]+/g, ""));
                         var test = Number(oldBidPrice.replace(/[^0-9]+/g, ""));
                         console.log("newBidPrice=" + newBidPrice + ", test=" + test);
-                    
+
                         if (newBidPrice == 0) {
                             var message = "Giá thầu mới phải lớn hơn 0 &#x20AB;";
 
@@ -264,11 +276,16 @@
                             //return;
                         }
                     }
-                    
+
 
                     //Validate deliveryDate
                     var check2 = true;
                     var deliveryDate = $("#DeliveryDate").val();
+                    var d = new Date(deliveryDate);
+                    var current = new Date();
+                    var currentYear = current.getFullYear();
+                    var year = d.getFullYear();
+                    var MaxYearInput = @Model.MaxYearInput;
 
                     var MinDateDeliveryRange = @Model.MinDateDeliveryRange;
                     var now = moment().format('YYYY-MM-DD');
@@ -292,7 +309,13 @@
                         $('#custome-duedate').show();
                         //return;
                         check2 = false;
-                    } 
+                    } else if (year > (currentYear + MaxYearInput)) {
+                        var message = "Ngày giao hàng không được vượt quá năm " + (currentYear + MaxYearInput);
+                        console.log(message);
+                        $('#custome-duedate').html(message);
+                        $('#custome-duedate').show();
+                        check2 = false;
+                    }
 
                     if (newBidPrice <= test && check1 && check2) {
                         $("#submit-btn-edit").off().on('click', function() {

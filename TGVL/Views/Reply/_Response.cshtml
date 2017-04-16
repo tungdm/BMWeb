@@ -274,8 +274,9 @@
         //}
 
         update_amounts();
-
+        var MaxLengthInputNumberBig = @Model.MaxLengthInputNumberBig;
         $('#BidPrice').keyup(function(event) {
+
             if(event.which >= 37 && event.which <= 40) return;
 
             var rawPrice = $(this).val();
@@ -288,9 +289,17 @@
             }
 
             var price = Number($(this).val().replace(/[^0-9]+/g, ""));
+            console.log("price = " + parseInt($(this).val().replace(/[^0-9]+/g, "")));
+            console.log("length = " + price.toString().length);
+            console.log("length2 = " + $(this).val().length);
 
             if (price == 0) {
                 var message = "Giá thầu phải lớn hơn 0 &#x20AB;";
+                console.log(message);
+                $('#error-bidprice').html(message);
+                $('#error-bidprice').show();
+            } else if (price.toString().length > MaxLengthInputNumberBig || $(this).val().length > 27) {
+                var message = "Xin hãy nhập ít hơn " + MaxLengthInputNumberBig + " số";
                 console.log(message);
                 $('#error-bidprice').html(message);
                 $('#error-bidprice').show();
@@ -307,7 +316,7 @@
                 ;
             });
 
-            
+
         });
 
 
@@ -331,6 +340,7 @@
 
 
 
+
         @*$.validator.addMethod("daterange", function (value, element) {
             var deliveryDate = $("#DeliveryDate").val();
 
@@ -351,6 +361,14 @@
 
         $("#DeliveryDate").on("change", function() {
             var deliveryDate = $("#DeliveryDate").val();
+            console.log("deliveryDate = " + deliveryDate );
+
+            var d = new Date(deliveryDate);
+            var current = new Date();
+            var currentYear = current.getFullYear();
+            var year = d.getFullYear();
+            var MaxYearInput = @Model.MaxYearInput;
+
 
             var MinDateDeliveryRange = @Model.MinDateDeliveryRange;
             var now = moment().format('YYYY-MM-DD');
@@ -373,6 +391,11 @@
                 console.log(message);
                 $('#custome-duedate').html(message);
                 $('#custome-duedate').show();
+            } else if (year > (currentYear + MaxYearInput)) {
+                var message = "Ngày giao hàng không được vượt quá năm " + (currentYear + MaxYearInput);
+                console.log(message);
+                $('#custome-duedate').html(message);
+                $('#custome-duedate').show();
             } else {
                 $('#custome-duedate').empty();
                 $('#custome-duedate').hide();
@@ -390,7 +413,7 @@
         $("#submit-btn-reply").click(function (event) {
             console.log("Hello from response");
             event.preventDefault();
-            
+
             //Validate bid price
             var check1 = true;
             var rawPrice = $("#BidPrice").val();
@@ -401,7 +424,11 @@
                 $('#error-bidprice').show();
                 //return;
                 check1 = false;
-            } else {
+            }
+
+            else {
+                console.log("raw = " + $("#BidPrice").val());
+                console.log("price = " + Number($("#BidPrice").val().replace(/[^0-9]+/g, "")));
                 var price = Number($("#BidPrice").val().replace(/[^0-9]+/g, ""));
 
                 if (price == 0) {
@@ -410,6 +437,12 @@
                     $('#error-bidprice').html(message);
                     $('#error-bidprice').show();
                     //return;
+                    check1 = false;
+                } else if (price.toString().length > MaxLengthInputNumberBig || $("#BidPrice").val().length > 27) {
+                    var message = "Xin hãy nhập ít hơn " + MaxLengthInputNumberBig + " số";
+                    console.log(message);
+                    $('#error-bidprice').html(message);
+                    $('#error-bidprice').show();
                     check1 = false;
                 }
             }
@@ -430,8 +463,13 @@
             //Validate deliveryDate
             var check3 = true;
             var deliveryDate = $("#DeliveryDate").val();
-
+            var d = new Date(deliveryDate);
+            var current = new Date();
+            var currentYear = current.getFullYear();
+            var year = d.getFullYear();
+            var MaxYearInput = @Model.MaxYearInput;
             var MinDateDeliveryRange = @Model.MinDateDeliveryRange;
+
             var now = moment().format('YYYY-MM-DD');
             var minDate = moment(now).add(MinDateDeliveryRange, 'days').format('YYYY-MM-DD');
 
@@ -453,7 +491,14 @@
                 $('#custome-duedate').show();
                 //return;
                 check3 = false;
-            } 
+            } else if (year > (currentYear + MaxYearInput)) {
+                var message = "Ngày giao hàng không được vượt quá năm " + (currentYear + MaxYearInput);
+                console.log(message);
+                $('#custome-duedate').html(message);
+                $('#custome-duedate').show();
+                check3 = false;
+            }
+
             if (!check1 || !check2 || !check3) {
                 return;
             }
