@@ -116,6 +116,10 @@ namespace TGVL.LucenceSearch
                 // search by multiple fields (ordered by RELEVANCE)
                 else
                 {
+                    
+                    var reader = IndexReader.Open(_directory, false);
+                    var test =  reader.ToString();
+
                     MultiFieldQueryParser parser = new MultiFieldQueryParser(Version.LUCENE_30, new[] { "Name", "Description", "ManufactureName" }, analyzer);
                     parser.DefaultOperator = QueryParser.Operator.AND;
 
@@ -130,9 +134,17 @@ namespace TGVL.LucenceSearch
                     var results = _mapLuceneToDataList(hits, searcher);
                     if (results.Count() == 0)
                     {
+                        var newparser = new QueryParser(Version.LUCENE_30, "Name", analyzer);
+                        //var newparser = new MultiFieldQueryParser(Version.LUCENE_30, new[] { "Name", "Description" }, analyzer);
+                        newparser.DefaultOperator = QueryParser.Operator.OR;
+                        var newquery = parseQuery(searchQuery, newparser);
+                        var newhits = searcher.Search(newquery, null, hits_limit).ScoreDocs;
+                        var newresults = _mapLuceneToDataList(newhits, searcher);
+
                         var suggestWords = FindSuggestions(searchQuery);
 
-                        return new LuceneResult { SearchResult = results, SuggestWords = suggestWords };
+                        //return new LuceneResult { SearchResult = results, SuggestWords = suggestWords };
+                        return new LuceneResult { SearchResult = newresults, SuggestWords = suggestWords };
                     }
 
                     analyzer.Close();
