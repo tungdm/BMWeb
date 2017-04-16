@@ -48,9 +48,9 @@
         height: 16px;
     }
 
-        span.stars span {
-            background-position: 0 0;
-        }
+    span.stars span {
+        background-position: 0 0;
+    }
 
     h3 {
         border-bottom: none 1px rgba(100, 100, 100, .30);
@@ -304,8 +304,9 @@
 <script>
     $(document).ready(function () {
         $(".stars").each(function () {
-
-            var val = parseFloat($(this).html());
+            var raw = $(this).text().replace(',', '.');
+            //console.log(raw);
+            var val = parseFloat(raw);
             console.log(val);
 
             var size = Math.max(0, (Math.min(5, val))) * 16;
@@ -343,6 +344,7 @@
             Handlebars.registerHelper("printStart", function (rating) {
 
                 var val = parseFloat(rating);
+                console.log(val);
                 var size = Math.max(0, (Math.min(5, val))) * 16;
 
                 var result = "<span style='width:" + size + "px;'/> ";

@@ -1,5 +1,5 @@
 ﻿@model TGVL.Models.CreateRequestViewModel
-
+@using TGVL.MyHelper
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_HomePageViewLayout.cshtml";
@@ -33,6 +33,14 @@
         margin-top: 5px;
         width: 380px;
         float:left;
+    }
+    .widget-content {
+        padding: 15px 0;
+        padding-left: 10px;
+        /* padding-right: 5px; */
+        margin-left: 10px;
+        border-top: none;
+        font-size: 17px;
     }
 </style>
 
@@ -153,7 +161,7 @@
                             </div>
                             <br />
 
-                            <div>
+                            <div style="font-size:17px;">
                                 <h2 class="widget-title"><strong>THÔNG TIN LIÊN HỆ</strong></h2>
                                 <br />
                                 <div class="form-group">
@@ -178,8 +186,8 @@
                                     @*@Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Điện thoại</label>
                                     <div class="col-md-6 col-sm-6 col-xs-12" style="margin-top: 6px;">
-                                        @Html.DisplayFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control"} })
                                         
+                                        @Html.FormatPhoneNum(Model.Phone)
                                     </div>
                                 </div>
 

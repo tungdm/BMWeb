@@ -1,4 +1,17 @@
 ﻿@model TGVL.Models.ReplyDetails
+@using TGVL.MyHelper
+<style>
+    span.stars, span.stars span {
+        display: block;
+        background: url("/Images/stars.png") 0 -16px repeat-x;
+        width: 80px;
+        height: 16px;
+    }
+
+    span.stars span {
+        background-position: 0 0;
+    }
+</style>
 
 <div class="table-responsive">
     <table class="data-table">
@@ -61,12 +74,37 @@
 <br />
 <div class="popular-posts widget widget__sidebar">
     <h3 class="widget-title"><strong>THÔNG TIN THÊM</strong></h3>
-    <div class="widget-content">
+    <div class="widget-content" style="font-size:16px;">
 
         <dl class="dl-horizontal">
             @if (Model.Rank != 0)
             {
-                
+                <dt>
+                    Giá thầu
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Total)
+                </dd>
+
+                <dt>
+                    Ngày giao hàng
+                </dt>
+
+                <dd>
+                    @Convert.ToDateTime(Model.DeliveryDate).ToString("dd/MM/yyyy")
+                </dd>
+
+                <dt>
+                    Ghi chú
+                </dt>
+
+                <dd>
+                    @Html.Raw(Model.Description)
+                </dd>
+
+                <hr style="margin-left: -10px;border-top: 5px solid #eaeaea;"/>
+
                 <dt>
                     Cửa hàng
                 </dt>
@@ -91,16 +129,20 @@
                 </dt>
 
                 <dd>
-                    @Model.PhoneNumber
+                    @*@Html.DisplayFor(model => model.PhoneNumber)*@
+                    @*@String.Format("{1} {2} {3}", Model.PhoneNumber.Substring(0, 3), Model.PhoneNumber.Substring(3, 3), Model.PhoneNumber.Substring(6, Model.PhoneNumber.Length - 6))*@
+                    @Html.FormatPhoneNum(Model.PhoneNumber)
                 </dd>
 
                 <dt>
-                    Giá thầu
+                    Đánh giá
                 </dt>
 
                 <dd>
-                    @Html.DisplayFor(model => model.Total)
+                    <span class="stars" style="float:left">@Model.Rating</span> (@Model.Rating)
                 </dd>
+
+
             }
             else
             {
@@ -119,25 +161,37 @@
                 <dd>
                     @Model.Discount %
                 </dd>
+
+                <dt>
+                    Ghi chú
+                </dt>
+
+                <dd>
+                    @Html.Raw(Model.Description)
+                </dd>
             }
 
-            <dt>
-                Ngày giao hàng
-            </dt>
+            
 
-            <dd>
-                @Convert.ToDateTime(Model.DeliveryDate).ToString("dd/MM/yyyy")
-            </dd>
-
-            <dt>
-                Ghi chú
-            </dt>
-
-            <dd>
-                @Html.Raw(Model.Description)
-            </dd>
+           
             
         </dl>
 
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $(".stars").each(function () {
+            var raw = $(this).text().replace(',', '.');
+            var val = parseFloat(raw);
+            console.log(val);
+
+            var size = Math.max(0, (Math.min(5, val))) * 16;
+
+            var $span = $('<span />').width(size);
+
+            $(this).html($span);
+        });
+    })
+</script>
