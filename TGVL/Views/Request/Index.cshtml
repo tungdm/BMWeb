@@ -265,7 +265,7 @@
                         </div>
                         <div id="box_main_content">
                             @{
-                                if (Model == null)
+                                if (Model == null || Model.Count == 0)
                                 {
                                     <div class="no_result_search_message">
                                         <img src="~/Images/note_search.png"><br>
