@@ -67,6 +67,12 @@ namespace TGVL.Models
 
         public int NumBuyer { get; set; }
 
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
+        public DateTime DueDate { get; set; }
+
+        public string DueDateCountdown { get; set; }
+
     }
 
     public class DealBriefViewModel
