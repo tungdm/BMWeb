@@ -27,7 +27,8 @@ namespace TGVL.Controllers
         private ApplicationUserManager _userManager;
         private List<FilterRequest> list1 = new List<FilterRequest> {
             new FilterRequest { Name = "Mới nhất" , Value = 1},
-            new FilterRequest { Name = "Nổi bật" , Value = 2}
+            new FilterRequest { Name = "Nổi bật" , Value = 2},
+            new FilterRequest { Name = "Phù hợp nhất" , Value = 0}
         };
 
         private List<FilterRequest> list2 = new List<FilterRequest> {
@@ -76,6 +77,11 @@ namespace TGVL.Controllers
             {
                 typeNumber = 2; //default
             }
+            
+            if (searchString != null)
+            {
+                sortNumber = 0; //tim kiem phu hop nhat
+            }
 
             ViewBag.page = pageNumber;
             ViewBag.sort = sortNumber;
@@ -84,10 +90,10 @@ namespace TGVL.Controllers
             var userId = User.Identity.GetUserId<int>();
 
             var requestFilter = new List<Request>();
-            searchString = searchString.Trim();
-            searchString = System.Text.RegularExpressions.Regex.Replace(searchString, @"\s+", " ");
+            
             if (searchString == null)
             {
+                
                 if (typeNumber == 2) //all
                 {
                     var requests = db.Requests.Where(r => r.StatusId == 1);
@@ -164,6 +170,8 @@ namespace TGVL.Controllers
             }
             else
             {
+                searchString = searchString.Trim();
+                searchString = System.Text.RegularExpressions.Regex.Replace(searchString, @"\s+", " ");
                 var LuceneFilter = new List<LuceneRequest>();
 
                 var hit_limits = db.Requests.Where(r => r.StatusId == 1).Count();
