@@ -1,6 +1,6 @@
 ﻿@model TGVL.Request
 @using Microsoft.AspNet.Identity
-
+@using TGVL.MyHelper
 @{
     ViewBag.Title = "ViewNormalDetail";
     Layout = "~/Views/Shared/_HomePageViewLayout.cshtml";
@@ -365,7 +365,9 @@
                                                 </tr>
                                                 <tr>
                                                     <td>Số điện thoại</td>
-                                                    <td>@Html.DisplayFor(model => model.User.PhoneNumber)</td>
+                                                    <td>
+                                                        @Html.FormatPhoneNum(Model.User.PhoneNumber)
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>Địa chỉ</td>

@@ -1,5 +1,6 @@
 ﻿@using PagedList.Mvc
 @using PagedList
+
 @model  IPagedList<TGVL.Models.RequestFloorModel>
 
 @{
@@ -64,7 +65,7 @@
 .select_title {
     background: #efeff4;
     display: block;
-    width: 107px;
+    width: 134px;
     text-align: center;
     padding: 6px 4px;
     border-radius: 30px;
@@ -83,7 +84,7 @@
 }
 .selectItem {
     background: #efeff4;
-    width: 108px;
+    width: 134px;
     padding: 20px 0 10px 0;
     position: absolute;
     top: 15px;
@@ -189,7 +190,19 @@
 
                             var list1 = ViewBag.list1;
                             var list2 = ViewBag.list2;
-                            var title1 = f_sort == "1" ? "Mới nhất" : "Nổi bật";
+
+                            var title1 = "";
+                            if (f_sort == "0")
+                            {
+                                title1 = "Phù hợp nhất";
+                            } else if (f_sort == "1")
+                            {
+                                title1 = "Mới nhất";
+                            } else
+                            {
+                                title1 = "Nổi bật";
+                            }
+                            
                             var title2 = "";
                             if (f_type == "2")
                             {
@@ -204,33 +217,43 @@
                         <div class="filter">
                             <div class="selectBox">
                                 <div class="select_title">@title1 <i></i> </div>
-                                <div class="selectItem">
-                                    @{ 
-                                        foreach (var item in list1)
-                                        {
-                                            if (item.Value == (int)ViewBag.sort)
+                                @if ((int)ViewBag.sort != 0)
+                                {
+                                    <div class="selectItem">
+                                        @{
+                                            foreach (var item in list1)
                                             {
-                                                continue;
+                                                if (item.Value == (int)ViewBag.sort)
+                                                {
+                                                    continue;
+                                                }
+                                                if (item.Name == "Phù hợp nhất")
+                                                {
+                                                    continue;
+                                                }
+                                                var link = "/Request?";
+                                                if (f_searchString != null)
+                                                {
+                                                    var test = Url.Encode(f_searchString);
+                                                    link += ("searchString=" + test + "&");
+                                                }
+                                                if (f_page != "1")
+                                                {
+                                                    link += ("page=" + f_page + "&");
+                                                }
+                                                if (f_type != "2")
+                                                {
+                                                    link += ("type=" + f_type + "&");
+                                                }
+                                                link += ("sort=" + item.Value);
+                                                <a href="@link">@item.Name</a>
                                             }
-                                            var link = "/Request?";
-                                            if (f_searchString != null)
-                                            {
-                                                var test = Url.Encode(f_searchString);
-                                                link += ("searchString=" + test + "&");
-                                            }
-                                            if (f_page != "1")
-                                            {
-                                                link += ("page=" + f_page + "&");
-                                            }
-                                            if (f_type != "2")
-                                            {
-                                                link += ("type=" + f_type + "&");
-                                            }
-                                            link += ("sort=" + item.Value);
-                                            <a href="@link">@item.Name</a>
+
+
                                         }
-                                    }
-                                </div>
+                                    </div>
+                                            }
+                                
                             </div>
                             <div class="selectBox">
                                 <div class="select_title">@title2 <i></i> </div>

@@ -70,7 +70,8 @@
     $(document).ready(function () {
         $("#searchBtn").click(function (event) {
             var searchString = $("#header_search_keyword").val();
-            if (searchString != "") {
+            //console.log("searchString:" + searchString);
+            if (searchString.trim() != "") {
                 $("form[id='header_search']").submit();
             }
         });
