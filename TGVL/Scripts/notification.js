@@ -218,11 +218,11 @@ function updateCustomerBidTable(controllerName, actionName, requestId) {
 }
 
 //Update bid table khi customer ban supplier - customer
-function updateCustomerBidTable(controllerName, actionName, requestId) {
-    if (controllerName === 'Request' && actionName === 'Details') {
-        updateReply(requestId);
-    }
-}
+//function updateCustomerBidTable(controllerName, actionName, requestId) {
+//    if (controllerName === 'Request' && actionName === 'Details') {
+//        updateReply(requestId);
+//    }
+//}
 
 //Supplier - update bid table khi rank thay đổi
 function updateBidTable(controllerName, actionName, requestId) {
@@ -302,7 +302,7 @@ function autobidAgain(replyId) {
 
 //Realtime update normal reply/bid reply - customer
 function updateReply(requestId, userName) {
-    console.log(userName);
+    console.log("userName:" + userName + "requestId:" + requestId);
     $.ajax({
         type: 'GET',
         url: '/Request/UpdateReplies',
