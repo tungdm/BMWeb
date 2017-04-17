@@ -994,6 +994,7 @@ namespace TGVL.Controllers
             db.ListBanneds.Add(ban);
 
             reply.BidReply.Flag = 9;
+            reply.BidReply.Rank = null;
             db.Entry(reply).State = EntityState.Modified;
 
             db.SaveChanges();
