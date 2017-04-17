@@ -118,7 +118,7 @@ namespace TGVL.Controllers
                             + "AND  BidReplies.Flag <> 9 "
                             + ") as t2 "
                             + "ON t1.ReplyId = t2.ReplyId "
-                            + "AND t2.RequestId = {0} ";
+                            + "WHERE t2.RequestId = {0} ";
 
                 db.Database.ExecuteSqlCommand(query, requestId);
 
@@ -281,7 +281,7 @@ namespace TGVL.Controllers
                                + "AND  BidReplies.Flag <> 9 "
                                + ") as t2 "
                                + "ON t1.ReplyId = t2.ReplyId "
-                               + "AND t2.RequestId = {0} ";
+                               + "WHERE t2.RequestId = {0} ";
 
                     db.Database.ExecuteSqlCommand(query, requestId);
 
@@ -726,7 +726,7 @@ namespace TGVL.Controllers
                                 + "AND  BidReplies.Flag <> 9 "
                                 + ") as t2 "
                                 + "ON t1.ReplyId = t2.ReplyId "
-                                + "AND t2.RequestId = {0} ";
+                                + "WHERE t2.RequestId = {0} ";
 
                     db.Database.ExecuteSqlCommand(query, requestId);
 
@@ -905,7 +905,7 @@ namespace TGVL.Controllers
                                     + "AND  BidReplies.Flag <> 9 "
                                     + ") as t2 "
                                     + "ON t1.ReplyId = t2.ReplyId "
-                                    + "AND t2.RequestId = {0} ";
+                                    + "WHERE t2.RequestId = {0} ";
 
                         var result = db.Database.ExecuteSqlCommand(query, requestId);
                             
@@ -1039,7 +1039,7 @@ namespace TGVL.Controllers
                         + "AND  BidReplies.Flag <> 9 "
                         + ") as t2 "
                         + "ON t1.ReplyId = t2.ReplyId "
-                        + "AND t2.RequestId = {0} ";
+                        + "WHERE t2.RequestId = {0} ";
 
             var result = db.Database.ExecuteSqlCommand(query, requestId);
 
@@ -1170,7 +1170,7 @@ namespace TGVL.Controllers
                                 + "AND  BidReplies.Flag <> 9 "
                                 + ") as t2 "
                                 + "ON t1.ReplyId = t2.ReplyId "
-                                + "AND t2.RequestId = {0} ";
+                                + "WHERE t2.RequestId = {0} ";
 
                     var result = db.Database.ExecuteSqlCommand(query, requestId);
 

@@ -236,8 +236,8 @@ namespace TGVL.Controllers
             var numOfUnseen = db.Notifications.Where(n => n.UserId == userId && n.IsSeen == false).Count();
             Session["UnSeenNoti"] = numOfUnseen;
 
-            //var callbackUrl = Url.Action("Details", "MyOrders", null, protocol: Request.Url.Scheme);
-            //await UserManager.SendEmailAsync(user.Id, "Đặt hàng thành công", "Xem chi tiết tại <a href=\"" + callbackUrl + "\">đây nè :)</a>");
+            var callbackUrl = Url.Action("Details", "MyOrders", null, protocol: Request.Url.Scheme);
+            await UserManager.SendEmailAsync(user.Id, "Đặt hàng thành công", "Xem chi tiết tại <a href=\"" + callbackUrl + "\">đây nè :)</a>");
 
             return new JsonResult {
                 Data = new {
