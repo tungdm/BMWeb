@@ -124,6 +124,8 @@ namespace TGVL.Controllers
                     PriceSave = Math.Ceiling(item.UnitPrice - (item.UnitPrice * item.Discount / 100)),
                     Image = item.Product.Image,
                     NumBuyer = item.NumBuyer,
+                    DueDate = item.DueDate,
+                    DueDateCountdown = item.DueDate.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture)
                 };
                 simiDeals.Add(simiDeal);
             }
@@ -144,6 +146,8 @@ namespace TGVL.Controllers
                     PriceSave = Math.Ceiling(item.UnitPrice - (item.UnitPrice * item.Discount / 100)),
                     Image = item.Product.Image,
                     NumBuyer = item.NumBuyer,
+                    DueDate = item.DueDate,
+                    DueDateCountdown = item.DueDate.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture)
                 };
                 sameSupDeals.Add(sameDeal);
             }
