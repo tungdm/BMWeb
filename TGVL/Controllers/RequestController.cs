@@ -869,7 +869,7 @@ namespace TGVL.Controllers
                             var maxBan = db.Settings.Where(s => s.SettingName == "MaxBanned").FirstOrDefault().SettingValue;
 
                             var banNum = db.ListBanneds.Where(l => l.RequestId == request.Id).Count();
-                            if (banNum < maxBan)
+                            if (banNum < maxBan && request.StatusId == 1)
                             {
                                 ViewBag.Banable = true; 
                             } else
