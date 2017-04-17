@@ -3090,6 +3090,7 @@ small {
 	/*width: 80%;
 	height: 80%;*/
 	line-height: 0;
+    width:75%;
 	-webkit-transition: all 0.3s ease;
 	-moz-transition: all 0.3s ease;
 	-o-transition: all 0.3s ease;
@@ -4698,8 +4699,8 @@ input.radio {
 	width: 100%;
 }
 .products-grid .item .item-inner .item-img .item-img-info a.product-image img {
-	width: 100%;
-	height: inherit;
+	width: 70%;
+	height: auto;
 }
 .products-grid .item .item-inner .item-img .item-box-hover .box-inner .magik-btn-quickview:hover, .products-grid .item .item-inner .item-img .item-box-hover .box-inner ul.add_to_cart li a:hover {
 	color: #ffc60a;
