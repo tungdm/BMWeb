@@ -75,6 +75,15 @@
                 $("form[id='header_search']").submit();
             }
         });
+
+        $('#header_search_keyword').keypress(function (e) { 
+            if (e.which == 13) { //Enter key pressed
+                e.preventDefault();
+                console.log("Hello");
+                $('#searchBtn').trigger("click");//Trigger search button click event
+            }
+        });
+
     })
 
 
