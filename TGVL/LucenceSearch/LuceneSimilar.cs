@@ -144,25 +144,39 @@ namespace TGVL.LucenceSearch
                 //else
                 //{
                 //MultiFieldQueryParser parser = new MultiFieldQueryParser(Version.LUCENE_30, new[] { "ListProduct" }, analyzer);
-                    var parser = new QueryParser(Version.LUCENE_30, "ListProduct", analyzer);
-                    parser.DefaultOperator = QueryParser.Operator.OR;
+                var parser = new QueryParser(Version.LUCENE_30, "ListProduct", analyzer);
+                //parser.DefaultOperator = QueryParser.Operator.OR;
+                parser.DefaultOperator = QueryParser.Operator.AND;
 
                 //var parser = new QueryParser(Version.LUCENE_30, "Name", analyzer);
                 //parser.DefaultOperator = QueryParser.Operator.AND;
 
 
-                  
 
 
 
-                    var query = parseQuery(searchQuery, parser);
+
+                var query = parseQuery(searchQuery, parser);
 
 
-                    var hits = searcher.Search(query, null, hits_limit).ScoreDocs;
+                var hits = searcher.Search(query, null, hits_limit).ScoreDocs;
 
-                    var results = _mapLuceneToDataList(hits, searcher);
+                var results = _mapLuceneToDataList(hits, searcher);
+
+                if (results.Count() == 0)
+                {
+                    var newparser = new QueryParser(Version.LUCENE_30, "ListProduct", analyzer); 
+                    newparser.DefaultOperator = QueryParser.Operator.OR;
+                    var newquery = parseQuery(searchQuery, newparser);
+                    var newhits = searcher.Search(newquery, null, hits_limit).ScoreDocs;
+                    var newresults = _mapLuceneToDataList(newhits, searcher);
+
                     
-                    analyzer.Close();
+
+                   
+                    return new LuceneRequestResult { SimilarResult = newresults };
+                }
+                analyzer.Close();
                     searcher.Dispose();
                     //return results;
                     return new LuceneRequestResult { SimilarResult = results };
