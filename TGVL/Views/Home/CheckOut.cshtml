@@ -1,4 +1,5 @@
 ﻿@model TGVL.Models.OrderViewModel
+@using TGVL.MyHelper
 @{
     ViewBag.Title = "CheckOut";
     Layout = "~/Views/Shared/_HomePageViewLayout.cshtml";
@@ -75,7 +76,7 @@
                                     </tr>
 
                                     <tr>
-                                        <td>Số điện thoại: @Model.PhoneNumber</td>
+                                        <td>Số điện thoại: @Html.FormatPhoneNum(Model.PhoneNumber)</td>
                                     </tr>
                                 </tbody>
 
@@ -136,14 +137,14 @@
                                         <td>
                                             <strong>TỔNG CỘNG</strong>
                                         </td>
-                                        <td style="white-space:nowrap">
+                                        <td style="white-space:nowrap;font-size:20px;color:red">
                                             @if (Model.IsRequestOrder)
                                             {
-                                                <span>@string.Format("{0:C0}", Model.Reply.Total)</span>
+                                                <strong><span>@string.Format("{0:C0}", Model.Reply.Total)</span></strong>
                                             }
                                             else
                                             {
-                                                @Html.DisplayFor(modelItem => Model.ShoppingCart.Total)
+                                                <strong>@Html.DisplayFor(modelItem => Model.ShoppingCart.Total)</strong>
                                             }
 
                                         </td>

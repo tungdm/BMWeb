@@ -203,13 +203,13 @@ new AjaxOptions
                                 <div class="toggle-content">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <i class="fa fa-user-circle-o"></i> &nbsp; <span id="num-buyer" style="font-size:18px">@Model.NumBuyer</span> <span style="font-size:18px">người đã mua</span>
+                                            <i class="fa fa-user-circle-o" style="font-size:18px"></i> &nbsp; <span id="num-buyer" style="font-size:18px">@Model.NumBuyer</span> <span style="font-size:18px">người đã mua</span>
                                         </div>
                                         <div class="col-md-8">
                                             <div id="time" class="more_item1" style="position:relative">
                                                 @*<span id="countdown-2">
                                                     </span>*@
-                                                <i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; <span class="count-down" data-time="@Model.DueDateCountdown" style="font-size:18px"></span>
+                                                <i class="fa fa-clock-o" aria-hidden="true" style="font-size:18px"></i>&nbsp; <span class="count-down" data-time="@Model.DueDateCountdown" style="font-size:18px"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -287,7 +287,7 @@ new AjaxOptions
                                                                 <div class="price-box" style="margin-top:10px">
                                                                     <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" style="font-size:20px"> @Html.DisplayFor(itemModel => item.UnitPrice)</span> <span class="deal_discount">@item.Discount%</span></p>
                                                                     <br />
-                                                                    <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" style="font-size:18px"> @Html.DisplayFor(itemModel => item.PriceSave) </span> &nbsp; <span class="pull-right"> <i class="fa fa-user-circle-o"> @item.NumBuyer </i></span></p>
+                                                                    <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" style="font-size:18px"> @Html.DisplayFor(itemModel => item.PriceSave) </span> &nbsp; <span class="pull-right"> <i class="fa fa-user-circle-o" style="font-size:18px"> @item.NumBuyer </i></span></p>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -344,7 +344,7 @@ new AjaxOptions
                                                                 <div class="price-box">
                                                                     <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" style="font-size:20px">@Html.DisplayFor(itemModel => item.UnitPrice)</span> <span class="deal_discount">@item.Discount%</span></p>
                                                                     <br />
-                                                                    <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" style="font-size:18px">@Html.DisplayFor(itemModel => item.PriceSave)</span> &nbsp; <span class="pull-right"> <i class="fa fa-user-circle-o"> @item.NumBuyer</i></span></p>
+                                                                    <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" style="font-size:18px">@Html.DisplayFor(itemModel => item.PriceSave)</span> &nbsp; <span class="pull-right"> <i class="fa fa-user-circle-o" style="font-size:18px"> @item.NumBuyer</i></span></p>
 
                                                                 </div>
                                                             </div>

@@ -1,5 +1,5 @@
 ﻿@model TGVL.Models.OrderViewModel
-
+@using TGVL.MyHelper
 
 <ul>
     <li>
@@ -12,7 +12,7 @@
     <li>
         <div class="input-box" style="font-size:medium">
 
-            @Html.DisplayFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "Số điện thoại liên hệ" } })
+            @Html.FormatPhoneNum(Model.PhoneNumber)
 
         </div>
     </li>
