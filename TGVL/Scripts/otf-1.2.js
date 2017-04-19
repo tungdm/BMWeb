@@ -567,9 +567,12 @@ if (window.location.hash && window.location.hash == '#_=_') {
     }
 }
 
-function clock() {
+function clock(callback) {
     $(".count-down").each(function () {
+        console.log("callback:" + callback);
         var countDownDate = new Date($(this).data("time")).getTime();
+        var dealId = $(this).data("deal");
+
         var $target = $(this);
         var x = setInterval(function () {
             var now = new Date().getTime();
@@ -579,6 +582,11 @@ function clock() {
                 clearInterval(x);
                 text = "EXPIRED"
                 $target.html(text);
+                if (callback) {
+                    //var dealId = $(this).data("deal");
+                    console.log("dealId=" + dealId);
+                    dealExpired(dealId);
+                }
             } else {
                 var days = Math.floor(distance / (1000 * 60 * 60 * 24));
                 var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
