@@ -73,12 +73,12 @@ namespace TGVL.Controllers
             }
 
             int? typeNumber = type;
-            if (typeNumber == null || typeNumber > 2 || sortNumber < 0)
+            if (typeNumber == null || typeNumber > 2 || typeNumber < 0)
             {
                 typeNumber = 2; //default
             }
             
-            if (searchString != null)
+            if (searchString != null && searchString != "")
             {
                 sortNumber = 0; //tim kiem phu hop nhat
             }
@@ -91,7 +91,7 @@ namespace TGVL.Controllers
 
             var requestFilter = new List<Request>();
             
-            if (searchString == null)
+            if (searchString == null || searchString == "")
             {
                 
                 if (typeNumber == 2) //all

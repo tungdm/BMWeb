@@ -56,6 +56,10 @@ namespace TGVL.Controllers
         // GET: Deal/Details/1
         public ActionResult Details(int? id)
         {
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetExpires(DateTime.UtcNow.AddHours(-1));
+            Response.Cache.SetNoStore();
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

@@ -592,6 +592,14 @@ namespace TGVL.Controllers
         [Authorize]
         public async System.Threading.Tasks.Task<ActionResult> CheckOut(int? replyId)
         {
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetExpires(DateTime.UtcNow.AddHours(-1));
+            Response.Cache.SetNoStore();
+
+            if (replyId == null)
+            {
+                return RedirectToAction("Index");
+            }
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
             var order = new OrderViewModel();
 
