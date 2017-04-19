@@ -167,12 +167,12 @@
                                 {
                                     <div class="add-to-box">
                                         @using (Ajax.BeginForm("AddToCart",
-new AjaxOptions
-{
-    HttpMethod = "POST",
-    OnSuccess = "updateCart(data, status, xhr)"
-}
-))
+                                        new AjaxOptions
+                                        {
+                                            HttpMethod = "POST",
+                                            OnSuccess = "updateCart(data, status, xhr)"
+                                        }
+                                        ))
                                         {
                                             @Html.AntiForgeryToken()
                                             @Html.HiddenFor(model => model.Id)
@@ -273,7 +273,7 @@ new AjaxOptions
                                                         <a href="/Deal/Details/@item.Id" class="product-image"> <img src="~/Images/Product/Warehouse/@item.Image"></a>
                                                         <div class="item-box-hover">
                                                             <div class="more_item">
-                                                                <i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; <span class="count-down" data-time="@item.DueDateCountdown" style="font-size:13px"></span>
+                                                                <i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; <span class="count-down" data-time="@item.DueDateCountdown" data-deal="@item.Id" style="font-size:13px"></span>
                                                             </div>
                                                             <span class="view"><a class="view_detail" href="/Deal/Details/@item.Id">Xem ngay</a></span>
                                                         </div>
@@ -330,7 +330,7 @@ new AjaxOptions
                                                         <a href="/Deal/Details/@item.Id" class="product-image"> <img src="~/Images/Product/Warehouse/@item.Image"> </a>
                                                         <div class="item-box-hover">
                                                             <div class="more_item">
-                                                                <i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; <span class="count-down" data-time="@item.DueDateCountdown" style="font-size:13px"></span>
+                                                                <i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; <span class="count-down" data-time="@item.DueDateCountdown" data-deal="@item.Id" style="font-size:13px"></span>
                                                             </div>
                                                             <span class="view"><a class="view_detail" href="/Deal/Details/@item.Id">Xem ngay</a></span>
                                                         </div>
@@ -454,6 +454,8 @@ new AjaxOptions
     }
 
     $(document).ready(function () {
+        clock(true);
+
         $("#showmap").click(function (event) {
             console.log("show");
             document.getElementById("tab_2").style.display = "block";
@@ -495,9 +497,25 @@ new AjaxOptions
 
     });
 
-    $(document).ready(function () {
-        clock();
-    });
+    function dealExpired(dealId) {
+        console.log("deal expired:" + dealId);
+        var currentDealId = @Model.Id;
+        if (currentDealId == dealId) {
+            var options = {
+                url: '/Deal/Expired',
+                data: { dealId: dealId },
+                type: 'GET',
+            };
+            $.ajax(options).done(function (data) {
+                
+                if (data.Success == "Success"){
+                    console.log("Expired success");
+                    window.location.reload(1);
+                }
+
+            });
+        }
+    }
 
 </script>
 
