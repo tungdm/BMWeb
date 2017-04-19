@@ -353,8 +353,29 @@
 <script>
     $(document).ready(function () {
         clock();
+
+        setInterval(function () {
+            window.location.reload(1);
+            @*var page = @ViewBag.page;
+            var sort = @ViewBag.sort;
+            var type = @ViewBag.type;
+            var searchString = '@ViewBag.SearchString';
+            refreshPage(page, sort, type, searchString);*@
+        }, 60000);
     });
 
+    function refreshPage(page, sort, type, searchString) {
+        var options = {
+            url: '/Request/Index',
+            type: 'GET',
+            data: { page: page, sort: sort, type: type, searchString: searchString },
+        };
+
+        $.ajax(options).done(function (data) {
+            console.log("Hello");
+            $(".main container").html(data);
+        });
+    }
 </script>
 
 
