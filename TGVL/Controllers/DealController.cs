@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using TGVL.Models;
 using System.Globalization;
 using System.Collections;
+using System.Data.Entity;
 
 namespace TGVL.Controllers
 {
@@ -210,6 +211,35 @@ namespace TGVL.Controllers
                 },
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
+        }
+
+        public ActionResult Expired(int dealId)
+        {
+            var deal = db.Deals.Find(dealId);
+            if (!deal.Expired)
+            {
+                deal.Expired = true;
+                db.Entry(deal).State = EntityState.Modified;
+                db.SaveChanges();
+                return new JsonResult
+                {
+                    Data = new
+                    {
+                        Success = "Success",
+                    },
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            } else
+            {
+                return new JsonResult
+                {
+                    Data = new
+                    {
+                        Success = "Already expired",
+                    },
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            }
         }
 
     }

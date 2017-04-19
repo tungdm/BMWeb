@@ -663,11 +663,18 @@ namespace TGVL.Controllers
         public ActionResult Index()
         {
             var model = new HydridViewModel();
-           
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetExpires(DateTime.UtcNow.AddHours(-1));
+            Response.Cache.SetNoStore();
+
             var newListHotdeal = new List<DealBriefViewModel>();
             var newListNewdeal = new List<DealBriefViewModel>();
             var newListHotshop = new List<HotShopViewModel>();
             var newListRequest = new List<RequestFloorModel>();
+
+            var query = "UPDATE Deals SET Expired = 1 WHERE DueDate < GETDATE()";
+
+            db.Database.ExecuteSqlCommand(query);
 
             var HotShop = db.Users.Where(d => d.Flag == 1).OrderByDescending(d => d.AverageGrade).ToList();
 
