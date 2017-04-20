@@ -3258,7 +3258,7 @@ a.button.detail-bnt span {
 }
 .block .block-title {
 	background-color: #fff;
-	border-bottom: 1px solid #efefef;
+	/*border-bottom: 1px solid #efefef;*/
 	color: #000;
 	font-family: 'Roboto', serif;
 	font-size: 20px;
