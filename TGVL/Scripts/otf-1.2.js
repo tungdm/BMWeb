@@ -504,16 +504,30 @@ function datmua(productId) {
     });
 }
 
-function viewOnMap(lat, lng) {
-    var map = "<iframe width='870' height='500' frameborder='0' scrolling='no' marginheight='0' marginwidth='0' src='https://maps.google.com/maps?q=" + lat + "," + lng + "&hl=es;z=14&amp;output=embed'></iframe>";
-    console.log(map);
+//function viewOnMap(lat, lng) {
+//    var map = "<iframe width='870' height='500' frameborder='0' scrolling='no' marginheight='0' marginwidth='0' src='https://maps.google.com/maps?q=" + lat + "," + lng + "&hl=es;z=14&amp;output=embed'></iframe>";
+//    console.log(map);
 
-    var $target = $('#mapsInfo');
-    $target.html(map);
+//    var $target = $('#mapsInfo');
+//    $target.html(map);
 
-    $('#maps').modal('show');
+//    $('#maps').modal('show');
+//}
 
-    
+function viewOnMap(supplierId, productId) {
+    var options = {
+        url: '/Home/GetAddresses',
+        data: { supplierId: supplierId, productId: productId },
+        type: 'GET',
+    };
+
+    $.ajax(options).done(function (data) {
+        var $target = $('#mapsInfo');
+        $target.html(data);
+        
+        $('#maps').modal('show');
+
+    });
 }
 
 function createOrderSuccess(data) {
@@ -529,7 +543,8 @@ function createOrderSuccess(data) {
             cancelButtonClass: 'btn btn-default',
             cancelButtonText: 'Quay lại trang chủ',
         }).then(function () {
-            var url = "/Order/Details/" + data.OrderId;
+            //var url = "/Order/Details/" + data.OrderId;
+            var url = "/Order/Index/";
             window.location.href = url;
         }, function (dismiss) {
             var url = "/Home/Index";
