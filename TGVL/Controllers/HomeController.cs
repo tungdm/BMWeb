@@ -596,10 +596,7 @@ namespace TGVL.Controllers
             Response.Cache.SetExpires(DateTime.UtcNow.AddHours(-1));
             Response.Cache.SetNoStore();
 
-            if (replyId == null)
-            {
-                return RedirectToAction("Index");
-            }
+            
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
             var order = new OrderViewModel();
 
@@ -620,6 +617,10 @@ namespace TGVL.Controllers
             } else
             {
                 order = (OrderViewModel)Session["Order"];
+                if (order == null)
+                {
+                    return RedirectToAction("Index");
+                }
                 order.IsRequestOrder = false;
             }
 
@@ -762,7 +763,7 @@ namespace TGVL.Controllers
 
             //var TopRecShop = db.Settings.Where(s => s.SettingName == "TopRecShop").FirstOrDefault().SettingValue;
 
-            var query = "SELECT [dbo].[Warehouses].[Id] AS id, [dbo].[Users].[Fullname] AS name, [dbo].[Warehouses].[Lat] AS lat, "
+            var query = "SELECT [dbo].[Warehouses].[Id] AS id, [dbo].[Users].[Id] AS supplierId, [dbo].[Users].[Fullname] AS name, [dbo].[Warehouses].[Lat] AS lat, "
                 + "[dbo].[Warehouses].[Lng] as lng, [dbo].[Warehouses].[Address] AS address, [dbo].[Warehouses].[Administrative_area_level_1] AS city, "
                 + "[dbo].[Users].[PhoneNumber] AS phone, [dbo].[Users].[AverageGrade] as rating, [dbo].[Products].[UnitPrice] as price, "
                 + "[dbo].[Products].[Id] AS productId "
@@ -775,6 +776,8 @@ namespace TGVL.Controllers
                 + "ORDER BY rating DESC";
 
             List<Shop> data = db.Database.SqlQuery<Shop>(query, id).ToList();
+            
+            data = data.GroupBy(x => x.supplierId).Select(y => y.FirstOrDefault()).ToList();
 
             //Sản phẩm tương tự
             var categoryId = product.SysCategoryId;
@@ -801,6 +804,45 @@ namespace TGVL.Controllers
             };
             ViewBag.MaxDistance = db.Settings.Where(s => s.SettingName == "MaxDistance").FirstOrDefault().SettingValue;
             return View(model);
+        }
+
+        public ActionResult GetAddresses(int supplierId, int productId)
+        {
+            var query = "SELECT [dbo].[Warehouses].[Address], [dbo].[Warehouses].[Lat], [dbo].[Warehouses].[Lng] "
+                    + "FROM [dbo].[Warehouses], [dbo].[WarehouseProducts] "
+                    + "WHERE [dbo].[Warehouses].[SupplierId] = {0} "
+                    + "AND [dbo].[Warehouses].[Id] = [dbo].[WarehouseProducts].[WarehouseId] "
+                    + "AND [dbo].[WarehouseProducts].[ProductId] = {1} ";
+            List<ShopAddress> data = db.Database.SqlQuery<ShopAddress>(query, supplierId, productId).ToList();
+            var cnt = data.Count;
+            var result = new string[cnt];
+            var infoWindowContent = new string[cnt];
+
+            for (int i = 0; i < cnt; i++)
+            {
+                var place = "['" + data[i].Address + "', " + data[i].Lat + ", " + data[i].Lng + "]";
+                var info = "['<div class=\"info_content\"><h3>" + data[i].Address + "</h3><br/>" + "<a href=\"http://maps.google.com/maps?q=" + HttpUtility.UrlEncode(data[i].Address) + "\" target=\"_blank\">Xem trên Google Maps</a>" + "</div>']";
+                result[i] = place;
+                infoWindowContent[i] = info;
+            }
+
+            var model = new MultiAddressShop
+            {
+                Result = result,
+                InfoWindowContent = infoWindowContent
+            };
+
+            return PartialView("_MapMultiAddresses", model);
+
+            //return new JsonResult
+            //{
+            //    Data = new
+            //    {
+            //        Success = "Success",
+            //        address = data
+            //    },
+            //    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            //};
         }
 
         public ActionResult SearchRequestResult()
