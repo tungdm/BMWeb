@@ -22,10 +22,25 @@ namespace TGVL.Models
         public string Avatar { get; set; }
     }
 
+    public class ShopAddress
+    {
+        public string Address { get; set; }
+        public string Lat { get; set; }
+        public string Lng { get; set; }
+    }
+
+    public class MultiAddressShop
+    {
+        public string[] Result { get; set; }
+        public string[] InfoWindowContent { get; set; }
+    }
+
   
     public class Shop
     {
         public int id { get; set; }
+
+        public int supplierId { get; set; }
         public string name { get; set; }
 
         public string lat { get; set; }
