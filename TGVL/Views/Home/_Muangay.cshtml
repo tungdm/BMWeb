@@ -1,5 +1,11 @@
 ﻿@model TGVL.Models.MuaNgayViewModel
 
+<style>
+    .price {
+        font-size: 20px;
+        color:red;
+    }
+</style>
 @using (Ajax.BeginForm("AddToCart", "Home",
     new AjaxOptions
     {
@@ -26,7 +32,7 @@
                 <div class="form-group">
                     <label class="control-label col-md-3" style="font-size:14px">Giá tiền</label>
                     <div class="col-md-9">
-                        @Html.DisplayFor(model => model.UnitPrice) / @Html.DisplayFor(model => model.UnitType)
+                        <span class="price">@Html.DisplayFor(model => model.UnitPrice) / @Html.DisplayFor(model => model.UnitType)</span>
                     </div>
                 </div>
 
@@ -82,7 +88,7 @@
                 $('#errorQuantity').hide();
                 e.preventDefault();
             } else if (quantity.length > MaxLengthInputNumberSmall) {
-                var error = "<span>Xin hãy nhập ít hơn 10 số</span>";
+                var error = "<span>Xin hãy nhập ít hơn " +  MaxLengthInputNumberSmall +" số</span>";
                 $("#errorQuantity").html(error);
                 $("#errorQuantity").show();
             }

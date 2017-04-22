@@ -1,0 +1,191 @@
+﻿@model TGVL.Models.OrderMail
+@using TGVL.MyHelper
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <div> 
+        <table style="margin:0px;padding:0px;width:100%;background-color:#f2f2f2;margin:0;padding:0;font-size:12px;font-family:Arial,Helvetica,sans-serif" border="0" cellpadding="0" cellspacing="0">
+            <tbody>
+                <tr>
+                    <td align="center" style="padding:10px 0;margin:0">
+                        <table border="0" cellpadding="0" cellspacing="0" style="background:#fff;width:610px;border-radius:6px;margin:0;padding:0">
+                            <tbody>
+                                <tr>
+                                    <td style="text-align:center;padding:6px 0;color:#a3a3a3;font-size:10px;line-height:15px;border-bottom:1px solid #eaeaea">
+                                        Bạn nhận được thư này là vì email <a href="mailto:tungdmse61703@fpt.edu.vn" target="_blank">@Model.Email</a> đã đặt hàng thành công tại <a href="#"> <span class="il">tgvl</span>.<span class="il">com</span></a><br>
+                                        Nếu bạn không xem được email này. <a href="@Model.CallbackURL">Xin bấm vào đây</a>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="padding:10px 0">
+                                        <table width="100%;">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="width:50%;padding-left:15px">
+                                                        <a href="#" target="_blank">
+                                                            <img width="134px" height="68px" src="http://i.imgur.com/LSW6yu1.jpg" class="CToWUd">
+                                                        </a>
+                                                    </td>
+                                                    <td style="width:50%;text-align:right;padding-right:15px">
+                                                        <p style="text-transform:uppercase;margin:0;padding-bottom:4px"><img src="https://ci6.googleusercontent.com/proxy/y4WccOJVl9i7W557U67mWyaJ8Xk0Yvj7tkJJOb3zhB4Mvwm8kDJpltiSop-O-LzKS7nhAtuqCY6LbAx0niRz7o-ic9axL6lyv3VNQlJL=s0-d-e1-ft#http://www.hotdeal.vn/assets/img/email/icon-location.png" alt="" class="CToWUd"> Hồ Chí Minh</p>
+                                                        <p style="color:#777777;margin:0">Xác nhận đơn hàng <span style="color:#73bc28;font-size:15px;font-weight:bold">@Model.Code</span></p>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="padding:20px 15px 0 15px;font-size:13px">
+                                        <p style="text-transform:uppercase;font-weight:bold">Thông tin giao hàng</p>
+                                        <table width="100%" border="0" cellpadding="0" cellspacing="0" style="border:1px solid #d2d2d2;border-radius:6px">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="40%" style="background:#f4f4f4;color:#999999;padding:5px 20px;border-right:1px solid #d2d2d2;text-align:right">
+                                                        Trạng thái
+                                                    </td>
+                                                    <td width="60%" style="padding:6px 20px">
+                                                        Mới đặt
+                                                    </td>
+                                                </tr>
+                                                
+                                                <tr>
+                                                    <td width="40%" style="background:#f4f4f4;color:#999999;padding:5px 20px;border-right:1px solid #d2d2d2;text-align:right">
+                                                        Hình thức thanh toán
+                                                    </td>
+                                                    <td width="60%" style="padding:6px 20px">
+                                                        @Model.Payment
+                                                    </td>
+                                                </tr>
+                                                
+                                                <tr>
+                                                    <td width="40%" style="background:#f4f4f4;color:#999999;padding:5px 20px;border-right:1px solid #d2d2d2;text-align:right">
+                                                        Người nhận
+                                                    </td>
+                                                    <td width="60%" style="padding:6px 20px">
+                                                        @Model.FullName
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="40%" style="background:#f4f4f4;color:#999999;padding:5px 20px;border-right:1px solid #d2d2d2;text-align:right">
+                                                        Địa chỉ
+                                                    </td>
+                                                    <td width="60%" style="padding:6px 20px">
+                                                        @Model.Address
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="40%" style="background:#f4f4f4;color:#999999;padding:5px 20px;border-right:1px solid #d2d2d2;text-align:right">
+                                                        Điện thoại
+                                                    </td>
+                                                    <td width="60%" style="padding:6px 20px">
+                                                        @Model.PhoneNumber
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <p style="text-transform:uppercase;padding-top:25px;font-weight:bold;margin:0">chi tiết đơn hàng</p>
+                                        <p style="margin:0;padding:5px 0 15px 0;color:#777777">Ngày đặt hàng <span style="color:#73bc28">@Model.CreatedDate</span></p>
+                                        <table width="100%" border="0" cellpadding="0" cellspacing="0" style="border:1px solid #d2d2d2;border-radius:6px">
+                                            <tbody>
+                                                <tr style="background:#f4f4f4">
+                                                    <td width="5%" style="border-bottom:1px solid #d2d2d2;color:#999999;padding:10px">
+                                                        STT
+                                                    </td>
+                                                    <td width="45%" style="border-bottom:1px solid #d2d2d2;color:#999999;padding:10px">
+                                                        Tên sản phẩm
+                                                    </td>
+                                                    <td width="20%" style="border-bottom:1px solid #d2d2d2;color:#999999;padding:10px">
+                                                        Đơn giá
+                                                    </td>
+                                                    <td width="10%" style="border-bottom:1px solid #d2d2d2;color:#999999;padding:10px">
+                                                        SL
+                                                    </td>
+                                                    <td width="20%" style="border-bottom:1px solid #d2d2d2;color:#999999;padding:10px">
+                                                        Thành tiền
+                                                    </td>
+                                                </tr>
+                                                @{
+                                                    int count = 0;
+                                                }
+                                                @foreach (var details in Model.OrderDetails)
+                                                {
+                                                    count++;
+                                                    decimal mini = details.UnitPrice * details.Quantity;
+                                                    if (details.Flag == 3) //deal
+                                                    {
+                                                        <tr>
+                                                            <td width="5%" style="border-bottom:1px dotted #d2d2d2;padding:10px">
+                                                                @count
+                                                            </td>
+                                                            <td width="45%" style="border-bottom:1px dotted #d2d2d2;padding:10px">
+                                                                <a href="#" target="_blank">@details.Deal.Product.SysProduct.Name</a>
+                                                            </td>
+                                                            <td width="20%" style="border-bottom:1px dotted #d2d2d2;padding:10px">
+                                                                @string.Format("{0:C0}", details.UnitPrice)
+                                                            </td>
+                                                            <td width="10%" style="border-bottom:1px dotted #d2d2d2;padding:10px">
+                                                                @details.Quantity
+                                                            </td>
+                                                            <td width="20%" align="right" style="border-bottom:1px dotted #d2d2d2;color:#d71921;padding:10px;font-weight:bold">
+                                                                @string.Format("{0:C0}", mini)
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                    else
+                                                    {
+                                                        <tr>
+                                                            <td width="5%" style="border-bottom:1px dotted #d2d2d2;padding:10px">
+                                                                @count
+                                                            </td>
+                                                            <td width="45%" style="border-bottom:1px dotted #d2d2d2;padding:10px">
+                                                                <a href="#" target="_blank">@details.Product.SysProduct.Name</a>
+                                                            </td>
+                                                            <td width="20%" style="border-bottom:1px dotted #d2d2d2;padding:10px">
+                                                                @string.Format("{0:C0}", details.UnitPrice)
+                                                            </td>
+                                                            <td width="10%" style="border-bottom:1px dotted #d2d2d2;padding:10px">
+                                                                @details.Quantity
+                                                            </td>
+                                                            <td width="20%" align="right" style="border-bottom:1px dotted #d2d2d2;color:#d71921;padding:10px;font-weight:bold">
+                                                                @string.Format("{0:C0}", mini)
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+
+                                                <tr>
+                                                    <td colspan="2" style="border-bottom:1px solid #d2d2d2;padding:10px"></td>
+                                                    <td colspan="2" style="border-bottom:1px solid #d2d2d2;padding:10px">
+                                                        <strong>Tổng cộng</strong>
+                                                    </td>
+                                                    <td width="20%" align="right" style="border-bottom:1px solid #d2d2d2;padding:10px">
+                                                        <strong>@string.Format("{0:C0}", Model.Total)</strong>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" style="color:#333;text-align:center;padding:4px 0 15px 0;font-size:11px;font-family:Arial,Helvetica,sans-serif">
+                        <p>©2017 <span class="il">TGVL</span> | CÔNG TY CỔ PHẦN <span class="il">BMW</span></p>
+                        <p>Tầng 2, số 70 Lữ Gia, P.15, Q.11, TP.HCM, Việt Nam.</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

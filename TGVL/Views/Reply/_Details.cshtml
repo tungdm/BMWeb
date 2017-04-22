@@ -147,11 +147,19 @@
             else
             {
                 <dt>
-                    Giá đề xuất từ cửa hàng
+                    Giá tiền
                 </dt>
 
                 <dd>
                     @Html.DisplayFor(model => model.Total)
+                </dd>
+
+                <dt>
+                    Ngày giao hàng
+                </dt>
+
+                <dd>
+                    @Convert.ToDateTime(Model.DeliveryDate).ToString("dd/MM/yyyy")
                 </dd>
 
                 <dt>
@@ -168,6 +176,43 @@
 
                 <dd>
                     @Html.Raw(Model.Description)
+                </dd>
+
+                <hr style="margin-left: -10px;border-top: 5px solid #eaeaea;" />
+
+                <dt>
+                    Cửa hàng
+                </dt>
+
+                <dd>
+                    @Model.SupplierName
+                </dd>
+
+                <dt>
+                    Địa chỉ
+                </dt>
+
+                <dd>
+                    @foreach (var addr in Model.WarehouseAddress)
+                    {
+                        <span class="warehouse-address" style="display:block">@addr</span>
+                    }
+                </dd>
+
+                <dt>
+                    Số điện thoại
+                </dt>
+
+                <dd>
+                    @Html.FormatPhoneNum(Model.PhoneNumber)
+                </dd>
+
+                <dt>
+                    Đánh giá
+                </dt>
+
+                <dd>
+                    <span class="stars" style="float:left">@Model.Rating</span> (@Model.Rating)
                 </dd>
             }
 

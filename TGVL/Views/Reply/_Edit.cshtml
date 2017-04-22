@@ -25,7 +25,7 @@
     <div class="popular-posts widget widget__sidebar">
         <h3 class="widget-title"><strong>THÔNG TIN</strong></h3>
         <div class="widget-content">
-            <div class="form-horizontal">
+            <div class="form-horizontal" style="font-size:16px">
                 @if (Model.Flag == 0)
                 {
                     @Html.HiddenFor(model => model.BidPrice, new { htmlAttributes = new { @Value = "0" } })
@@ -53,7 +53,7 @@
                     <div id="DueDateRequest" style="display:none">@Convert.ToDateTime(Model.DueDate).ToString("yyyy-MM-dd")</div>
 
                     <div class="form-group">
-                        <label class="control-label col-md-3" style="font-size:14px">Giá thầu (&#x20AB;) <span style="color:#ff0000"> *</span></label>
+                        <label class="control-label col-md-3">Giá thầu (&#x20AB;) <span style="color:#ff0000"> *</span></label>
                         <div class="col-md-9">
                             @Html.EditorFor(model => model.BidPrice, "", new { htmlAttributes = new { @class = "form-control", @Value = bidPrice , @style="font-size:medium"} })
                             @Html.ValidationMessageFor(model => model.BidPrice, "", new { @class = "text-danger" })
@@ -62,8 +62,8 @@
                     </div>
 
                     <div class="form-group">
-                        <labael class="control-label col-md-3">Ngày giao hàng <span style="color:#ff0000"> *</span></labael>
-                        @*@Html.LabelFor(model => model.DeliveryDate, htmlAttributes: new { @class = "control-label col-md-3" })*@
+                        <label class="control-label col-md-3">Ngày giao hàng <span style="color:#ff0000"> *</span></label>
+                        
                         <div class="col-md-9">
                             @Html.EditorFor(model => model.DeliveryDate, new { htmlAttributes = new { @class = "form-control", @style = "font-size:medium" } })
                             @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "text-danger" })
@@ -74,11 +74,10 @@
                 }
 
                 <div class="form-group">
-                    <labael class="control-label col-md-3 col-sm-3 col-xs-12">Giá đề xuất từ cửa hàng</labael>
-                    @*@Html.LabelFor(model => model.Total, htmlAttributes: new { @class = "control-label col-md-3" })*@
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Giá đề xuất từ cửa hàng</label>
                     <div class="col-md-9">
-                        <div style="padding:4px 10px 0px 2px">
-                            <span class="total" style="font-size:medium"></span> &#x20AB;
+                        <div style="padding:0px 10px 0px 2px">
+                            <span class="total" style="font-size:25px;color:red;"></span> <span style="color:red">&#x20AB;</span>
                         </div>
                         <div id="oldTotal" style="display:none"></div>
 
@@ -89,7 +88,7 @@
                 </div>
 
                 <div class="form-group">
-                    <labael class="control-label col-md-3">Ghi chú</labael>
+                    <label class="control-label col-md-3">Ghi chú</label>
                     <div class="col-md-9">
                         
                         @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @rows = "5", @cols = "20" })

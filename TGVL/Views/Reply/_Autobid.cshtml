@@ -7,6 +7,10 @@
     .modal-body {
         min-height: 0;
     }
+    .current-price {
+        font-size: 25px;
+        color:red;
+    }
 </style>
 
 @model TGVL.Models.AutobidViewModel
@@ -35,7 +39,7 @@
                 <div class="form-group">
                     <label class="control-label col-md-3" style="font-size:14px">Giá thầu hiện tại</label>
                     <div class="col-md-9">
-                        @Html.DisplayFor(model => model.CurentPrice)
+                        <span class="current-price">@Html.DisplayFor(model => model.CurentPrice)</span>
                     </div>
                 </div>
 
@@ -49,7 +53,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label col-md-3" style="font-size:14px">Giá trừ mỗi lần đặt (&#x20AB;) <span style="color:#ff0000"> *</span></label>
+                    <label class="control-label col-md-3" style="font-size:14px">Giá trừ mỗi lần giảm (&#x20AB;) <span style="color:#ff0000"> *</span></label>
                     <div class="col-md-9">
                         @Html.EditorFor(model => model.Deduction, "", new { htmlAttributes = new { @class = "form-control", onfocus = "if(this.value=='0') this.value=''", @Value = Deduction, @style = "font-size:medium" } })
                         @Html.ValidationMessageFor(model => model.Deduction, "", new { @class = "text-danger" })

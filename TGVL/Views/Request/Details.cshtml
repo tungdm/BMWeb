@@ -460,45 +460,44 @@
                                                         }
 
                                                         <div id="bidtable">
-                                                            @if (User.IsInRole("Customer") && Model.CustomerId == User.Identity.GetUserId<int>() && (!bidReplies.Any()))
+                                                            @if (User.IsInRole("Customer") && Model.CustomerId == User.Identity.GetUserId<int>() && (bidReplies == null || !bidReplies.Any()))
                                                             {
                                                                 <p>Hiện tại chưa có ai đặt thầu</p>
-                                                            }
-                                                            else if (Model.StatusId == 3)
-                                                            {
-                                                                TGVL.Reply winner = ViewBag.Winner;
-                                                                <div class="table-responsive">
-                                                                    <table class="data-table">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>
-                                                                                    Thứ hạng
-                                                                                </th>
+                                                                if (Model.StatusId == 3)
+                                                                {
+                                                                    TGVL.Reply winner = ViewBag.Winner;
+                                                                    <div class="table-responsive">
+                                                                        <table class="data-table">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>
+                                                                                        Thứ hạng
+                                                                                    </th>
 
-                                                                                <th>
-                                                                                    Cửa hàng
-                                                                                </th>
+                                                                                    <th>
+                                                                                        Cửa hàng
+                                                                                    </th>
 
-                                                                                <th>
-                                                                                    Giá thầu
-                                                                                </th>
+                                                                                    <th>
+                                                                                        Giá thầu
+                                                                                    </th>
 
-                                                                                <th>
-                                                                                    Ngày giao hàng
-                                                                                </th>
-                                                                                <th>
-                                                                                    Thao tác
-                                                                                </th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            
-                                                                            <tr id="reply_@winner.Id">
+                                                                                    <th>
+                                                                                        Ngày giao hàng
+                                                                                    </th>
+                                                                                    <th>
+                                                                                        Thao tác
+                                                                                    </th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+
+                                                                                <tr id="reply_@winner.Id">
 
                                                                                     <td id="rank">
-                                                                                       
+
                                                                                         <img src="~/Images/cup.png" style="max-height:75px; max-width:75px" />
-              
+
                                                                                     </td>
 
                                                                                     <td>
@@ -517,15 +516,16 @@
 
                                                                                     <td>
                                                                                         <button type="button" class="btn btn-primary btn-sm" onclick="viewDetails(@winner.Id)">Chi tiết</button>
-                                                                                        
+
                                                                                     </td>
                                                                                 </tr>
-                                                                            
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                            }
 
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                }
+                                                            }
+                                                           
                                                             else if ((User.IsInRole("Customer") && Model.CustomerId == User.Identity.GetUserId<int>()) || (User.IsInRole("Supplier") && !ViewBag.Retracted))
                                                             {
                                                                 if (bidReplies != null)
@@ -684,17 +684,19 @@
                         @if (Model.Flag == 1)
                         {
                             <h3>THỜI GIAN CÒN LẠI</h3>
-                                <div class="widget-content" style="padding-bottom:20px">
-                                    <div id="countdown-2"></div>
-                                </div>
-                                <hr />
+                            <div class="widget-content" style="padding-bottom:20px">
+                                <div id="countdown-2"></div>
+                            </div>
+                            <hr />
+
+                            <h3 style="margin-top: -20px;">SỐ NGƯỜI ĐẤU THẦU</h3>
+                            <div class="widget-content" style="padding-bottom:20px;text-align: center;">
+                                <i class="fa fa-user-circle-o fa-3x" aria-hidden="true"> <span id="numBidder">@ViewBag.NumBidder</span></i>
+                            </div>
+                            <hr />
                         }
                         
-                        <h3 style="margin-top: -20px;">SỐ NGƯỜI ĐẤU THẦU</h3>
-                        <div class="widget-content" style="padding-bottom:20px;text-align: center;">
-                            <i class="fa fa-user-circle-o fa-3x" aria-hidden="true"> <span id="numBidder">@ViewBag.NumBidder</span></i>
-                        </div>
-                        <hr />
+                       
 
                         @{
                             TGVL.Models.LuceneRequestResult similarRequest = ViewBag.SimilarRequest;
@@ -766,7 +768,7 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Cập nhật đơn thầu</h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="min-height:calc(100vh - 210px);max-height: calc(100vh - 210px);overflow-y: auto;">
                 <div id="replyInfo"></div>
             </div>
             <div class="modal-footer">
