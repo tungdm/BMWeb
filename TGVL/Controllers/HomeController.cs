@@ -392,7 +392,7 @@ namespace TGVL.Controllers
                 ProductName = product.SysProduct.Name,
                 Quantity = 1
             };
-            ViewBag.MaxLengthInputNumberSmall = db.Settings.Where(s => s.SettingName == "MaxLengthInputNumberSmall").FirstOrDefault().SettingValue;
+            ViewBag.MaxLengthInputNumberSmall = db.Settings.Where(s => s.SettingName == "MaxLengthInputNumberMuangay").FirstOrDefault().SettingValue;
             return PartialView("_Muangay", model);
         }
 

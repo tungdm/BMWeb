@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.SignalR;
+using RazorEngine.Templating;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -18,7 +20,7 @@ namespace TGVL.Controllers
     {
         private BMWEntities db = new BMWEntities();
         private ApplicationUserManager _userManager;
-
+        static readonly string TemplateFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "EmailTemplates");
         public OrderController()
         {
         }
@@ -87,9 +89,12 @@ namespace TGVL.Controllers
                     newOrder.Flag = 4;  //order detail chung cho deal va mua le
                     newOrder.StatusId = 1; //mới đặt
                     newOrder.Discount = 0;
+                    newOrder.Code = Guid.NewGuid().ToString().GetHashCode().ToString("x");
 
                     db.Orders.Add(newOrder);
                     db.SaveChanges();
+
+                    var newOrderDetails = new List<OrderDetail>();
 
                     newOrderId = newOrder.Id;
 
@@ -128,11 +133,37 @@ namespace TGVL.Controllers
                             orderDetails.Quantity = o.Quantity;
                             orderDetails.UnitPrice = o.UnitPrice;
                             orderDetails.Flag = 2; //order detail cho mua le
+                            orderDetails.Product = db.Products.Find(o.ProductId);
                         }
                         db.OrderDetails.Add(orderDetails);
-
+                        newOrderDetails.Add(orderDetails);
                     }
-                    
+                    db.SaveChanges();
+
+
+
+                    var OrderEmailTemplatePath = Path.Combine(Server.MapPath("~/Views/EmailTemplates"), "OrderMail.cshtml");
+                    var templateService = new TemplateService();
+
+                    //Mail model
+
+                    var mailModel = new OrderMail();
+                    mailModel.Email = user.Email;
+                    mailModel.Administrative_area_level_1 = user.Administrative_area_level_1;
+                    mailModel.Code = newOrder.Code;
+                    mailModel.Payment = db.Payments.Find(model.PaymentType).Type;
+                    mailModel.FullName = user.Fullname;
+                    mailModel.PhoneNumber = user.PhoneNumber;
+                    mailModel.CreatedDate = newOrder.CreateDate;
+                    mailModel.Total = newOrder.Total;
+                    mailModel.OrderDetails = newOrderDetails;
+                    mailModel.Address = user.Address;
+                    mailModel.CallbackURL = Url.Action("Details", "Order", new { id = newOrder.Id }, protocol: Request.Url.Scheme);
+                 
+
+                    var emailHtmlBody = templateService.Parse(System.IO.File.ReadAllText(OrderEmailTemplatePath), mailModel, null, null);
+                    await UserManager.SendEmailAsync(user.Id, "Đặt hàng thành công", emailHtmlBody).ConfigureAwait(false);
+  
                 }
 
             } else //normal request hoặc bid request
@@ -160,13 +191,9 @@ namespace TGVL.Controllers
                     StatusId = 1 //mới đặt
                 };
                 db.Orders.Add(newOrder);
-                try {
-                    db.SaveChanges();
-                }
-                catch (DbEntityValidationException e)
-                {
-                    
-                }
+                
+                db.SaveChanges();
+                
                
 
                 newOrderId = newOrder.Id;
@@ -236,8 +263,8 @@ namespace TGVL.Controllers
             var numOfUnseen = db.Notifications.Where(n => n.UserId == userId && n.IsSeen == false).Count();
             Session["UnSeenNoti"] = numOfUnseen;
 
-            var callbackUrl = Url.Action("Details", "MyOrders", null, protocol: Request.Url.Scheme);
-            await UserManager.SendEmailAsync(user.Id, "Đặt hàng thành công", "Xem chi tiết tại <a href=\"" + callbackUrl + "\">đây nè :)</a>");
+            //var callbackUrl = Url.Action("Details", "MyOrders", null, protocol: Request.Url.Scheme);
+            //await UserManager.SendEmailAsync(user.Id, "Đặt hàng thành công", "Xem chi tiết tại <a href=\"" + callbackUrl + "\">đây nè :)</a>");
 
             return new JsonResult {
                 Data = new {
@@ -323,6 +350,8 @@ namespace TGVL.Controllers
             
             return new JsonResult { Data = new { Message = "Success" }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
+
+        
     }
 
     
