@@ -48,6 +48,31 @@ namespace TGVL.Models
 
     }
 
+    public class OrderMail
+    {
+        public string Email { get; set; }
+
+        public string FullName { get; set; }
+
+        public string Administrative_area_level_1 { get; set; }
+
+        public string Address { get; set; }
+
+        public string PhoneNumber { get; set; }
+
+        public string Code { get; set; }
+        
+        public string Payment { get; set; }
+
+        public decimal Total { get; set; }
+
+        public DateTime? CreatedDate { get; set; }
+
+        public string CallbackURL { get; set; }
+
+        public ICollection<OrderDetail> OrderDetails { get; set; }
+    }
+
     public class ReviewViewModel
     {
         public int OrderId { get; set; }
