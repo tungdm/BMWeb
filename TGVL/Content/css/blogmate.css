@@ -453,7 +453,7 @@
 	top: 0;
     height: 170px;
     width: 170px;
-    margin-top: -20px;
+    margin-top: 0px;
 }
 .commentlist li .gravatar img {
 	float: left;
