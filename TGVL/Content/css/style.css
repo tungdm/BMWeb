@@ -8998,12 +8998,12 @@ input.radio {
   position: relative;
   background: #f8f8f8;
   color: #333;
-  padding: 10px 5px 12px 15px;
+  padding: 15px 5px 12px 15px;
   border-radius: 0;
-  border-right: 48px solid #FF1341;
+  border-right: 48px solid #73bc28;
   min-height: 50px;
   text-decoration: none;
-  font-family: "Lato", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-weight: bold;
 }
 .accordion-faq .collapsed .arrow-down {
