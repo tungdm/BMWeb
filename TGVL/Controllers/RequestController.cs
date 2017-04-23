@@ -828,6 +828,7 @@ namespace TGVL.Controllers
                         ViewBag.Finished = true;
                     } else
                     {
+                        ViewBag.Finished = false;
                         var requestId = (int)id;
 
                         var userId = User.Identity.GetUserId<int>();
