@@ -4,8 +4,8 @@
     ViewBag.Title = "Thông tin cá nhân";
     Layout = "~/Views/Shared/_HomePageViewLayout.cshtml";
 }
-
-<p class="text-success">@ViewBag.StatusMessage</p>
+@Styles.Render("~/Content/searchproductcss")
+@*<p class="text-success">@ViewBag.StatusMessage</p>*@
 
 <div class="main-container col2-left-layout" style="background:#f4f4f4">
     <div class="main container">
@@ -14,124 +14,71 @@
                 @Html.Partial("_MenuPartial")
 
             </aside>
-            <section class="col-main col-sm-9">
-                <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="x_panel">
-                            <div class="x_content">
-                                <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
-                                    <div class="profile_img">
-                                        <div id="crop-avatar">
-                                            <!-- Current avatar -->
-                                            <img class="img-responsive avatar-view" src="~/Images/UserAvatar/Admin1.jpg" alt="Avatar" title="Change the avatar">
-                                        </div>
-                                    </div>
-                                    <h3>@(Model.Fullname)</h3>
-                                    <ul class="list-unstyled user_data">
-                                        <li>
-                                            <i class="fa fa-map-marker user-profile-icon"></i> @(Model.Address)
-                                        </li>
-
-                                        <li>
-                                            <i class="fa fa-briefcase user-profile-icon"></i> Nhà thầu
-                                        </li>
-
-                                        <li class="m-top-xs">
-                                            <i class="fa fa-external-link user-profile-icon"></i>
-                                            <a href="http://www.kimlabs.com/profile/" target="_blank">www.vlxdvietnam.com</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-9 col-sm-9 col-xs-12">
-                                    <div class="" role="tabpanel" data-example-id="togglable-tabs">
-                                        <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-                                            <li role="presentation" class="active">
-                                                <a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Thông tin cá nhân</a>
-                                            </li>
-                                            <li role="presentation" class="">
-                                                @if (Model.HasPassword)
-                                                {
-                                                    @Html.ActionLink("Chỉnh sửa mật khẩu", "ChangePassword")
-                                                }
-                                                else
-                                                {
-                                                    @Html.ActionLink("Tạo mới mật khẩu", "SetPassword")
-                                                }
-
-                                                @*@Html.ActionLink("Change Password", "ChangePassword")*@
-                                                @*<a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Change Password</a>*@
-                                            </li>
-                                            @*<li role="presentation" class="">
-                                        <a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Setting</a>
-                                    </li>*@
-                                        </ul>
-                                        <div id="myTabContent" class="tab-content">
-                                            <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
-                                                @using (Html.BeginForm("UpdateProfile", "Manage", FormMethod.Post, new { @class = "form-horizontal form-label-left", role = "form", id = "demo-form2" }))
-                                                {
-                                                    @Html.AntiForgeryToken()
-                                                    @Html.ValidationSummary("", new { @class = "text-danger" })
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="fullname">
-                                                            Họ và tên @*<span class="required">*</span>*@
-                                                        </label>
-                                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                                            @Html.TextBoxFor(m => m.Fullname, new { @class = "form-control col-md-7 col-xs-12", id = "fullname" })
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="phonenumber">
-                                                            Số điện thoại
-                                                        </label>
-                                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                                            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control col-md-7 col-xs-12", id = "phonenumber" })
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Địa chỉ</label>
-                                                        <div class="col-md-8 col-sm-6 col-xs-12">
-                                                            @Html.TextBoxFor(m => m.Address, new { @class = "form-control col-md-7 col-xs-12", id = "address" })
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                                            Ngày sinh
-                                                        </label>
-                                                        <fieldset class="col-md-6 col-sm-6 col-xs-12">
-                                                            <div class="control-group">
-                                                                <div class="controls">
-                                                                    <div class="col-md-7 col-xs-12 xdisplay_inputx form-group has-feedback">
-                                                                        @Html.TextBoxFor(m => m.DateOfBirth, new { @class = "form-control col-md-7 col-xs-12 has-feedback-left", id = "single_cal2", name = "daterange", aria_describedby = "inputSuccess2Status2", style = "margin-left: -10px;" })
-                                                                        @*<input type="text" name="daterange" class="form-control col-md-7 col-xs-12 has-feedback-left" id="single_cal2" placeholder="dd-mm-yyyy" aria-describedby="inputSuccess2Status2" style="margin-left: -10px;">*@
-                                                                        <span class="fa fa-calendar form-control-feedback left" aria-hidden="true"></span>
-                                                                        <span id="inputSuccess2Status2" class="sr-only">(success)</span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </fieldset>
-                                                    </div>
-
-                                                    <div class="ln_solid"></div>
-                                                    <div class="form-group">
-                                                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                                            @*<button class="btn btn-primary" type="button">Cancel</button>*@
-                                                            @*<button class="btn btn-primary" type="reset">Reset</button>*@
-                                                            <button type="submit" class="btn btn-success">Cập nhật</button>
-                                                        </div>
-                                                    </div>
-                                                }
-                                            </div>
-                                            <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab"></div>
-                                            <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab"></div>
-                                        </div>
-                                    </div>
+            <div class="col-main col-sm-9">
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#tab_1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">THÔNG TIN CÁ NHÂN</a></li>
+                        <li>
+                            @if (Model.HasPassword)
+                            {
+                                @Html.ActionLink("THAY ĐỔI MẬT KHẨU", "ChangePassword")
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Tạo mới mật khẩu", "SetPassword")
+                            }
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab_1">
+                            @using (Html.BeginForm("UpdateProfile", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "demo-form2" }))
+                            {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary("", new { @class = "text-danger" })
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="fullname">
+                                    Họ và tên @*<span class="required">*</span>*@
+                                </label>
+                                <div class="col-md-9 col-xs-12">
+                                    @Html.TextBoxFor(m => m.Fullname, new { @class = "form-control col-md-7 col-xs-12", id = "fullname" })
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="phonenumber">
+                                    Số điện thoại
+                                </label>
+                                <div class="col-md-9 col-xs-12">
+                                    @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control col-md-7 col-xs-12", id = "phonenumber" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Địa chỉ</label>
+                                <div class="col-md-9 col-xs-12">
+                                    @Html.TextBoxFor(m => m.Address, new { @class = "form-control col-md-7 col-xs-12", id = "address" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-xs-12">Ngày sinh</label>
+                                <div class="col-md-9 col-xs-12">
+                                    @Html.EditorFor(model => model.DateOfBirth, new { htmlAttributes = new { @class = "form-control", @style = "float:left" } })
+                                    @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="ln_solid"></div>
+                            <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                    @*<button class="btn btn-primary" type="button">Cancel</button>*@
+                                    @*<button class="btn btn-primary" type="reset">Reset</button>*@
+                                    <button type="submit" class="btn btn-success">Cập nhật</button>
+                                </div>
+                            </div>
+                                                }
                         </div>
+                        
                     </div>
                 </div>
-            </section>
-
+            </div>
         </div>
     </div>
 </div>
