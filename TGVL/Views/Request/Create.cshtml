@@ -349,6 +349,10 @@
 
                     if (year > (currentYear + MaxYearInput)) {
                         var message = "Ngày giao hàng không được vượt quá năm " + (currentYear + MaxYearInput);
+                        var oldMessage =  $("span[for='ReceivingDate']").text();
+                        console.log(oldMessage);
+                        $("span[for='ReceivingDate']").empty();
+                     
                         console.log(message);
                         $('#custome-duedate').html(message);
                         $('#custome-duedate').show();
@@ -357,6 +361,9 @@
                     } 
 
                     var result = $('#form0').valid();
+                    if (!result) {
+                        return;
+                    }
                     console.log(result);
                     console.log("check=" + check);
                     if (result && check) {
@@ -422,6 +429,13 @@
 
             $.validator.addMethod("daterange", function (value, element) {
                 var receivingDate = $("#ReceivingDate").val();
+                var d = new Date(receivingDate);
+                var current = new Date();
+                var currentYear = current.getFullYear();
+                var year = d.getFullYear();
+                var MaxYearInput = @Model.MaxYearInput;
+
+                if (year > (currentYear + MaxYearInput)) { return true; }
 
                 var timeRange = $("#TimeRange").val();
                 if (timeRange > MinDateDeliveryRange) {
@@ -454,6 +468,11 @@
                 if (year > (currentYear + MaxYearInput)) {
                     var message = "Ngày giao hàng không được vượt quá năm " + (currentYear + MaxYearInput);
                     console.log(message);
+                    var oldMessage =  $("span[for='ReceivingDate']").text();
+                    console.log("old:" + oldMessage);
+
+                    $("span[for='ReceivingDate']").empty();
+
                     $('#custome-duedate').html(message);
                     $('#custome-duedate').show();
                 } else {
