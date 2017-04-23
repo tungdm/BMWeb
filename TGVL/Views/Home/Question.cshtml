@@ -5,7 +5,15 @@
 }
 
 @Styles.Render("~/Content/searchproductcss")
-
+<style>
+    img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 100%;
+        height: auto;
+    }
+</style>
 <section class="main-container col1-layout">
     <div class="main container">
         <div class="col-main">
@@ -15,39 +23,53 @@
                 </div>
                 <div class="panel-group accordion-faq" id="faq-accordion">
                     <div class="panel">
-                        <div class="panel-heading"> <a data-toggle="collapse" data-parent="#faq-accordion" href="#question1"> <span class="arrow-down">+</span> <span class="arrow-up">&#8211;</span> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec eros tellus, scelerisque nec, rhoncus eget, laoreet sit amet, nunc. Ut sit amet turpis. In est arcu, sollicitudin eu, vehicula venenatis, tempor vitae, est. </a> </div>
+                        <div class="panel-heading"> <a data-toggle="collapse" data-parent="#faq-accordion" href="#question1"> <span class="arrow-down">+</span> <span class="arrow-up">&#8211;</span> Làm thế nào để tạo tài khoản trên BMW? </a> </div>
                         <div id="question1" class="panel-collapse collapse in">
-                            <div class="panel-body"> Vestibulum justo. Nulla mauris ipsum, convallis ut, vestibulum eu, tincidunt vel, nisi. Curabitur molestie euismod erat. Proin eros odio, mattis rutrum, pulvinar et, egestas vitae, magna. Integer semper, velit ut interdum malesuada, diam dolor pellentesque lacus, vitae commodo orci nisi et sem. Pellentesque adipiscing nisi. Nulla facilisi. Mauris lacinia lectus sit amet felis. Aliquam erat volutpat. Nulla porttitor tortor at nisl. Nam lectus nulla, bibendum pretium, dictum a, mattis nec, dolor. Nullam id justo sed diam aliquam tincidunt. Duis sollicitudin, dui ac commodo iaculis, mi risus sagittis odio, vel ultrices enim sem ut pede. Aenean quam. Nulla neque purus, ullamcorper nec, eleifend at, fermentum ut, turpis. Mauris et ligula quis erat dignissim imperdiet. Integer ligula magna, dictum et, pulvinar non, ultricies ac, nibh. </div>
+                            <div class="panel-body">
+                                <p style="font-size:16px"><span style="text-decoration:underline"><strong>Bước 1:</strong></span> Nhấn vào nút "Đăng ký" ở góc phải trang web.</p>
+                                <p><img src="~/Images/Register.jpg" width="623" height="340"></p>
+                                <p style="font-size:16px"><span style="text-decoration:underline"><strong>Bước 2:</strong></span> Điền đầy đủ thông tin email, họ tên, điện thoại, ..theo yêu cầu. Để đảm bảo quyền lợi trong giao dịch với BMW, Khách Hàng nên cung cấp thông tin chính xác trong quá trình tạo tài khoản, sau đó bấm “Đăng ký”.</p>
+                                <p style="font-size:16px">Sau khi hoàn tất Bước 2, Khách Hàng đã có thể mua hàng tại BMW.</p>
+                            </div>
                         </div>
                     </div>
                     <div class="panel">
-                        <div class="panel-heading"> <a data-toggle="collapse" data-parent="#faq-accordion" href="#question3" class="collapsed"> <span class="arrow-down">+</span> <span class="arrow-up">&#8211;</span> Nulla porttitor tortor at nisl. Nam lectus nulla, bibendum pretium, dictum a, mattis nec, dolor.</a> </div>
+                        <div class="panel-heading"> <a data-toggle="collapse" data-parent="#faq-accordion" href="#question3" class="collapsed"> <span class="arrow-down">+</span> <span class="arrow-up">&#8211;</span> Làm thế nào để thay đổi thông tin cá nhân: Tên, số điện thoại, ngày sinh?</a> </div>
                         <div id="question3" class="panel-collapse collapse">
-                            <div class="panel-body"> Vestibulum justo. Nulla mauris ipsum, convallis ut, vestibulum eu, tincidunt vel, nisi. Curabitur molestie euismod erat. Proin eros odio, mattis rutrum, pulvinar et, egestas vitae, magna. Integer semper, velit ut interdum malesuada, diam dolor pellentesque lacus, vitae commodo orci nisi et sem. Pellentesque adipiscing nisi. Nulla facilisi. Mauris lacinia lectus sit amet felis. Aliquam erat volutpat. Nulla porttitor tortor at nisl. Nam lectus nulla, bibendum pretium, dictum a, mattis nec, dolor. Nullam id justo sed diam aliquam tincidunt. Duis sollicitudin, dui ac commodo iaculis, mi risus sagittis odio, vel ultrices enim sem ut pede. Aenean quam. Nulla neque purus, ullamcorper nec, eleifend at, fermentum ut, turpis. Mauris et ligula quis erat dignissim imperdiet. Integer ligula magna, dictum et, pulvinar non, ultricies ac, nibh. </div>
+                            <div class="panel-body">
+                                <p style="font-size:16px">Sau khi đăng nhập vào tài khoản, chọn mục “Thông tin cá nhân”.</p>
+                                <p><img src="~/Images/Edit_Profile.jpg" width="623" height="340"></p>
+                                <p style="font-size:16px">Điền thông tin cá nhân: Tên, Ngày sinh, Điện thoại. Sau đó nhấn nút "Cập nhật".</p>
+                            </div>
                         </div>
                     </div>
                     <div class="panel">
-                        <div class="panel-heading"> <a data-toggle="collapse" data-parent="#faq-accordion" href="#question2" class="collapsed"> <span class="arrow-down">+</span> <span class="arrow-up">&#8211;</span> Sed semper tortor. Cras condimentum, odio sed molestie molestie, enim urna vehicula magna, eu venenatis velit nunc eget justo.</a> </div>
-                        <div id="question2" class="panel-collapse collapse">
-                            <div class="panel-body"> Vestibulum justo. Nulla mauris ipsum, convallis ut, vestibulum eu, tincidunt vel, nisi. Curabitur molestie euismod erat. Proin eros odio, mattis rutrum, pulvinar et, egestas vitae, magna. Integer semper, velit ut interdum malesuada, diam dolor pellentesque lacus, vitae commodo orci nisi et sem. Pellentesque adipiscing nisi. Nulla facilisi. Mauris lacinia lectus sit amet felis. Aliquam erat volutpat. Nulla porttitor tortor at nisl. Nam lectus nulla, bibendum pretium, dictum a, mattis nec, dolor. Nullam id justo sed diam aliquam tincidunt. Duis sollicitudin, dui ac commodo iaculis, mi risus sagittis odio, vel ultrices enim sem ut pede. Aenean quam. Nulla neque purus, ullamcorper nec, eleifend at, fermentum ut, turpis. Mauris et ligula quis erat dignissim imperdiet. Integer ligula magna, dictum et, pulvinar non, ultricies ac, nibh. </div>
-                        </div>
-                    </div>
-                    <div class="panel">
-                        <div class="panel-heading"> <a data-toggle="collapse" data-parent="#faq-accordion" href="#question5" class="collapsed"> <span class="arrow-down">+</span> <span class="arrow-up">&#8211;</span> Curabitur convallis facilisis lorem. Vivamus euismod nulla vel nunc. Fusce tincidunt, justo congue egestas molestie, tortor tortor.</a> </div>
+                        <div class="panel-heading"> <a data-toggle="collapse" data-parent="#faq-accordion" href="#question5" class="collapsed"> <span class="arrow-down">+</span> <span class="arrow-up">&#8211;</span> Làm thế nào để đăng yêu cầu đấu thầu? </a> </div>
                         <div id="question5" class="panel-collapse collapse">
-                            <div class="panel-body"> Vestibulum justo. Nulla mauris ipsum, convallis ut, vestibulum eu, tincidunt vel, nisi. Curabitur molestie euismod erat. Proin eros odio, mattis rutrum, pulvinar et, egestas vitae, magna. Integer semper, velit ut interdum malesuada, diam dolor pellentesque lacus, vitae commodo orci nisi et sem. Pellentesque adipiscing nisi. Nulla facilisi. Mauris lacinia lectus sit amet felis. Aliquam erat volutpat. Nulla porttitor tortor at nisl. Nam lectus nulla, bibendum pretium, dictum a, mattis nec, dolor. Nullam id justo sed diam aliquam tincidunt. Duis sollicitudin, dui ac commodo iaculis, mi risus sagittis odio, vel ultrices enim sem ut pede. Aenean quam. Nulla neque purus, ullamcorper nec, eleifend at, fermentum ut, turpis. Mauris et ligula quis erat dignissim imperdiet. Integer ligula magna, dictum et, pulvinar non, ultricies ac, nibh. </div>
+                            <div class="panel-body">
+                                <div class="panel-body">
+                                    <p style="font-size:16px">Sau khi đăng nhập vào tài khoản, chọn mục “Đấu thầu”.</p>
+                                    <p><img src="~/Images/Bid_Request.jpg" width="623" height="340"></p>
+                                    <p style="font-size:16px">Điền thông tin. Sau đó nhấn nút "Hoàn tất".</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="panel">
-                        <div class="panel-heading"> <a data-toggle="collapse" data-parent="#faq-accordion" href="#question4" class="collapsed"> <span class="arrow-down">+</span> <span class="arrow-up">&#8211;</span> Cras pellentesque. Fusce ullamcorper, pede eget pellentesque venenatis, felis magna nonummy eros, quis ultrices odio lorem quis urna. Mauris sem sapien, mollis vel.</a> </div>
+                        <div class="panel-heading"> <a data-toggle="collapse" data-parent="#faq-accordion" href="#question2" class="collapsed"> <span class="arrow-down">+</span> <span class="arrow-up">&#8211;</span> Làm thế nào để đánh giá đơn hàng?</a> </div>
+                        <div id="question2" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <p style="font-size:16px"><span style="text-decoration:underline"><strong>Bước 1:</strong></span> Ở trang "Thông tin đơn hàng", Khách Hàng chọn "Đánh giá".</p>
+                                <p style="font-size:16px"><span style="text-decoration:underline"><strong>Bước 2:</strong></span> Điền thông tin cá nhân: Giá bán, Chất lượng sản phẩm, Mức độ phục vụ. Sau đó nhấn nút "Đánh giá".</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-heading"> <a data-toggle="collapse" data-parent="#faq-accordion" href="#question4" class="collapsed"> <span class="arrow-down">+</span> <span class="arrow-up">&#8211;</span> Điều kiện để tôi đánh giá đơn hàng?</a> </div>
                         <div id="question4" class="panel-collapse collapse">
-                            <div class="panel-body"> Vestibulum justo. Nulla mauris ipsum, convallis ut, vestibulum eu, tincidunt vel, nisi. Curabitur molestie euismod erat. Proin eros odio, mattis rutrum, pulvinar et, egestas vitae, magna. Integer semper, velit ut interdum malesuada, diam dolor pellentesque lacus, vitae commodo orci nisi et sem. Pellentesque adipiscing nisi. Nulla facilisi. Mauris lacinia lectus sit amet felis. Aliquam erat volutpat. Nulla porttitor tortor at nisl. Nam lectus nulla, bibendum pretium, dictum a, mattis nec, dolor. Nullam id justo sed diam aliquam tincidunt. Duis sollicitudin, dui ac commodo iaculis, mi risus sagittis odio, vel ultrices enim sem ut pede. Aenean quam. Nulla neque purus, ullamcorper nec, eleifend at, fermentum ut, turpis. Mauris et ligula quis erat dignissim imperdiet. Integer ligula magna, dictum et, pulvinar non, ultricies ac, nibh. </div>
-                        </div>
-                    </div>
-                    <div class="panel">
-                        <div class="panel-heading"> <a data-toggle="collapse" data-parent="#faq-accordion" href="#question6" class="collapsed"> <span class="arrow-down">+</span> <span class="arrow-up">&#8211;</span> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec eros tellus, scelerisque nec, rhoncus eget, laoreet sit amet, nunc vel ultrices enim sem ut pede. Aenean quam. Nulla neque purus, ullamcorper nec, eleifend at, fermentum ut, turpis. </a> </div>
-                        <div id="question6" class="panel-collapse collapse">
-                            <div class="panel-body"> Vestibulum justo. Nulla mauris ipsum, convallis ut, vestibulum eu, tincidunt vel, nisi. Curabitur molestie euismod erat. Proin eros odio, mattis rutrum, pulvinar et, egestas vitae, magna. Integer semper, velit ut interdum malesuada, diam dolor pellentesque lacus, vitae commodo orci nisi et sem. Pellentesque adipiscing nisi. Nulla facilisi. Mauris lacinia lectus sit amet felis. Aliquam erat volutpat. Nulla porttitor tortor at nisl. Nam lectus nulla, bibendum pretium, dictum a, mattis nec, dolor. Nullam id justo sed diam aliquam tincidunt. Duis sollicitudin, dui ac commodo iaculis, mi risus sagittis odio, vel ultrices enim sem ut pede. Aenean quam. Nulla neque purus, ullamcorper nec, eleifend at, fermentum ut, turpis. Mauris et ligula quis erat dignissim imperdiet. Integer ligula magna, dictum et, pulvinar non, ultricies ac, nibh. </div>
+                            <div class="panel-body">
+                                <p style="font-size:16px"> Khách hàng chỉ có thể đánh giá đơn hàng khi đơn hàng đã được giao hàng thành công.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
