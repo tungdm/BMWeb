@@ -462,7 +462,7 @@
                                                         <div id="bidtable">
                                                             @if (User.IsInRole("Customer") && Model.CustomerId == User.Identity.GetUserId<int>() && (bidReplies == null || !bidReplies.Any()))
                                                             {
-                                                                <p>Hiện tại chưa có ai đặt thầu</p>
+                                                                
                                                                 if (Model.StatusId == 3)
                                                                 {
                                                                     TGVL.Reply winner = ViewBag.Winner;
@@ -524,8 +524,13 @@
                                                                         </table>
                                                                     </div>
                                                                 }
+                                                                else
+                                                                {
+                                                                    <p style="font-size:35px; color:darkblue">Hiện tại chưa có ai đặt thầu</p>
+                                                                }
+
                                                             }
-                                                           
+
                                                             else if ((User.IsInRole("Customer") && Model.CustomerId == User.Identity.GetUserId<int>()) || (User.IsInRole("Supplier") && !ViewBag.Retracted))
                                                             {
                                                                 if (bidReplies != null)
@@ -658,7 +663,67 @@
                                                                         </table>
                                                                     </div>
                                                                 }
+                                                                if (ViewBag.Finished)
+                                                                {
+                                                                    TGVL.Reply winner = ViewBag.Winner;
+                                                                    <div class="table-responsive">
+                                                                        <table class="data-table">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>
+                                                                                        Thứ hạng
+                                                                                    </th>
 
+                                                                                    <th>
+                                                                                        Cửa hàng
+                                                                                    </th>
+
+                                                                                    <th>
+                                                                                        Giá thầu
+                                                                                    </th>
+
+                                                                                    <th>
+                                                                                        Ngày giao hàng
+                                                                                    </th>
+                                                                                    <th>
+                                                                                        Thao tác
+                                                                                    </th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+
+                                                                                <tr id="reply_@winner.Id">
+
+                                                                                    <td id="rank">
+
+                                                                                        <img src="~/Images/cup.png" style="max-height:75px; max-width:75px" />
+
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <img src="~/Images/UserAvatar/@winner.User.Avatar" width="100" height="100" alt="avatar" style="display: block; margin-bottom: 5px;" />
+
+                                                                                        <span class="supplierName"><strong>@winner.User.Fullname</strong></span>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <strong><span style="color: #ff1341; font-size: 20px">@string.Format("{0:C0}", winner.Total)</span></strong>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        @Convert.ToDateTime(winner.DeliveryDate).ToString("dd/MM/yyyy")
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <button type="button" class="btn btn-primary btn-sm" onclick="viewDetails(@winner.Id)">Chi tiết</button>
+
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                }
                                                             }
 
                                                         </div>
