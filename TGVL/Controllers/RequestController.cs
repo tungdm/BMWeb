@@ -824,6 +824,8 @@ namespace TGVL.Controllers
                     {
                         var winnerReply = db.Replies.Where(r => r.RequestId == request.Id && (bool)r.Selected).FirstOrDefault();
                         ViewBag.Winner = winnerReply;
+                        ViewBag.Retracted = false;
+                        ViewBag.Finished = true;
                     } else
                     {
                         var requestId = (int)id;
