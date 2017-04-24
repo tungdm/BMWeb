@@ -289,9 +289,9 @@
                                                         <div class="item-content">
                                                             <div class="price-block">
                                                                 <div class="price-box" style="margin-top:10px">
-                                                                    <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" style="font-size:20px"> @Html.DisplayFor(itemModel => item.UnitPrice)</span> <span class="deal_discount">@item.Discount%</span></p>
+                                                                    <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" style="font-size:20px"> @Html.DisplayFor(itemModel => item.PriceSave)</span> <span class="deal_discount">@item.Discount%</span></p>
                                                                     <br />
-                                                                    <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" style="font-size:18px"> @Html.DisplayFor(itemModel => item.PriceSave) </span> &nbsp; <span class="pull-right"> <i class="fa fa-user-circle-o" style="font-size:18px"> @item.NumBuyer </i></span></p>
+                                                                    <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" style="font-size:18px"> @Html.DisplayFor(itemModel => item.UnitPrice) </span> &nbsp; <span class="pull-right"> <i class="fa fa-user-circle-o" style="font-size:18px"> @item.NumBuyer </i></span></p>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -346,9 +346,9 @@
                                                         <div class="item-content">
                                                             <div class="price-block" style="margin-top:10px;text-align:left">
                                                                 <div class="price-box">
-                                                                    <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" style="font-size:20px">@Html.DisplayFor(itemModel => item.UnitPrice)</span> <span class="deal_discount">@item.Discount%</span></p>
+                                                                    <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" style="font-size:20px">@Html.DisplayFor(itemModel => item.PriceSave)</span> <span class="deal_discount">@item.Discount%</span></p>
                                                                     <br />
-                                                                    <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" style="font-size:18px">@Html.DisplayFor(itemModel => item.PriceSave)</span> &nbsp; <span class="pull-right"> <i class="fa fa-user-circle-o" style="font-size:18px"> @item.NumBuyer</i></span></p>
+                                                                    <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" style="font-size:18px">@Html.DisplayFor(itemModel => item.UnitPrice)</span> &nbsp; <span class="pull-right"> <i class="fa fa-user-circle-o" style="font-size:18px"> @item.NumBuyer</i></span></p>
 
                                                                 </div>
                                                             </div>
