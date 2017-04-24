@@ -102,7 +102,16 @@
 
                                 <div class="price-block">
                                     <div class="price-box">
-                                        Có <span class="total"><strong class="price"> @Model.NumOfShops </strong> </span> cửa hàng bán với giá từ: <p class="special-price"> <span class="price-label"> Special Price</span> <span class="price">@string.Format("{0:C0}", Model.SysProduct.UnitPrice)</span> </p>
+                                        @if(@Model.NumOfShops == 0)
+                                        {
+                                            <span> Hiện tại vẫn chưa có cửa hàng nào bán sản phẩm này</span>
+                                        }
+                                        else
+                                        {
+                                            <span>Có <span class="total"><strong class="price"> @Model.NumOfShops </strong> </span> cửa hàng bán với giá từ: <p class="special-price"> <span class="price-label"> Special Price</span> <span class="price">@string.Format("{0:C0}", Model.SysProduct.UnitPrice)</span> </p></span>
+                                        }
+
+                                        
                                     </div>
                                 </div>
                                 
@@ -151,13 +160,18 @@
                                                     <td>@item.name</td>
                                                     <td style="white-space:nowrap">@Html.DisplayFor(modelItem => item.price)</td>
                                                     <td style="white-space:nowrap">
-                                                        <span style="float: left;" class="stars">@item.rating</span> (@item.rating)
+                                                        <span style="float: left;" class="stars">@item.rating</span> (<a onclick="viewReview(@item.supplierId)" href="javascript:void(0);">@item.rating</a>)
                                                     </td>
                                                     <td>@Html.FormatPhoneNum(@item.phone)</td>
                                                     <td style="white-space:nowrap">
-                                                        <button type="submit" class="btn btn-success" onclick="datmua(@item.productId)">Thêm vào giỏ hàng</button>
+                                                        <button type="submit" class="btn btn-success" onclick="datmua(@item.productId)"><i class="fa fa-cart-plus" aria-hidden="true"></i> Thêm vào giỏ hàng</button>
                                                         @*<button type="submit" class="btn btn-primary" onclick="viewOnMap(@item.lat, @item.lng)">Xem vị trí</button>*@
-                                                        <button type="submit" class="btn btn-primary" onclick="viewOnMap(@item.supplierId, @item.productId)">Xem vị trí</button>
+                                                        <button type="submit" class="btn btn-primary" onclick="viewOnMap(@item.supplierId, @item.productId)"><i class="fa fa-map-marker" aria-hidden="true"></i> Xem vị trí</button>
+                                                        @if (item.facebookId != null)
+                                                        {
+                                                            <a href="https://www.messenger.com/t/@item.facebookId" class="btn btn-default" target="_blank"><i class="fa fa-comments-o" aria-hidden="true"></i> Chat với cửa hàng</a>
+                                                        }
+                                                        
                                                     </td>
                                                 </tr>
                                             }
@@ -272,6 +286,24 @@
     </div>
 </div>
 
+<div id="list-reviews" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg" style="left:0%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Đánh giá</h4>
+            </div>
+            <div class="modal-body">
+                <div id="reviewinfo"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 <div id="maps" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg" style="left:0%; height:100%;">
         <div class="modal-content" style="height:100%; width:100%; max-height: 555px;">
@@ -290,6 +322,7 @@
 </div>
 
 
+
 @*<script src="~/Scripts/js/jquery.min.js"></script>*@
 <script src="~/Scripts/js/bootstrap.min.js"></script>
 <script src="~/Scripts/js/parallax.js"></script>
@@ -303,6 +336,7 @@
 
 <script>
     $(document).ready(function () {
+        
         $(".stars").each(function () {
             var raw = $(this).text().replace(',', '.');
             //console.log(raw);
@@ -352,11 +386,22 @@
                 return new Handlebars.SafeString(result);
             });
         });
-
-
-
     });
 
+    function viewReview(supplierId) {
+        var options = {
+            url: '/Home/ViewReview',
+            type: 'GET',
+            data: { supplierId: supplierId }
+        };
+
+        $.ajax(options).done(function (data) {
+            var $target = $('#reviewinfo');
+            $target.html(data);
+
+            $('#list-reviews').modal('show');
+        });
+    }
 
 </script>
 

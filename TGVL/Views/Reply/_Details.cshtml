@@ -129,8 +129,6 @@
                 </dt>
 
                 <dd>
-                    @*@Html.DisplayFor(model => model.PhoneNumber)*@
-                    @*@String.Format("{1} {2} {3}", Model.PhoneNumber.Substring(0, 3), Model.PhoneNumber.Substring(3, 3), Model.PhoneNumber.Substring(6, Model.PhoneNumber.Length - 6))*@
                     @Html.FormatPhoneNum(Model.PhoneNumber)
                 </dd>
 
@@ -139,7 +137,7 @@
                 </dt>
 
                 <dd>
-                    <span class="stars" style="float:left">@Model.Rating</span> (@Model.Rating)
+                    <span class="stars" style="float:left">@Model.Rating</span> (<a onclick="viewReviewReply(@Model.SupplierId)" href="javascript:void(0);">@Model.Rating</a>)
                 </dd>
 
 
@@ -212,13 +210,9 @@
                 </dt>
 
                 <dd>
-                    <span class="stars" style="float:left">@Model.Rating</span> (@Model.Rating)
+                    <span class="stars" style="float:left">@Model.Rating</span> (<a onclick="viewReviewReply(@Model.SupplierId)" href="javascript:void(0);">@Model.Rating</a>)
                 </dd>
             }
-
-            
-
-           
             
         </dl>
 
@@ -239,4 +233,19 @@
             $(this).html($span);
         });
     })
+
+    function viewReviewReply(supplierId) {
+        var options = {
+            url: '/Reply/ViewReview',
+            type: 'GET',
+            data: { supplierId: supplierId }
+        };
+
+        $.ajax(options).done(function (data) {
+            var $target = $('#reviewinfo');
+            $target.html(data);
+
+            $('#list-reviews').modal('show');
+        });
+    }
 </script>
