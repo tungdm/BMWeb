@@ -7,16 +7,26 @@
 @Styles.Render("~/Content/loginformcss")
 <style>
     body {
-        /*background: url('../../Images/login.jpg') !important;*/
-        /*background-repeat: no-repeat;
-        background-size: cover;*/
-        /*background-position: center center;*/
+        /*background: url('../../Images/login.jpg') !important;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;*/
+        background: #fff;
     }
 
     #login {
-        border-radius: 15px;
+        /*border-radius: 15px;*/
         background: #E8E8E8;
         padding: 15px;
+    }
+
+    .header {
+        background: #FF3838;
+        padding: 30px 20px;
+        color: white;
+        font-size: 1.2em;
+        font-weight: 600;
+        border-radius: 10px 10px 0 0;
     }
 </style>
 @*<body style="background:#F7F7F7;">*@
@@ -24,7 +34,7 @@
 @*<a class="hiddenanchor" id="toregister"></a>
     <a class="hiddenanchor" id="tologin"></a>*@
 <div id="wrapper">
-    <div id="login" class="animate form login_form" style="margin-top: 50px;">
+    <div id="login" class="animate form login_form">
         <section class="login_content">
 
             @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl, RegOrLog = "Đăng nhập" })
@@ -47,32 +57,35 @@
                     @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                 </div>
 
-                @*<div class="checkbox">
-                            @Html.CheckBoxFor(m => m.RememberMe, new { placeholder="Ghi nhớ" })
-                            @Html.LabelFor(m => m.RememberMe)
-                    </div>*@
-                
-                    <div>
-                        <input type="submit" value="ĐĂNG NHẬP" class="btn btn-warning" style="font-size: 20px; margin: 10px 15px 10px 0 ;float: none" />
-                        @Html.ActionLink("Quên mật khẩu", "ForgotPassword", null, new { @class = "reset_pass", @style = "font-size:14px" })
-                    </div>
+                <div class="checkbox">
+                    @Html.CheckBoxFor(m => m.RememberMe, new { placeholder = "Ghi nhớ" })
+                    @Html.LabelFor(m => m.RememberMe)
+                </div>
+
+                <div>
+                    <input type="submit" value="ĐĂNG NHẬP" class="btn btn-success" style="font-size: 24px; margin: 10px 15px 10px 0 ;float: none" />
+
+                </div>
+
+                <div class="separator">
+                    <h5 class="change_link" style="margin-top:20px">
+                        Bạn chưa có tài khoản?
+                        <strong>
+                            @Html.ActionLink("Đăng ký ngay", "Register", new { type = "Customer" }, new { @class = "to_register", @style = "font-size:14px" })
+                        </strong>
+                    </h5>
 
                     <div class="clearfix"></div>
-                    <div class="separator">
-                        <h5 class="change_link" style="margin-top:20px">
-                            Bạn chưa có tài khoản? 
-                            <strong>
-                                @Html.ActionLink("Đăng ký ngay", "Register", new { type = "Customer" }, new { @class = "to_register", @style="font-size:14px" })
-                            </strong>
-                        </h5>
+                </div>
 
-                        <div class="clearfix"></div>
-                    </div>
+                <div>
+                    <strong>
+                        @Html.ActionLink("Quên mật khẩu?", "ForgotPassword", null, new { @class = "reset_pass", @style = "font-size:14px" })
+                    </strong>
+                </div>
 
 
             }
-            <!--/Login form-->
-
         </section>
     </div>
 
