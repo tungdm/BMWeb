@@ -9,6 +9,7 @@ namespace TGVL.Models
 {
     public class DealDetailsViewModel
     {
+        public string SupplierName { get; set; }
         public int Id { get; set; } //dealId
         public string Title { get; set; }
 
@@ -99,6 +100,7 @@ namespace TGVL.Models
 
         public string DueDateCountdown { get; set; }
 
+        public string ShopName { get; set; }
     }
     public class HydridViewModel
     {
