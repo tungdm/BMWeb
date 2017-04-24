@@ -683,6 +683,7 @@ namespace TGVL.Controllers
             {
                 var hsmodel = new HotShopViewModel
                 {
+                    
                     ShopId = hs.Id,
                     Avatar = hs.Avatar,
                     Rating = (float)hs.AverageGrade,
@@ -699,6 +700,7 @@ namespace TGVL.Controllers
             {
                 var hdmodel = new DealBriefViewModel
                 {
+                    ShopName = hd.User.Fullname,
                     Id = hd.Id,
                     Title = hd.Title,
                     UnitPrice = hd.UnitPrice,

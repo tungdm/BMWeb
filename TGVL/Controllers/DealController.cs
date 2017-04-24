@@ -70,6 +70,7 @@ namespace TGVL.Controllers
             
             var model = new DealDetailsViewModel
             {
+                SupplierName = deal.User.Fullname,
                 Id = deal.Id,
                 Title = deal.Title,
                 UnitPrice = deal.UnitPrice,
