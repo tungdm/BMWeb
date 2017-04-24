@@ -375,6 +375,7 @@ namespace TGVL.Controllers
                 Id = reply.Id,
                 Total = reply.Total,
                 SupplierName = reply.User.Fullname,
+                SupplierId = reply.User.Id,
                 PhoneNumber = reply.User.PhoneNumber,
                 Description = reply.Description,
                 DeliveryDate = reply.DeliveryDate,
@@ -1244,6 +1245,23 @@ namespace TGVL.Controllers
 
         }
 
-       
+        public ActionResult ViewReview(int supplierId)
+        {
+            var query = "SELECT [dbo].[Reviews].[PriceGradeId], [dbo].[Reviews].[QualityGradeId], [dbo].[Reviews].[ServiceGradeId], "
+                    + "[dbo].[Users].[Fullname], [dbo].[Users].[Avatar], [dbo].[Reviews].[CreatedDate], [dbo].[Reviews].[Comment] "
+                    + "FROM [dbo].[Reviews], [dbo].[Users] "
+                    + "WHERE [dbo].[Reviews].[SupplierId] = {0} "
+                    + "AND [dbo].[Users].[Id] = [dbo].[Reviews].[CustomerId] "
+                    + "ORDER BY [dbo].[Reviews].[CreatedDate] DESC";
+            List<ListReviews> data = db.Database.SqlQuery<ListReviews>(query, supplierId).ToList();
+
+            var model = new ShopReviews
+            {
+                ListReviews = data
+            };
+
+            return PartialView("_Reviews", model);
+        }
+
     }
 }

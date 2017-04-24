@@ -766,16 +766,17 @@ namespace TGVL.Controllers
             //var TopRecShop = db.Settings.Where(s => s.SettingName == "TopRecShop").FirstOrDefault().SettingValue;
 
             var query = "SELECT [dbo].[Warehouses].[Id] AS id, [dbo].[Users].[Id] AS supplierId, [dbo].[Users].[Fullname] AS name, [dbo].[Warehouses].[Lat] AS lat, "
-                + "[dbo].[Warehouses].[Lng] as lng, [dbo].[Warehouses].[Address] AS address, [dbo].[Warehouses].[Administrative_area_level_1] AS city, "
-                + "[dbo].[Users].[PhoneNumber] AS phone, [dbo].[Users].[AverageGrade] as rating, [dbo].[Products].[UnitPrice] as price, "
-                + "[dbo].[Products].[Id] AS productId "
-                + "FROM [dbo].[SysProducts], [dbo].[Products], [dbo].[WarehouseProducts], [dbo].[Warehouses], [dbo].[Users] "
-                + "WHERE [dbo].[Products].[SysProductId] = [dbo].[SysProducts].[Id] "
-                + "AND [dbo].[Products].[Id] =  [dbo].[WarehouseProducts].[ProductId] "
-                + "AND [dbo].[WarehouseProducts].[WarehouseId] = [dbo].[Warehouses].[Id] "
-                + "AND [dbo].[Warehouses].[SupplierId] = [dbo].[Users].[Id] "
-                + "AND [dbo].[SysProducts].[Id] = {0} "
-                + "ORDER BY rating DESC";
+                    +   "[dbo].[Warehouses].[Lng] as lng, [dbo].[Warehouses].[Address] AS address, [dbo].[Warehouses].[Administrative_area_level_1] AS city, "
+                    +   "[dbo].[Users].[PhoneNumber] AS phone, [dbo].[Users].[AverageGrade] as rating, [dbo].[Products].[UnitPrice] as price, "
+                    +   "[dbo].[Products].[Id] AS productId, [dbo].[UserLogins].[ProviderKey] as facebookId "
+                    +   "FROM [dbo].[SysProducts], [dbo].[Products], [dbo].[WarehouseProducts], [dbo].[Warehouses], [dbo].[Users] "
+                    +   "LEFT JOIN [dbo].[UserLogins] ON [dbo].[Users].[Id] = [dbo].[UserLogins].[UserId] "
+                    +   "WHERE [dbo].[Products].[SysProductId] = [dbo].[SysProducts].[Id] "
+                    +   "AND [dbo].[Products].[Id] =  [dbo].[WarehouseProducts].[ProductId] " 
+                    +   "AND [dbo].[WarehouseProducts].[WarehouseId] = [dbo].[Warehouses].[Id] " 
+                    +   "AND [dbo].[Warehouses].[SupplierId] = [dbo].[Users].[Id] "
+                    +   "AND [dbo].[SysProducts].[Id] = {0} "
+                    +   "ORDER BY rating DESC";
 
             List<Shop> data = db.Database.SqlQuery<Shop>(query, id).ToList();
             
@@ -1154,6 +1155,25 @@ namespace TGVL.Controllers
             }
             
             return View(newListHotshop);
+        }
+
+
+        public ActionResult ViewReview(int supplierId)
+        {
+            var query = "SELECT [dbo].[Reviews].[PriceGradeId], [dbo].[Reviews].[QualityGradeId], [dbo].[Reviews].[ServiceGradeId], "
+                    + "[dbo].[Users].[Fullname], [dbo].[Users].[Avatar], [dbo].[Reviews].[CreatedDate], [dbo].[Reviews].[Comment] "
+                    + "FROM [dbo].[Reviews], [dbo].[Users] "
+                    + "WHERE [dbo].[Reviews].[SupplierId] = {0} "
+                    + "AND [dbo].[Users].[Id] = [dbo].[Reviews].[CustomerId] "
+                    + "ORDER BY [dbo].[Reviews].[CreatedDate] DESC";
+            List<ListReviews> data = db.Database.SqlQuery<ListReviews>(query, supplierId).ToList();
+
+            var model = new ShopReviews
+            {
+                ListReviews = data
+            };
+
+            return PartialView("_Reviews", model);
         }
     }
 }
