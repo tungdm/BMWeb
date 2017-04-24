@@ -197,6 +197,8 @@ namespace TGVL.Models
 
         public string SupplierName { get; set; }
 
+        public int SupplierId { get; set; }
+
         [DisplayFormat(DataFormatString = "{0:####-###-###}")]
         public string PhoneNumber { get; set; }
 

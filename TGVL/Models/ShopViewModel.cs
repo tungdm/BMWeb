@@ -69,6 +69,8 @@ namespace TGVL.Models
 
         public int productId { get; set; }
 
+        public string facebookId { get; set; }
+
     }
 
 
@@ -119,5 +121,21 @@ namespace TGVL.Models
 
         [AllowHtml]
         public string Description { get; set; }
+    }
+
+    public class ListReviews
+    {
+        public int PriceGradeId { get; set; }
+        public int QualityGradeId { get; set; }
+        public int ServiceGradeId { get; set; }
+        public string Comment { get; set; }
+        public string Fullname { get; set; }
+        public string Avatar { get; set; }
+        public DateTime CreatedDate { get; set; }
+    }
+
+    public class ShopReviews
+    {
+        public ICollection<ListReviews> ListReviews { get; set; }
     }
 }
