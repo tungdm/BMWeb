@@ -40,7 +40,7 @@
                                         <tr>
                                             <td>@cnt</td>
 
-                                            <td>@Html.DisplayFor(modelItem => item.CreateDate)</td>
+                                            <td>@Convert.ToDateTime(item.CreateDate).ToString("dd/MM/yyyy HH:mm")</td>
                                             <td>@item.User1.Fullname</td>
                                             <td>
                                                 @if (item.StatusId == 5)
@@ -53,12 +53,12 @@
                                                 }
                                             </td>
                                             <td>
-                                                @Html.ActionLink("Xem chi tiết", "Details", new { id = item.Id }, new { @class = "button" })
+                                                @Html.ActionLink("Xem chi tiết", "Details", new { id = item.Id }, new { @class = "btn btn-success" })
                                                 @if (item.StatusId == 4)
                                                 {
                                                     //Hoan tat
-                                                    <button type="button" id="review-btn" class="button btn-info" onclick="review(@item.Id)">
-                                                        Đánh giá
+                                                    <button type="button" id="review-btn" class="btn btn-primary" onclick="review(@item.Id)">
+                                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Đánh giá
                                                     </button>
                                                 }
 
@@ -89,11 +89,11 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Đánh giá đơn hàng</h4>
             </div>
-            <div class="modal-body" style="min-height:calc(100vh - 210px);max-height: calc(100vh - 210px);overflow-y: auto;">
+            <div class="modal-body">
                 <div id="reviewForm"></div>
             </div>
             <div class="modal-footer">
-                <input type="button" value="Hoàn tất" class="btn btn-success" id="submit-btn-review" />
+                <input type="button" value="Đánh giá" class="btn btn-primary" id="submit-btn-review" />
                 <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
             </div>
         </div>
