@@ -10,6 +10,9 @@
 @Styles.Render("~/Content/searchproductcss")
 
 <style>
+    body{
+        font-family:Helvetica, Arial, sans-serif;
+    }
     .item-img-info {
         width: 250px;
         height: 220px;
@@ -144,14 +147,15 @@
                                         var message = "";
                                         message = Model.Expired ? "(Expired)" : "";
                                     }
-                                    <h1>@Model.Title <span id="expired">@message</span></h1>
+                                    <h1>@Model.Title tại @Model.SupplierName <span id="expired">@message</span></h1>
                                 </div>
                                 <div class="short-description">
-                                    <p>
+                                    <p>                                       
                                         @Model.ShortDescription
+                                        
                                     </p>
                                     <p>
-                                        Còn lại: <span id="quantity-remain" style="font-size:24px">@Model.Quantity</span> @Model.UnitType
+                                        Còn lại: <span id="quantity-remain" style="font-size:30px">@Model.Quantity</span> @Model.UnitType
                                     </p>
                                 </div>
                                 <hr />

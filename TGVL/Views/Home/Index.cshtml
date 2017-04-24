@@ -8,6 +8,9 @@
 @Styles.Render("~/Content/slidercss")
 <link href="~/Content/css/AdminLTE.min.css" rel="stylesheet" />
 <style>
+     body{
+        font-family:Helvetica, Arial, sans-serif;
+    }
     span.stars, span.stars span {
         display: block;
         background: url("/Images/stars.png") 0 -16px repeat-x;
@@ -215,7 +218,7 @@
                                                     </div>
                                                     <div class="item-info">
                                                         <div class="info-inner">
-                                                            <div class="item-title" style="text-align:left"> <h3 style="font-size:14px">@item.Title</h3></div>
+                                                            <div class="item-title" style="text-align:left"> <h3 style="font-size:14px">@item.Title áp dụng tại @item.ShopName</h3></div>
                                                             <div class="item-content">
                                                                 <div class="price-block">
                                                                     <div class="price-box" style="text-align:left">
