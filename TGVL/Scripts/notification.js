@@ -265,7 +265,7 @@ function supplierUpdateBidReply(requestId) {
             console.log("pending=" + pending);
 
             if (data.Rank > data.OldRank && data.Min != null && !pending) {
-                
+                console.log("autobid-go");
                 var replyId = data.ReplyId;
                 
                 myTimeOut = setTimeout(function () {

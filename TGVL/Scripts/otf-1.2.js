@@ -452,6 +452,12 @@ function updateReview(data, status, xhr) {
     if (data.Message == "Success") {
         $("#review-btn").remove();
         $('#review').modal('toggle');
+        
+        swal({
+            title: 'Tạo review thành công',
+            text: 'Cám ơn bạn sự đóng góp ý kiến của bạn.',
+            type: 'success',
+        })
     }
     
 }
