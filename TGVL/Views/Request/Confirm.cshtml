@@ -67,7 +67,7 @@
                 <div class="col-md-6">
                     <div class="popular-posts widget widget__sidebar">
                         <h3 class="widget-title">THÔNG TIN KHÁCH HÀNG</h3>
-                        <div class="widget-content">
+                        <div class="widget-content" style="font-size:16px">
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead>
@@ -96,7 +96,7 @@
                 <div class="col-md-6">
                     <div class="popular-posts widget widget__sidebar">
                         <h3 class="widget-title">THÔNG TIN CỬA HÀNG</h3>
-                        <div class="widget-content">
+                        <div class="widget-content" style="font-size:16px">
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead>
@@ -134,7 +134,7 @@
                 {
                     @Html.AntiForgeryToken()
                     <input type="number" name="replyId" value="@Model.Id" style="visibility:hidden"/>
-                    <div style="text-align:center">
+                    <div style="text-align:center;margin-bottom:30px;">
                         @Html.ActionLink("Quay lại", "Details", new { id = Model.RequestId }, new { @class = "btn btn-primary", style= "font-size:18px" })
                         <button class="btn btn-success" style="font-size:18px" type="submit">HOÀN TẤT</button>
                         
